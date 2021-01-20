@@ -1,0 +1,7 @@
+﻿IslandFleetGalaxy=Sky Station Galaxy
+YosshiHomeGalaxy=Yoshi Star Galaxy
+DigMineGalaxy=Spin-Dig Galaxy
+MokumokuValleyGalaxy=Fluffy Bluff Galaxy
+RedBlueExGalaxy=Flip-Swap Galaxy
+AbekobeGalaxy=Rightside Down Galaxy
+VsKoopaJrLv1Galaxy=Bowser Jr.'s Fiery Flotilla
