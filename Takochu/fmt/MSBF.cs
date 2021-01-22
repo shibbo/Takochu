@@ -110,9 +110,9 @@ namespace Takochu.fmt
         public EntryNode(ref FileBase file) : base()
         {
             mNodeType = NodeType.NodeType_Entry;
-            file.Skip(0x4);
-            mNextNode = file.ReadUInt16();
             file.Skip(0x2);
+            mNextNode = file.ReadUInt16();
+            file.Skip(0x4);
         }
     }
 
@@ -186,6 +186,8 @@ namespace Takochu.fmt
                 TableEntry e = new TableEntry();
                 e.mIsValid = file.ReadUInt32();
                 e.mPtr = file.ReadInt32();
+
+                mEntries.Add(e);
 
                 if (e.mIsValid == 1)
                 {

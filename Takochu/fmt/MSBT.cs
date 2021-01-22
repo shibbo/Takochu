@@ -11,7 +11,10 @@ namespace Takochu.fmt
     {
         public MSBT(FileBase file)
         {
-
+            if (file.ReadString(8) != "MsgStdBn")
+            {
+                throw new Exception("MSBT::MSBT() -- Invalid MSBT file!");
+            }
         }
     }
 }
