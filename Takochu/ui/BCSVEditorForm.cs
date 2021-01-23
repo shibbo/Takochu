@@ -132,7 +132,7 @@ namespace Takochu.ui
                     object[] row = new object[entry.Count];
                     int i = 0;
 
-                    foreach (KeyValuePair<uint, object> _val in entry)
+                    foreach (KeyValuePair<int, object> _val in entry)
                     {
                         object val = _val.Value;
                         row[i++] = val;
@@ -166,7 +166,7 @@ namespace Takochu.ui
 
                 foreach(BCSV.Field f in file.mFields.Values)
                 {
-                    uint hash = f.mHash;
+                    int hash = f.mHash;
                     string valStr = r.Cells[hash.ToString("X8")].FormattedValue.ToString();
 
                     try
@@ -246,7 +246,7 @@ namespace Takochu.ui
 
                     foreach (BCSV.Field f in file.mFields.Values)
                     {
-                        uint hash = f.mHash;
+                        int hash = f.mHash;
                         string valStr = r.Cells[hash.ToString("X8")].FormattedValue.ToString();
 
                         try
@@ -255,7 +255,7 @@ namespace Takochu.ui
                             {
                                 case 0:
                                 case 3:
-                                    entry.Add(hash, uint.Parse(valStr));
+                                    entry.Add(hash, int.Parse(valStr));
                                     break;
                                 case 4:
                                     entry.Add(hash, ushort.Parse(valStr));
@@ -307,6 +307,44 @@ namespace Takochu.ui
             // if so, add that onto it
             if (!bcsvEditorsTabControl.SelectedTab.Text.Contains("*"))
                 bcsvEditorsTabControl.SelectedTab.Text += "*";
+        }
+
+        private void BCSVEditorForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (mFilesystem != null)
+                mFilesystem.Close();
+        }
+
+        private void openExternalBtn_Click(object sender, EventArgs e)
+        {
+            if (mFilesystem != null)
+            {
+                mFilesystem.Close();
+            }
+
+            foreach (BCSV file in mFiles.Values)
+            {
+                file.Close();
+            }
+
+            mFiles.Clear();
+            mEditors.Clear();
+            bcsvEditorsTabControl.TabPages.Clear();
+
+            filesystemView.Nodes.Clear();
+
+            OpenFileDialog dlg = new OpenFileDialog();
+
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                mFilesystem = new RARCFilesystem(new ExternalFile(dlg.FileName));
+
+                TreeNode root = new TreeNode("/");
+
+                PopulateTreeView(ref root, "/root");
+
+                filesystemView.Nodes.Add(root);
+            }
         }
     }
 }

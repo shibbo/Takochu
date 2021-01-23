@@ -38,6 +38,7 @@
             this.saveAll_Btn = new System.Windows.Forms.ToolStripButton();
             this.filesystemView = new System.Windows.Forms.TreeView();
             this.bcsvEditorsTabControl = new System.Windows.Forms.TabControl();
+            this.openExternalBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,11 +53,12 @@
             this.archiveTextBox,
             this.toolStripSeparator1,
             this.openBCSVBtn,
+            this.openExternalBtn,
             this.saveBCSVBtn,
             this.saveAll_Btn});
             this.toolStrip1.Location = new System.Drawing.Point(4, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(937, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1017, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -119,7 +121,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.filesystemView.Location = new System.Drawing.Point(0, 28);
             this.filesystemView.Name = "filesystemView";
-            this.filesystemView.Size = new System.Drawing.Size(972, 451);
+            this.filesystemView.Size = new System.Drawing.Size(1052, 451);
             this.filesystemView.TabIndex = 2;
             this.filesystemView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.filesystemView_NodeMouseDoubleClick);
             // 
@@ -131,19 +133,30 @@
             this.bcsvEditorsTabControl.Location = new System.Drawing.Point(0, 485);
             this.bcsvEditorsTabControl.Name = "bcsvEditorsTabControl";
             this.bcsvEditorsTabControl.SelectedIndex = 0;
-            this.bcsvEditorsTabControl.Size = new System.Drawing.Size(972, 123);
+            this.bcsvEditorsTabControl.Size = new System.Drawing.Size(1052, 123);
             this.bcsvEditorsTabControl.TabIndex = 3;
+            // 
+            // openExternalBtn
+            // 
+            this.openExternalBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.openExternalBtn.Image = ((System.Drawing.Image)(resources.GetObject("openExternalBtn.Image")));
+            this.openExternalBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.openExternalBtn.Name = "openExternalBtn";
+            this.openExternalBtn.Size = new System.Drawing.Size(49, 22);
+            this.openExternalBtn.Text = "Open...";
+            this.openExternalBtn.Click += new System.EventHandler(this.openExternalBtn_Click);
             // 
             // BCSVEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(972, 608);
+            this.ClientSize = new System.Drawing.Size(1052, 608);
             this.Controls.Add(this.bcsvEditorsTabControl);
             this.Controls.Add(this.filesystemView);
             this.Controls.Add(this.toolStrip1);
             this.Name = "BCSVEditorForm";
             this.Text = "BCSVEditorForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BCSVEditorForm_FormClosing);
             this.Load += new System.EventHandler(this.BCSVEditorForm_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
@@ -163,5 +176,6 @@
         private System.Windows.Forms.TreeView filesystemView;
         private System.Windows.Forms.TabControl bcsvEditorsTabControl;
         private System.Windows.Forms.ToolStripButton saveAll_Btn;
+        private System.Windows.Forms.ToolStripButton openExternalBtn;
     }
 }

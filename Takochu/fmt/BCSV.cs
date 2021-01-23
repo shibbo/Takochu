@@ -15,7 +15,7 @@ namespace Takochu.fmt
         {
             mFile = file;
 
-            mFields = new Dictionary<uint, Field>();
+            mFields = new Dictionary<int, Field>();
             mEntries = new List<Entry>();
 
             if (mFile.GetLength() == 0)
@@ -35,7 +35,7 @@ namespace Takochu.fmt
                 Field f = new Field();
                 mFile.Seek(0x10 + (0xC * i));
 
-                f.mHash = mFile.ReadUInt32();
+                f.mHash = mFile.ReadInt32();
                 f.mMask = mFile.ReadInt32();
                 f.mEntryOffset = mFile.ReadUInt16();
                 f.mShiftAmount = mFile.ReadByte();
@@ -255,7 +255,7 @@ namespace Takochu.fmt
 
         public void RemoveField(string name)
         {
-            uint hash = FieldNameToHash(name);
+            int hash = FieldNameToHash(name);
             mFields.Remove(hash);
 
             foreach (Entry e in mEntries)
@@ -266,7 +266,7 @@ namespace Takochu.fmt
 
         public class Field
         {
-            public uint mHash;
+            public int mHash;
             public int mMask;
             public ushort mEntryOffset;
             public byte mShiftAmount;
@@ -275,7 +275,7 @@ namespace Takochu.fmt
             public string mName;
         }
 
-        public class Entry : Dictionary<uint, object>
+        public class Entry : Dictionary<int, object>
         {
             public Entry() : base() { }
 
@@ -309,9 +309,9 @@ namespace Takochu.fmt
             }
         }
 
-        public static uint FieldNameToHash(string name)
+        public static int FieldNameToHash(string name)
         {
-            uint ret = 0;
+            int ret = 0;
 
             foreach (char c in name.ToCharArray())
             {
@@ -322,7 +322,7 @@ namespace Takochu.fmt
             return ret;
         }
 
-        public static string HashToFieldName(uint hash)
+        public static string HashToFieldName(int hash)
         {
             if (!sHashTable.ContainsKey(hash))
                 return String.Format($"[{hash.ToString("X").ToUpper()}]");
@@ -332,7 +332,7 @@ namespace Takochu.fmt
 
         public static void AddHash(string field)
         {
-            uint hash = FieldNameToHash(field);
+            int hash = FieldNameToHash(field);
 
             if (!sHashTable.ContainsKey(hash))
                 sHashTable.Add(hash, field);
@@ -340,7 +340,7 @@ namespace Takochu.fmt
 
         public static void PopulateHashTable()
         {
-            sHashTable = new Dictionary<uint, string>();
+            sHashTable = new Dictionary<int, string>();
 
             if (!File.Exists("res/FieldNames.txt"))
                 throw new Exception("BCSV::PopulateHashTable() - res/FieldNames.txt not found.");
@@ -354,10 +354,10 @@ namespace Takochu.fmt
         }
 
         private FileBase mFile;
-        public Dictionary<uint, Field> mFields;
+        public Dictionary<int, Field> mFields;
         public List<Entry> mEntries;
 
 
-        public static Dictionary<uint, string> sHashTable;
+        public static Dictionary<int, string> sHashTable;
     }
 }

@@ -372,19 +372,19 @@ namespace Takochu.smg.obj
             public void DoUI(IObjectUIControl control)
             {
                 if (obj.mFields.ContainsKey("eflag.enableErpFrame"))
-                    obj.mFields["eflag.enableErpFrame"] = Convert.ToUInt32(control.CheckBox("eflag.enableErpFrame", (uint)obj.mFields["eflag.enableErpFrame"] != 0));
+                    obj.mFields["eflag.enableErpFrame"] = Convert.ToInt32(control.CheckBox("eflag.enableErpFrame", (int)obj.mFields["eflag.enableErpFrame"] != 0));
 
                 if (obj.mFields.ContainsKey("eflag.enableEndErpFrame"))
-                    obj.mFields["eflag.enableEndErpFrame"] = Convert.ToUInt32(control.CheckBox("eflag.enableEndErpFrame", (uint)obj.mFields["eflag.enableEndErpFrame"] != 0));
+                    obj.mFields["eflag.enableEndErpFrame"] = Convert.ToInt32(control.CheckBox("eflag.enableEndErpFrame", (int)obj.mFields["eflag.enableEndErpFrame"] != 0));
 
                 if (obj.mFields.ContainsKey("camendint"))
-                    obj.mFields["camendint"] = Convert.ToUInt32(control.NumberInput((uint)obj.mFields["camendint"], "camendint"));
+                    obj.mFields["camendint"] = Convert.ToInt32(control.NumberInput((int)obj.mFields["camendint"], "camendint"));
 
                 if (obj.mFields.ContainsKey("evfrm"))
-                    obj.mFields["evfrm"] = Convert.ToUInt32(control.NumberInput((uint)obj.mFields["evfrm"], "evfrm"));
+                    obj.mFields["evfrm"] = Convert.ToInt32(control.NumberInput((int)obj.mFields["evfrm"], "evfrm"));
 
                 if (obj.mFields.ContainsKey("evpriority"))
-                    obj.mFields["evpriority"] = Convert.ToUInt32(control.NumberInput((uint)obj.mFields["evpriority"], "evpriority"));
+                    obj.mFields["evpriority"] = Convert.ToInt32(control.NumberInput((int)obj.mFields["evpriority"], "evpriority"));
             }
 
             public void OnValueChangeStart()
