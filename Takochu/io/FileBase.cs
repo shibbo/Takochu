@@ -43,8 +43,8 @@ namespace Takochu.io
         public virtual void Write(double val) { }
         public virtual void Write(byte[] val) { }
         public virtual void Write(char[] val) { }
-        public virtual void WriteString(string val) { }
-        public virtual void WriteStringNT(string val) { }
+        public virtual int WriteString(string val) { return 0; }
+        public virtual int WriteStringNT(string val) { return 0; }
 
         public virtual byte[] GetBuffer() { return null; }
         public virtual void SetBuffer(byte[] buffer) { }

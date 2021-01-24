@@ -324,19 +324,26 @@ namespace Takochu.io
                 Write(b);
         }
 
-        public override void WriteString(string val)
+        public override int WriteString(string val)
         {
+            int start = Position();
             byte[] data = mEncoding.GetBytes(val);
 
             Write(data);
+
+            return (Position() - start);
         }
 
-        public override void WriteStringNT(string val)
+        public override int WriteStringNT(string val)
         {
+            int start = Position();
+
             byte[] data = mEncoding.GetBytes(val);
 
             Write(data);
             Write('\0');
+
+            return (Position() - start);
         }
 
         public override byte[] GetBuffer()

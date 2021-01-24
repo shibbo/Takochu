@@ -42,8 +42,6 @@ namespace Takochu.smg.obj
 
             mType = mEntry.Get<string>("camtype");
 
-            // we will build our field dictionary to know what fields to save and what fields to not save
-            // piss off, LaunchCamPlus and your shitty watermark
             mFields = new Dictionary<string, object>();
 
             // the first thing we load are the camera-type specific fields
@@ -58,8 +56,8 @@ namespace Takochu.smg.obj
                     case "float":
                         mFields[field] = mEntry.Get<float>(field);
                         break;
-                    case "uint":
-                        mFields[field] = mEntry.Get<uint>(field);
+                    case "int":
+                        mFields[field] = mEntry.Get<int>(field);
                         break;
                     case "string":
                         mFields[field] = mEntry.Get<string>(field);
@@ -238,6 +236,11 @@ namespace Takochu.smg.obj
                 obj.mType = control.DropDownTextInput("Camera Type", obj.mEntry.Get<string>("camtype"), cameraTypes, false);
 
                 obj.mFields["camint"] = Convert.ToInt32(control.NumberInput((int)obj.mFields["camint"], "CamInt"));
+                control.VerticalSeperator();
+                control.Spacing(2);
+                obj.mFields["woffset.X"] = control.NumberInput((float)obj.mFields["woffset.X"], "World Offset X");
+                obj.mFields["woffset.Y"] = control.NumberInput((float)obj.mFields["woffset.Y"], "World Offset Y");
+                obj.mFields["woffset.Z"] = control.NumberInput((float)obj.mFields["woffset.Z"], "World Offset Z");
             }
 
             public void OnValueChangeStart()

@@ -186,8 +186,7 @@ namespace Takochu.fmt
                                     stringOffsets.Add(val, curStr);
                                     mFile.Write(curStr);
                                     mFile.Seek(strTableOffs + curStr);
-                                    mFile.WriteStringNT(val);
-                                    curStr += val.Length + 1;
+                                    curStr += mFile.WriteStringNT(val);
                                 }
 
                                 break;

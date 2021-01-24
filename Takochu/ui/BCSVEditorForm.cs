@@ -175,7 +175,7 @@ namespace Takochu.ui
                         {
                             case 0:
                             case 3:
-                                entry.Add(hash, uint.Parse(valStr));
+                                entry.Add(hash, int.Parse(valStr));
                                 break;
                             case 4:
                                 entry.Add(hash, ushort.Parse(valStr));
@@ -197,7 +197,7 @@ namespace Takochu.ui
                         {
                             case 0:
                             case 3:
-                                entry.Add(hash, (uint)0);
+                                entry.Add(hash, (int)0);
                                 break;
                             case 4:
                                 entry.Add(hash, (ushort)0);

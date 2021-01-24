@@ -185,17 +185,19 @@ namespace Takochu.io
             mFile.Write(val, 0, val.Length);
         }
 
-        public override void WriteString(string val)
+        public override int WriteString(string val)
         {
             byte[] arr = mEncoding.GetBytes(val);
             mFile.Write(arr, 0, arr.Length);
+            return arr.Length;
         }
 
-        public override void WriteStringNT(string val)
+        public override int WriteStringNT(string val)
         {
             byte[] arr = mEncoding.GetBytes(val);
             mFile.Write(arr, 0, arr.Length);
             mFile.WriteByte((byte)'\0');
+            return arr.Length + 1;
         }
 
         public override byte[] GetBuffer()
