@@ -1,3 +1,4 @@
-Takochu/bin/*
-obj/*
-packages/*
+.vs/
+packages
+/Takochu/bin
+/Takochu/obj
