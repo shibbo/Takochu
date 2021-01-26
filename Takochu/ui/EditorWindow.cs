@@ -33,6 +33,8 @@ namespace Takochu.ui
             scene = new EditorScene();
             cameraScene = new EditorScene();
             cameraScene.Visible = false;
+            lightScene = new EditorScene();
+            lightScene.Visible = false;
 
             mGalaxy = Program.sGame.OpenGalaxy(mGalaxyName);
 
@@ -67,6 +69,11 @@ namespace Takochu.ui
             cameraListView.ListExited += CameraSceneListView_ListExited;
             cameraScene.SelectionChanged += CameraScene_SelectionChanged;
 
+            lightsSceneListView.SelectionChanged += LightListView_SelectionChanged;
+            lightsSceneListView.ItemsMoved += LightSceneListView_ItemsMoved;
+            lightsSceneListView.ListExited += LightSceneListView_ListExited;
+            lightScene.SelectionChanged += LightScene_SelectionChanged;
+
             galaxyViewControl.CameraTarget = new OpenTK.Vector3(0, 0, 0);
             galaxyViewControl.Refresh();
         }
@@ -74,6 +81,7 @@ namespace Takochu.ui
 
         private EditorScene scene;
         private EditorScene cameraScene;
+        private EditorScene lightScene;
         private string mGalaxyName;
         public int mCurrentScenario;
 
@@ -83,10 +91,11 @@ namespace Takochu.ui
         {
             sceneListView.RootLists.Clear();
             cameraListView.RootLists.Clear();
-            lightsTree.Nodes.Clear();
+            lightsSceneListView.RootLists.Clear();
 
             scene.objects.Clear();
             cameraScene.objects.Clear();
+            lightScene.objects.Clear();
 
             // we want to clear out the children of the 5 camera type root nodes
             //for (int i = 0; i < 5; i++)
@@ -96,6 +105,8 @@ namespace Takochu.ui
 
             // first we need to get the proper layers that the galaxy itself uses
             List<string> layers = mGalaxy.GetGalaxyLayers(mGalaxy.GetMaskUsedInZoneOnCurrentScenario(mGalaxyName));
+
+            layers.ForEach(l => layerViewerDropDown.DropDownItems.Add(l));
 
             // get our main galaxy's zone
             Zone mainZone = mGalaxy.GetZone(mGalaxyName);
@@ -254,7 +265,12 @@ namespace Takochu.ui
             cameraScene.objects.AddRange(startCameras);
             cameraScene.objects.AddRange(otherCameras);
 
-            lights.ForEach(l => lightsTree.Nodes.Add(l.ToString()));
+            lightsSceneListView.RootLists.Add("Lights", lights);
+            lightsSceneListView.UpdateComboBoxItems();
+            lightsSceneListView.SelectedItems = lightScene.SelectedObjects;
+            lightsSceneListView.SetRootList("Lights");
+
+            lightScene.objects.AddRange(lights);
 
             galaxyViewControl.Refresh();
         }
@@ -447,6 +463,52 @@ namespace Takochu.ui
                 objectUIContainer.UpdateProperties();
 
             cameraUIControl.Refresh();
+        }
+
+        private void LightListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.SelectionChangeMode == SelectionChangeMode.SET)
+            {
+                lightScene.SelectedObjects.Clear();
+
+                foreach (ISelectable obj in e.Items)
+                    obj.SelectDefault(null);
+            }
+
+            e.Handled = true;
+
+            LightScene_SelectionChanged(this, null);
+        }
+
+        private void LightSceneListView_ListExited(object sender, ListEventArgs e)
+        {
+            lightScene.CurrentList = e.List;
+            //fetch availible properties for list
+            lightScene.SetupObjectUIControl(lightsUIControl);
+        }
+
+        private void LightSceneListView_ItemsMoved(object sender, ItemsMovedEventArgs e)
+        {
+            lightScene.ReorderObjects(lightsSceneListView.CurrentList, e.OriginalIndex, e.Count, e.Offset);
+            e.Handled = true;
+        }
+
+        private void LightScene_SelectionChanged(object sender, EventArgs e)
+        {
+            //update sceneListView
+            lightsSceneListView.Refresh();
+
+            //fetch availible properties for selection
+            lightScene.SetupObjectUIControl(lightsUIControl);
+        }
+
+        private void LightScene_ObjectsMoved(object sender, EventArgs e)
+        {
+            //update the property control because properties might have changed
+            foreach (IObjectUIContainer objectUIContainer in lightsUIControl.ObjectUIContainers)
+                objectUIContainer.UpdateProperties();
+
+            lightsUIControl.Refresh();
         }
     }
 }

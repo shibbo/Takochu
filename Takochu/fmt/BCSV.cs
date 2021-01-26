@@ -141,7 +141,7 @@ namespace Takochu.fmt
                         case 0:
                         case 3:
                             {
-                                int val = mFile.ReadInt32();
+                                int val = e.Get<int>(HashToFieldName(f.mHash));
                                 val &= f.mMask;
                                 val |= (int)(((int)e[f.mHash] << f.mShiftAmount) & f.mMask);
 
@@ -152,7 +152,7 @@ namespace Takochu.fmt
 
                         case 4:
                             {
-                                short val = mFile.ReadInt16();
+                                short val = e.Get<short>(HashToFieldName(f.mHash));
                                 val &= (short)f.mMask;
                                 val |= (short)(((short)e[f.mHash] << f.mShiftAmount) & f.mMask);
 
@@ -163,7 +163,7 @@ namespace Takochu.fmt
 
                         case 5:
                             {
-                                byte val = mFile.ReadByte();
+                                byte val = e.Get<byte>(HashToFieldName(f.mHash));
                                 val &= (byte)f.mMask;
                                 val |= (byte)(((byte)e[f.mHash] << f.mShiftAmount) & f.mMask);
 
@@ -255,6 +255,10 @@ namespace Takochu.fmt
         public void RemoveField(string name)
         {
             int hash = FieldNameToHash(name);
+
+            if (!mFields.ContainsKey(hash))
+                return;
+
             mFields.Remove(hash);
 
             foreach (Entry e in mEntries)
@@ -300,6 +304,11 @@ namespace Takochu.fmt
                     throw new Exception($"BCSV::Entry::Set() - Key {key} not found.");
 
                 this[FieldNameToHash(key)] = val;
+            }
+
+            public void Add(string key, object val)
+            {
+                Add(BCSV.FieldNameToHash(key), val);
             }
 
             public bool ContainsKey(string key)

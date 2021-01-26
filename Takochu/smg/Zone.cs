@@ -76,6 +76,7 @@ namespace Takochu.smg
         public void LoadCameras()
         {
             BCSV cameraBCSV = new BCSV(mMapFiles["Map"].OpenFile("/root/camera/CameraParam.bcam"));
+            cameraBCSV.RemoveField("no");
             mCameras = new List<Camera>();
             cameraBCSV.mEntries.ForEach(c => mCameras.Add(new Camera(c, this)));
         }

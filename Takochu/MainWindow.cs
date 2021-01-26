@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Takochu.fmt;
 using Takochu.io;
+using Takochu.smg;
 using Takochu.ui;
 using Takochu.util;
 
@@ -44,6 +45,7 @@ namespace Takochu
         private void Setup()
         {
             Program.sGame = new smg.Game(new ExternalFilesystem(Properties.Settings.Default.GamePath));
+            LightData.Initialize();
             bcsvEditorBtn.Enabled = true;
             galaxyTreeView.Nodes.Clear();
 

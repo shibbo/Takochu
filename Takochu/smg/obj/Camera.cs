@@ -37,6 +37,7 @@ namespace Takochu.smg.obj
         public Camera(BCSV.Entry entry, Zone parent) : base(Vector3.Zero)
         {
             mEntry = entry;
+
             mName = mEntry.Get<string>("id");
             mParentZone = parent;
 
@@ -235,12 +236,33 @@ namespace Takochu.smg.obj
                 obj.mName = control.FullWidthTextInput(obj.mName, "Camera Name");
                 obj.mType = control.DropDownTextInput("Camera Type", obj.mEntry.Get<string>("camtype"), cameraTypes, false);
 
-                obj.mFields["camint"] = Convert.ToInt32(control.NumberInput((int)obj.mFields["camint"], "CamInt"));
                 control.VerticalSeperator();
                 control.Spacing(2);
                 obj.mFields["woffset.X"] = control.NumberInput((float)obj.mFields["woffset.X"], "World Offset X");
                 obj.mFields["woffset.Y"] = control.NumberInput((float)obj.mFields["woffset.Y"], "World Offset Y");
                 obj.mFields["woffset.Z"] = control.NumberInput((float)obj.mFields["woffset.Z"], "World Offset Z");
+
+                obj.mFields["loffset"] = control.NumberInput((float)obj.mFields["loffset"], "loffset");
+                obj.mFields["loffsetv"] = control.NumberInput((float)obj.mFields["loffsetv"], "loffsetv");
+                obj.mFields["roll"] = control.NumberInput((float)obj.mFields["roll"], "roll");
+                obj.mFields["fovy"] = control.NumberInput((float)obj.mFields["fovy"], "fovy");
+                obj.mFields["camint"] = Convert.ToInt32(control.NumberInput((int)obj.mFields["camint"], "camint"));
+                obj.mFields["upper"] = control.NumberInput((float)obj.mFields["upper"], "upper");
+                obj.mFields["lower"] = control.NumberInput((float)obj.mFields["lower"], "lower");
+
+                obj.mFields["gndint"] = Convert.ToInt32(control.NumberInput((int)obj.mFields["gndint"], "gndint"));
+                obj.mFields["uplay"] = control.NumberInput((float)obj.mFields["uplay"], "uplay");
+                obj.mFields["lplay"] = control.NumberInput((float)obj.mFields["lplay"], "lplay");
+
+                obj.mFields["pushdelay"] = Convert.ToInt32(control.NumberInput((int)obj.mFields["pushdelay"], "pushdelay"));
+                obj.mFields["pushdelaylow"] = Convert.ToInt32(control.NumberInput((int)obj.mFields["pushdelaylow"], "pushdelaylow"));
+
+                obj.mFields["udown"] = Convert.ToInt32(control.NumberInput((int)obj.mFields["udown"], "udown"));
+                obj.mFields["vpanuse"] = Convert.ToInt32(control.NumberInput((int)obj.mFields["vpanuse"], "vpanuse"));
+
+                obj.mFields["vpanaxis.X"] = control.NumberInput((float)obj.mFields["vpanaxis.X"], "Pan Axis X");
+                obj.mFields["vpanaxis.Y"] = control.NumberInput((float)obj.mFields["vpanaxis.Y"], "Pan Axis Y");
+                obj.mFields["vpanaxis.Z"] = control.NumberInput((float)obj.mFields["vpanaxis.Z"], "Pan Axis Z");
             }
 
             public void OnValueChangeStart()

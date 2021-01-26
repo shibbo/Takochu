@@ -159,7 +159,7 @@ namespace Takochu.ui
             foreach(DataGridViewRow r in dataGrid.Rows)
             {
                 if (r.IsNewRow)
-                    continue;
+                   continue;
 
                 BCSV.Entry entry = new BCSV.Entry();
                 file.mEntries.Add(entry);
@@ -168,6 +168,7 @@ namespace Takochu.ui
                 {
                     int hash = f.mHash;
                     string valStr = r.Cells[hash.ToString("X8")].FormattedValue.ToString();
+                    object fuck = r.Cells[hash.ToString("X8")].Value;
 
                     try
                     {
@@ -175,6 +176,7 @@ namespace Takochu.ui
                         {
                             case 0:
                             case 3:
+                                Console.WriteLine($"{int.Parse(valStr)}");
                                 entry.Add(hash, int.Parse(valStr));
                                 break;
                             case 4:
@@ -206,7 +208,7 @@ namespace Takochu.ui
                                 entry.Add(hash, (byte)0);
                                 break;
                             case 2:
-                                entry.Add(hash, 0f);
+                                entry.Add(hash, 0.0f);
                                 break;
                             case 6:
                                 entry.Add(hash, "");
