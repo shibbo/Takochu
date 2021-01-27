@@ -19,7 +19,7 @@ namespace Takochu.smg
             mBCSV.mEntries.ForEach(e => mLights.Add(new LightEntry(e)));
         }
 
-        static LightEntry GetEntry(string name)
+        public static LightEntry Get(string name)
         {
             return mLights.Find(l => l.mAreaLightName == name);
         }
@@ -31,7 +31,7 @@ namespace Takochu.smg
             return names;
         }
 
-        static void Save()
+        public static void Save()
         {
             mBCSV.Save();   
             mFilesystem.Save();
@@ -49,6 +49,17 @@ namespace Takochu.smg
             mEntry = entry;
             mAreaLightName = mEntry.Get<string>("AreaLightName");
         }
+
+        public T Get<T>(string key)
+        {
+            return mEntry.Get<T>(key);
+        }
+
+        public void Set(string key, object val)
+        {
+            mEntry.Set(key, val);
+        }
+
 
         BCSV.Entry mEntry;
         public string mAreaLightName;

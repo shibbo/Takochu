@@ -168,7 +168,6 @@ namespace Takochu.ui
                 {
                     int hash = f.mHash;
                     string valStr = r.Cells[hash.ToString("X8")].FormattedValue.ToString();
-                    object fuck = r.Cells[hash.ToString("X8")].Value;
 
                     try
                     {
@@ -176,7 +175,6 @@ namespace Takochu.ui
                         {
                             case 0:
                             case 3:
-                                Console.WriteLine($"{int.Parse(valStr)}");
                                 entry.Add(hash, int.Parse(valStr));
                                 break;
                             case 4:
