@@ -1272,6 +1272,7 @@
             this.strongLight1FollowCamera.Tag = "StrongLight1FollowCamera";
             this.strongLight1FollowCamera.Text = "Follow Camera";
             this.strongLight1FollowCamera.UseVisualStyleBackColor = true;
+            this.strongLight1FollowCamera.CheckedChanged += new System.EventHandler(this.NumericBoolean_ValueChanged);
             // 
             // strongLight1Color
             // 
@@ -1669,6 +1670,7 @@
             this.strongLight0FollowCamera.Tag = "StrongLight0FollowCamera";
             this.strongLight0FollowCamera.Text = "Follow Camera";
             this.strongLight0FollowCamera.UseVisualStyleBackColor = true;
+            this.strongLight0FollowCamera.CheckedChanged += new System.EventHandler(this.NumericBoolean_ValueChanged);
             // 
             // strongLight0Color
             // 
@@ -1910,6 +1912,7 @@
             this.weakLight1FollowCamera.Tag = "WeakLight1FollowCamera";
             this.weakLight1FollowCamera.Text = "Follow Camera";
             this.weakLight1FollowCamera.UseVisualStyleBackColor = true;
+            this.weakLight1FollowCamera.CheckedChanged += new System.EventHandler(this.NumericBoolean_ValueChanged);
             // 
             // weakLight1Color
             // 
@@ -2307,6 +2310,7 @@
             this.weakLight0FollowCamera.Tag = "WeakLight0FollowCamera";
             this.weakLight0FollowCamera.Text = "Follow Camera";
             this.weakLight0FollowCamera.UseVisualStyleBackColor = true;
+            this.weakLight0FollowCamera.CheckedChanged += new System.EventHandler(this.NumericBoolean_ValueChanged);
             // 
             // weakLight0Color
             // 
@@ -2548,6 +2552,7 @@
             this.planetLight1FollowCamera.Tag = "PlanetLight1FollowCamera";
             this.planetLight1FollowCamera.Text = "Follow Camera";
             this.planetLight1FollowCamera.UseVisualStyleBackColor = true;
+            this.planetLight1FollowCamera.CheckedChanged += new System.EventHandler(this.NumericBoolean_ValueChanged);
             // 
             // planetLight1Color
             // 
@@ -2945,6 +2950,7 @@
             this.planetLight0FollowCamera.Tag = "PlanetLight0FollowCamera";
             this.planetLight0FollowCamera.Text = "Follow Camera";
             this.planetLight0FollowCamera.UseVisualStyleBackColor = true;
+            this.planetLight0FollowCamera.CheckedChanged += new System.EventHandler(this.NumericBoolean_ValueChanged);
             // 
             // planetLight0Color
             // 
