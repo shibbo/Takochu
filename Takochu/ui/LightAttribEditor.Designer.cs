@@ -32,45 +32,15 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editorsTabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.fixCheckBox = new System.Windows.Forms.CheckBox();
             this.lightInterpolate = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.lightNameTxt = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.playerLightAlpha2 = new System.Windows.Forms.NumericUpDown();
-            this.label17 = new System.Windows.Forms.Label();
-            this.playerLight0ColorA = new System.Windows.Forms.NumericUpDown();
-            this.playerLight0ColorB = new System.Windows.Forms.NumericUpDown();
-            this.playerLight0ColorG = new System.Windows.Forms.NumericUpDown();
-            this.playerLight0ColorR = new System.Windows.Forms.NumericUpDown();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.playerLight0FollowCamera = new System.Windows.Forms.CheckBox();
-            this.playerLight0Color = new System.Windows.Forms.PictureBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.playerLight0X = new System.Windows.Forms.NumericUpDown();
-            this.playerLight0Y = new System.Windows.Forms.NumericUpDown();
-            this.label6 = new System.Windows.Forms.Label();
-            this.playerLight0Z = new System.Windows.Forms.NumericUpDown();
-            this.label5 = new System.Windows.Forms.Label();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.playerLightAmbientA = new System.Windows.Forms.NumericUpDown();
-            this.playerLightAmbientB = new System.Windows.Forms.NumericUpDown();
-            this.playerLightAmbientG = new System.Windows.Forms.NumericUpDown();
-            this.playerLightAmbientR = new System.Windows.Forms.NumericUpDown();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.playerLightAmbient = new System.Windows.Forms.PictureBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.playerLight1ColorA = new System.Windows.Forms.NumericUpDown();
             this.playerLight1ColorB = new System.Windows.Forms.NumericUpDown();
@@ -88,6 +58,36 @@
             this.label20 = new System.Windows.Forms.Label();
             this.playerLight1Z = new System.Windows.Forms.NumericUpDown();
             this.label21 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.playerLightAlpha2 = new System.Windows.Forms.NumericUpDown();
+            this.label17 = new System.Windows.Forms.Label();
+            this.playerLightAmbientA = new System.Windows.Forms.NumericUpDown();
+            this.playerLightAmbientB = new System.Windows.Forms.NumericUpDown();
+            this.playerLightAmbientG = new System.Windows.Forms.NumericUpDown();
+            this.playerLightAmbientR = new System.Windows.Forms.NumericUpDown();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.playerLightAmbient = new System.Windows.Forms.PictureBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.playerLight0ColorA = new System.Windows.Forms.NumericUpDown();
+            this.playerLight0ColorB = new System.Windows.Forms.NumericUpDown();
+            this.playerLight0ColorG = new System.Windows.Forms.NumericUpDown();
+            this.playerLight0ColorR = new System.Windows.Forms.NumericUpDown();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.playerLight0FollowCamera = new System.Windows.Forms.CheckBox();
+            this.playerLight0Color = new System.Windows.Forms.PictureBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.playerLight0X = new System.Windows.Forms.NumericUpDown();
+            this.playerLight0Y = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
+            this.playerLight0Z = new System.Windows.Forms.NumericUpDown();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.strongLight1ColorA = new System.Windows.Forms.NumericUpDown();
             this.strongLight1ColorB = new System.Windows.Forms.NumericUpDown();
@@ -134,6 +134,7 @@
             this.label39 = new System.Windows.Forms.Label();
             this.strongLight0Z = new System.Windows.Forms.NumericUpDown();
             this.label40 = new System.Windows.Forms.Label();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.weakLight1ColorA = new System.Windows.Forms.NumericUpDown();
             this.weakLight1ColorB = new System.Windows.Forms.NumericUpDown();
@@ -180,6 +181,7 @@
             this.label58 = new System.Windows.Forms.Label();
             this.weakLight0Z = new System.Windows.Forms.NumericUpDown();
             this.label59 = new System.Windows.Forms.Label();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.planetLight1ColorA = new System.Windows.Forms.NumericUpDown();
             this.planetLight1ColorB = new System.Windows.Forms.NumericUpDown();
@@ -226,32 +228,11 @@
             this.label77 = new System.Windows.Forms.Label();
             this.planetLight0Z = new System.Windows.Forms.NumericUpDown();
             this.label78 = new System.Windows.Forms.Label();
-            this.fixCheckBox = new System.Windows.Forms.CheckBox();
-            this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.editorsTabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lightInterpolate)).BeginInit();
             this.tabPage2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.playerLightAlpha2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.playerLight0ColorA)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.playerLight0ColorB)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.playerLight0ColorG)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.playerLight0ColorR)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.playerLight0Color)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.playerLight0X)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.playerLight0Y)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.playerLight0Z)).BeginInit();
-            this.tabPage3.SuspendLayout();
-            this.tabPage4.SuspendLayout();
-            this.tabPage5.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.playerLightAmbientA)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.playerLightAmbientB)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.playerLightAmbientG)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.playerLightAmbientR)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.playerLightAmbient)).BeginInit();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.playerLight1ColorA)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.playerLight1ColorB)).BeginInit();
@@ -261,6 +242,23 @@
             ((System.ComponentModel.ISupportInitialize)(this.playerLight1X)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.playerLight1Y)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.playerLight1Z)).BeginInit();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.playerLightAlpha2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.playerLightAmbientA)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.playerLightAmbientB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.playerLightAmbientG)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.playerLightAmbientR)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.playerLightAmbient)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.playerLight0ColorA)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.playerLight0ColorB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.playerLight0ColorG)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.playerLight0ColorR)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.playerLight0Color)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.playerLight0X)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.playerLight0Y)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.playerLight0Z)).BeginInit();
+            this.tabPage3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.strongLight1ColorA)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.strongLight1ColorB)).BeginInit();
@@ -286,6 +284,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.strongLight0X)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.strongLight0Y)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.strongLight0Z)).BeginInit();
+            this.tabPage4.SuspendLayout();
             this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.weakLight1ColorA)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.weakLight1ColorB)).BeginInit();
@@ -311,6 +310,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.weakLight0X)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.weakLight0Y)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.weakLight0Z)).BeginInit();
+            this.tabPage5.SuspendLayout();
             this.groupBox10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.planetLight1ColorA)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.planetLight1ColorB)).BeginInit();
@@ -371,9 +371,16 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // closeToolStripMenuItem
+            // 
+            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.closeToolStripMenuItem.Text = "Close";
+            this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
             // editorsTabControl
             // 
@@ -405,6 +412,16 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "General";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // fixCheckBox
+            // 
+            this.fixCheckBox.AutoSize = true;
+            this.fixCheckBox.Location = new System.Drawing.Point(13, 94);
+            this.fixCheckBox.Name = "fixCheckBox";
+            this.fixCheckBox.Size = new System.Drawing.Size(39, 17);
+            this.fixCheckBox.TabIndex = 4;
+            this.fixCheckBox.Text = "Fix";
+            this.fixCheckBox.UseVisualStyleBackColor = true;
             // 
             // lightInterpolate
             // 
@@ -460,441 +477,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Player";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.playerLight0ColorA);
-            this.groupBox1.Controls.Add(this.playerLight0ColorB);
-            this.groupBox1.Controls.Add(this.playerLight0ColorG);
-            this.groupBox1.Controls.Add(this.playerLight0ColorR);
-            this.groupBox1.Controls.Add(this.label12);
-            this.groupBox1.Controls.Add(this.label11);
-            this.groupBox1.Controls.Add(this.label10);
-            this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.playerLight0FollowCamera);
-            this.groupBox1.Controls.Add(this.playerLight0Color);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.playerLight0X);
-            this.groupBox1.Controls.Add(this.playerLight0Y);
-            this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.playerLight0Z);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Location = new System.Drawing.Point(3, 179);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(482, 217);
-            this.groupBox1.TabIndex = 12;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Light 0";
-            // 
-            // playerLightAlpha2
-            // 
-            this.playerLightAlpha2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.playerLightAlpha2.Location = new System.Drawing.Point(68, 121);
-            this.playerLightAlpha2.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.playerLightAlpha2.Name = "playerLightAlpha2";
-            this.playerLightAlpha2.Size = new System.Drawing.Size(402, 20);
-            this.playerLightAlpha2.TabIndex = 30;
-            this.playerLightAlpha2.Tag = "PlayerAlpha2";
-            this.playerLightAlpha2.ValueChanged += new System.EventHandler(this.NumericByte_ValueChanged);
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(8, 123);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(43, 13);
-            this.label17.TabIndex = 29;
-            this.label17.Text = "Alpha 2";
-            // 
-            // playerLight0ColorA
-            // 
-            this.playerLight0ColorA.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.playerLight0ColorA.Location = new System.Drawing.Point(27, 167);
-            this.playerLight0ColorA.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.playerLight0ColorA.Name = "playerLight0ColorA";
-            this.playerLight0ColorA.Size = new System.Drawing.Size(367, 20);
-            this.playerLight0ColorA.TabIndex = 19;
-            this.playerLight0ColorA.Tag = "PlayerLight0ColorA";
-            this.playerLight0ColorA.ValueChanged += new System.EventHandler(this.NumericByte_ValueChanged);
-            // 
-            // playerLight0ColorB
-            // 
-            this.playerLight0ColorB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.playerLight0ColorB.Location = new System.Drawing.Point(26, 141);
-            this.playerLight0ColorB.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.playerLight0ColorB.Name = "playerLight0ColorB";
-            this.playerLight0ColorB.Size = new System.Drawing.Size(367, 20);
-            this.playerLight0ColorB.TabIndex = 18;
-            this.playerLight0ColorB.Tag = "PlayerLight0ColorB";
-            this.playerLight0ColorB.ValueChanged += new System.EventHandler(this.NumericByte_ValueChanged);
-            // 
-            // playerLight0ColorG
-            // 
-            this.playerLight0ColorG.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.playerLight0ColorG.Location = new System.Drawing.Point(27, 115);
-            this.playerLight0ColorG.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.playerLight0ColorG.Name = "playerLight0ColorG";
-            this.playerLight0ColorG.Size = new System.Drawing.Size(367, 20);
-            this.playerLight0ColorG.TabIndex = 17;
-            this.playerLight0ColorG.Tag = "PlayerLight0ColorG";
-            this.playerLight0ColorG.ValueChanged += new System.EventHandler(this.NumericByte_ValueChanged);
-            // 
-            // playerLight0ColorR
-            // 
-            this.playerLight0ColorR.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.playerLight0ColorR.Location = new System.Drawing.Point(27, 90);
-            this.playerLight0ColorR.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.playerLight0ColorR.Name = "playerLight0ColorR";
-            this.playerLight0ColorR.Size = new System.Drawing.Size(367, 20);
-            this.playerLight0ColorR.TabIndex = 16;
-            this.playerLight0ColorR.Tag = "PlayerLight0ColorR";
-            this.playerLight0ColorR.ValueChanged += new System.EventHandler(this.NumericByte_ValueChanged);
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(8, 167);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(14, 13);
-            this.label12.TabIndex = 15;
-            this.label12.Text = "A";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(6, 143);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(14, 13);
-            this.label11.TabIndex = 14;
-            this.label11.Text = "B";
-            this.label11.Click += new System.EventHandler(this.label11_Click);
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(6, 117);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(15, 13);
-            this.label10.TabIndex = 13;
-            this.label10.Text = "G";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 92);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(15, 13);
-            this.label9.TabIndex = 12;
-            this.label9.Text = "R";
-            // 
-            // playerLight0FollowCamera
-            // 
-            this.playerLight0FollowCamera.AutoSize = true;
-            this.playerLight0FollowCamera.Location = new System.Drawing.Point(6, 193);
-            this.playerLight0FollowCamera.Name = "playerLight0FollowCamera";
-            this.playerLight0FollowCamera.Size = new System.Drawing.Size(95, 17);
-            this.playerLight0FollowCamera.TabIndex = 11;
-            this.playerLight0FollowCamera.Tag = "PlayerLight0FollowCamera";
-            this.playerLight0FollowCamera.Text = "Follow Camera";
-            this.playerLight0FollowCamera.UseVisualStyleBackColor = true;
-            this.playerLight0FollowCamera.CheckedChanged += new System.EventHandler(this.NumericBoolean_ValueChanged);
-            // 
-            // playerLight0Color
-            // 
-            this.playerLight0Color.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.playerLight0Color.BackColor = System.Drawing.Color.Transparent;
-            this.playerLight0Color.Location = new System.Drawing.Point(400, 92);
-            this.playerLight0Color.Name = "playerLight0Color";
-            this.playerLight0Color.Size = new System.Drawing.Size(70, 95);
-            this.playerLight0Color.TabIndex = 10;
-            this.playerLight0Color.TabStop = false;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 16);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(14, 13);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "X";
-            // 
-            // playerLight0X
-            // 
-            this.playerLight0X.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.playerLight0X.DecimalPlaces = 2;
-            this.playerLight0X.Location = new System.Drawing.Point(26, 14);
-            this.playerLight0X.Maximum = new decimal(new int[] {
-            999999,
-            0,
-            0,
-            0});
-            this.playerLight0X.Minimum = new decimal(new int[] {
-            999999,
-            0,
-            0,
-            -2147483648});
-            this.playerLight0X.Name = "playerLight0X";
-            this.playerLight0X.Size = new System.Drawing.Size(444, 20);
-            this.playerLight0X.TabIndex = 0;
-            this.playerLight0X.Tag = "PlayerLight0PosX";
-            this.playerLight0X.ValueChanged += new System.EventHandler(this.NumericFloat_ValueChanged);
-            // 
-            // playerLight0Y
-            // 
-            this.playerLight0Y.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.playerLight0Y.DecimalPlaces = 2;
-            this.playerLight0Y.Location = new System.Drawing.Point(26, 40);
-            this.playerLight0Y.Maximum = new decimal(new int[] {
-            999999,
-            0,
-            0,
-            0});
-            this.playerLight0Y.Minimum = new decimal(new int[] {
-            999999,
-            0,
-            0,
-            -2147483648});
-            this.playerLight0Y.Name = "playerLight0Y";
-            this.playerLight0Y.Size = new System.Drawing.Size(444, 20);
-            this.playerLight0Y.TabIndex = 1;
-            this.playerLight0Y.Tag = "PlayerLight0PosY";
-            this.playerLight0Y.ValueChanged += new System.EventHandler(this.NumericFloat_ValueChanged);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 68);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(14, 13);
-            this.label6.TabIndex = 9;
-            this.label6.Text = "Z";
-            // 
-            // playerLight0Z
-            // 
-            this.playerLight0Z.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.playerLight0Z.DecimalPlaces = 2;
-            this.playerLight0Z.Location = new System.Drawing.Point(26, 64);
-            this.playerLight0Z.Maximum = new decimal(new int[] {
-            999999,
-            0,
-            0,
-            0});
-            this.playerLight0Z.Minimum = new decimal(new int[] {
-            999999,
-            0,
-            0,
-            -2147483648});
-            this.playerLight0Z.Name = "playerLight0Z";
-            this.playerLight0Z.Size = new System.Drawing.Size(444, 20);
-            this.playerLight0Z.TabIndex = 2;
-            this.playerLight0Z.Tag = "PlayerLight0PosZ";
-            this.playerLight0Z.ValueChanged += new System.EventHandler(this.NumericFloat_ValueChanged);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 42);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(14, 13);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "Y";
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.Controls.Add(this.groupBox4);
-            this.tabPage3.Controls.Add(this.groupBox5);
-            this.tabPage3.Controls.Add(this.groupBox6);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(495, 876);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Strong";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.groupBox7);
-            this.tabPage4.Controls.Add(this.groupBox8);
-            this.tabPage4.Controls.Add(this.groupBox9);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(495, 876);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "Weak";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // tabPage5
-            // 
-            this.tabPage5.Controls.Add(this.groupBox10);
-            this.tabPage5.Controls.Add(this.groupBox11);
-            this.tabPage5.Controls.Add(this.groupBox12);
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(495, 876);
-            this.tabPage5.TabIndex = 4;
-            this.tabPage5.Text = "Planet";
-            this.tabPage5.UseVisualStyleBackColor = true;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.playerLightAlpha2);
-            this.groupBox2.Controls.Add(this.label17);
-            this.groupBox2.Controls.Add(this.playerLightAmbientA);
-            this.groupBox2.Controls.Add(this.playerLightAmbientB);
-            this.groupBox2.Controls.Add(this.playerLightAmbientG);
-            this.groupBox2.Controls.Add(this.playerLightAmbientR);
-            this.groupBox2.Controls.Add(this.label13);
-            this.groupBox2.Controls.Add(this.label14);
-            this.groupBox2.Controls.Add(this.label15);
-            this.groupBox2.Controls.Add(this.label16);
-            this.groupBox2.Controls.Add(this.playerLightAmbient);
-            this.groupBox2.Location = new System.Drawing.Point(3, 3);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(482, 170);
-            this.groupBox2.TabIndex = 13;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "General";
-            // 
-            // playerLightAmbientA
-            // 
-            this.playerLightAmbientA.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.playerLightAmbientA.Location = new System.Drawing.Point(70, 95);
-            this.playerLightAmbientA.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.playerLightAmbientA.Name = "playerLightAmbientA";
-            this.playerLightAmbientA.Size = new System.Drawing.Size(325, 20);
-            this.playerLightAmbientA.TabIndex = 37;
-            this.playerLightAmbientA.Tag = "PlayerAmbientA";
-            this.playerLightAmbientA.ValueChanged += new System.EventHandler(this.NumericByte_ValueChanged);
-            // 
-            // playerLightAmbientB
-            // 
-            this.playerLightAmbientB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.playerLightAmbientB.Location = new System.Drawing.Point(69, 69);
-            this.playerLightAmbientB.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.playerLightAmbientB.Name = "playerLightAmbientB";
-            this.playerLightAmbientB.Size = new System.Drawing.Size(325, 20);
-            this.playerLightAmbientB.TabIndex = 36;
-            this.playerLightAmbientB.Tag = "PlayerAmbientB";
-            this.playerLightAmbientB.ValueChanged += new System.EventHandler(this.NumericByte_ValueChanged);
-            // 
-            // playerLightAmbientG
-            // 
-            this.playerLightAmbientG.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.playerLightAmbientG.Location = new System.Drawing.Point(70, 43);
-            this.playerLightAmbientG.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.playerLightAmbientG.Name = "playerLightAmbientG";
-            this.playerLightAmbientG.Size = new System.Drawing.Size(325, 20);
-            this.playerLightAmbientG.TabIndex = 35;
-            this.playerLightAmbientG.Tag = "PlayerAmbientG";
-            this.playerLightAmbientG.ValueChanged += new System.EventHandler(this.NumericByte_ValueChanged);
-            // 
-            // playerLightAmbientR
-            // 
-            this.playerLightAmbientR.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.playerLightAmbientR.Location = new System.Drawing.Point(70, 18);
-            this.playerLightAmbientR.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.playerLightAmbientR.Name = "playerLightAmbientR";
-            this.playerLightAmbientR.Size = new System.Drawing.Size(325, 20);
-            this.playerLightAmbientR.TabIndex = 34;
-            this.playerLightAmbientR.Tag = "PlayerAmbientR";
-            this.playerLightAmbientR.ValueChanged += new System.EventHandler(this.NumericByte_ValueChanged);
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(9, 95);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(55, 13);
-            this.label13.TabIndex = 33;
-            this.label13.Text = "Ambient A";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(7, 71);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(55, 13);
-            this.label14.TabIndex = 32;
-            this.label14.Text = "Ambient B";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(7, 45);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(56, 13);
-            this.label15.TabIndex = 31;
-            this.label15.Text = "Ambient G";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(7, 20);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(56, 13);
-            this.label16.TabIndex = 30;
-            this.label16.Text = "Ambient R";
-            // 
-            // playerLightAmbient
-            // 
-            this.playerLightAmbient.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.playerLightAmbient.Location = new System.Drawing.Point(401, 20);
-            this.playerLightAmbient.Name = "playerLightAmbient";
-            this.playerLightAmbient.Size = new System.Drawing.Size(70, 95);
-            this.playerLightAmbient.TabIndex = 29;
-            this.playerLightAmbient.TabStop = false;
             // 
             // groupBox3
             // 
@@ -1134,6 +716,417 @@
             this.label21.Size = new System.Drawing.Size(14, 13);
             this.label21.TabIndex = 8;
             this.label21.Text = "Y";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.playerLightAlpha2);
+            this.groupBox2.Controls.Add(this.label17);
+            this.groupBox2.Controls.Add(this.playerLightAmbientA);
+            this.groupBox2.Controls.Add(this.playerLightAmbientB);
+            this.groupBox2.Controls.Add(this.playerLightAmbientG);
+            this.groupBox2.Controls.Add(this.playerLightAmbientR);
+            this.groupBox2.Controls.Add(this.label13);
+            this.groupBox2.Controls.Add(this.label14);
+            this.groupBox2.Controls.Add(this.label15);
+            this.groupBox2.Controls.Add(this.label16);
+            this.groupBox2.Controls.Add(this.playerLightAmbient);
+            this.groupBox2.Location = new System.Drawing.Point(3, 3);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(482, 170);
+            this.groupBox2.TabIndex = 13;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "General";
+            // 
+            // playerLightAlpha2
+            // 
+            this.playerLightAlpha2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.playerLightAlpha2.Location = new System.Drawing.Point(68, 121);
+            this.playerLightAlpha2.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.playerLightAlpha2.Name = "playerLightAlpha2";
+            this.playerLightAlpha2.Size = new System.Drawing.Size(402, 20);
+            this.playerLightAlpha2.TabIndex = 30;
+            this.playerLightAlpha2.Tag = "PlayerAlpha2";
+            this.playerLightAlpha2.ValueChanged += new System.EventHandler(this.NumericByte_ValueChanged);
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(8, 123);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(43, 13);
+            this.label17.TabIndex = 29;
+            this.label17.Text = "Alpha 2";
+            // 
+            // playerLightAmbientA
+            // 
+            this.playerLightAmbientA.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.playerLightAmbientA.Location = new System.Drawing.Point(70, 95);
+            this.playerLightAmbientA.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.playerLightAmbientA.Name = "playerLightAmbientA";
+            this.playerLightAmbientA.Size = new System.Drawing.Size(325, 20);
+            this.playerLightAmbientA.TabIndex = 37;
+            this.playerLightAmbientA.Tag = "PlayerAmbientA";
+            this.playerLightAmbientA.ValueChanged += new System.EventHandler(this.NumericByte_ValueChanged);
+            // 
+            // playerLightAmbientB
+            // 
+            this.playerLightAmbientB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.playerLightAmbientB.Location = new System.Drawing.Point(69, 69);
+            this.playerLightAmbientB.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.playerLightAmbientB.Name = "playerLightAmbientB";
+            this.playerLightAmbientB.Size = new System.Drawing.Size(325, 20);
+            this.playerLightAmbientB.TabIndex = 36;
+            this.playerLightAmbientB.Tag = "PlayerAmbientB";
+            this.playerLightAmbientB.ValueChanged += new System.EventHandler(this.NumericByte_ValueChanged);
+            // 
+            // playerLightAmbientG
+            // 
+            this.playerLightAmbientG.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.playerLightAmbientG.Location = new System.Drawing.Point(70, 43);
+            this.playerLightAmbientG.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.playerLightAmbientG.Name = "playerLightAmbientG";
+            this.playerLightAmbientG.Size = new System.Drawing.Size(325, 20);
+            this.playerLightAmbientG.TabIndex = 35;
+            this.playerLightAmbientG.Tag = "PlayerAmbientG";
+            this.playerLightAmbientG.ValueChanged += new System.EventHandler(this.NumericByte_ValueChanged);
+            // 
+            // playerLightAmbientR
+            // 
+            this.playerLightAmbientR.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.playerLightAmbientR.Location = new System.Drawing.Point(70, 18);
+            this.playerLightAmbientR.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.playerLightAmbientR.Name = "playerLightAmbientR";
+            this.playerLightAmbientR.Size = new System.Drawing.Size(325, 20);
+            this.playerLightAmbientR.TabIndex = 34;
+            this.playerLightAmbientR.Tag = "PlayerAmbientR";
+            this.playerLightAmbientR.ValueChanged += new System.EventHandler(this.NumericByte_ValueChanged);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(9, 95);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(55, 13);
+            this.label13.TabIndex = 33;
+            this.label13.Text = "Ambient A";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(7, 71);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(55, 13);
+            this.label14.TabIndex = 32;
+            this.label14.Text = "Ambient B";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(7, 45);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(56, 13);
+            this.label15.TabIndex = 31;
+            this.label15.Text = "Ambient G";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(7, 20);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(56, 13);
+            this.label16.TabIndex = 30;
+            this.label16.Text = "Ambient R";
+            // 
+            // playerLightAmbient
+            // 
+            this.playerLightAmbient.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.playerLightAmbient.Location = new System.Drawing.Point(401, 20);
+            this.playerLightAmbient.Name = "playerLightAmbient";
+            this.playerLightAmbient.Size = new System.Drawing.Size(70, 95);
+            this.playerLightAmbient.TabIndex = 29;
+            this.playerLightAmbient.TabStop = false;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.playerLight0ColorA);
+            this.groupBox1.Controls.Add(this.playerLight0ColorB);
+            this.groupBox1.Controls.Add(this.playerLight0ColorG);
+            this.groupBox1.Controls.Add(this.playerLight0ColorR);
+            this.groupBox1.Controls.Add(this.label12);
+            this.groupBox1.Controls.Add(this.label11);
+            this.groupBox1.Controls.Add(this.label10);
+            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Controls.Add(this.playerLight0FollowCamera);
+            this.groupBox1.Controls.Add(this.playerLight0Color);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.playerLight0X);
+            this.groupBox1.Controls.Add(this.playerLight0Y);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.playerLight0Z);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Location = new System.Drawing.Point(3, 179);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(482, 217);
+            this.groupBox1.TabIndex = 12;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Light 0";
+            // 
+            // playerLight0ColorA
+            // 
+            this.playerLight0ColorA.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.playerLight0ColorA.Location = new System.Drawing.Point(27, 167);
+            this.playerLight0ColorA.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.playerLight0ColorA.Name = "playerLight0ColorA";
+            this.playerLight0ColorA.Size = new System.Drawing.Size(367, 20);
+            this.playerLight0ColorA.TabIndex = 19;
+            this.playerLight0ColorA.Tag = "PlayerLight0ColorA";
+            this.playerLight0ColorA.ValueChanged += new System.EventHandler(this.NumericByte_ValueChanged);
+            // 
+            // playerLight0ColorB
+            // 
+            this.playerLight0ColorB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.playerLight0ColorB.Location = new System.Drawing.Point(26, 141);
+            this.playerLight0ColorB.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.playerLight0ColorB.Name = "playerLight0ColorB";
+            this.playerLight0ColorB.Size = new System.Drawing.Size(367, 20);
+            this.playerLight0ColorB.TabIndex = 18;
+            this.playerLight0ColorB.Tag = "PlayerLight0ColorB";
+            this.playerLight0ColorB.ValueChanged += new System.EventHandler(this.NumericByte_ValueChanged);
+            // 
+            // playerLight0ColorG
+            // 
+            this.playerLight0ColorG.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.playerLight0ColorG.Location = new System.Drawing.Point(27, 115);
+            this.playerLight0ColorG.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.playerLight0ColorG.Name = "playerLight0ColorG";
+            this.playerLight0ColorG.Size = new System.Drawing.Size(367, 20);
+            this.playerLight0ColorG.TabIndex = 17;
+            this.playerLight0ColorG.Tag = "PlayerLight0ColorG";
+            this.playerLight0ColorG.ValueChanged += new System.EventHandler(this.NumericByte_ValueChanged);
+            // 
+            // playerLight0ColorR
+            // 
+            this.playerLight0ColorR.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.playerLight0ColorR.Location = new System.Drawing.Point(27, 90);
+            this.playerLight0ColorR.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.playerLight0ColorR.Name = "playerLight0ColorR";
+            this.playerLight0ColorR.Size = new System.Drawing.Size(367, 20);
+            this.playerLight0ColorR.TabIndex = 16;
+            this.playerLight0ColorR.Tag = "PlayerLight0ColorR";
+            this.playerLight0ColorR.ValueChanged += new System.EventHandler(this.NumericByte_ValueChanged);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(8, 167);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(14, 13);
+            this.label12.TabIndex = 15;
+            this.label12.Text = "A";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(6, 143);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(14, 13);
+            this.label11.TabIndex = 14;
+            this.label11.Text = "B";
+            this.label11.Click += new System.EventHandler(this.label11_Click);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(6, 117);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(15, 13);
+            this.label10.TabIndex = 13;
+            this.label10.Text = "G";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(6, 92);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(15, 13);
+            this.label9.TabIndex = 12;
+            this.label9.Text = "R";
+            // 
+            // playerLight0FollowCamera
+            // 
+            this.playerLight0FollowCamera.AutoSize = true;
+            this.playerLight0FollowCamera.Location = new System.Drawing.Point(6, 193);
+            this.playerLight0FollowCamera.Name = "playerLight0FollowCamera";
+            this.playerLight0FollowCamera.Size = new System.Drawing.Size(95, 17);
+            this.playerLight0FollowCamera.TabIndex = 11;
+            this.playerLight0FollowCamera.Tag = "PlayerLight0FollowCamera";
+            this.playerLight0FollowCamera.Text = "Follow Camera";
+            this.playerLight0FollowCamera.UseVisualStyleBackColor = true;
+            this.playerLight0FollowCamera.CheckedChanged += new System.EventHandler(this.NumericBoolean_ValueChanged);
+            // 
+            // playerLight0Color
+            // 
+            this.playerLight0Color.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.playerLight0Color.BackColor = System.Drawing.Color.Transparent;
+            this.playerLight0Color.Location = new System.Drawing.Point(400, 92);
+            this.playerLight0Color.Name = "playerLight0Color";
+            this.playerLight0Color.Size = new System.Drawing.Size(70, 95);
+            this.playerLight0Color.TabIndex = 10;
+            this.playerLight0Color.TabStop = false;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 16);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(14, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "X";
+            // 
+            // playerLight0X
+            // 
+            this.playerLight0X.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.playerLight0X.DecimalPlaces = 2;
+            this.playerLight0X.Location = new System.Drawing.Point(26, 14);
+            this.playerLight0X.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.playerLight0X.Minimum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            -2147483648});
+            this.playerLight0X.Name = "playerLight0X";
+            this.playerLight0X.Size = new System.Drawing.Size(444, 20);
+            this.playerLight0X.TabIndex = 0;
+            this.playerLight0X.Tag = "PlayerLight0PosX";
+            this.playerLight0X.ValueChanged += new System.EventHandler(this.NumericFloat_ValueChanged);
+            // 
+            // playerLight0Y
+            // 
+            this.playerLight0Y.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.playerLight0Y.DecimalPlaces = 2;
+            this.playerLight0Y.Location = new System.Drawing.Point(26, 40);
+            this.playerLight0Y.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.playerLight0Y.Minimum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            -2147483648});
+            this.playerLight0Y.Name = "playerLight0Y";
+            this.playerLight0Y.Size = new System.Drawing.Size(444, 20);
+            this.playerLight0Y.TabIndex = 1;
+            this.playerLight0Y.Tag = "PlayerLight0PosY";
+            this.playerLight0Y.ValueChanged += new System.EventHandler(this.NumericFloat_ValueChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 68);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(14, 13);
+            this.label6.TabIndex = 9;
+            this.label6.Text = "Z";
+            // 
+            // playerLight0Z
+            // 
+            this.playerLight0Z.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.playerLight0Z.DecimalPlaces = 2;
+            this.playerLight0Z.Location = new System.Drawing.Point(26, 64);
+            this.playerLight0Z.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.playerLight0Z.Minimum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            -2147483648});
+            this.playerLight0Z.Name = "playerLight0Z";
+            this.playerLight0Z.Size = new System.Drawing.Size(444, 20);
+            this.playerLight0Z.TabIndex = 2;
+            this.playerLight0Z.Tag = "PlayerLight0PosZ";
+            this.playerLight0Z.ValueChanged += new System.EventHandler(this.NumericFloat_ValueChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 42);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(14, 13);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Y";
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.groupBox4);
+            this.tabPage3.Controls.Add(this.groupBox5);
+            this.tabPage3.Controls.Add(this.groupBox6);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(495, 876);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Strong";
+            this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // groupBox4
             // 
@@ -1775,6 +1768,18 @@
             this.label40.TabIndex = 8;
             this.label40.Text = "Y";
             // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.groupBox7);
+            this.tabPage4.Controls.Add(this.groupBox8);
+            this.tabPage4.Controls.Add(this.groupBox9);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(495, 876);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Weak";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
             // groupBox7
             // 
             this.groupBox7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -2414,6 +2419,18 @@
             this.label59.Size = new System.Drawing.Size(14, 13);
             this.label59.TabIndex = 8;
             this.label59.Text = "Y";
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.groupBox10);
+            this.tabPage5.Controls.Add(this.groupBox11);
+            this.tabPage5.Controls.Add(this.groupBox12);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Size = new System.Drawing.Size(495, 876);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "Planet";
+            this.tabPage5.UseVisualStyleBackColor = true;
             // 
             // groupBox10
             // 
@@ -3055,23 +3072,6 @@
             this.label78.TabIndex = 8;
             this.label78.Text = "Y";
             // 
-            // fixCheckBox
-            // 
-            this.fixCheckBox.AutoSize = true;
-            this.fixCheckBox.Location = new System.Drawing.Point(13, 94);
-            this.fixCheckBox.Name = "fixCheckBox";
-            this.fixCheckBox.Size = new System.Drawing.Size(39, 17);
-            this.fixCheckBox.TabIndex = 4;
-            this.fixCheckBox.Text = "Fix";
-            this.fixCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // closeToolStripMenuItem
-            // 
-            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.closeToolStripMenuItem.Text = "Close";
-            this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
-            // 
             // LightAttribEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3083,6 +3083,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "LightAttribEditor";
             this.Text = "LightAttribEditor";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.LightAttribEditor_FormClosed);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.editorsTabControl.ResumeLayout(false);
@@ -3090,27 +3091,6 @@
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lightInterpolate)).EndInit();
             this.tabPage2.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.playerLightAlpha2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.playerLight0ColorA)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.playerLight0ColorB)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.playerLight0ColorG)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.playerLight0ColorR)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.playerLight0Color)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.playerLight0X)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.playerLight0Y)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.playerLight0Z)).EndInit();
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage4.ResumeLayout(false);
-            this.tabPage5.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.playerLightAmbientA)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.playerLightAmbientB)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.playerLightAmbientG)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.playerLightAmbientR)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.playerLightAmbient)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.playerLight1ColorA)).EndInit();
@@ -3121,6 +3101,25 @@
             ((System.ComponentModel.ISupportInitialize)(this.playerLight1X)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.playerLight1Y)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.playerLight1Z)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.playerLightAlpha2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.playerLightAmbientA)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.playerLightAmbientB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.playerLightAmbientG)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.playerLightAmbientR)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.playerLightAmbient)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.playerLight0ColorA)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.playerLight0ColorB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.playerLight0ColorG)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.playerLight0ColorR)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.playerLight0Color)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.playerLight0X)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.playerLight0Y)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.playerLight0Z)).EndInit();
+            this.tabPage3.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.strongLight1ColorA)).EndInit();
@@ -3149,6 +3148,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.strongLight0X)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.strongLight0Y)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.strongLight0Z)).EndInit();
+            this.tabPage4.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.weakLight1ColorA)).EndInit();
@@ -3177,6 +3177,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.weakLight0X)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.weakLight0Y)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.weakLight0Z)).EndInit();
+            this.tabPage5.ResumeLayout(false);
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.planetLight1ColorA)).EndInit();

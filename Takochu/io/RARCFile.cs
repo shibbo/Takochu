@@ -22,6 +22,6 @@ namespace Takochu.io
 
         public RARCFilesystem mFilesystem;
         public string mFileName;
-        
+
     }
 }

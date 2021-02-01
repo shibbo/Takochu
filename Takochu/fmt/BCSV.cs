@@ -64,7 +64,7 @@ namespace Takochu.fmt
                             break;
 
                         case 4:
-                            val = Convert.ToUInt16((mFile.ReadUInt16() & f.mMask) >> f.mShiftAmount);
+                            val = (short)((mFile.ReadInt16() & f.mMask) >> f.mShiftAmount);
                             break;
 
                         case 5:
@@ -141,8 +141,8 @@ namespace Takochu.fmt
                         case 0:
                         case 3:
                             {
-                                int val = e.Get<int>(HashToFieldName(f.mHash));
-                                val &= f.mMask;
+                                int val = mFile.ReadInt32();
+                                val &= ~f.mMask;
                                 val |= (int)(((int)e[f.mHash] << f.mShiftAmount) & f.mMask);
 
                                 mFile.Seek(valOffs);
@@ -152,8 +152,8 @@ namespace Takochu.fmt
 
                         case 4:
                             {
-                                short val = e.Get<short>(HashToFieldName(f.mHash));
-                                val &= (short)f.mMask;
+                                short val = mFile.ReadInt16();
+                                val &= (short)~f.mMask;
                                 val |= (short)(((short)e[f.mHash] << f.mShiftAmount) & f.mMask);
 
                                 mFile.Seek(valOffs);
@@ -163,8 +163,8 @@ namespace Takochu.fmt
 
                         case 5:
                             {
-                                byte val = e.Get<byte>(HashToFieldName(f.mHash));
-                                val &= (byte)f.mMask;
+                                byte val = mFile.ReadByte();
+                                val &= (byte)~f.mMask;
                                 val |= (byte)(((byte)e[f.mHash] << f.mShiftAmount) & f.mMask);
 
                                 mFile.Seek(valOffs);
