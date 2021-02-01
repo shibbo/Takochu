@@ -195,7 +195,7 @@ namespace Takochu.smg
 
             layers.ForEach(l =>
             {
-                ret = objs[l].FindAll(o => o.mType == type);
+                ret.AddRange(objs[l].FindAll(o => o.mType == type));
             });
 
             return ret;

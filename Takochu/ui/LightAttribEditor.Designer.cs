@@ -3083,7 +3083,6 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "LightAttribEditor";
             this.Text = "LightAttribEditor";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.LightAttribEditor_FormClosed);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.editorsTabControl.ResumeLayout(false);
