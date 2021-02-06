@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using Takochu.fmt;
 using Takochu.io;
 using Takochu.smg;
+using Takochu.smg.msg;
 using Takochu.ui;
 using Takochu.util;
 
@@ -39,6 +40,7 @@ namespace Takochu
             if (gamePath != "" && Directory.Exists(gamePath))
             {
                 Setup();
+                NameHolder.Initialize();
             }
         }
 

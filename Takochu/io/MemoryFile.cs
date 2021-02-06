@@ -154,6 +154,12 @@ namespace Takochu.io
             return output;
         }
 
+        public override string ReadStringLenPrefix()
+        {
+            byte len = ReadByte();
+            return ReadString(len);
+        }
+
         public override float ReadSingle()
         {
             if (mPosition + sizeof(float) > GetLength())
@@ -185,6 +191,30 @@ namespace Takochu.io
         public override string ReadString(int len)
         {
             return mEncoding.GetString(ReadBytes(len));
+        }
+
+        public override string ReadStringUTF16()
+        {
+            List<ushort> chars = new List<ushort>();
+
+            while (true)
+            {
+                ushort val = ReadUInt16();
+
+                if (val == 0)
+                {
+                    chars.Add(0);
+                    break;
+                }
+
+                chars.Add(val);
+            }
+
+            byte[] dest = new byte[chars.Count * 2];
+            System.Buffer.BlockCopy(chars.ToArray(), 0, dest, 0, chars.Count);
+
+            return Encoding.Unicode.GetString(dest);
+            //return Encoding.UTF8.GetString(Encoding.Convert(Encoding.BigEndianUnicode, Encoding.ASCII, dest));
         }
 
         public override uint ReadUInt32At(int loc)

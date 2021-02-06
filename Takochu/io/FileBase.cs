@@ -30,9 +30,11 @@ namespace Takochu.io
         public virtual uint ReadUInt32At(int loc) { return 0; }
         public virtual byte[] ReadBytes(int num) { return null; }
         public virtual float ReadSingle() { return 0.0f; }
+        public virtual string ReadStringLenPrefix() { return ""; }
         public virtual string ReadString() { return ""; }
         public virtual string ReadString(int len) { return ""; }
         public virtual string ReadStringAt(int loc) { return ""; }
+        public virtual string ReadStringUTF16() { return ""; }
         public virtual void Write(byte val) { }
         public virtual void Write(char val) { }
         public virtual void Write(short val) { }

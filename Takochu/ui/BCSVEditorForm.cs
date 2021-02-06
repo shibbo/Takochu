@@ -32,7 +32,7 @@ namespace Takochu.ui
                 mFilesystem.Close();
             }
 
-            foreach(BCSV file in mFiles.Values)
+            foreach (BCSV file in mFiles.Values)
             {
                 file.Close();
             }
@@ -99,7 +99,7 @@ namespace Takochu.ui
                 if (mFiles.ContainsKey(tag))
                     return;
 
-                
+
                 BCSV file = new BCSV(mFilesystem.OpenFile(tag));
                 mFiles.Add(tag, file);
 
@@ -156,15 +156,15 @@ namespace Takochu.ui
 
             file.mEntries.Clear();
 
-            foreach(DataGridViewRow r in dataGrid.Rows)
+            foreach (DataGridViewRow r in dataGrid.Rows)
             {
                 if (r.IsNewRow)
-                   continue;
+                    continue;
 
                 BCSV.Entry entry = new BCSV.Entry();
                 file.mEntries.Add(entry);
 
-                foreach(BCSV.Field f in file.mFields.Values)
+                foreach (BCSV.Field f in file.mFields.Values)
                 {
                     int hash = f.mHash;
                     string valStr = r.Cells[hash.ToString("X8")].FormattedValue.ToString();
@@ -193,7 +193,7 @@ namespace Takochu.ui
                     }
                     catch
                     {
-                        switch(f.mType)
+                        switch (f.mType)
                         {
                             case 0:
                             case 3:
@@ -218,16 +218,20 @@ namespace Takochu.ui
 
             file.Save();
             mFilesystem.Save();
+
+            mUnsavedChanges = false;
         }
 
         public Dictionary<string, DataGridView> mEditors;
         public Dictionary<string, BCSV> mFiles;
 
-        private void saveAll_Btn_Click(object sender, EventArgs e)
+        private bool mUnsavedChanges = false;
+
+        void SaveAll()
         {
             TabPageCollection tabs = bcsvEditorsTabControl.TabPages;
 
-            foreach(TabPage tabPage in tabs)
+            foreach (TabPage tabPage in tabs)
             {
                 // since we're saving, we can strip that * from tab pages
                 tabPage.Text = tabPage.Text.Replace("*", "");
@@ -299,6 +303,13 @@ namespace Takochu.ui
                 file.Save();
                 mFilesystem.Save();
             }
+
+            mUnsavedChanges = false;
+        }
+         
+        private void saveAll_Btn_Click(object sender, EventArgs e)
+        {
+            SaveAll();
         }
 
         private void Grid_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -307,10 +318,27 @@ namespace Takochu.ui
             // if so, add that onto it
             if (!bcsvEditorsTabControl.SelectedTab.Text.Contains("*"))
                 bcsvEditorsTabControl.SelectedTab.Text += "*";
+
+            mUnsavedChanges = true;
         }
 
         private void BCSVEditorForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (mUnsavedChanges)
+            {
+                DialogResult res = MessageBox.Show("You have unsaved changes! Do you want to save your changes?", "Unsaved Changes", MessageBoxButtons.YesNoCancel);
+
+                if (res == DialogResult.Yes)
+                {
+                    SaveAll();
+                }
+                else if (res == DialogResult.Cancel)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+            }
+
             if (mFilesystem != null)
                 mFilesystem.Close();
         }

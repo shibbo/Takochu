@@ -40,21 +40,21 @@
             this.cameraUIControl = new GL_EditorFramework.ObjectUIControl();
             this.cameraListView = new GL_EditorFramework.SceneListView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.lightsUIControl = new GL_EditorFramework.ObjectUIControl();
+            this.lightsSceneListView = new GL_EditorFramework.SceneListView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.layerViewerDropDown = new System.Windows.Forms.ToolStripDropDownButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.openMsgEditorButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
+            this.galaxyNameTxtBox = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripTextBox2 = new System.Windows.Forms.ToolStripTextBox();
+            this.scenarioNameTxtBox = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
-            this.lightsSceneListView = new GL_EditorFramework.SceneListView();
-            this.lightsUIControl = new GL_EditorFramework.ObjectUIControl();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -198,23 +198,43 @@
             this.tabPage3.Text = "Light";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // lightsUIControl
+            // 
+            this.lightsUIControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lightsUIControl.BackColor = System.Drawing.SystemColors.Control;
+            this.lightsUIControl.Location = new System.Drawing.Point(0, 517);
+            this.lightsUIControl.Name = "lightsUIControl";
+            this.lightsUIControl.Size = new System.Drawing.Size(342, 256);
+            this.lightsUIControl.TabIndex = 1;
+            // 
+            // lightsSceneListView
+            // 
+            this.lightsSceneListView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lightsSceneListView.Location = new System.Drawing.Point(0, 0);
+            this.lightsSceneListView.Name = "lightsSceneListView";
+            this.lightsSceneListView.RootLists = ((System.Collections.Generic.Dictionary<string, System.Collections.IList>)(resources.GetObject("lightsSceneListView.RootLists")));
+            this.lightsSceneListView.Size = new System.Drawing.Size(342, 511);
+            this.lightsSceneListView.TabIndex = 0;
+            // 
             // toolStrip1
             // 
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.layerViewerDropDown,
-            this.toolStripButton1,
+            this.openMsgEditorButton,
             this.toolStripButton2,
             this.toolStripSeparator1,
             this.toolStripLabel1,
-            this.toolStripTextBox1,
+            this.galaxyNameTxtBox,
             this.toolStripLabel2,
-            this.toolStripTextBox2,
+            this.scenarioNameTxtBox,
             this.toolStripButton3});
             this.toolStrip1.Location = new System.Drawing.Point(358, 1);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1100, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1131, 25);
             this.toolStrip1.TabIndex = 7;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -227,14 +247,15 @@
             this.layerViewerDropDown.Size = new System.Drawing.Size(76, 22);
             this.layerViewerDropDown.Text = "View Layer";
             // 
-            // toolStripButton1
+            // openMsgEditorButton
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(91, 22);
-            this.toolStripButton1.Text = "Message Editor";
+            this.openMsgEditorButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.openMsgEditorButton.Image = ((System.Drawing.Image)(resources.GetObject("openMsgEditorButton.Image")));
+            this.openMsgEditorButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.openMsgEditorButton.Name = "openMsgEditorButton";
+            this.openMsgEditorButton.Size = new System.Drawing.Size(91, 22);
+            this.openMsgEditorButton.Text = "Message Editor";
+            this.openMsgEditorButton.Click += new System.EventHandler(this.openMsgEditorButton_Click);
             // 
             // toolStripButton2
             // 
@@ -256,11 +277,11 @@
             this.toolStripLabel1.Size = new System.Drawing.Size(80, 22);
             this.toolStripLabel1.Text = "Galaxy Name:";
             // 
-            // toolStripTextBox1
+            // galaxyNameTxtBox
             // 
-            this.toolStripTextBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.toolStripTextBox1.Name = "toolStripTextBox1";
-            this.toolStripTextBox1.Size = new System.Drawing.Size(300, 25);
+            this.galaxyNameTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.galaxyNameTxtBox.Name = "galaxyNameTxtBox";
+            this.galaxyNameTxtBox.Size = new System.Drawing.Size(300, 25);
             // 
             // toolStripLabel2
             // 
@@ -268,11 +289,11 @@
             this.toolStripLabel2.Size = new System.Drawing.Size(86, 22);
             this.toolStripLabel2.Text = "Mission Name:";
             // 
-            // toolStripTextBox2
+            // scenarioNameTxtBox
             // 
-            this.toolStripTextBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.toolStripTextBox2.Name = "toolStripTextBox2";
-            this.toolStripTextBox2.Size = new System.Drawing.Size(300, 25);
+            this.scenarioNameTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.scenarioNameTxtBox.Name = "scenarioNameTxtBox";
+            this.scenarioNameTxtBox.Size = new System.Drawing.Size(300, 25);
             // 
             // toolStripButton3
             // 
@@ -313,26 +334,6 @@
             this.toolStripButton5.Name = "toolStripButton5";
             this.toolStripButton5.Size = new System.Drawing.Size(40, 22);
             this.toolStripButton5.Text = "Close";
-            // 
-            // lightsSceneListView
-            // 
-            this.lightsSceneListView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lightsSceneListView.Location = new System.Drawing.Point(0, 0);
-            this.lightsSceneListView.Name = "lightsSceneListView";
-            this.lightsSceneListView.RootLists = ((System.Collections.Generic.Dictionary<string, System.Collections.IList>)(resources.GetObject("lightsSceneListView.RootLists")));
-            this.lightsSceneListView.Size = new System.Drawing.Size(342, 511);
-            this.lightsSceneListView.TabIndex = 0;
-            // 
-            // lightsUIControl
-            // 
-            this.lightsUIControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lightsUIControl.BackColor = System.Drawing.SystemColors.Control;
-            this.lightsUIControl.Location = new System.Drawing.Point(0, 517);
-            this.lightsUIControl.Name = "lightsUIControl";
-            this.lightsUIControl.Size = new System.Drawing.Size(342, 256);
-            this.lightsUIControl.TabIndex = 1;
             // 
             // EditorWindow
             // 
@@ -376,13 +377,13 @@
         private GL_EditorFramework.ObjectUIControl cameraUIControl;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripDropDownButton layerViewerDropDown;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton openMsgEditorButton;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
-        private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
+        private System.Windows.Forms.ToolStripTextBox galaxyNameTxtBox;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
-        private System.Windows.Forms.ToolStripTextBox toolStripTextBox2;
+        private System.Windows.Forms.ToolStripTextBox scenarioNameTxtBox;
         private System.Windows.Forms.ToolStripButton toolStripButton3;
         private System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.ToolStripButton toolStripButton4;

@@ -103,9 +103,9 @@ namespace Takochu.smg.obj
             EditorSceneBase scene;
 
             string text = "";
-            uint marioNo = 0;
+            int marioNo = 0;
             int arg_0 = 0;
-            uint cameraID = 0;
+            int cameraID = 0;
             string zone = "";
 
             static List<string> zones;
@@ -124,13 +124,11 @@ namespace Takochu.smg.obj
                 text = control.TextInput(obj.Get<string>("name"), "Name");
                 zone = control.DropDownTextInput("Zone", obj.mParentZone.mZoneName, zones.ToArray(), false);
 
-                uint val = obj.Get<uint>("Obj_arg0");
+                int val = obj.Get<int>("Obj_arg0");
 
-                arg_0 = val == 0xFFFFFFFF ? -1 : (int)val;
-
-                marioNo = (uint)control.NumberInput(obj.Get<uint>("MarioNo"), "Mario No");
+                marioNo = (int)control.NumberInput(obj.Get<int>("MarioNo"), "Mario No");
                 arg_0 =  (int)control.NumberInput(arg_0, "Obj_arg0");
-                cameraID = (uint)control.NumberInput(obj.Get<uint>("Camera_id"), "Camera ID");
+                cameraID = (int)control.NumberInput(obj.Get<int>("Camera_id"), "Camera ID");
             }
 
             public void OnValueChangeStart()

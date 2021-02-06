@@ -61,7 +61,7 @@
       },
       {
          "id":"CAM_TYPE_RAIL_FOLLOW",
-         "fields":"num1,num2,dist,wpoint.x,wpoint.y"
+         "fields":"num1,num2,dist,wpoint.X,wpoint.Y"
       },
       {
          "id":"CAM_TYPE_TRIPOD_BOSS_JOINT",
@@ -93,7 +93,7 @@
       },
       {
          "id":"CAM_TYPE_INNER_CYLINDER",
-         "fields":"axis.X,axis.Y,axis.Z,angleA,angleB,up.X,dist,wpoint.x,wpoint.y,wpoint.z"
+         "fields":"axis.X,axis.Y,axis.Z,angleA,angleB,up.X,dist,wpoint.X,wpoint.Y,wpoint.Z"
       },
       {
          "id":"CAM_TYPE_SPIRAL_DEMO",
@@ -133,7 +133,7 @@
       },
       {
          "id":"CAM_TYPE_RACE_FOLLOW",
-         "fields":"num1,wpoint.x,wpoint.Y,wpoint.Z,angleA"
+         "fields":"num1,wpoint.X,wpoint.Y,wpoint.Z,angleA"
       },
       {
          "id":"CAM_TYPE_2D_SLIDE",
@@ -169,7 +169,7 @@
       },
       {
          "id":"CAM_TYPE_WATER_PLANET_BOSS",
-         "fields":"wpoint.z,num1,up.X,up.Y,up.Z,axis.Z,axis.Y,axis.X,dist"
+         "fields":"wpoint.Z,num1,up.X,up.Y,up.Z,axis.Z,axis.Y,axis.X,dist"
       },
       {
          "id":"CAM_TYPE_RAIL_WATCH",

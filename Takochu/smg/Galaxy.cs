@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Takochu.fmt;
 using Takochu.io;
+using Takochu.smg.msg;
 using Takochu.smg.obj;
 
 namespace Takochu.smg
@@ -36,13 +37,18 @@ namespace Takochu.smg
 
             zonesBCSV.Close();
             scenarioFile.Close();
+
+            if (mName == "FileSelect" || mName == "PeachCastleGalaxy" || mName == "StaffRollGalaxy")
+                return;
+
+            mGalaxyName = NameHolder.GetGalaxyName(name);
         }
 
         public void Close()
         {
             mFilesystem.Close();
 
-            foreach(Zone zone in GetZones().Values)
+            foreach (Zone zone in GetZones().Values)
             {
                 zone.Close();
             }
@@ -51,6 +57,28 @@ namespace Takochu.smg
         public void SetScenario(int no)
         {
             mScenarioNo = no;
+
+            if (mName == "FileSelect" || mName == "PeachCastleGalaxy" || mName == "StaffRollGalaxy")
+                return;
+
+            // Green stars are a little more complicated to determine
+            // they don't follow the scenario number scheme that regular stars do
+            int greenStarNum = GetGreenStarNo();
+
+            // if there are 3 total green stars, we need to see if we have selected scenarios 1, 2, or 3
+            // if there are 2 total green stars, we need to see if we have selected scenarios 1 or 2
+            // if we have, we just load the regular scenario names
+            // if we have selected a green star, we now have to see what number,
+            // by subtracting the number of regular stars to get our current green star index
+            if (no < 4 && greenStarNum == 3 || no < 3 && greenStarNum == 2)
+                mCurScenarioName = NameHolder.GetScenarioName(mName, no);
+            else
+                mCurScenarioName = NameHolder.GetScenarioName("GreenStar", greenStarNum == 2 ? no - 2 : no - 3);
+        }
+
+        public int GetGreenStarNo()
+        {
+            return mScenarioEntries.Where(e => e.Get<string>("PowerStarType") == "Green").Count();
         }
 
         public bool ContainsZone(string zone)
@@ -136,5 +164,7 @@ namespace Takochu.smg
 
         public string mName;
         private Dictionary<string, Zone> mZones;
+        public string mGalaxyName;
+        public string mCurScenarioName;
     }
 }

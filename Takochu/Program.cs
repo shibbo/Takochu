@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Takochu.fmt;
 using Takochu.smg;
+using Takochu.smg.msg;
 using Takochu.util;
 
 namespace Takochu

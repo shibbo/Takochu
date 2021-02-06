@@ -83,6 +83,10 @@ namespace Takochu.smg
 
         public void LoadLight()
         {
+            // thank you, DrillUpDownHardPlanetZone for having a empty light file for god knows why
+            if (mMapFiles["Light"].GetFiles("/root").Count == 0)
+                return;
+
             BCSV lightBCSV = new BCSV(mMapFiles["Light"].OpenFile($"/root/csv/{mZoneName}Light.bcsv"));
             mLights = new List<Light>();
             lightBCSV.mEntries.ForEach(e => mLights.Add(new Light(e, mZoneName)));
@@ -204,6 +208,16 @@ namespace Takochu.smg
         public Camera GetCamera(string cameraName)
         {
             return mCameras.Find(c => c.mName == cameraName);
+        }
+
+        public bool HasMessages()
+        {
+            return mMessages != null;
+        }
+
+        public MSBT GetMessages()
+        {
+            return mMessages;
         }
 
         //public void ReplaceCamera(string )

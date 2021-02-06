@@ -14,6 +14,7 @@ using Takochu.fmt;
 using Takochu.io;
 using Takochu.smg;
 using Takochu.smg.obj;
+using Takochu.util;
 using static GL_EditorFramework.EditorDrawables.EditorSceneBase;
 using static GL_EditorFramework.Framework;
 
@@ -37,6 +38,7 @@ namespace Takochu.ui
             lightScene.Visible = false;
 
             mGalaxy = Program.sGame.OpenGalaxy(mGalaxyName);
+            galaxyNameTxtBox.Text = mGalaxy.mGalaxyName;
 
             // we load our scenario information here and will use it later
             foreach (BCSV.Entry entry in mGalaxy.mScenarioEntries)
@@ -102,6 +104,7 @@ namespace Takochu.ui
             //    camerasTree.Nodes[i].Nodes.Clear();
 
             mGalaxy.SetScenario(scenarioNo);
+            scenarioNameTxtBox.Text = mGalaxy.mCurScenarioName;
 
             // first we need to get the proper layers that the galaxy itself uses
             List<string> layers = mGalaxy.GetGalaxyLayers(mGalaxy.GetMaskUsedInZoneOnCurrentScenario(mGalaxyName));
@@ -509,6 +512,12 @@ namespace Takochu.ui
                 objectUIContainer.UpdateProperties();
 
             lightsUIControl.Refresh();
+        }
+
+        private void openMsgEditorButton_Click(object sender, EventArgs e)
+        {
+            MessageEditor editor = new MessageEditor(ref mGalaxy);
+            editor.Show();
         }
     }
 }
