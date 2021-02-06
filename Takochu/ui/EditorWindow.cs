@@ -144,6 +144,12 @@ namespace Takochu.ui
                 starts.AddRange(z.GetObjectsFromLayers("Map", "StartObj", mGalaxy.GetGalaxyLayers(zoneMasks[zone])));
                 mapparts.AddRange(z.GetObjectsFromLayers("Map", "MapPart", mGalaxy.GetGalaxyLayers(zoneMasks[zone])));
 
+                objects.AddRange(z.GetObjectsFromLayers("Design", "Obj", mGalaxy.GetGalaxyLayers(zoneMasks[zone])));
+                objects.AddRange(z.GetObjectsFromLayers("Sound", "Obj", mGalaxy.GetGalaxyLayers(zoneMasks[zone])));
+                
+                areas.AddRange(z.GetObjectsFromLayers("Design", "AreaObj", mGalaxy.GetGalaxyLayers(zoneMasks[zone])));
+                areas.AddRange(z.GetObjectsFromLayers("Sound", "AreaObj", mGalaxy.GetGalaxyLayers(zoneMasks[zone])));
+
                 cameras.Add(zone, z.mCameras);
 
                 if (z.mLights != null)

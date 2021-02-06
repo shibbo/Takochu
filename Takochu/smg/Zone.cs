@@ -195,11 +195,18 @@ namespace Takochu.smg
         public List<AbstractObj> GetObjectsFromLayers(string archive, string type, List<string> layers)
         {
             List<AbstractObj> ret = new List<AbstractObj>();
+
+            // empty list to avoid a bunch of null exceptions
+            if (!mObjects.ContainsKey(archive))
+                return ret;
+            
             Dictionary<string, List<AbstractObj>> objs = mObjects[archive];
 
             layers.ForEach(l =>
             {
-                ret.AddRange(objs[l].FindAll(o => o.mType == type));
+                // stage files don't share the same layers
+                if (objs.ContainsKey(l))
+                    ret.AddRange(objs[l].FindAll(o => o.mType == type));
             });
 
             return ret;
@@ -219,8 +226,6 @@ namespace Takochu.smg
         {
             return mMessages;
         }
-
-        //public void ReplaceCamera(string )
 
         public Galaxy mGalaxy;
         private Game mGame;
