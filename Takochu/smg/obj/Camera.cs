@@ -50,6 +50,9 @@ namespace Takochu.smg.obj
 
             foreach(string field in fields)
             {
+                if (field == "none")
+                    break;
+
                 string type = CameraUtil.GetTypeOfField(field);
 
                 switch (type)

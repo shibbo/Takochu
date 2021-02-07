@@ -24,9 +24,6 @@ namespace Takochu.util
                     string id = item.id;
                     string[] fields = Convert.ToString(item.fields).Split(',');
 
-                    if (fields.Contains("none"))
-                        continue;
-
                     mCameraEntries.Add(id, fields);
                 }
             }
