@@ -27,6 +27,8 @@ namespace Takochu.smg.obj
             Scale = new Vector3(Get<float>("scale_x"), Get<float>("scale_y"), Get<float>("scale_z"));
 
             mMarioNo = Get<int>("MarioNo");
+            mCameraID = Get<int>("Camera_id");
+            mObjArg0 = Get<int>("Obj_arg0");
         }
 
         public override void Save()
