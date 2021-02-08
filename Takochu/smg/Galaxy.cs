@@ -158,7 +158,7 @@ namespace Takochu.smg
         }
 
         public Game mGame;
-        private FilesystemBase mFilesystem;
+        public FilesystemBase mFilesystem;
         public List<BCSV.Entry> mScenarioEntries;
         int mScenarioNo;
 

@@ -88,8 +88,14 @@
     <Compile Include="smg\LightData.cs" />
     <Compile Include="smg\msg\FlowEmulator.cs" />
     <Compile Include="smg\msg\NameHolder.cs" />
+    <Compile Include="smg\obj\CameraObj.cs" />
+    <Compile Include="smg\obj\DebugObj.cs" />
     <Compile Include="smg\obj\DemoObj.cs" />
+    <Compile Include="smg\obj\GeneralPosObj.cs" />
     <Compile Include="smg\obj\ObjectHolder.cs" />
+    <Compile Include="smg\obj\PathObj.cs" />
+    <Compile Include="smg\obj\PathPointObj.cs" />
+    <Compile Include="smg\obj\PlanetObj.cs" />
     <Compile Include="ui\LightAttribEditor.cs">
       <SubType>Form</SubType>
     </Compile>

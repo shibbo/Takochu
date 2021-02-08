@@ -56,7 +56,11 @@ namespace Takochu.smg
                             LoadObjects(file, "Placement", "StageObjInfo");
 
                         LoadObjects(file, "Placement", "AreaObjInfo");
+                        LoadObjects(file, "Placement", "CameraCubeInfo");
                         LoadObjects(file, "Placement", "ObjInfo");
+                        LoadObjects(file, "Placement", "PlanetObjInfo");
+                        LoadObjects(file, "GeneralPos", "GeneralPosInfo");
+                        LoadObjects(file, "Debug", "DebugMoveInfo");
                         LoadObjects(file, "Start", "StartInfo");
                         LoadObjects(file, "MapParts", "MapPartsInfo");
                         LoadObjects(file, "Placement", "DemoObjInfo");
@@ -66,6 +70,7 @@ namespace Takochu.smg
 
             LoadCameras();
             LoadMessages();
+            LoadPaths();
         }
 
         public void LoadObjects(string archive, string directory, string file)
@@ -107,6 +112,18 @@ namespace Takochu.smg
             }
         }
 
+        public void LoadPaths()
+        {
+            BCSV pathsBCSV = new BCSV(mMapFiles["Map"].OpenFile("/root/jmp/Path/CommonPathInfo"));
+
+            mPaths = new List<PathObj>();
+
+            foreach(BCSV.Entry e in pathsBCSV.mEntries)
+            {
+                mPaths.Add(new PathObj(e, this, (RARCFilesystem)mMapFiles["Map"]));
+            }
+        }
+
         public void AssignsObjectsToList(string archive, string path)
         {
             string[] data = path.Split('/');
@@ -137,6 +154,9 @@ namespace Takochu.smg
                     case "AreaObjInfo":
                         mObjects[archive][layer].Add(new AreaObj(e, this, path));
                         break;
+                    case "CameraCubeInfo":
+                        mObjects[archive][layer].Add(new CameraObj(e, this, path));
+                        break;
                     case "StageObjInfo":
                         mZones[layer].Add(new StageObj(e));
                         break;
@@ -145,6 +165,15 @@ namespace Takochu.smg
                         break;
                     case "DemoObjInfo":
                         mObjects[archive][layer].Add(new DemoObj(e, this, path));
+                        break;
+                    case "GeneralPosInfo":
+                        mObjects[archive][layer].Add(new GeneralPosObj(e, this, path));
+                        break;
+                    case "DebugMoveInfo":
+                        mObjects[archive][layer].Add(new DebugMoveObj(e, this, path));
+                        break;
+                    case "PlanetObjInfo":
+                        mObjects[archive][layer].Add(new PlanetObj(e, this, path));
                         break;
                     case "StartInfo":
                         mObjects[archive][layer].Add(new StartObj(e, this, path));
@@ -272,6 +301,7 @@ namespace Takochu.smg
         public Dictionary<string, List<StageObj>> mZones;
         public List<Camera> mCameras;
         public List<Light> mLights;
+        public List<PathObj> mPaths;
 
         Dictionary<string, FilesystemBase> mMapFiles;
 

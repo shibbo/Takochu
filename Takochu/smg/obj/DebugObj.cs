@@ -8,30 +8,27 @@ using Takochu.fmt;
 
 namespace Takochu.smg.obj
 {
-    class DemoObj : AbstractObj
+    public class DebugMoveObj : AbstractObj
     {
-        public DemoObj(BCSV.Entry entry, Zone parentZone, string path) : base(entry)
+        public DebugMoveObj(BCSV.Entry entry, Zone parentZone, string path) : base(entry)
         {
             mParentZone = parentZone;
             string[] content = path.Split('/');
             mDirectory = content[0];
             mLayer = content[1];
             mFile = content[2];
+            mParentZone = parentZone;
 
-            mType = "DemoObj";
+            mType = "DebugMoveObj";
 
             Position = new Vector3(Get<float>("pos_x") / 100, Get<float>("pos_y") / 100, Get<float>("pos_z") / 100);
             Rotation = new Vector3(Get<float>("dir_x"), Get<float>("dir_y"), Get<float>("dir_z"));
             Scale = new Vector3(Get<float>("scale_x"), Get<float>("scale_y"), Get<float>("scale_z"));
-
-            mDemoName = Get<string>("DemoName");
         }
 
         public override string ToString()
         {
-            return $"[{Get<int>("l_id")}] {mDemoName} [{mLayer}] [{mParentZone.mZoneName}]";
+            return $"[{Get<int>("l_id")}] {mName} [{mLayer}] [{mParentZone.mZoneName}]";
         }
-
-        string mDemoName;
     }
 }

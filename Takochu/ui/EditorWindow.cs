@@ -127,16 +127,11 @@ namespace Takochu.ui
 
             Dictionary<string, int> zoneMasks = new Dictionary<string, int>();
 
-            List<AbstractObj> objects = new List<AbstractObj>();
-            List<AbstractObj> areas = new List<AbstractObj>();
-            List<AbstractObj> demos = new List<AbstractObj>();
-            List<AbstractObj> starts = new List<AbstractObj>();
-            List<AbstractObj> mapparts = new List<AbstractObj>();
-
             ObjectHolder mainHolder = new ObjectHolder();
 
             Dictionary<string, List<Camera>> cameras = new Dictionary<string, List<Camera>>();
             List<Light> lights = new List<Light>();
+            List<PathPointObj> pathpoints = new List<PathPointObj>();
 
             foreach (string zone in zonesUsed)
             {
@@ -144,6 +139,11 @@ namespace Takochu.ui
 
                 Zone z = mGalaxy.GetZone(zone);
                 ObjectHolder curHolder = z.GetAllObjectsFromLayers(mGalaxy.GetGalaxyLayers(zoneMasks[zone]));
+
+                foreach (PathObj pobj in z.mPaths)
+                {
+                    pathpoints.AddRange(pobj.mPathPointObjs);
+                }
 
                 cameras.Add(zone, z.mCameras);
 
@@ -175,17 +175,29 @@ namespace Takochu.ui
             }
 
             sceneListView.RootLists.Add("Areas", mainHolder.GetObjectsOfType("AreaObj"));
+            sceneListView.RootLists.Add("Camera Areas", mainHolder.GetObjectsOfType("CameraObj"));
             sceneListView.RootLists.Add("Objects", mainHolder.GetObjectsOfType("Obj"));
+            sceneListView.RootLists.Add("Demos", mainHolder.GetObjectsOfType("DemoObj"));
+            sceneListView.RootLists.Add("Positions", mainHolder.GetObjectsOfType("GeneralPosObj"));
+            sceneListView.RootLists.Add("Debug", mainHolder.GetObjectsOfType("DebugMoveObj"));
+            sceneListView.RootLists.Add("Gravity", mainHolder.GetObjectsOfType("PlanetObj"));
             sceneListView.RootLists.Add("Start", mainHolder.GetObjectsOfType("StartObj"));
             sceneListView.RootLists.Add("Map Parts", mainHolder.GetObjectsOfType("MapPartsObj"));
+            sceneListView.RootLists.Add("Paths", pathpoints);
             sceneListView.UpdateComboBoxItems();
             sceneListView.SelectedItems = scene.SelectedObjects;
             sceneListView.SetRootList("Areas");
 
             scene.objects.AddRange(mainHolder.GetObjectsOfType("AreaObj"));
+            scene.objects.AddRange(mainHolder.GetObjectsOfType("CameraObj"));
             scene.objects.AddRange(mainHolder.GetObjectsOfType("Obj"));
+            scene.objects.AddRange(mainHolder.GetObjectsOfType("DemoObj"));
+            scene.objects.AddRange(mainHolder.GetObjectsOfType("GeneralPosObj"));
+            scene.objects.AddRange(mainHolder.GetObjectsOfType("DebugMoveObj"));
+            scene.objects.AddRange(mainHolder.GetObjectsOfType("PlanetObj"));
             scene.objects.AddRange(mainHolder.GetObjectsOfType("StartObj"));
             scene.objects.AddRange(mainHolder.GetObjectsOfType("MapPartsObj"));
+            scene.objects.AddRange(pathpoints);
 
             List<Camera> cubeCameras = new List<Camera>();
             List<Camera> groupCameras = new List<Camera>();
@@ -303,22 +315,45 @@ namespace Takochu.ui
                 // now let's get the type so we can jump to the right category
                 // since you can select multiple objects, we will just jump to the first one
                 SelectionSet set = scene.SelectedObjects;
-                AbstractObj obj = set.ElementAt(0) as AbstractObj;
 
-                switch (obj.mType)
+                if (set.ElementAt(0) is PathPointObj)
                 {
-                    case "AreaObj":
-                        sceneListView.SetRootList("Areas");
-                        break;
-                    case "Obj":
-                        sceneListView.SetRootList("Objects");
-                        break;
-                    case "StartObj":
-                        sceneListView.SetRootList("Start");
-                        break;
-                    case "MapPart":
-                        sceneListView.SetRootList("Map Parts");
-                        break;
+                    sceneListView.SetRootList("Paths");
+                }
+                else
+                {
+                    AbstractObj obj = set.ElementAt(0) as AbstractObj;
+
+                    switch (obj.mType)
+                    {
+                        case "AreaObj":
+                            sceneListView.SetRootList("Areas");
+                            break;
+                        case "CameraObj":
+                            sceneListView.SetRootList("Camera Areas");
+                            break;
+                        case "Obj":
+                            sceneListView.SetRootList("Objects");
+                            break;
+                        case "DemoObj":
+                            sceneListView.SetRootList("Demos");
+                            break;
+                        case "GeneralPosObj":
+                            sceneListView.SetRootList("Positions");
+                            break;
+                        case "DebugMoveObj":
+                            sceneListView.SetRootList("Debug");
+                            break;
+                        case "PlanetObj":
+                            sceneListView.SetRootList("Gravity");
+                            break;
+                        case "StartObj":
+                            sceneListView.SetRootList("Start");
+                            break;
+                        case "MapPart":
+                            sceneListView.SetRootList("Map Parts");
+                            break;
+                    }
                 }
             }
 

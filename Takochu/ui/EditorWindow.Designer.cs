@@ -313,7 +313,7 @@
             this.toolStripButton5});
             this.toolStrip2.Location = new System.Drawing.Point(6, 1);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(109, 25);
+            this.toolStrip2.Size = new System.Drawing.Size(78, 25);
             this.toolStrip2.TabIndex = 8;
             this.toolStrip2.Text = "toolStrip2";
             // 
