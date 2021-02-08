@@ -59,6 +59,7 @@ namespace Takochu.smg
                         LoadObjects(file, "Placement", "ObjInfo");
                         LoadObjects(file, "Start", "StartInfo");
                         LoadObjects(file, "MapParts", "MapPartsInfo");
+                        LoadObjects(file, "Placement", "DemoObjInfo");
                     }
                 }
             }
@@ -142,6 +143,9 @@ namespace Takochu.smg
                     case "ObjInfo":
                         mObjects[archive][layer].Add(new LevelObj(e, this, path));
                         break;
+                    case "DemoObjInfo":
+                        mObjects[archive][layer].Add(new DemoObj(e, this, path));
+                        break;
                     case "StartInfo":
                         mObjects[archive][layer].Add(new StartObj(e, this, path));
                         break;
@@ -192,13 +196,34 @@ namespace Takochu.smg
             return mObjects[archive][layer];
         }
 
-        public List<AbstractObj> GetObjectsFromLayers(string archive, string type, List<string> layers)
+        public ObjectHolder GetAllObjectsFromLayers(List<string> layers)
+        {
+            List<AbstractObj> ret = new List<AbstractObj>();
+
+            foreach(string archive in cPossibleFiles)
+            {
+                if (!mObjects.ContainsKey(archive))
+                    continue;
+
+                Dictionary<string, List<AbstractObj>> objs = mObjects[archive];
+
+                layers.ForEach(l =>
+                {
+                    if (objs.ContainsKey(l))
+                        ret.AddRange(objs[l]);
+                });
+            }
+
+            return new ObjectHolder(ref ret);
+        }
+
+        public ObjectHolder GetObjectsFromLayers(string archive, string type, List<string> layers)
         {
             List<AbstractObj> ret = new List<AbstractObj>();
 
             // empty list to avoid a bunch of null exceptions
             if (!mObjects.ContainsKey(archive))
-                return ret;
+                return null;
             
             Dictionary<string, List<AbstractObj>> objs = mObjects[archive];
 
@@ -209,7 +234,7 @@ namespace Takochu.smg
                     ret.AddRange(objs[l].FindAll(o => o.mType == type));
             });
 
-            return ret;
+            return new ObjectHolder(ref ret);
         }
 
         public Camera GetCamera(string cameraName)

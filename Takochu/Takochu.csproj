@@ -88,6 +88,8 @@
     <Compile Include="smg\LightData.cs" />
     <Compile Include="smg\msg\FlowEmulator.cs" />
     <Compile Include="smg\msg\NameHolder.cs" />
+    <Compile Include="smg\obj\DemoObj.cs" />
+    <Compile Include="smg\obj\ObjectHolder.cs" />
     <Compile Include="ui\LightAttribEditor.cs">
       <SubType>Form</SubType>
     </Compile>

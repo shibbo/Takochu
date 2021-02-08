@@ -129,8 +129,11 @@ namespace Takochu.ui
 
             List<AbstractObj> objects = new List<AbstractObj>();
             List<AbstractObj> areas = new List<AbstractObj>();
+            List<AbstractObj> demos = new List<AbstractObj>();
             List<AbstractObj> starts = new List<AbstractObj>();
             List<AbstractObj> mapparts = new List<AbstractObj>();
+
+            ObjectHolder mainHolder = new ObjectHolder();
 
             Dictionary<string, List<Camera>> cameras = new Dictionary<string, List<Camera>>();
             List<Light> lights = new List<Light>();
@@ -140,17 +143,7 @@ namespace Takochu.ui
                 zoneMasks.Add(zone, mGalaxy.GetMaskUsedInZoneOnCurrentScenario(zone));
 
                 Zone z = mGalaxy.GetZone(zone);
-
-                objects.AddRange(z.GetObjectsFromLayers("Map", "Obj", mGalaxy.GetGalaxyLayers(zoneMasks[zone])));
-                areas.AddRange(z.GetObjectsFromLayers("Map", "AreaObj", mGalaxy.GetGalaxyLayers(zoneMasks[zone])));
-                starts.AddRange(z.GetObjectsFromLayers("Map", "StartObj", mGalaxy.GetGalaxyLayers(zoneMasks[zone])));
-                mapparts.AddRange(z.GetObjectsFromLayers("Map", "MapPart", mGalaxy.GetGalaxyLayers(zoneMasks[zone])));
-
-                objects.AddRange(z.GetObjectsFromLayers("Design", "Obj", mGalaxy.GetGalaxyLayers(zoneMasks[zone])));
-                objects.AddRange(z.GetObjectsFromLayers("Sound", "Obj", mGalaxy.GetGalaxyLayers(zoneMasks[zone])));
-                
-                areas.AddRange(z.GetObjectsFromLayers("Design", "AreaObj", mGalaxy.GetGalaxyLayers(zoneMasks[zone])));
-                areas.AddRange(z.GetObjectsFromLayers("Sound", "AreaObj", mGalaxy.GetGalaxyLayers(zoneMasks[zone])));
+                ObjectHolder curHolder = z.GetAllObjectsFromLayers(mGalaxy.GetGalaxyLayers(zoneMasks[zone]));
 
                 cameras.Add(zone, z.mCameras);
 
@@ -172,55 +165,27 @@ namespace Takochu.ui
                         {
                             if (o.mName == z.mZoneName)
                             {
-                                objects.ForEach(obj =>
-                                {
-                                    if (obj.mParentZone.mZoneName == z.mZoneName)
-                                    {
-                                        obj.ApplyZoneOffset(o.mPosition, o.mRotation);
-                                    }
-                                });
-
-                                areas.ForEach(obj =>
-                                {
-                                    if (obj.mParentZone.mZoneName == z.mZoneName)
-                                    {
-                                        obj.ApplyZoneOffset(o.mPosition, o.mRotation);
-                                    }
-                                });
-
-                                starts.ForEach(obj =>
-                                {
-                                    if (obj.mParentZone.mZoneName == z.mZoneName)
-                                    {
-                                        obj.ApplyZoneOffset(o.mPosition, o.mRotation);
-                                    }
-                                });
-
-                                mapparts.ForEach(obj =>
-                                {
-                                    if (obj.mParentZone.mZoneName == z.mZoneName)
-                                    {
-                                        obj.ApplyZoneOffset(o.mPosition, o.mRotation);
-                                    }
-                                });
-                            } 
+                                curHolder.ApplyZoneOffset(o.mPosition, o.mRotation);
+                            }
                         }
                     }
                 }
+
+                mainHolder.AddObjects(curHolder);
             }
 
-            sceneListView.RootLists.Add("Areas", areas);
-            sceneListView.RootLists.Add("Objects", objects);
-            sceneListView.RootLists.Add("Start", starts);
-            sceneListView.RootLists.Add("Map Parts", mapparts);
+            sceneListView.RootLists.Add("Areas", mainHolder.GetObjectsOfType("AreaObj"));
+            sceneListView.RootLists.Add("Objects", mainHolder.GetObjectsOfType("Obj"));
+            sceneListView.RootLists.Add("Start", mainHolder.GetObjectsOfType("StartObj"));
+            sceneListView.RootLists.Add("Map Parts", mainHolder.GetObjectsOfType("MapPartsObj"));
             sceneListView.UpdateComboBoxItems();
             sceneListView.SelectedItems = scene.SelectedObjects;
             sceneListView.SetRootList("Areas");
 
-            scene.objects.AddRange(areas);
-            scene.objects.AddRange(objects);
-            scene.objects.AddRange(starts);
-            scene.objects.AddRange(mapparts);
+            scene.objects.AddRange(mainHolder.GetObjectsOfType("AreaObj"));
+            scene.objects.AddRange(mainHolder.GetObjectsOfType("Obj"));
+            scene.objects.AddRange(mainHolder.GetObjectsOfType("StartObj"));
+            scene.objects.AddRange(mainHolder.GetObjectsOfType("MapPartsObj"));
 
             List<Camera> cubeCameras = new List<Camera>();
             List<Camera> groupCameras = new List<Camera>();
