@@ -527,5 +527,10 @@ namespace Takochu.ui
             MessageEditor editor = new MessageEditor(ref mGalaxy);
             editor.Show();
         }
+
+        private void saveGalaxyBtn_Click(object sender, EventArgs e)
+        {
+            mGalaxy.Save();
+        }
     }
 }

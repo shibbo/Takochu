@@ -53,7 +53,7 @@
             this.scenarioNameTxtBox = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.saveGalaxyBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -309,22 +309,23 @@
             this.toolStrip2.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton4,
+            this.saveGalaxyBtn,
             this.toolStripButton5});
             this.toolStrip2.Location = new System.Drawing.Point(6, 1);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(78, 25);
+            this.toolStrip2.Size = new System.Drawing.Size(109, 25);
             this.toolStrip2.TabIndex = 8;
             this.toolStrip2.Text = "toolStrip2";
             // 
-            // toolStripButton4
+            // saveGalaxyBtn
             // 
-            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
-            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(35, 22);
-            this.toolStripButton4.Text = "Save";
+            this.saveGalaxyBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.saveGalaxyBtn.Image = ((System.Drawing.Image)(resources.GetObject("saveGalaxyBtn.Image")));
+            this.saveGalaxyBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.saveGalaxyBtn.Name = "saveGalaxyBtn";
+            this.saveGalaxyBtn.Size = new System.Drawing.Size(35, 22);
+            this.saveGalaxyBtn.Text = "Save";
+            this.saveGalaxyBtn.Click += new System.EventHandler(this.saveGalaxyBtn_Click);
             // 
             // toolStripButton5
             // 
@@ -386,7 +387,7 @@
         private System.Windows.Forms.ToolStripTextBox scenarioNameTxtBox;
         private System.Windows.Forms.ToolStripButton toolStripButton3;
         private System.Windows.Forms.ToolStrip toolStrip2;
-        private System.Windows.Forms.ToolStripButton toolStripButton4;
+        private System.Windows.Forms.ToolStripButton saveGalaxyBtn;
         private System.Windows.Forms.ToolStripButton toolStripButton5;
         private GL_EditorFramework.ObjectUIControl lightsUIControl;
         private GL_EditorFramework.SceneListView lightsSceneListView;

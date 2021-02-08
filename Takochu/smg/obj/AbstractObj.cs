@@ -39,7 +39,7 @@ namespace Takochu.smg.obj
             return mEntry.Get<T>(key);
         }
 
-        private BCSV.Entry mEntry;
+        public BCSV.Entry mEntry;
         public Zone mParentZone;
 
         public Vector3 mTruePosition;

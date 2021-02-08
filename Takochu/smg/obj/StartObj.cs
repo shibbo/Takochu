@@ -25,11 +25,24 @@ namespace Takochu.smg.obj
             Position = new Vector3(Get<float>("pos_x") / 100, Get<float>("pos_y") / 100, Get<float>("pos_z") / 100);
             Rotation = new Vector3(Get<float>("dir_x"), Get<float>("dir_y"), Get<float>("dir_z"));
             Scale = new Vector3(Get<float>("scale_x"), Get<float>("scale_y"), Get<float>("scale_z"));
+
+            mMarioNo = Get<int>("MarioNo");
         }
+
+        public override void Save()
+        {
+            mEntry.Set("MarioNo", mMarioNo);
+            mEntry.Set("Obj_arg0", mObjArg0);
+            mEntry.Set("Camera_id", mCameraID);
+        }
+
+        int mMarioNo;
+        int mObjArg0;
+        int mCameraID;
 
         public override string ToString()
         {
-            return $"[{Get<int>("MarioNo")}] {mName} [{mLayer}] [{mParentZone.mZoneName}]";
+            return $"[{mMarioNo}] {mName} [{mLayer}] [{mParentZone.mZoneName}]";
         }
 
         public override uint Select(int index, GL_ControlBase control)
@@ -99,20 +112,17 @@ namespace Takochu.smg.obj
 
         public class StartObjUI : IObjectUIContainer
         {
-            AbstractObj obj;
+            StartObj obj;
             EditorSceneBase scene;
 
             string text = "";
-            int marioNo = 0;
-            int arg_0 = 0;
-            int cameraID = 0;
             string zone = "";
 
             static List<string> zones;
 
             public StartObjUI(AbstractObj obj, EditorSceneBase scene)
             {
-                this.obj = obj;
+                this.obj = obj as StartObj;
                 this.scene = scene;
 
                 zones = new List<string>();
@@ -124,11 +134,9 @@ namespace Takochu.smg.obj
                 text = control.TextInput(obj.Get<string>("name"), "Name");
                 zone = control.DropDownTextInput("Zone", obj.mParentZone.mZoneName, zones.ToArray(), false);
 
-                int val = obj.Get<int>("Obj_arg0");
-
-                marioNo = (int)control.NumberInput(obj.Get<int>("MarioNo"), "Mario No");
-                arg_0 =  (int)control.NumberInput(arg_0, "Obj_arg0");
-                cameraID = (int)control.NumberInput(obj.Get<int>("Camera_id"), "Camera ID");
+                obj.mMarioNo = (int)control.NumberInput(obj.mMarioNo, "Mario Number");
+                obj.mObjArg0 =  (int)control.NumberInput(obj.mObjArg0, "Obj_arg0");
+                obj.mCameraID = (int)control.NumberInput(obj.mCameraID, "Camera ID");
             }
 
             public void OnValueChangeStart()

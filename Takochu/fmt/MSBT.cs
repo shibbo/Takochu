@@ -51,7 +51,7 @@ namespace Takochu.fmt
 
         public bool HasGalaxyName(string galaxy)
         {
-            return GetMessages().ContainsKey(galaxy);
+            return GetMessages().ContainsKey($"GalaxyName_{galaxy}");
         }
 
         public List<MessageBase> GetMessageFromLabel(string label)

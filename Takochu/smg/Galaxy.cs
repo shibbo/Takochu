@@ -121,6 +121,14 @@ namespace Takochu.smg
             return GetScenarioInfoForCurrentScenario().Get<int>(zoneName);
         }
 
+        public void Save()
+        {
+            foreach(KeyValuePair<string, Zone> z in mZones)
+            {
+                z.Value.Save();
+            }
+        }
+
         public List<string> GetGalaxyLayers(int mask)
         {
             List<string> layers = new List<string>

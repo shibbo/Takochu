@@ -291,6 +291,61 @@ namespace Takochu.smg
             return mMessageFlows != null;
         }
 
+        public void Save()
+        {
+            foreach(KeyValuePair<string, FilesystemBase> p in mMapFiles)
+            {
+                SaveObjects(p.Key, "Placement", "AreaObjInfo");
+                SaveObjects(p.Key, "Placement", "CameraCubeInfo");
+                SaveObjects(p.Key, "Placement", "DemoObjInfo");
+                SaveObjects(p.Key, "Placement", "ObjInfo");
+                SaveObjects(p.Key, "Placement", "PlanetObjInfo");
+                SaveObjects(p.Key, "MapParts", "MapPartsInfo");
+                SaveObjects(p.Key, "Start", "StartInfo");
+            }
+        }
+
+        private void SaveObjects(string archive, string dir, string file)
+        {
+            if (archive == "Light")
+                return;
+
+            List<string> layers = mMapFiles[archive].GetDirectories($"/stage/jmp/{dir}");
+
+            foreach (string layer in layers)
+            {
+                SaveObjectList(archive, $"{dir}/{layer}/{file}");
+            }
+
+            mMapFiles[archive].Save();
+        }
+
+        private void SaveObjectList(string archive, string path)
+        {
+            string[] content = path.Split('/');
+
+            string dir = content[0];
+            string layer = content[1];
+            string file = content[2];
+
+            BCSV bcsv = new BCSV(mMapFiles[archive].OpenFile($"/stage/jmp/{path}"));
+            bcsv.mEntries.Clear();
+
+            List<AbstractObj> objs = mObjects[archive][layer];
+
+            foreach(AbstractObj o in objs)
+            {
+                if (o.mFile == file)
+                {
+                    o.Save();
+                    bcsv.mEntries.Add(o.mEntry);
+                }
+            }
+
+            bcsv.Save();
+            bcsv.Close();
+        }
+
         public Galaxy mGalaxy;
         private Game mGame;
         private FilesystemBase mFilesystem;
