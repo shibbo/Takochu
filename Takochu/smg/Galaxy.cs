@@ -38,7 +38,7 @@ namespace Takochu.smg
             zonesBCSV.Close();
             scenarioFile.Close();
 
-            if (mName == "FileSelect" || mName == "PeachCastleGalaxy" || mName == "StaffRollGalaxy")
+            if (!NameHolder.HasGalaxyName(name))
                 return;
 
             mGalaxyName = NameHolder.GetGalaxyName(name);
@@ -58,7 +58,7 @@ namespace Takochu.smg
         {
             mScenarioNo = no;
 
-            if (mName == "FileSelect" || mName == "PeachCastleGalaxy" || mName == "StaffRollGalaxy")
+            if (!NameHolder.HasGalaxyName(mName))
                 return;
 
             // Green stars are a little more complicated to determine

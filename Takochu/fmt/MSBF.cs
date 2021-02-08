@@ -7,7 +7,7 @@ using Takochu.io;
 
 namespace Takochu.fmt
 {
-    class MSBF
+    public class MSBF
     {
         public MSBF(FileBase file)
         {
@@ -36,11 +36,52 @@ namespace Takochu.fmt
             }
         }
 
+        public List<string> GetFlowNames()
+        {
+            List<string> ret = new List<string>();
+
+            foreach(KeyValuePair<string, uint> p in mEntries.mTable)
+            {
+                ret.Add(p.Key);
+            }
+
+            return ret;
+        }
+
+        public uint GetStartID(string name)
+        {
+            return mEntries.mTable[name];
+        }
+
+        public int NodeCount()
+        {
+            return mFlow.mNodes.Count;
+        }
+
+        public Node GetNode(int id)
+        {
+            return mFlow.mNodes[id];
+        }
+
+        public Node GetNextNode(int id)
+        {
+            if (mFlow.mNodes.Count == id + 1)
+                return null;
+
+            return mFlow.mNodes[id + 1];
+        }
+
+        public void GetJumpLabels(int startID, out ushort firstID, out ushort secondID)
+        {
+            firstID = mFlow.mLabels[startID];
+            secondID = mFlow.mLabels[startID + 1];
+        }
+
         Flow mFlow;
         Entry mEntries;
     }
 
-    class Node
+    public class Node
     {
         public enum NodeType
         {
@@ -65,6 +106,12 @@ namespace Takochu.fmt
             file.Skip(0x4);
             mMessageID = file.ReadUInt16();
             mNextNode = file.ReadUInt16();
+            file.Skip(0x2);
+        }
+
+        public override string ToString()
+        {
+            return "Message Node";
         }
 
         public ushort mMessageID;
@@ -75,11 +122,16 @@ namespace Takochu.fmt
         public BranchNode(ref FileBase file) : base()
         {
             mNodeType = NodeType.NodeType_Branch;
-            file.Skip(0x2);
-            mUnk2 = file.ReadUInt16();
-            mCondition = file.ReadUInt16();
-            mYesNoBoxChoices = file.ReadUInt16();
-            mLabelsToUse = file.ReadUInt16();
+            file.Skip(0x2); // Unk1
+            mUnk2 = file.ReadUInt16(); // Unk2
+            mCondition = file.ReadUInt16(); // Unk3
+            mYesNoBoxChoices = file.ReadUInt16(); // Unk4
+            mLabelsToUse = file.ReadUInt16(); // Unk5
+        }
+
+        public override string ToString()
+        {
+            return "Branch Node";
         }
 
         public ushort mUnk2;
@@ -100,6 +152,11 @@ namespace Takochu.fmt
             mFlowID = file.ReadUInt16();
         }
 
+        public override string ToString()
+        {
+            return "Event Node";
+        }
+
         public ushort mEvent;
         public ushort mJumpFlow;
         public ushort mFlowID;
@@ -112,7 +169,12 @@ namespace Takochu.fmt
             mNodeType = NodeType.NodeType_Entry;
             file.Skip(0x2);
             mNextNode = file.ReadUInt16();
-            file.Skip(0x4);
+            file.Skip(0x6);
+        }
+
+        public override string ToString()
+        {
+            return "Entry Node";
         }
     }
 
@@ -144,6 +206,9 @@ namespace Takochu.fmt
                         break;
                     case Node.NodeType.NodeType_Branch:
                         mNodes.Add(new BranchNode(ref file));
+                        break;
+                    default:
+                        Console.WriteLine($"Unsupported type: {(int)type}");
                         break;
                 }
             }
@@ -204,6 +269,6 @@ namespace Takochu.fmt
         }
 
         List<TableEntry> mEntries;
-        Dictionary<string, uint> mTable;
+        public Dictionary<string, uint> mTable;
     };
 }

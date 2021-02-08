@@ -49,6 +49,11 @@ namespace Takochu.fmt
             return msgs; 
         }
 
+        public bool HasGalaxyName(string galaxy)
+        {
+            return GetMessages().ContainsKey(galaxy);
+        }
+
         public List<MessageBase> GetMessageFromLabel(string label)
         {
             return GetMessages()[label];
@@ -60,6 +65,22 @@ namespace Takochu.fmt
             List<MessageBase> msgs = GetMessageFromLabel(label);
 
             foreach(MessageBase m in msgs)
+            {
+                if (m is Character)
+                {
+                    ret += m.ToString();
+                }
+            }
+
+            return ret;
+        }
+
+        public string GetStringFromIndex(ushort idx)
+        {
+            string ret = "";
+            List<MessageBase> msgs = mText.mMessages[idx];
+
+            foreach (MessageBase m in msgs)
             {
                 if (m is Character)
                 {
@@ -400,7 +421,7 @@ namespace Takochu.fmt
         {
             mMaxWidth = file.ReadUInt16();
             mWidth = file.ReadUInt16();
-            mNumber = Convert.ToInt32(file.ReadBytes(mWidth));
+            mNumber = BitConverter.ToInt32(file.ReadBytes(mWidth), 0);
         }
 
         public override string ToString()

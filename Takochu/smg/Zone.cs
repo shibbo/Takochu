@@ -84,7 +84,7 @@ namespace Takochu.smg
         public void LoadLight()
         {
             // thank you, DrillUpDownHardPlanetZone for having a empty light file for god knows why
-            if (mMapFiles["Light"].GetFiles("/root").Count == 0)
+            if (mMapFiles["Light"].GetFiles("/root/csv").Count == 0)
                 return;
 
             BCSV lightBCSV = new BCSV(mMapFiles["Light"].OpenFile($"/root/csv/{mZoneName}Light.bcsv"));
@@ -225,6 +225,16 @@ namespace Takochu.smg
         public MSBT GetMessages()
         {
             return mMessages;
+        }
+
+        public MSBF GetFlows()
+        {
+            return mMessageFlows;
+        }
+
+        public bool HasFlows()
+        {
+            return mMessageFlows != null;
         }
 
         public Galaxy mGalaxy;

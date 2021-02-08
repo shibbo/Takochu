@@ -18,6 +18,11 @@ namespace Takochu.smg.msg
             mScenarioNames = new MSBT(mFilesystem.OpenFile("/boop/ScenarioName.msbt"));
         }
 
+        public static bool HasGalaxyName(string galaxy)
+        {
+            return mGalaxyNames.HasGalaxyName(galaxy);
+        }
+
         public static string GetGalaxyName(string galaxy)
         {
             string name = $"GalaxyName_{galaxy}";

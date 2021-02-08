@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Takochu.fmt;
 using Takochu.smg;
+using Takochu.smg.msg;
 
 namespace Takochu.util
 {
@@ -28,6 +29,8 @@ namespace Takochu.util
         private Galaxy mGalaxy;
         private string mSelectedZone;
         private MSBT mCurMessages;
+        private MSBF mCurFlow;
+        private string mCurrentSelectedFlow;
 
         private void zoneNamesComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -46,6 +49,17 @@ namespace Takochu.util
                 {
                     labelsComboBox.Items.Add(str);
                 }
+
+                flowNamesList.Items.Clear();
+
+                if (mGalaxy.GetZone(name).HasFlows())
+                {
+                    ((Control)tabPage2).Enabled = true;
+                    mCurFlow = mGalaxy.GetZone(name).GetFlows();
+                    mCurFlow.GetFlowNames().ForEach(l => flowNamesList.Items.Add(l));
+                }
+                else
+                    ((Control)tabPage2).Enabled = false;
             }
         }
 
@@ -61,6 +75,35 @@ namespace Takochu.util
                 foreach(MessageBase m in msg)
                 {
                     labelTextBox.Text += m.ToString();
+                }
+            }
+        }
+
+        private void testMSBFBtn_Click(object sender, EventArgs e)
+        {
+            FlowEmulator emu = new FlowEmulator(mCurMessages, mCurFlow);
+            emu.Start((int)mCurFlow.GetStartID(mCurrentSelectedFlow));
+        }
+
+        private void flowNamesList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (flowNamesList.SelectedIndex != -1)
+            {
+                mCurrentSelectedFlow = Convert.ToString(flowNamesList.SelectedItem);
+                flowNamesListBox.Items.Clear();
+
+                uint startID = mCurFlow.GetStartID(mCurrentSelectedFlow);
+
+                uint curID = startID;
+                while (true)
+                {
+                    flowNamesListBox.Items.Add(mCurFlow.GetNode((int)curID).ToString());
+
+                    Node nextNode = mCurFlow.GetNextNode((int)curID);
+                    if (nextNode == null || nextNode.mNodeType == Node.NodeType.NodeType_Entry)
+                        break;
+
+                    curID++;
                 }
             }
         }

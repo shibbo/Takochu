@@ -99,6 +99,8 @@ namespace Takochu.ui
             cameraScene.objects.Clear();
             lightScene.objects.Clear();
 
+            layerViewerDropDown.DropDownItems.Clear();
+
             // we want to clear out the children of the 5 camera type root nodes
             //for (int i = 0; i < 5; i++)
             //    camerasTree.Nodes[i].Nodes.Clear();
