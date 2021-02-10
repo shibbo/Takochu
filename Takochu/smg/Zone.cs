@@ -102,13 +102,13 @@ namespace Takochu.smg
         {
             if (mFilesystem.DoesFileExist($"/LocalizeData/UsEnglish/MessageData/{mZoneName}.arc"))
             {
-                RARCFilesystem msg = new RARCFilesystem(mFilesystem.OpenFile($"/LocalizeData/UsEnglish/MessageData/{mZoneName}.arc"));
+                mMessagesFile = new RARCFilesystem(mFilesystem.OpenFile($"/LocalizeData/UsEnglish/MessageData/{mZoneName}.arc"));
 
-                if (msg.DoesFileExist($"/root/{mZoneName}.msbt"))
-                    mMessages = new MSBT(msg.OpenFile($"/root/{mZoneName}.msbt"));
+                if (mMessagesFile.DoesFileExist($"/root/{mZoneName}.msbt"))
+                    mMessages = new MSBT(mMessagesFile.OpenFile($"/root/{mZoneName}.msbt"));
 
-                if (msg.DoesFileExist($"/root/{mZoneName}.msbf"))
-                    mMessageFlows = new MSBF(msg.OpenFile($"/root/{mZoneName}.msbf"));
+                if (mMessagesFile.DoesFileExist($"/root/{mZoneName}.msbf"))
+                    mMessageFlows = new MSBF(mMessagesFile.OpenFile($"/root/{mZoneName}.msbf"));
             }
         }
 
@@ -193,6 +193,15 @@ namespace Takochu.smg
             {
                 fs.Close();
             }
+
+            if (mMessages != null)
+                mMessages.Close();
+
+            if (mMessageFlows != null)
+                mMessageFlows.Close();
+
+            if (mMessagesFile != null)
+                mMessagesFile.Close();
         }
 
         public bool IsZoneUsedOnLayer(string layer)
@@ -303,6 +312,17 @@ namespace Takochu.smg
                 SaveObjects(p.Key, "MapParts", "MapPartsInfo");
                 SaveObjects(p.Key, "Start", "StartInfo");
             }
+
+            if (mMessages != null)
+                mMessages.Save();
+            if (mMessageFlows != null)
+                mMessageFlows.Save();
+
+            if (mMessagesFile != null)
+            {
+                mMessagesFile.Save();
+                mMessagesFile.Close();
+            }
         }
 
         private void SaveObjects(string archive, string dir, string file)
@@ -360,6 +380,7 @@ namespace Takochu.smg
 
         Dictionary<string, FilesystemBase> mMapFiles;
 
+        private RARCFilesystem mMessagesFile;
         private MSBT mMessages;
         private MSBF mMessageFlows;
     }

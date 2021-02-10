@@ -376,6 +376,12 @@ namespace Takochu.io
             return (Position() - start);
         }
 
+        public override void WritePadding(byte padVal, int howMany)
+        {
+            for (int i = 0; i < howMany; i++)
+                Write(padVal);
+        }
+
         public override byte[] GetBuffer()
         {
             return mBuffer;

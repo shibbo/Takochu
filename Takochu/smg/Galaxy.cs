@@ -65,6 +65,12 @@ namespace Takochu.smg
             // they don't follow the scenario number scheme that regular stars do
             int greenStarNum = GetGreenStarNo();
 
+            if (greenStarNum == 0)
+            {
+                mCurScenarioName = NameHolder.GetScenarioName(mName, no);
+                return;
+            }
+
             // if there are 3 total green stars, we need to see if we have selected scenarios 1, 2, or 3
             // if there are 2 total green stars, we need to see if we have selected scenarios 1 or 2
             // if we have, we just load the regular scenario names
@@ -127,6 +133,8 @@ namespace Takochu.smg
             {
                 z.Value.Save();
             }
+
+            NameHolder.Save();
         }
 
         public List<string> GetGalaxyLayers(int mask)

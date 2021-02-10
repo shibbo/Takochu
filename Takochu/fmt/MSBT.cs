@@ -11,12 +11,16 @@ namespace Takochu.fmt
     {
         public MSBT(FileBase file)
         {
+            mFile = file;
+
             if (file.ReadString(8) != "MsgStdBn")
             {
                 throw new Exception("MSBT::MSBT() -- Invalid MSBT file!");
             }
 
-            file.Skip(0x18);
+            file.Skip(0xA);
+            int fileSize = file.ReadInt32();
+            file.Skip(0xA);
 
             while (file.Position() != file.GetLength())
             {
@@ -35,6 +39,11 @@ namespace Takochu.fmt
                         break;
                 }
             }
+        }
+
+        public void Close()
+        {
+            mFile.Close();
         }
 
         public Dictionary<string, List<MessageBase>> GetMessages()
@@ -91,9 +100,45 @@ namespace Takochu.fmt
             return ret;
         }
 
+        public void DetermineSize()
+        {
+
+        }
+
+        public void Save()
+        {
+            int size = 0x20;
+
+            int lbl = mLabels.CalcSize();
+            int atr = mAttributes.CalcSize();
+            int txt = mText.CalcSize();
+
+            size += lbl;
+            size += atr;
+            size += txt;
+
+            mFile.SetLength(size);
+            mFile.Seek(0);
+            mFile.WriteString("MsgStdBn");
+            mFile.Write((ushort)0xFEFF);
+            mFile.Write((short)0);
+            mFile.Write((short)0x0103);
+            mFile.Write((short)3);
+            mFile.Write((short)0);
+            mFile.Write(size);
+            mFile.WritePadding(0, 0xA);
+
+            mLabels.Save(ref mFile);
+            mAttributes.Save(ref mFile);
+            mText.Save(ref mFile);
+
+            mFile.Save();
+        }
+
         LBL1 mLabels;
         ATR1 mAttributes;
         TXT2 mText;
+        FileBase mFile;
     }
 
     public class LBL1
@@ -141,6 +186,66 @@ namespace Takochu.fmt
                 file.Skip(0x1);
         }
 
+        public void Save(ref FileBase file)
+        {
+            file.WriteString("LBL1");
+            file.Write(CalcSizeNoPadding());
+            file.WritePadding(0, 0x8);
+            file.Write(mEntries.Count);
+
+            int dataOffset = (mEntries.Count * 0x8) + 4;
+
+            List<LabelPair> pairs = new List<LabelPair>();
+
+            foreach (LabelEntry e in mEntries)
+            {
+                // if the pair count is greater than zero, we can write a new count and up our current data offset
+                if (e.Pairs.Count > 0)
+                {
+                    file.Write(e.Pairs.Count);
+                    file.Write(dataOffset);
+
+                    pairs.AddRange(e.Pairs);
+
+                    // increment our data offset by the length of each string in the pair
+                    for (int i = 0; i < e.Pairs.Count; i++)
+                    {
+                        dataOffset += e.Pairs[i].Label.Length + 5;
+                    }
+                }
+                else
+                {
+                    // otherwise we just write another entry with no pairs and the same data offset
+                    file.Write(0);
+                    file.Write(dataOffset);
+                }
+            }
+
+            // now we write the actual data
+            foreach(LabelPair p in pairs)
+            {
+                file.Write((byte)p.Label.Length);
+                file.WriteString(p.Label);
+                file.Write(p.TextOffset);
+            }
+
+            while (file.Position() % 0x10 != 0)
+                file.Write((byte)0xAB);
+        }
+
+        private int LabelHash(string label, int bucketCount)
+        {
+            int curGroup = 0;
+
+            for (int i = 0; i < label.Length; i++)
+            {
+                curGroup *= 0x492;
+                curGroup += label[i];
+            }
+
+            return curGroup % bucketCount;
+        }
+
         public List<LabelEntry> mEntries;
 
         public struct LabelEntry
@@ -154,6 +259,51 @@ namespace Takochu.fmt
             public string Label;
             public uint TextOffset;
         }
+
+        public int CalcSizeNoPadding()
+        {
+            int size = 4;
+            size += (mEntries.Count * 0x8);
+
+            // now we go through our pairs and calculate more sizes based on the strings
+            foreach (LabelEntry e in mEntries)
+            {
+                foreach (LabelPair p in e.Pairs)
+                {
+                    // value
+                    size += 4;
+                    // string length itself (+1 for string size)
+                    size += p.Label.Length + 1;
+                }
+            }
+
+            return size;
+        }
+
+        public int CalcSize()
+        {
+            // we start with the size of this header, which is 0x14
+            int size = 0x14;
+            size += (mEntries.Count * 0x8);
+
+            // now we go through our pairs and calculate more sizes based on the strings
+            foreach(LabelEntry e in mEntries)
+            {
+               foreach(LabelPair p in e.Pairs)
+                {
+                    // value
+                    size += 4;
+                    // string length itself (+1 for string size)
+                    size += p.Label.Length + 1;
+                }
+            }
+
+            // alignment
+            while (size % 0x10 != 0)
+                size++;
+
+            return size;
+        }
     }
 
     public class ATR1
@@ -164,7 +314,7 @@ namespace Takochu.fmt
             file.Skip(0x8);
             int baseOffset = file.Position();
             int entryCount = file.ReadInt32();
-            file.Skip(0x4);
+            mSomeValue = file.ReadInt32();
 
             mAttributes = new List<AttributeEntry>();
 
@@ -182,22 +332,72 @@ namespace Takochu.fmt
                     _7 = file.ReadByte()
                 };
 
-                int offs = file.ReadInt32();
-                int orig = file.Position();
+                file.ReadInt32();
 
-                file.Seek(baseOffset + offs);
-                e.mString = file.ReadStringUTF16();
-
-                file.Seek(orig);
+                mAttributes.Add(e);
             }
 
-            file.Seek(start + baseOffset);
+            file.Skip(mAttributes.Count * 2);
 
             while (file.Position() % 0x10 != 0)
                 file.Skip(0x1);
         }
 
+        public int CalcSize()
+        {
+            int size = 0x18;
+            size += (mAttributes.Count * 0xC);
+            size += (mAttributes.Count * 0x2);
+
+            while (size % 0x10 != 0)
+                size++;
+
+            return size;
+        }
+
+        public int CalcSizeNoPadding()
+        {
+            int size = 0x8;
+            size += (mAttributes.Count * 0xC);
+            size += (mAttributes.Count * 0x2);
+
+            return size;
+        }
+
+        public void Save(ref FileBase file)
+        {
+            file.WriteString("ATR1");
+            file.Write(CalcSizeNoPadding());
+            file.WritePadding(0, 0x8);
+            file.Write(mAttributes.Count);
+            file.Write(mSomeValue);
+
+            int dataOffset = (mAttributes.Count * 0xC) + 0x8;
+
+            foreach(AttributeEntry e in mAttributes)
+            {
+                file.Write(e._0);
+                file.Write(e._1);
+                file.Write(e._2);
+                file.Write(e._3);
+                file.Write(e._4);
+                file.Write(e._5);
+                file.Write(e._6);
+                file.Write(e._7);
+                file.Write(dataOffset);
+
+                dataOffset += 2;
+            }
+
+            for (int i = 0; i < mAttributes.Count; i++)
+                file.Write((short)0x0000);
+
+            while (file.Position() % 0x10 != 0)
+                file.Write((byte)0xAB);
+        }
+
         List<AttributeEntry> mAttributes;
+        int mSomeValue;
 
         public struct AttributeEntry
         {
@@ -299,22 +499,138 @@ namespace Takochu.fmt
                 file.Skip(0x1);
         }
 
+        public int CalcSize()
+        {
+            int size = 0x14;
+            // offsets
+            size += (mMessages.Count * 0x4);
+            // null terminators are a double 0x00 at the end of each string
+            // we add it here because it's easier than trying to find the end of a message list anyways
+            size += (mMessages.Count * 0x2);
+
+            // now we move on to the messages themselves
+            foreach(KeyValuePair<uint, List<MessageBase>> p in mMessages)
+            {
+                List<MessageBase> msgs = p.Value;
+
+                msgs.ForEach(m =>
+                {
+                    size += m.CalcSize();
+
+                    if (!(m is Character))
+                        size += 0x2;
+
+                });
+            }
+
+            while (size % 0x10 != 0)
+                size++;
+
+            return size;
+        }
+
+        public int CalcSizeNoPadding()
+        {
+            int size = 0x4;
+            // offsets
+            size += (mMessages.Count * 0x4);
+            // null terminators are a double 0x00 at the end of each string
+            // we add it here because it's easier than trying to find the end of a message list anyways
+            size += (mMessages.Count * 0x2);
+
+            // now we move on to the messages themselves
+            foreach (KeyValuePair<uint, List<MessageBase>> p in mMessages)
+            {
+                List<MessageBase> msgs = p.Value;
+
+                msgs.ForEach(m =>
+                {
+                    size += m.CalcSize();
+
+                    if (!(m is Character))
+                        size += 0x2;
+                });
+            }
+
+            return size;
+        }
+
         public List<MessageBase> GetMessageFromID(uint id)
         {
             return mMessages[id];
+        }
+
+        public void Save(ref FileBase file)
+        {
+            file.WriteString("TXT2");
+            file.Write(CalcSizeNoPadding());
+            file.WritePadding(0, 0x8);
+            file.Write(mMessages.Count);
+
+            int dataOffset = (mMessages.Count * 0x4) + 4;
+
+            // first let's write the offsets
+            foreach (KeyValuePair<uint, List<MessageBase>> p in mMessages)
+            {
+                file.Write(dataOffset);
+
+                List<MessageBase> msgs = p.Value;
+
+                msgs.ForEach(m =>
+                {
+                    dataOffset += m.CalcSize();
+
+                    if (!(m is Character))
+                        dataOffset += 0x2;
+                });
+
+                dataOffset += 0x2;
+            }
+
+            // now let's write the actual text data
+            foreach(KeyValuePair<uint, List<MessageBase>> p in mMessages)
+            {
+                List<MessageBase> msgs = p.Value;
+
+                foreach (MessageBase b in msgs)
+                    b.Save(ref file);
+
+                // null terminator at the end
+                file.Write((ushort)0);
+            }
+
+            while (file.Position() % 0x10 != 0)
+                file.Write((byte)0xAB);
         }
 
         public Dictionary<uint, List<MessageBase>> mMessages;
     }
 
     public class MessageBase
-    { }
+    {
+        public virtual void Save(ref FileBase file) 
+        {
+            file.Write((short)0xE);
+        }
+        public virtual int CalcSize() { return 0; }
+    }
+
 
     class Character : MessageBase
     {
         public Character(short cur)
         {
             mCharacter = (ushort)cur;
+        }
+
+        public override void Save(ref FileBase file)
+        {
+            file.Write(mCharacter);
+        }
+
+        public override int CalcSize()
+        {
+            return 0x2;
         }
 
         public override string ToString()
@@ -333,15 +649,31 @@ namespace Takochu.fmt
     {
         public SystemGroup(ref FileBase file)
         {
-            ushort mType = file.ReadUInt16();
+            mType = file.ReadUInt16();
             // we skip the data size here, we can safely determine the size by the type
-            file.Skip(0x2);
+            ushort val = file.ReadUInt16();
             // type 0 is japanese only
             // type 3 is color
             if (mType == 3)
             {
                 mColor = file.ReadInt16();
             }
+        }
+
+        public override int CalcSize()
+        {
+            return 0x8;
+        }
+
+        public override void Save(ref FileBase file)
+        {
+            base.Save(ref file);
+            // write the group type (0)
+            file.Write((short)0);
+            file.Write(mType);
+            // data size
+            file.Write((short)2);
+            file.Write(mColor);
         }
 
         public override string ToString()
@@ -363,6 +695,20 @@ namespace Takochu.fmt
             mCharID = file.ReadUInt16();
         }
 
+        public override int CalcSize()
+        {
+            return 0x8;
+        }
+
+        public override void Save(ref FileBase file)
+        {
+            base.Save(ref file);
+            file.Write((short)3);
+            file.Write((ushort)(mCharIdx - 0x30));
+            file.Write(mFont);
+            file.Write(mCharID);
+        }
+
         public override string ToString()
         {
             return $"[img={mCharIdx}]";
@@ -378,6 +724,7 @@ namespace Takochu.fmt
         public DisplayGroup(ref FileBase file)
         {
             mType = file.ReadUInt16();
+            file.Skip(0x2);
 
             if (mType != 0)
             {
@@ -385,8 +732,29 @@ namespace Takochu.fmt
             }
             else
             {
-                file.Skip(0x2);
                 mFrames = file.ReadUInt16();
+                file.Skip(0x2);
+            }
+        }
+
+        public override int CalcSize()
+        {
+            return 0x8;
+        }
+        public override void Save(ref FileBase file)
+        {
+            base.Save(ref file);
+            file.Write((short)1);
+            file.Write(mType);
+            // data length
+            file.Write((short)2);
+
+            if (mType != 0)
+                file.Write(0);
+            else
+            {
+                file.Write((short)0);
+                file.Write(mFrames);
             }
         }
 
@@ -407,6 +775,19 @@ namespace Takochu.fmt
             file.Skip(0x2);
         }
 
+        public override void Save(ref FileBase file)
+        {
+            base.Save(ref file);
+            file.Write((short)4);
+            file.Write(mFontSize);
+            file.WritePadding(0, 2);
+        }
+
+        public override int CalcSize()
+        {
+            return 0x6;
+        }
+
         public override string ToString()
         {
             return $"[font={mFontSize}]";
@@ -421,7 +802,25 @@ namespace Takochu.fmt
         {
             mMaxWidth = file.ReadUInt16();
             mWidth = file.ReadUInt16();
-            mNumber = BitConverter.ToInt32(file.ReadBytes(mWidth), 0);
+
+            mData = file.ReadBytes(mWidth);
+            mNumber = BitConverter.ToInt32(mData, 0);
+        }
+
+        public override void Save(ref FileBase file)
+        {
+            base.Save(ref file);
+            file.Write((short)6);
+            file.Write(mMaxWidth);
+            file.Write(mWidth);
+
+            for (int i = 0; i < mWidth; i++)
+                file.Write(mData[i]);
+        }
+
+        public override int CalcSize()
+        {
+            return 0x6 + mWidth;
         }
 
         public override string ToString()
@@ -432,6 +831,8 @@ namespace Takochu.fmt
         ushort mMaxWidth;
         ushort mWidth;
         int mNumber;
+
+        byte[] mData;
     }
 
     class SoundGroup : MessageBase
@@ -452,6 +853,11 @@ namespace Takochu.fmt
             mSoundID = str;
         }
 
+        public override int CalcSize()
+        {
+            return 0x8 + (mSoundID.Length * 2);
+        }
+
         public override string ToString()
         {
             return $"[sound=\"{mSoundID}\"]";
@@ -465,6 +871,18 @@ namespace Takochu.fmt
         public LocalizeGroup(ref FileBase file)
         {
             file.Skip(0x6);
+        }
+
+        public override void Save(ref FileBase file)
+        {
+            base.Save(ref file);
+            file.Write((short)5);
+            file.WritePadding(0, 0x4);
+        }
+
+        public override int CalcSize()
+        {
+            return 0x8;
         }
 
         public override string ToString()

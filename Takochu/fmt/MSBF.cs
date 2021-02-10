@@ -11,6 +11,7 @@ namespace Takochu.fmt
     {
         public MSBF(FileBase file)
         {
+            mFile = file;
             if (file.ReadString(0x8) != "MsgFlwBn")
             {
                 throw new Exception("MSBF::MSBF() -- Not a valid MSBF file!");
@@ -34,6 +35,16 @@ namespace Takochu.fmt
                         throw new Exception("MSBF::MSBF() -- REF1 section found, but this is not supported.");
                 }
             }
+        }
+
+        public void Close()
+        {
+            mFile.Close();
+        }
+
+        public void Save()
+        {
+
         }
 
         public List<string> GetFlowNames()
@@ -79,6 +90,7 @@ namespace Takochu.fmt
 
         Flow mFlow;
         Entry mEntries;
+        FileBase mFile;
     }
 
     public class Node

@@ -54,7 +54,7 @@
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.saveGalaxyBtn = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
+            this.closeEditorBtn = new System.Windows.Forms.ToolStripButton();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -310,7 +310,7 @@
             this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveGalaxyBtn,
-            this.toolStripButton5});
+            this.closeEditorBtn});
             this.toolStrip2.Location = new System.Drawing.Point(6, 1);
             this.toolStrip2.Name = "toolStrip2";
             this.toolStrip2.Size = new System.Drawing.Size(109, 25);
@@ -327,14 +327,15 @@
             this.saveGalaxyBtn.Text = "Save";
             this.saveGalaxyBtn.Click += new System.EventHandler(this.saveGalaxyBtn_Click);
             // 
-            // toolStripButton5
+            // closeEditorBtn
             // 
-            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
-            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton5.Name = "toolStripButton5";
-            this.toolStripButton5.Size = new System.Drawing.Size(40, 22);
-            this.toolStripButton5.Text = "Close";
+            this.closeEditorBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.closeEditorBtn.Image = ((System.Drawing.Image)(resources.GetObject("closeEditorBtn.Image")));
+            this.closeEditorBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.closeEditorBtn.Name = "closeEditorBtn";
+            this.closeEditorBtn.Size = new System.Drawing.Size(40, 22);
+            this.closeEditorBtn.Text = "Close";
+            this.closeEditorBtn.Click += new System.EventHandler(this.closeEditorBtn_Click);
             // 
             // EditorWindow
             // 
@@ -388,7 +389,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButton3;
         private System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.ToolStripButton saveGalaxyBtn;
-        private System.Windows.Forms.ToolStripButton toolStripButton5;
+        private System.Windows.Forms.ToolStripButton closeEditorBtn;
         private GL_EditorFramework.ObjectUIControl lightsUIControl;
         private GL_EditorFramework.SceneListView lightsSceneListView;
     }

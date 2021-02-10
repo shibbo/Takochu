@@ -35,6 +35,13 @@ namespace Takochu.smg.msg
             return mScenarioNames.GetStringFromLabelNoTag(name);
         }
 
+        public static void Save()
+        {
+            mGalaxyNames.Save();
+            mFilesystem.Save();
+            mFilesystem.Close();
+        }
+
         private static RARCFilesystem mFilesystem;
         private static MSBT mGalaxyNames;
         private static MSBT mScenarioNames;

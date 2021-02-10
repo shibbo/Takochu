@@ -532,5 +532,10 @@ namespace Takochu.ui
         {
             mGalaxy.Save();
         }
+
+        private void closeEditorBtn_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }

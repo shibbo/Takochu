@@ -18,6 +18,7 @@ namespace Takochu.io
         public override void Save()
         {
             mFilesystem.ReinsertFile(this);
+            this.Close();
         }
 
         public RARCFilesystem mFilesystem;

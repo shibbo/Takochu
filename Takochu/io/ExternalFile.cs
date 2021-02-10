@@ -185,6 +185,12 @@ namespace Takochu.io
             mFile.Write(val, 0, val.Length);
         }
 
+        public override void WritePadding(byte padVal, int howMany)
+        {
+            for (int i = 0; i < howMany; i++)
+                Write(padVal);
+        }
+
         public override int WriteString(string val)
         {
             byte[] arr = mEncoding.GetBytes(val);

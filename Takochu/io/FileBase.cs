@@ -45,6 +45,7 @@ namespace Takochu.io
         public virtual void Write(double val) { }
         public virtual void Write(byte[] val) { }
         public virtual void Write(char[] val) { }
+        public virtual void WritePadding(byte padVal, int howMany) { }
         public virtual int WriteString(string val) { return 0; }
         public virtual int WriteStringNT(string val) { return 0; }
 
