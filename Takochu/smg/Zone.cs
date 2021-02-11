@@ -315,13 +315,12 @@ namespace Takochu.smg
 
             if (mMessages != null)
                 mMessages.Save();
+
             if (mMessageFlows != null)
                 mMessageFlows.Save();
 
             if (mMessagesFile != null)
-            {
                 mMessagesFile.Save();
-            }
         }
 
         private void SaveObjects(string archive, string dir, string file)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Takochu.io;
+using static Takochu.fmt.Entry;
 
 namespace Takochu.fmt
 {
@@ -45,7 +46,12 @@ namespace Takochu.fmt
             mFile.Write((short)0x2);
             mFile.Write((short)0);
 
+            int size = 0x20 + mFlow.CalcSize() + mEntries.CalcSize();
+            mFile.Write(size);
+            mFile.WritePadding(0, 0xA);
 
+            mFlow.Save(ref mFile);
+            mEntries.Save(ref mFile);
         }
 
         public void Close()
@@ -57,9 +63,12 @@ namespace Takochu.fmt
         {
             List<string> ret = new List<string>();
 
-            foreach(KeyValuePair<string, uint> p in mEntries.mTable)
+            foreach (TableEntry e in mEntries.mEntries)
             {
-                ret.Add(p.Key);
+                if (e.Count > 0)
+                {
+                    e.Pairs.ForEach(p => ret.Add(p.Label));
+                }
             }
 
             return ret;
@@ -67,7 +76,19 @@ namespace Takochu.fmt
 
         public uint GetStartID(string name)
         {
-            return mEntries.mTable[name];
+            foreach (TableEntry e in mEntries.mEntries)
+            {
+                if (e.Count > 0)
+                {
+                    foreach (TablePair p in e.Pairs)
+                    {
+                        if (p.Label == name)
+                            return p.FlowOffset;
+                    }
+                }
+            }
+
+            return 0xFFFFFFFF;
         }
 
         public int NodeCount()
@@ -101,7 +122,7 @@ namespace Takochu.fmt
 
     public class Node
     {
-        public enum NodeType
+        public enum NodeType : ushort
         {
             NodeType_Message = 1,
             NodeType_Branch = 2,
@@ -110,6 +131,8 @@ namespace Takochu.fmt
         }
 
         public Node() {  }
+
+        public virtual void Save(ref FileBase file) { }
 
         public NodeType mNodeType;
         public ushort mNextNode;
@@ -125,6 +148,15 @@ namespace Takochu.fmt
             mMessageID = file.ReadUInt16();
             mNextNode = file.ReadUInt16();
             file.Skip(0x2);
+        }
+
+        public override void Save(ref FileBase file)
+        {
+            file.Write((short)0x1);
+            file.WritePadding(0, 0x4);
+            file.Write(mMessageID);
+            file.Write(mNextNode);
+            file.WritePadding(0, 0x2);
         }
 
         public override string ToString()
@@ -145,6 +177,16 @@ namespace Takochu.fmt
             mCondition = file.ReadUInt16(); // Unk3
             mYesNoBoxChoices = file.ReadUInt16(); // Unk4
             mLabelsToUse = file.ReadUInt16(); // Unk5
+        }
+
+        public override void Save(ref FileBase file)
+        {
+            file.Write((short)0x2);
+            file.WritePadding(0, 0x2);
+            file.Write(mUnk2);
+            file.Write(mCondition);
+            file.Write(mYesNoBoxChoices);
+            file.Write(mLabelsToUse);
         }
 
         public override string ToString()
@@ -170,6 +212,16 @@ namespace Takochu.fmt
             mFlowID = file.ReadUInt16();
         }
 
+        public override void Save(ref FileBase file)
+        {
+            file.Write((short)0x3);
+            file.WritePadding(0, 0x2);
+            file.Write(mEvent);
+            file.Write(mJumpFlow);
+            file.WritePadding(0, 0x2);
+            file.Write(mFlowID);
+        }
+
         public override string ToString()
         {
             return "Event Node";
@@ -188,6 +240,14 @@ namespace Takochu.fmt
             file.Skip(0x2);
             mNextNode = file.ReadUInt16();
             file.Skip(0x6);
+        }
+
+        public override void Save(ref FileBase file)
+        {
+            file.Write((short)0x4);
+            file.WritePadding(0, 0x2);
+            file.Write(mNextNode);
+            file.WritePadding(0, 0x6);
         }
 
         public override string ToString()
@@ -242,10 +302,41 @@ namespace Takochu.fmt
                 file.Skip(0x1);
         }
 
+        public void Save(ref FileBase file)
+        {
+            file.WriteString("FLW2");
+            file.Write(CalcSizeNoPadding());
+            file.WritePadding(0, 0x8);
+            file.Write((short)mNodes.Count);
+            file.Write((short)mLabels.Count);
+
+            foreach (Node n in mNodes)
+                n.Save(ref file);
+
+            foreach (ushort label in mLabels)
+                file.Write(label);
+
+            while (file.Position() % 0x10 != 0)
+                file.Write((byte)0xAB);
+        }
+
         public int CalcSize()
         {
             int size = 0x18;
+            size += (mNodes.Count * 0xC);
+            size += (mLabels.Count * 0x2);
 
+            while (size % 0x10 != 0)
+                size++;
+
+            return size;
+        }
+
+        public int CalcSizeNoPadding()
+        {
+            int size = 0x8;
+            size += (mNodes.Count * 0xC);
+            size += (mLabels.Count * 0x2);
             return size;
         }
 
@@ -253,17 +344,23 @@ namespace Takochu.fmt
         public List<ushort> mLabels;
     }
 
-    class Entry
+    public class Entry
     {
-        struct TableEntry
+        public struct TableEntry
         {
-            public int mPtr;
-            public uint mIsValid;
+            public uint Count;
+            public List<TablePair> Pairs;
+        }
+
+        public struct TablePair
+        {
+            public string Label;
+            public uint FlowOffset;
         }
 
         public Entry(ref FileBase file)
         {
-            mTable = new Dictionary<string, uint>();
+            //mTable = new Dictionary<string, uint>();
             mEntries = new List<TableEntry>();
 
             int size = file.ReadInt32();
@@ -274,17 +371,34 @@ namespace Takochu.fmt
             for (int i = 0; i < count; i++)
             {
                 TableEntry e = new TableEntry();
-                e.mIsValid = file.ReadUInt32();
-                e.mPtr = file.ReadInt32();
+                e.Count = file.ReadUInt32();
 
-                mEntries.Add(e);
+                int offs = file.ReadInt32();
 
-                if (e.mIsValid == 1)
+                e.Pairs = new List<TablePair>();
+
+                int pos = file.Position();
+                file.Seek(loc + offs);
+
+                for (int j = 0; j < e.Count; j++)
+                {
+                    TablePair p = new TablePair();
+                    p.Label = file.ReadStringLenPrefix();
+                    p.FlowOffset = file.ReadUInt32();
+
+                    e.Pairs.Add(p);
+                }
+
+                file.Seek(pos);
+
+                /*if (e.mIsValid == 1)
                 {
                     string str = file.ReadStringAt(loc + e.mPtr);
                     uint val = file.ReadUInt32At(loc + e.mPtr + str.Length + 1);
                     mTable.Add(str, val);
-                }
+                }*/
+
+                mEntries.Add(e);
             }
 
             file.Seek(loc + size);
@@ -293,7 +407,98 @@ namespace Takochu.fmt
                 file.Skip(0x1);
         }
 
-        List<TableEntry> mEntries;
-        public Dictionary<string, uint> mTable;
+        public void Save(ref FileBase file)
+        {
+            file.WriteString("FEN1");
+            file.Write(CalcSizeNoPadding());
+            file.WritePadding(0, 0x8);
+            file.Write(mEntries.Count);
+            file.WritePadding(0, 0x4);
+
+            int dataOffset = (mEntries.Count * 0x8) + 4;
+
+            List<TablePair> pairs = new List<TablePair>();
+
+            foreach (TableEntry e in mEntries)
+            {
+                // if the pair count is greater than zero, we can write a new count and up our current data offset
+                if (e.Pairs.Count > 0)
+                {
+                    file.Write(e.Pairs.Count);
+                    file.Write(dataOffset);
+
+                    pairs.AddRange(e.Pairs);
+
+                    // increment our data offset by the length of each string in the pair
+                    for (int i = 0; i < e.Pairs.Count; i++)
+                    {
+                        dataOffset += e.Pairs[i].Label.Length + 5;
+                    }
+                }
+                else
+                {
+                    // otherwise we just write another entry with no pairs and the same data offset
+                    file.Write(0);
+                    file.Write(dataOffset);
+                }
+            }
+
+            // now we write the actual data
+            foreach (TablePair p in pairs)
+            {
+                file.Write((byte)p.Label.Length);
+                file.WriteString(p.Label);
+                file.Write(p.FlowOffset);
+            }
+
+            while (file.Position() % 0x10 != 0)
+                file.Write((byte)0xAB);
+        }
+
+        public int CalcSize()
+        {
+            int size = 0x14;
+            size += (mEntries.Count * 0x8);
+
+            // now we go through our pairs and calculate more sizes based on the strings
+            foreach (TableEntry e in mEntries)
+            {
+                foreach (TablePair p in e.Pairs)
+                {
+                    // value
+                    size += 4;
+                    // string length itself (+1 for string size)
+                    size += p.Label.Length + 1;
+                }
+            }
+
+            while ((size % 0x10) != 0)
+                size++;
+
+            return size;
+        }
+
+        public int CalcSizeNoPadding()
+        {
+            int size = 4;
+            size += (mEntries.Count * 0x8);
+
+            // now we go through our pairs and calculate more sizes based on the strings
+            foreach (TableEntry e in mEntries)
+            {
+                foreach (TablePair p in e.Pairs)
+                {
+                    // value
+                    size += 4;
+                    // string length itself (+1 for string size)
+                    size += p.Label.Length + 1;
+                }
+            }
+
+            return size;
+        }
+
+        public List<TableEntry> mEntries;
+        //public Dictionary<string, uint> mTable;
     };
 }
