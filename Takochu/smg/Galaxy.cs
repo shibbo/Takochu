@@ -52,6 +52,8 @@ namespace Takochu.smg
             {
                 zone.Close();
             }
+
+            NameHolder.Close();
         }
 
         public void SetScenario(int no)

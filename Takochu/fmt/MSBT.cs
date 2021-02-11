@@ -100,11 +100,6 @@ namespace Takochu.fmt
             return ret;
         }
 
-        public void DetermineSize()
-        {
-
-        }
-
         public void Save()
         {
             int size = 0x20;

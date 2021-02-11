@@ -321,7 +321,6 @@ namespace Takochu.smg
             if (mMessagesFile != null)
             {
                 mMessagesFile.Save();
-                mMessagesFile.Close();
             }
         }
 

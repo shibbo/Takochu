@@ -37,14 +37,20 @@ namespace Takochu.fmt
             }
         }
 
+        public void Save()
+        {
+            mFile.WriteString("MsgFlwbn");
+            mFile.Write((ushort)0xFEFF);
+            mFile.Write(0x3);
+            mFile.Write((short)0x2);
+            mFile.Write((short)0);
+
+
+        }
+
         public void Close()
         {
             mFile.Close();
-        }
-
-        public void Save()
-        {
-
         }
 
         public List<string> GetFlowNames()
@@ -234,6 +240,13 @@ namespace Takochu.fmt
 
             while (file.Position() % 0x10 != 0)
                 file.Skip(0x1);
+        }
+
+        public int CalcSize()
+        {
+            int size = 0x18;
+
+            return size;
         }
 
         public List<Node> mNodes;

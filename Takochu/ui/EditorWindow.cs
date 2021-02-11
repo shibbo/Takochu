@@ -535,6 +535,7 @@ namespace Takochu.ui
 
         private void closeEditorBtn_Click(object sender, EventArgs e)
         {
+            mGalaxy.Close();
             Close();
         }
     }
