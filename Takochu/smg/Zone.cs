@@ -300,6 +300,11 @@ namespace Takochu.smg
             return mMessageFlows != null;
         }
 
+        public List<string> GetLayersUsedOnZoneForCurrentScenario()
+        {
+            return mGalaxy.GetGalaxyLayers(mGalaxy.GetMaskUsedInZoneOnCurrentScenario(mZoneName));
+        }
+
         public void Save()
         {
             foreach(KeyValuePair<string, FilesystemBase> p in mMapFiles)

@@ -113,9 +113,9 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.objUIControl.BackColor = System.Drawing.SystemColors.Control;
             this.objUIControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.objUIControl.Location = new System.Drawing.Point(-3, 635);
+            this.objUIControl.Location = new System.Drawing.Point(0, 635);
             this.objUIControl.Name = "objUIControl";
-            this.objUIControl.Size = new System.Drawing.Size(342, 169);
+            this.objUIControl.Size = new System.Drawing.Size(339, 138);
             this.objUIControl.TabIndex = 5;
             // 
             // tabControl1
@@ -313,7 +313,7 @@
             this.closeEditorBtn});
             this.toolStrip2.Location = new System.Drawing.Point(6, 1);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(109, 25);
+            this.toolStrip2.Size = new System.Drawing.Size(78, 25);
             this.toolStrip2.TabIndex = 8;
             this.toolStrip2.Text = "toolStrip2";
             // 

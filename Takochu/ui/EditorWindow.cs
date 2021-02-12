@@ -80,7 +80,6 @@ namespace Takochu.ui
             galaxyViewControl.Refresh();
         }
 
-
         private EditorScene scene;
         private EditorScene cameraScene;
         private EditorScene lightScene;

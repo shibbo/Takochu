@@ -44,6 +44,7 @@ namespace Takochu.smg.obj
 
         public Vector3 mTruePosition;
         public Vector3 mTrueRotation;
+        public Vector3 mScale;
 
         public string mDirectory;
         public string mLayer;
@@ -51,6 +52,5 @@ namespace Takochu.smg.obj
 
         public string mName;
         public string mType;
-        ulong animationStartFrame;
     }
 }
