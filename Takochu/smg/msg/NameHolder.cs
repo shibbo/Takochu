@@ -37,11 +37,6 @@ namespace Takochu.smg.msg
 
         public static void Close()
         {
-            mFilesystem.Close();
-        }
-
-        public static void CloseAll()
-        {
             mGalaxyNames.Close();
             mScenarioNames.Close();
             mFilesystem.Close();
