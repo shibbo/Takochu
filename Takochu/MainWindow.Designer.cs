@@ -110,6 +110,7 @@
             this.Controls.Add(this.mainToolStrip);
             this.Name = "MainWindow";
             this.Text = "Takochu";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.mainToolStrip.ResumeLayout(false);
             this.mainToolStrip.PerformLayout();
             this.ResumeLayout(false);

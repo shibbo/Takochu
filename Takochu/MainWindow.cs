@@ -129,5 +129,10 @@ namespace Takochu
             RARCExplorer explorer = new RARCExplorer();
             explorer.Show();
         }
+
+        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            NameHolder.CloseAll();
+        }
     }
 }
