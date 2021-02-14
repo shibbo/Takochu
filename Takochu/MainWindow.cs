@@ -132,7 +132,7 @@ namespace Takochu
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            NameHolder.CloseAll();
+            NameHolder.Close();
         }
     }
 }
