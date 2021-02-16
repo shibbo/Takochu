@@ -88,6 +88,7 @@
     <Compile Include="smg\LightData.cs" />
     <Compile Include="smg\msg\FlowEmulator.cs" />
     <Compile Include="smg\msg\NameHolder.cs" />
+    <Compile Include="smg\ObjectDB.cs" />
     <Compile Include="smg\obj\CameraObj.cs" />
     <Compile Include="smg\obj\DebugObj.cs" />
     <Compile Include="smg\obj\DemoObj.cs" />

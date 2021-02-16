@@ -20,6 +20,7 @@ namespace Takochu
         {
             BCSV.PopulateHashTable();
             CameraUtil.InitCameras();
+            ObjectDB.Load();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
