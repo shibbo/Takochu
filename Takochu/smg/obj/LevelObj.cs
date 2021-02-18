@@ -13,6 +13,7 @@ using GL_EditorFramework;
 using System.Security.Policy;
 using System.Security.Cryptography;
 using Takochu.ui;
+using static Takochu.smg.ObjectDB;
 
 namespace Takochu.smg.obj
 {
@@ -61,28 +62,6 @@ namespace Takochu.smg.obj
             mMapPartsID = Get<short>("MapParts_ID");
             mObjID = Get<short>("Obj_ID");
             mGeneratorID = Get<short>("GeneratorID");
-        }
-        
-        public List<AbstractObj> GetObjsWithSameField(string type, int value)
-        {
-            List<AbstractObj> ret = new List<AbstractObj>();
-
-            List<string> layers = mParentZone.GetLayersUsedOnZoneForCurrentScenario();
-            ObjectHolder objs = mParentZone.GetObjectsFromLayers("Map", "Obj", layers);
-            objs.AddObjects(mParentZone.GetObjectsFromLayers("Map", "AreaObj", layers));
-
-            foreach(AbstractObj o in objs.GetObjs())
-            {
-                if (!o.mEntry.ContainsKey(type))
-                    continue;
-
-                if (o.Get<int>(type) == value)
-                {
-                    ret.Add(o);
-                }
-            }
-
-            return ret;
         }
 
         public override void Save()
@@ -315,7 +294,38 @@ namespace Takochu.smg.obj
             public void DoUI(IObjectUIControl control)
             {
                 for (int i = 0; i < 8; i++)
-                    obj.mObjArgs[i] = (int)control.NumberInput(obj.mObjArgs[i], $"Obj_arg{i}");
+                {
+                    if (ObjectDB.UsesObjArg(obj.mName, i))
+                    {
+                        Actor actor = ObjectDB.GetActorFromObjectName(obj.mName);
+                        ActorField field = GetFieldFromActor(actor, i);
+
+                        switch (field.Type)
+                        {
+                            case "checkbox":
+                                bool check = obj.mObjArgs[i] == Int32.Parse(field.Value);
+                                int intVal = Int32.Parse(field.Value);
+                                obj.mObjArgs[i] = control.CheckBox(field.Name, check) ? intVal : -1;
+                                break;
+                            case "list":
+                                // this code is a little complicated, but to sum it up:
+                                // the list has a syntax, value = name
+                                // so we get the fields as a list, then we get the index of the field we need to select, based on the Obj_arg value
+                                // then after that, we insert the list into the combo box, and set the current selected index based on our Obj_arg value
+                                // to properly set the value again, we simply take the selected item and set the value on the left side and set it to that
+                                string[] fields = ObjectDB.GetFieldAsList(field);
+                                int index = ObjectDB.IndexOfSelectedListField(field, obj.mObjArgs[i]);
+                                string val = control.DropDownTextInput(field.Name, fields[index], fields, false);
+                                obj.mObjArgs[i] = Int32.Parse(val.Split('=')[0]);
+                                break;
+                            case "value":
+                                obj.mObjArgs[i] = (int)control.NumberInput(obj.mObjArgs[i], field.Name);
+                                break;
+                        }
+                    }
+                    else
+                        obj.mObjArgs[i] = (int)control.NumberInput(obj.mObjArgs[i], $"Obj_arg{i}");
+                }   
             }
 
             public void OnValueChangeStart() { }

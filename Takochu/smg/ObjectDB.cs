@@ -41,7 +41,7 @@ namespace Takochu.smg
                 {
                     ActorField f = new ActorField();
                     string arg = field.Attributes["id"].Value;
-                    f.Arg = arg[arg.Length - 1].ToString();
+                    f.Arg = Int32.Parse(arg[arg.Length - 1].ToString());
                     f.Name = field.Attributes["name"].Value;
                     f.Type = field.Attributes["type"].Value;
                     f.Value = field.Attributes["values"].Value;
@@ -65,7 +65,7 @@ namespace Takochu.smg
                 obj.Name = generalFlags["name"].InnerText;
                 obj.Actor = generalFlags["actor"].InnerText;
                 obj.Notes = generalFlags["notes"].InnerText;
-                obj.Game = Convert.ToInt32(generalFlags["flags"].Attributes["games"].Value);
+                obj.Game = Int32.Parse(generalFlags["flags"].Attributes["games"].Value);
 
                 Objects.Add(obj.InternalName, obj);
             }
@@ -74,10 +74,67 @@ namespace Takochu.smg
         public static Actor GetActorFromObjectName(string objName)
         {
             Object obj = Objects[objName];
+
+            if (obj.Actor == "")
+                return null;
+
             return Actors[obj.Actor];
         }
 
-        public struct Actor
+        public static ActorField GetFieldFromActor(Actor actor, int fieldNo)
+        {
+            foreach(ActorField field in actor.Fields)
+            {
+                if (field.Arg == fieldNo)
+                    return field;
+            }
+
+            return null;
+        }
+
+        public static string[] GetFieldAsList(ActorField field)
+        {
+            string[] elements = field.Value.Split(',');
+            return elements;
+        }
+
+        public static int IndexOfSelectedListField(ActorField field, int value)
+        {
+            string[] list = GetFieldAsList(field);
+            int index = -1;
+
+            foreach(string element in list)
+            {
+                index++;
+
+                string[] split = element.Split('=');
+
+                if (Int32.Parse(split[0]) == value)
+                    return index;
+            }
+
+            return -1;
+        }
+
+        public static bool UsesObjArg(string objName, int argNo)
+        {
+            bool ret = false;
+
+            Actor actor = GetActorFromObjectName(objName);
+
+            if (actor == null)
+                return ret;
+
+            actor.Fields.ForEach(f =>
+            {
+                if (f.Arg == argNo)
+                    ret = true;
+            });
+
+            return ret;
+        }
+
+        public class Actor
         {
             public string ActorName;
             public int IsKnown;
@@ -85,16 +142,16 @@ namespace Takochu.smg
             public List<ActorField> Fields;
         }
 
-        public struct ActorField
+        public class ActorField
         {
-            public string Arg;
+            public int Arg;
             public string Type;
             public string Name;
             public string Value;
             public string Notes;
         }
 
-        public struct Object
+        public class Object
         {
             public string InternalName;
             public string Name;

@@ -26,6 +26,28 @@ namespace Takochu.smg.obj
             //Rotation = rot + Rotation;
         }
 
+        public List<AbstractObj> GetObjsWithSameField(string type, int value)
+        {
+            List<AbstractObj> ret = new List<AbstractObj>();
+
+            List<string> layers = mParentZone.GetLayersUsedOnZoneForCurrentScenario();
+            ObjectHolder objs = mParentZone.GetObjectsFromLayers("Map", "Obj", layers);
+            objs.AddObjects(mParentZone.GetObjectsFromLayers("Map", "AreaObj", layers));
+
+            foreach (AbstractObj o in objs.GetObjs())
+            {
+                if (!o.mEntry.ContainsKey(type))
+                    continue;
+
+                if (o.Get<int>(type) == value)
+                {
+                    ret.Add(o);
+                }
+            }
+
+            return ret;
+        }
+
         public virtual void Save() { }
         public virtual void InitializeRender() { }
         public virtual void StopRender() { }

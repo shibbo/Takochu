@@ -93,6 +93,37 @@ namespace Takochu.smg.obj
             }
         }
 
+        public void Save()
+        {
+            // load camera specific fields
+            List<string> fields = CameraUtil.GetStrings(mType).ToList();
+
+            foreach (string field in fields)
+            {
+                // skip if there are no fields here
+                if (field == "none")
+                    break;
+
+                // write the rest
+                mEntry.Set(field, mFields[field]);
+            }
+
+            Dictionary<string, string> allFields = CameraUtil.GetAll();
+
+            foreach (string s in allFields.Keys)
+            {
+                // skip if it doesn't exist
+                if (!mEntry.ContainsKey(s))
+                    continue;
+
+                // write the remaining fields
+                mEntry.Set(s, mFields[s]);
+            }
+
+            mEntry.Set("id", mName);
+            mEntry.Set("camtype", mType);
+        }
+
         public CameraType GetCameraType()
         {
             string type = mName.Substring(0, 1);

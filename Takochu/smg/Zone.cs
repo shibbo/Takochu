@@ -326,6 +326,9 @@ namespace Takochu.smg
 
             if (mMessagesFile != null)
                 mMessagesFile.Save();
+
+            foreach (Camera c in mCameras)
+                c.Save();
         }
 
         private void SaveObjects(string archive, string dir, string file)
