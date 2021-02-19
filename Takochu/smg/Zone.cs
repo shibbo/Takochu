@@ -81,10 +81,10 @@ namespace Takochu.smg
 
         public void LoadCameras()
         {
-            BCSV cameraBCSV = new BCSV(mMapFiles["Map"].OpenFile("/root/camera/CameraParam.bcam"));
-            cameraBCSV.RemoveField("no");
+            BCSV cameras = new BCSV(mMapFiles["Map"].OpenFile("/root/camera/CameraParam.bcam"));
+            cameras.RemoveField("no");
             mCameras = new List<Camera>();
-            cameraBCSV.mEntries.ForEach(c => mCameras.Add(new Camera(c, this)));
+            cameras.mEntries.ForEach(c => mCameras.Add(new Camera(c, this)));
         }
 
         public void LoadLight()
@@ -93,9 +93,9 @@ namespace Takochu.smg
             if (mMapFiles["Light"].GetFiles("/root/csv").Count == 0)
                 return;
 
-            BCSV lightBCSV = new BCSV(mMapFiles["Light"].OpenFile($"/root/csv/{mZoneName}Light.bcsv"));
+            mLightBCSV = new BCSV(mMapFiles["Light"].OpenFile($"/root/csv/{mZoneName}Light.bcsv"));
             mLights = new List<Light>();
-            lightBCSV.mEntries.ForEach(e => mLights.Add(new Light(e, mZoneName)));
+            mLightBCSV.mEntries.ForEach(e => mLights.Add(new Light(e, mZoneName)));
         }
 
         public void LoadMessages()
@@ -327,8 +327,11 @@ namespace Takochu.smg
             if (mMessagesFile != null)
                 mMessagesFile.Save();
 
-            foreach (Camera c in mCameras)
-                c.Save();
+            SaveCameras();
+            mMapFiles["Map"].Save();
+
+            if (mLightBCSV != null)
+                mLightBCSV.Save();
         }
 
         private void SaveObjects(string archive, string dir, string file)
@@ -372,6 +375,21 @@ namespace Takochu.smg
             bcsv.Close();
         }
 
+        private void SaveCameras()
+        {
+            BCSV bcsv = new BCSV(mMapFiles["Map"].OpenFile("/root/camera/CameraParam.bcam"));
+            bcsv.mEntries.Clear();
+
+            foreach(Camera c in mCameras)
+            {
+                c.Save();
+                bcsv.mEntries.Add(c.mEntry);
+            }
+
+            bcsv.Save();
+            bcsv.Close();
+        }
+
         public Galaxy mGalaxy;
         private Game mGame;
         private FilesystemBase mFilesystem;
@@ -389,5 +407,7 @@ namespace Takochu.smg
         private RARCFilesystem mMessagesFile;
         private MSBT mMessages;
         private MSBF mMessageFlows;
+
+        private BCSV mLightBCSV;
     }
 }
