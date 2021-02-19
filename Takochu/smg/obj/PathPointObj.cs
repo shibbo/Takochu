@@ -47,12 +47,29 @@ namespace Takochu.smg.obj
             }
         }
 
+        public void Save()
+        {
+            mEntry.Set("id", mID);
+
+            mEntry.Set("pnt0_x", mPosition.X);
+            mEntry.Set("pnt0_y", mPosition.Y);
+            mEntry.Set("pnt0_z", mPosition.Z);
+
+            mEntry.Set("pnt0_x", mPoint1.X);
+            mEntry.Set("pnt0_y", mPoint1.Y);
+            mEntry.Set("pnt0_z", mPoint1.Z);
+
+            mEntry.Set("pnt0_x", mPoint2.X);
+            mEntry.Set("pnt0_y", mPoint2.Y);
+            mEntry.Set("pnt0_z", mPoint2.Z);
+        }
+
         public override string ToString()
         {
             return $"[{mParent.mID}] {mParent.mName} (Point {mID}) ({mParent.mZone.mZoneName})";
         }
 
-        BCSV.Entry mEntry;
+        public BCSV.Entry mEntry;
         PathObj mParent;
         short mID;
         Vector3 mPosition;

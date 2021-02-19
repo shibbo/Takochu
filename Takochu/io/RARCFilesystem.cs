@@ -427,7 +427,7 @@ namespace Takochu.io
         public override void DeleteFile(string file)
         {
             file = PathToKey(file);
-            if (mFileEntries.ContainsKey(file))
+            if (!mFileEntries.ContainsKey(file))
                 return;
 
             FileEntry f = mFileEntries[file];

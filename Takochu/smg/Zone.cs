@@ -36,7 +36,7 @@ namespace Takochu.smg
         {
             // so first we need to collect all of the files used in this zone
             // zones can use Design, Sound, Light, etc
-            foreach(string file in cPossibleFiles)
+            foreach (string file in cPossibleFiles)
             {
                 string path = $"/StageData/{mZoneName}/{mZoneName}{file}.arc";
 
@@ -118,7 +118,7 @@ namespace Takochu.smg
 
             mPaths = new List<PathObj>();
 
-            foreach(BCSV.Entry e in pathsBCSV.mEntries)
+            foreach (BCSV.Entry e in pathsBCSV.mEntries)
             {
                 mPaths.Add(new PathObj(e, this, (RARCFilesystem)mMapFiles["Map"]));
             }
@@ -167,7 +167,7 @@ namespace Takochu.smg
                         mObjects[archive][layer].Add(new DemoObj(e, this, path));
                         break;
                     case "GeneralPosInfo":
-                        mObjects[archive][layer].Add(new GeneralPosObj(e, this, path));
+                        mObjects[archive][layer].Add(new GeneralPos(e, this, path));
                         break;
                     case "DebugMoveInfo":
                         mObjects[archive][layer].Add(new DebugMoveObj(e, this, path));
@@ -238,7 +238,7 @@ namespace Takochu.smg
         {
             List<AbstractObj> ret = new List<AbstractObj>();
 
-            foreach(string archive in cPossibleFiles)
+            foreach (string archive in cPossibleFiles)
             {
                 if (!mObjects.ContainsKey(archive))
                     continue;
@@ -262,7 +262,7 @@ namespace Takochu.smg
             // empty list to avoid a bunch of null exceptions
             if (!mObjects.ContainsKey(archive))
                 return null;
-            
+
             Dictionary<string, List<AbstractObj>> objs = mObjects[archive];
 
             layers.ForEach(l =>
@@ -307,7 +307,7 @@ namespace Takochu.smg
 
         public void Save()
         {
-            foreach(KeyValuePair<string, FilesystemBase> p in mMapFiles)
+            foreach (KeyValuePair<string, FilesystemBase> p in mMapFiles)
             {
                 SaveObjects(p.Key, "Placement", "AreaObjInfo");
                 SaveObjects(p.Key, "Placement", "CameraCubeInfo");
@@ -316,6 +316,8 @@ namespace Takochu.smg
                 SaveObjects(p.Key, "Placement", "PlanetObjInfo");
                 SaveObjects(p.Key, "MapParts", "MapPartsInfo");
                 SaveObjects(p.Key, "Start", "StartInfo");
+                SaveObjects(p.Key, "Debug", "DebugMoveInfo");
+                SaveObjects(p.Key, "GeneralPos", "GeneralPosInfo");
             }
 
             if (mMessages != null)
@@ -328,13 +330,47 @@ namespace Takochu.smg
                 mMessagesFile.Save();
 
             SaveCameras();
-            mMapFiles["Map"].Save();
 
             if (mLights != null)
             {
                 SaveLights();
                 mMapFiles["Light"].Save();
             }
+
+            SavePaths();
+
+            // strip out unused files that we really don't need
+            List<string> layers = mMapFiles["Map"].GetDirectories("/stage/jmp/placement");
+
+            foreach (string layer in layers)
+            {
+                if (mMapFiles.ContainsKey("Design"))
+                    mMapFiles["Design"].DeleteFile($"/stage/jmp/placement/{layer}/changeobjinfo");
+
+                if (mMapFiles.ContainsKey("Sound"))
+                    mMapFiles["Sound"].DeleteFile($"/stage/jmp/placement/{layer}/changeobjinfo");
+
+                mMapFiles["Map"].DeleteFile($"/stage/jmp/placement/{layer}/changeobjinfo");
+            }
+
+
+            if (mMapFiles.ContainsKey("Design"))
+            {
+                mMapFiles["Design"].DeleteFile("/stage/jmp/list/changescenelistinfo");
+                mMapFiles["Design"].DeleteFile("/stage/jmp/path/commonpathpointinfo");
+                mMapFiles["Design"].Save();
+            }
+
+            if (mMapFiles.ContainsKey("Sound"))
+            {
+                mMapFiles["Sound"].DeleteFile("/stage/jmp/list/changescenelistinfo");
+                mMapFiles["Sound"].DeleteFile("/stage/jmp/path/commonpathpointinfo");
+                mMapFiles["Sound"].Save();
+            }
+
+            mMapFiles["Map"].DeleteFile("/stage/jmp/list/changescenelistinfo");
+            mMapFiles["Map"].DeleteFile("/stage/jmp/path/commonpathpointinfo");
+            mMapFiles["Map"].Save();
         }
 
         private void SaveObjects(string archive, string dir, string file)
@@ -365,7 +401,7 @@ namespace Takochu.smg
 
             List<AbstractObj> objs = mObjects[archive][layer];
 
-            foreach(AbstractObj o in objs)
+            foreach (AbstractObj o in objs)
             {
                 if (o.mFile == file)
                 {
@@ -383,7 +419,7 @@ namespace Takochu.smg
             BCSV bcsv = new BCSV(mMapFiles["Map"].OpenFile("/root/camera/CameraParam.bcam"));
             bcsv.mEntries.Clear();
 
-            foreach(Camera c in mCameras)
+            foreach (Camera c in mCameras)
             {
                 c.Save();
                 bcsv.mEntries.Add(c.mEntry);
@@ -398,7 +434,7 @@ namespace Takochu.smg
             BCSV light = new BCSV(mMapFiles["Light"].OpenFile($"/root/csv/{mZoneName}Light.bcsv"));
             light.mEntries.Clear();
 
-            foreach(Light l in mLights)
+            foreach (Light l in mLights)
             {
                 l.Save();
                 light.mEntries.Add(l.mEntry);
@@ -406,6 +442,20 @@ namespace Takochu.smg
 
             light.Save();
             light.Close();
+        }
+
+        private void SavePaths()
+        {
+            BCSV pathsBCSV = new BCSV(mMapFiles["Map"].OpenFile("/root/jmp/Path/CommonPathInfo"));
+            pathsBCSV.mEntries.Clear();
+
+            foreach (PathObj p in mPaths)
+            {
+                p.Save();
+                pathsBCSV.mEntries.Add(p.mEntry);
+            }
+
+            pathsBCSV.Save();
         }
 
         public Galaxy mGalaxy;

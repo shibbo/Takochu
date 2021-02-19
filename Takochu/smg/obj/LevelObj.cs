@@ -90,9 +90,9 @@ namespace Takochu.smg.obj
             mEntry.Set("dir_y", mTrueRotation.Y);
             mEntry.Set("dir_z", mTrueRotation.Z);
 
-            mEntry.Set("scale_x", mScale.X);
-            mEntry.Set("scale_y", mScale.Y);
-            mEntry.Set("scale_z", mScale.Z);
+            mEntry.Set("scale_x", Scale.X);
+            mEntry.Set("scale_y", Scale.Y);
+            mEntry.Set("scale_z", Scale.Z);
 
             mEntry.Set("CastId", mCastID);
             mEntry.Set("ViewGroupId", mViewGroupID);
@@ -265,9 +265,9 @@ namespace Takochu.smg.obj
                 control.VerticalSeperator();
 
                 control.PlainText("Scale");
-                obj.mScale.X = control.NumberInput(obj.mScale.X, "X:");
-                obj.mScale.Y = control.NumberInput(obj.mScale.Y, "Y:");
-                obj.mScale.Z = control.NumberInput(obj.mScale.Z, "Z:");
+                obj.mScale.X = control.NumberInput(obj.Scale.X, "X:");
+                obj.mScale.Y = control.NumberInput(obj.Scale.Y, "Y:");
+                obj.mScale.Z = control.NumberInput(obj.Scale.Z, "Z:");
             }
 
             public void OnValueChangeStart() { }

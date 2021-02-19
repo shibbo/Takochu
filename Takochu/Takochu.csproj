@@ -93,7 +93,7 @@
     <Compile Include="smg\obj\CameraObj.cs" />
     <Compile Include="smg\obj\DebugObj.cs" />
     <Compile Include="smg\obj\DemoObj.cs" />
-    <Compile Include="smg\obj\GeneralPosObj.cs" />
+    <Compile Include="smg\obj\GeneralPos.cs" />
     <Compile Include="smg\obj\ObjectHolder.cs" />
     <Compile Include="smg\obj\PathObj.cs" />
     <Compile Include="smg\obj\PathPointObj.cs" />
