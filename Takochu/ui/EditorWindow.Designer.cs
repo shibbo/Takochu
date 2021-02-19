@@ -29,13 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditorWindow));
-            this.galaxyViewControl = new GL_EditorFramework.GL_Core.GL_ControlModern();
             this.scenarioTreeView = new System.Windows.Forms.TreeView();
-            this.sceneListView = new GL_EditorFramework.SceneListView();
-            this.objUIControl = new GL_EditorFramework.ObjectUIControl();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.sceneListView = new GL_EditorFramework.SceneListView();
+            this.objUIControl = new GL_EditorFramework.ObjectUIControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.cameraUIControl = new GL_EditorFramework.ObjectUIControl();
             this.cameraListView = new GL_EditorFramework.SceneListView();
@@ -55,6 +54,11 @@
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.saveGalaxyBtn = new System.Windows.Forms.ToolStripButton();
             this.closeEditorBtn = new System.Windows.Forms.ToolStripButton();
+            this.galaxyViewControl = new GL_EditorFramework.GL_Core.GL_ControlModern();
+            this.toolStrip3 = new System.Windows.Forms.ToolStrip();
+            this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -62,31 +66,8 @@
             this.tabPage3.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.toolStrip2.SuspendLayout();
+            this.toolStrip3.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // galaxyViewControl
-            // 
-            this.galaxyViewControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.galaxyViewControl.BackColor = System.Drawing.Color.Black;
-            this.galaxyViewControl.CameraDistance = 10F;
-            this.galaxyViewControl.CameraTarget = ((OpenTK.Vector3)(resources.GetObject("galaxyViewControl.CameraTarget")));
-            this.galaxyViewControl.CamRotX = 0F;
-            this.galaxyViewControl.CamRotY = 0F;
-            this.galaxyViewControl.CurrentShader = null;
-            this.galaxyViewControl.Fov = 0.7853982F;
-            this.galaxyViewControl.Location = new System.Drawing.Point(358, 29);
-            this.galaxyViewControl.Name = "galaxyViewControl";
-            this.galaxyViewControl.NormPickingDepth = 0F;
-            this.galaxyViewControl.ShowOrientationCube = true;
-            this.galaxyViewControl.Size = new System.Drawing.Size(1148, 798);
-            this.galaxyViewControl.Stereoscopy = GL_EditorFramework.GL_Core.GL_ControlBase.StereoscopyType.DISABLED;
-            this.galaxyViewControl.TabIndex = 0;
-            this.galaxyViewControl.VSync = false;
-            this.galaxyViewControl.ZFar = 32000F;
-            this.galaxyViewControl.ZNear = 0.32F;
-            this.galaxyViewControl.Load += new System.EventHandler(this.galaxyViewControl_Load);
             // 
             // scenarioTreeView
             // 
@@ -97,26 +78,6 @@
             this.scenarioTreeView.TabIndex = 2;
             this.scenarioTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.scenarioTreeView_AfterSelect);
             this.scenarioTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.scenarioTreeView_NodeMouseClick);
-            // 
-            // sceneListView
-            // 
-            this.sceneListView.Location = new System.Drawing.Point(0, 0);
-            this.sceneListView.Name = "sceneListView";
-            this.sceneListView.RootLists = ((System.Collections.Generic.Dictionary<string, System.Collections.IList>)(resources.GetObject("sceneListView.RootLists")));
-            this.sceneListView.Size = new System.Drawing.Size(342, 629);
-            this.sceneListView.TabIndex = 4;
-            this.sceneListView.ItemClicked += new GL_EditorFramework.ItemClickedEventHandler(this.sceneListView_ItemClicked);
-            // 
-            // objUIControl
-            // 
-            this.objUIControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.objUIControl.BackColor = System.Drawing.SystemColors.Control;
-            this.objUIControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.objUIControl.Location = new System.Drawing.Point(0, 635);
-            this.objUIControl.Name = "objUIControl";
-            this.objUIControl.Size = new System.Drawing.Size(339, 138);
-            this.objUIControl.TabIndex = 5;
             // 
             // tabControl1
             // 
@@ -144,6 +105,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.toolStrip3);
             this.tabPage1.Controls.Add(this.sceneListView);
             this.tabPage1.Controls.Add(this.objUIControl);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
@@ -153,6 +115,26 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Objects";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // sceneListView
+            // 
+            this.sceneListView.Location = new System.Drawing.Point(0, 27);
+            this.sceneListView.Name = "sceneListView";
+            this.sceneListView.RootLists = ((System.Collections.Generic.Dictionary<string, System.Collections.IList>)(resources.GetObject("sceneListView.RootLists")));
+            this.sceneListView.Size = new System.Drawing.Size(342, 602);
+            this.sceneListView.TabIndex = 4;
+            this.sceneListView.ItemClicked += new GL_EditorFramework.ItemClickedEventHandler(this.sceneListView_ItemClicked);
+            // 
+            // objUIControl
+            // 
+            this.objUIControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.objUIControl.BackColor = System.Drawing.SystemColors.Control;
+            this.objUIControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.objUIControl.Location = new System.Drawing.Point(3, 638);
+            this.objUIControl.Name = "objUIControl";
+            this.objUIControl.Size = new System.Drawing.Size(339, 138);
+            this.objUIControl.TabIndex = 5;
             // 
             // tabPage2
             // 
@@ -279,7 +261,6 @@
             // 
             // galaxyNameTxtBox
             // 
-            this.galaxyNameTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.galaxyNameTxtBox.Name = "galaxyNameTxtBox";
             this.galaxyNameTxtBox.Size = new System.Drawing.Size(300, 25);
             // 
@@ -291,7 +272,6 @@
             // 
             // scenarioNameTxtBox
             // 
-            this.scenarioNameTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.scenarioNameTxtBox.Name = "scenarioNameTxtBox";
             this.scenarioNameTxtBox.Size = new System.Drawing.Size(300, 25);
             // 
@@ -337,6 +317,70 @@
             this.closeEditorBtn.Text = "Close";
             this.closeEditorBtn.Click += new System.EventHandler(this.closeEditorBtn_Click);
             // 
+            // galaxyViewControl
+            // 
+            this.galaxyViewControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.galaxyViewControl.BackColor = System.Drawing.Color.Black;
+            this.galaxyViewControl.CameraDistance = 10F;
+            this.galaxyViewControl.CameraTarget = ((OpenTK.Vector3)(resources.GetObject("galaxyViewControl.CameraTarget")));
+            this.galaxyViewControl.CamRotX = 0F;
+            this.galaxyViewControl.CamRotY = 0F;
+            this.galaxyViewControl.CurrentShader = null;
+            this.galaxyViewControl.Fov = 0.7853982F;
+            this.galaxyViewControl.Location = new System.Drawing.Point(358, 29);
+            this.galaxyViewControl.Name = "galaxyViewControl";
+            this.galaxyViewControl.NormPickingDepth = 0F;
+            this.galaxyViewControl.ShowOrientationCube = true;
+            this.galaxyViewControl.Size = new System.Drawing.Size(1148, 798);
+            this.galaxyViewControl.Stereoscopy = GL_EditorFramework.GL_Core.GL_ControlBase.StereoscopyType.DISABLED;
+            this.galaxyViewControl.TabIndex = 0;
+            this.galaxyViewControl.VSync = false;
+            this.galaxyViewControl.ZFar = 32000F;
+            this.galaxyViewControl.ZNear = 0.32F;
+            this.galaxyViewControl.Load += new System.EventHandler(this.galaxyViewControl_Load);
+            // 
+            // toolStrip3
+            // 
+            this.toolStrip3.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSplitButton1,
+            this.toolStripButton1,
+            this.toolStripButton4});
+            this.toolStrip3.Location = new System.Drawing.Point(3, 3);
+            this.toolStrip3.Name = "toolStrip3";
+            this.toolStrip3.Size = new System.Drawing.Size(336, 25);
+            this.toolStrip3.TabIndex = 6;
+            this.toolStrip3.Text = "toolStrip3";
+            // 
+            // toolStripSplitButton1
+            // 
+            this.toolStripSplitButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripSplitButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButton1.Image")));
+            this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButton1.Name = "toolStripSplitButton1";
+            this.toolStripSplitButton1.Size = new System.Drawing.Size(83, 22);
+            this.toolStripSplitButton1.Text = "Add Object";
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(82, 22);
+            this.toolStripButton1.Text = "Delete Object";
+            // 
+            // toolStripButton4
+            // 
+            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
+            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton4.Name = "toolStripButton4";
+            this.toolStripButton4.Size = new System.Drawing.Size(99, 22);
+            this.toolStripButton4.Text = "Duplicate Object";
+            // 
             // EditorWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -353,12 +397,15 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.toolStrip2.ResumeLayout(false);
             this.toolStrip2.PerformLayout();
+            this.toolStrip3.ResumeLayout(false);
+            this.toolStrip3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -368,10 +415,7 @@
 
         private GL_EditorFramework.GL_Core.GL_ControlModern galaxyViewControl;
         private System.Windows.Forms.TreeView scenarioTreeView;
-        private GL_EditorFramework.SceneListView sceneListView;
-        private GL_EditorFramework.ObjectUIControl objUIControl;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
@@ -392,5 +436,12 @@
         private System.Windows.Forms.ToolStripButton closeEditorBtn;
         private GL_EditorFramework.ObjectUIControl lightsUIControl;
         private GL_EditorFramework.SceneListView lightsSceneListView;
+        private System.Windows.Forms.TabPage tabPage1;
+        private GL_EditorFramework.SceneListView sceneListView;
+        private GL_EditorFramework.ObjectUIControl objUIControl;
+        private System.Windows.Forms.ToolStrip toolStrip3;
+        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton1;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton toolStripButton4;
     }
 }

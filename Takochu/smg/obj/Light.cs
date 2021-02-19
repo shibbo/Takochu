@@ -23,6 +23,12 @@ namespace Takochu.smg.obj
             mParent = parent;
         }
 
+        public void Save()
+        {
+            mEntry.Set("AreaLightName", mLightName);
+            mEntry.Set("LightID", mLightNo);
+        }
+
         public override string ToString()
         {
             return $"[{mLightNo}] {mLightName} [{mParent}]";
@@ -83,7 +89,7 @@ namespace Takochu.smg.obj
             return true;
         }
 
-        BCSV.Entry mEntry;
+        public BCSV.Entry mEntry;
         public string mParent;
 
         public string mLightName;
@@ -93,8 +99,6 @@ namespace Takochu.smg.obj
         {
             Light obj;
             EditorSceneBase scene;
-            int lightID;
-            string lightName;
 
             public LightUI(Light obj, EditorSceneBase scene)
             {
@@ -104,12 +108,12 @@ namespace Takochu.smg.obj
 
             public void DoUI(IObjectUIControl control)
             {
-                lightID = Convert.ToInt32(control.NumberInput(obj.mEntry.Get<int>("LightID"), "LightID"));
-                lightName = control.FullWidthTextInput(obj.mEntry.Get<string>("AreaLightName"), "AreaLightName");
+                obj.mLightNo = Convert.ToInt32(control.NumberInput(obj.mLightNo, "LightID"));
+                obj.mLightName = control.FullWidthTextInput(obj.mLightName, "AreaLightName");
 
                 if (control.Button("View Light Attributes"))
                 {
-                    LightAttribEditor l = new LightAttribEditor(lightName);
+                    LightAttribEditor l = new LightAttribEditor(obj.mLightName);
                     l.Show();
                 }
             }

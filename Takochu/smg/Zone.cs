@@ -93,9 +93,9 @@ namespace Takochu.smg
             if (mMapFiles["Light"].GetFiles("/root/csv").Count == 0)
                 return;
 
-            mLightBCSV = new BCSV(mMapFiles["Light"].OpenFile($"/root/csv/{mZoneName}Light.bcsv"));
+            BCSV light = new BCSV(mMapFiles["Light"].OpenFile($"/root/csv/{mZoneName}Light.bcsv"));
             mLights = new List<Light>();
-            mLightBCSV.mEntries.ForEach(e => mLights.Add(new Light(e, mZoneName)));
+            light.mEntries.ForEach(e => mLights.Add(new Light(e, mZoneName)));
         }
 
         public void LoadMessages()
@@ -330,8 +330,11 @@ namespace Takochu.smg
             SaveCameras();
             mMapFiles["Map"].Save();
 
-            if (mLightBCSV != null)
-                mLightBCSV.Save();
+            if (mLights != null)
+            {
+                SaveLights();
+                mMapFiles["Light"].Save();
+            }
         }
 
         private void SaveObjects(string archive, string dir, string file)
@@ -390,6 +393,21 @@ namespace Takochu.smg
             bcsv.Close();
         }
 
+        private void SaveLights()
+        {
+            BCSV light = new BCSV(mMapFiles["Light"].OpenFile($"/root/csv/{mZoneName}Light.bcsv"));
+            light.mEntries.Clear();
+
+            foreach(Light l in mLights)
+            {
+                l.Save();
+                light.mEntries.Add(l.mEntry);
+            }
+
+            light.Save();
+            light.Close();
+        }
+
         public Galaxy mGalaxy;
         private Game mGame;
         private FilesystemBase mFilesystem;
@@ -407,7 +425,5 @@ namespace Takochu.smg
         private RARCFilesystem mMessagesFile;
         private MSBT mMessages;
         private MSBF mMessageFlows;
-
-        private BCSV mLightBCSV;
     }
 }
