@@ -40,13 +40,12 @@ namespace Takochu.ui
             mGalaxy = Program.sGame.OpenGalaxy(mGalaxyName);
             galaxyNameTxtBox.Text = mGalaxy.mGalaxyName;
 
-            // we load our scenario information here and will use it later
-            foreach (BCSV.Entry entry in mGalaxy.mScenarioEntries)
+            foreach(KeyValuePair<int, Scenario> scenarios in mGalaxy.mScenarios)
             {
-                int no = entry.Get<int>("ScenarioNo");
-                TreeNode n = new TreeNode($"[{no}] {entry.Get<string>("ScenarioName")}")
+                Scenario s = scenarios.Value;
+                TreeNode n = new TreeNode($"[{s.mScenarioNo}] {s.mScenarioName}")
                 {
-                    Tag = no
+                    Tag = s.mScenarioNo
                 };
 
                 scenarioTreeView.Nodes.Add(n);

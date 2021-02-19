@@ -48,6 +48,7 @@ namespace Takochu
         {
             Program.sGame = new smg.Game(new ExternalFilesystem(Properties.Settings.Default.GamePath));
             LightData.Initialize();
+            BGMInfo.Initialize();
             bcsvEditorBtn.Enabled = true;
             galaxyTreeView.Nodes.Clear();
 

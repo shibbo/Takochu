@@ -98,11 +98,18 @@
     <Compile Include="smg\obj\PathObj.cs" />
     <Compile Include="smg\obj\PathPointObj.cs" />
     <Compile Include="smg\obj\PlanetObj.cs" />
+    <Compile Include="smg\Scenario.cs" />
     <Compile Include="ui\LightAttribEditor.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ui\LightAttribEditor.Designer.cs">
       <DependentUpon>LightAttribEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\StageInfoEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\StageInfoEditor.Designer.cs">
+      <DependentUpon>StageInfoEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="util\CameraUtil.cs" />
     <Compile Include="smg\Galaxy.cs" />

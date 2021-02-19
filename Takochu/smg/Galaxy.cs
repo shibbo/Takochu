@@ -23,10 +23,7 @@ namespace Takochu.smg
 
             mZones = new Dictionary<string, Zone>();
             RARCFilesystem scenarioFile = new RARCFilesystem(mFilesystem.OpenFile($"/StageData/{name}/{name}Scenario.arc"));
-            BCSV scenarioBCSV = new BCSV(scenarioFile.OpenFile("/root/ScenarioData.bcsv"));
-            mScenarioEntries = scenarioBCSV.mEntries;
-            scenarioBCSV.Close();
-
+            
             BCSV zonesBCSV = new BCSV(scenarioFile.OpenFile("/root/ZoneList.bcsv"));
 
             foreach(BCSV.Entry e in zonesBCSV.mEntries)
@@ -36,6 +33,17 @@ namespace Takochu.smg
             }
 
             zonesBCSV.Close();
+
+            BCSV scenarioBCSV = new BCSV(scenarioFile.OpenFile("/root/ScenarioData.bcsv"));
+
+            mScenarios = new Dictionary<int, Scenario>();
+
+            foreach (BCSV.Entry e in scenarioBCSV.mEntries)
+            {
+                mScenarios.Add(e.Get<int>("ScenarioNo"), new Scenario(e, mZones.Keys.ToList()));
+            }
+
+            scenarioBCSV.Close();
             scenarioFile.Close();
 
             if (!NameHolder.HasGalaxyName(name))
@@ -65,6 +73,7 @@ namespace Takochu.smg
             // they don't follow the scenario number scheme that regular stars do
             int greenStarNum = GetGreenStarNo();
 
+            // for some special galaxies with no green stars at all
             if (greenStarNum == 0)
             {
                 mCurScenarioName = NameHolder.GetScenarioName(mName, no);
@@ -84,7 +93,7 @@ namespace Takochu.smg
 
         public int GetGreenStarNo()
         {
-            return mScenarioEntries.Where(e => e.Get<string>("PowerStarType") == "Green").Count();
+            return (from KeyValuePair<int, Scenario> scenarios in mScenarios where scenarios.Value.mPowerStarType == "Green" select scenarios).Count();
         }
 
         public bool ContainsZone(string zone)
@@ -119,7 +128,7 @@ namespace Takochu.smg
         {
             // it is smart to instead check for our scenario info in a loop
             // sometimes scenario data is not stored in order, so using an index may produce inaccurate results
-            return mScenarioEntries.Find(e => e.Get<int>("ScenarioNo") == mScenarioNo);
+            return mScenarios[mScenarioNo].mEntry;
         }
 
         public int GetMaskUsedInZoneOnCurrentScenario(string zoneName)
@@ -175,7 +184,7 @@ namespace Takochu.smg
 
         public Game mGame;
         public FilesystemBase mFilesystem;
-        public List<BCSV.Entry> mScenarioEntries;
+        public Dictionary<int, Scenario> mScenarios;
         int mScenarioNo;
 
         public string mName;
