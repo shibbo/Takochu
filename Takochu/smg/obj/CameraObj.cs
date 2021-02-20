@@ -64,9 +64,9 @@ namespace Takochu.smg.obj
             mEntry.Set("dir_y", mTrueRotation.Y);
             mEntry.Set("dir_z", mTrueRotation.Z);
 
-            mEntry.Set("scale_x", mScale.X);
-            mEntry.Set("scale_y", mScale.Y);
-            mEntry.Set("scale_z", mScale.Z);
+            mEntry.Set("scale_x", Scale.X);
+            mEntry.Set("scale_y", Scale.Y);
+            mEntry.Set("scale_z", Scale.Z);
 
             mEntry.Set("AreaShapeNo", mAreaShapeNo);
             mEntry.Set("FollowId", mFollowID);
