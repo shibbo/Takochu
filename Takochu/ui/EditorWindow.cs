@@ -139,7 +139,11 @@ namespace Takochu.ui
                 zoneMasks.Add(zone, mGalaxy.GetMaskUsedInZoneOnCurrentScenario(zone));
 
                 Zone z = mGalaxy.GetZone(zone);
-                ObjectHolder curHolder = z.GetAllObjectsFromLayers(GameUtil.GetGalaxyLayers(zoneMasks[zone]));
+                List<string> curlayers = GameUtil.GetGalaxyLayers(zoneMasks[zone]);
+
+                if (GameUtil.IsSMG1())
+                    curlayers = curlayers.ConvertAll(l => l.ToLower());
+                ObjectHolder curHolder = z.GetAllObjectsFromLayers(curlayers);
 
                 foreach (PathObj pobj in z.mPaths)
                 {
@@ -157,6 +161,9 @@ namespace Takochu.ui
 
                     // the first step
                     List<string> galaxyLayers = GameUtil.GetGalaxyLayers(zoneMasks[mGalaxy.mName]);
+
+                    if (GameUtil.IsSMG1())
+                        galaxyLayers = galaxyLayers.ConvertAll(l => l.ToLower());
 
                     foreach(string layer in galaxyLayers)
                     {

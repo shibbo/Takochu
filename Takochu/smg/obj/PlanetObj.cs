@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Takochu.fmt;
+using Takochu.util;
 
 namespace Takochu.smg.obj
 {
@@ -44,7 +45,9 @@ namespace Takochu.smg.obj
             mSwitchDead = Get<int>("SW_DEAD");
             mSwitchActivate = Get<int>("SW_A");
             mSwitchDeactivate = Get<int>("SW_B");
-            mSwitchAwake = Get<int>("SW_AWAKE");
+
+            if (GameUtil.IsSMG2())
+                mSwitchAwake = Get<int>("SW_AWAKE");
 
             mFollowID = Get<int>("FollowId");
             mPathID = Get<short>("CommonPath_ID");

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Takochu.fmt;
 using Takochu.io;
+using Takochu.util;
 
 namespace Takochu.smg
 {
@@ -13,7 +14,7 @@ namespace Takochu.smg
         public static void Initialize()
         {
             mLights = new List<LightEntry>();
-            mFilesystem = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile("/LightData/LightData.arc"));
+            mFilesystem = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile(GameUtil.IsSMG1() ? "/ObjectData/LightData.arc" : "/LightData/LightData.arc"));
             mBCSV = new BCSV(mFilesystem.OpenFile("/LightData/LightData.bcsv"));
 
             mBCSV.mEntries.ForEach(e => mLights.Add(new LightEntry(e)));

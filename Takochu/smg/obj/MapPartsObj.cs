@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Takochu.fmt;
+using Takochu.util;
 
 namespace Takochu.smg.obj
 {
@@ -48,15 +49,22 @@ namespace Takochu.smg.obj
             mRotateType = Get<int>("RotateType");
             mSignMotionType = Get<int>("SignMotionType");
 
+            if (GameUtil.IsSMG2())
+            {
+                mSwitchAwake = Get<int>("SW_AWAKE");
+                mSwitchParameter = Get<int>("SW_PARAM");
+                mParamScale = Get<float>("ParamScale");
+                mObjID = Get<short>("Obj_ID");
+                mMapPartsID = Get<short>("MapParts_ID");
+                mParentID = Get<short>("ParentId");
+            }
+
             mCameraSetID = Get<int>("CameraSetId");
-            mParamScale = Get<float>("ParamScale");
 
             mSwitchAppear = Get<int>("SW_APPEAR");
             mSwitchDead = Get<int>("SW_DEAD");
             mSwitchActivate = Get<int>("SW_A");
             mSwitchDeactivate = Get<int>("SW_B");
-            mSwitchAwake = Get<int>("SW_AWAKE");
-            mSwitchParameter = Get<int>("SW_PARAM");
 
             mCastID = Get<int>("CastId");
             mViewGroupID = Get<int>("ViewGroupId");
@@ -65,8 +73,6 @@ namespace Takochu.smg.obj
             mClippingGroupID = Get<short>("ClippingGroupId");
             mGroupID = Get<short>("GroupId");
             mDemoGroupID = Get<short>("DemoGroupId");
-            mMapPartsID = Get<short>("MapParts_ID");
-            mObjID = Get<short>("Obj_ID");
         }
 
         public override void Save()
@@ -158,6 +164,7 @@ namespace Takochu.smg.obj
         short mDemoGroupID;
         short mMapPartsID;
         short mObjID;
+        short mParentID;
 
         public override uint Select(int index, GL_ControlBase control)
         {

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Takochu.fmt;
+using Takochu.util;
 using static Takochu.smg.ObjectDB;
 
 namespace Takochu.smg.obj
@@ -36,14 +37,23 @@ namespace Takochu.smg.obj
 
             for (int i = 0; i < 8; i++)
                 mObjArgs[i] = Get<int>($"Obj_arg{i}");
-
-            mPriority = Get<int>("Priority");
+            
             mSwitchAppear = Get<int>("SW_APPEAR");
             mSwitchActivate = Get<int>("SW_A");
             mSwitchDeactivate = Get<int>("SW_B");
-            mSwitchAwake = Get<int>("SW_AWAKE");
 
-            mAreaShapeNo = Get<short>("AreaShapeNo");
+            if (GameUtil.IsSMG2())
+            {
+                mPriority = Get<int>("Priority");
+                mSwitchAwake = Get<int>("SW_AWAKE");
+                mAreaShapeNo = Get<short>("AreaShapeNo");
+            }
+            else
+            {
+                mChildObjID = Get<short>("ChildObjId");
+                mSwitchSleep = Get<int>("SW_SLEEP");
+            }
+            
             mPathID = Get<short>("CommonPath_ID");
             mClippingGroupID = Get<short>("ClippingGroupId");
             mGroupID = Get<short>("GroupId");
@@ -101,6 +111,9 @@ namespace Takochu.smg.obj
         short mDemoGroupID;
         short mMapPartsID;
         short mObjID;
+
+        int mSwitchSleep;
+        short mChildObjID;
 
         public override string ToString()
         {

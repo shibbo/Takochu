@@ -35,42 +35,68 @@ namespace Takochu.smg
 
         public void Load()
         {
-            // so first we need to collect all of the files used in this zone
-            // zones can use Design, Sound, Light, etc
-            foreach (string file in cPossibleFiles)
+            if (GameUtil.IsSMG1())
             {
-                string path = $"/StageData/{mZoneName}/{mZoneName}{file}.arc";
+                string path = $"/StageData/{mZoneName}.arc";
 
                 if (mFilesystem.DoesFileExist(path))
                 {
-                    mMapFiles.Add(file, new RARCFilesystem(mFilesystem.OpenFile(path)));
+                    mMapFiles.Add("Map", new RARCFilesystem(mFilesystem.OpenFile(path)));
 
-                    if (file == "Light")
+                    if (mIsMainGalaxy)
+                        LoadObjects("Map", "Placement", "StageObjInfo");
+
+                    LoadObjects("Map", "placement", "AreaObjInfo");
+                    LoadObjects("Map", "placement", "CameraCubeInfo");
+                    LoadObjects("Map", "placement", "ObjInfo");
+                    LoadObjects("Map", "placement", "PlanetObjInfo");
+                    LoadObjects("Map", "GeneralPos", "GeneralPosInfo");
+                    LoadObjects("Map", "Debug", "DebugMoveInfo");
+                    LoadObjects("Map", "Start", "StartInfo");
+                    LoadObjects("Map", "MapParts", "MapPartsInfo");
+                    LoadObjects("Map", "placement", "DemoObjInfo");
+                }
+            }
+            else
+            {
+                // so first we need to collect all of the files used in this zone
+                // zones can use Design, Sound, Light, etc
+                foreach (string file in cPossibleFiles)
+                {
+                    string path = $"/StageData/{mZoneName}/{mZoneName}{file}.arc";
+
+                    if (mFilesystem.DoesFileExist(path))
                     {
-                        LoadLight();
-                    }
-                    else
-                    {
-                        // we load our StageObjInfo first because objects can use their offsets
+                        mMapFiles.Add(file, new RARCFilesystem(mFilesystem.OpenFile(path)));
 
-                        if (mIsMainGalaxy)
-                            LoadObjects(file, "Placement", "StageObjInfo");
+                        if (file == "Light")
+                        {
+                            LoadLight();
+                        }
+                        else
+                        {
+                            // we load our StageObjInfo first because objects can use their offsets
 
-                        LoadObjects(file, "Placement", "AreaObjInfo");
-                        LoadObjects(file, "Placement", "CameraCubeInfo");
-                        LoadObjects(file, "Placement", "ObjInfo");
-                        LoadObjects(file, "Placement", "PlanetObjInfo");
-                        LoadObjects(file, "GeneralPos", "GeneralPosInfo");
-                        LoadObjects(file, "Debug", "DebugMoveInfo");
-                        LoadObjects(file, "Start", "StartInfo");
-                        LoadObjects(file, "MapParts", "MapPartsInfo");
-                        LoadObjects(file, "Placement", "DemoObjInfo");
+                            if (mIsMainGalaxy)
+                                LoadObjects(file, "Placement", "StageObjInfo");
+
+                            LoadObjects(file, "Placement", "AreaObjInfo");
+                            LoadObjects(file, "Placement", "CameraCubeInfo");
+                            LoadObjects(file, "Placement", "ObjInfo");
+                            LoadObjects(file, "Placement", "PlanetObjInfo");
+                            LoadObjects(file, "GeneralPos", "GeneralPosInfo");
+                            LoadObjects(file, "Debug", "DebugMoveInfo");
+                            LoadObjects(file, "Start", "StartInfo");
+                            LoadObjects(file, "MapParts", "MapPartsInfo");
+                            LoadObjects(file, "Placement", "DemoObjInfo");
+                        }
                     }
                 }
+
+                LoadMessages();
             }
 
             LoadCameras();
-            LoadMessages();
             LoadPaths();
         }
 
@@ -150,36 +176,38 @@ namespace Takochu.smg
 
             foreach (BCSV.Entry e in bcsv.mEntries)
             {
+                dir = dir.ToLower();
+
                 switch (dir)
                 {
-                    case "AreaObjInfo":
+                    case "areaobjinfo":
                         mObjects[archive][layer].Add(new AreaObj(e, this, path));
                         break;
-                    case "CameraCubeInfo":
+                    case "cameracubeinfo":
                         mObjects[archive][layer].Add(new CameraObj(e, this, path));
                         break;
-                    case "StageObjInfo":
+                    case "stageobjinfo":
                         mZones[layer].Add(new StageObj(e));
                         break;
-                    case "ObjInfo":
+                    case "objinfo":
                         mObjects[archive][layer].Add(new LevelObj(e, this, path));
                         break;
-                    case "DemoObjInfo":
+                    case "demoobjinfo":
                         mObjects[archive][layer].Add(new DemoObj(e, this, path));
                         break;
-                    case "GeneralPosInfo":
+                    case "generalposinfo":
                         mObjects[archive][layer].Add(new GeneralPos(e, this, path));
                         break;
-                    case "DebugMoveInfo":
+                    case "debugmoveinfo":
                         mObjects[archive][layer].Add(new DebugMoveObj(e, this, path));
                         break;
-                    case "PlanetObjInfo":
+                    case "planetobjinfo":
                         mObjects[archive][layer].Add(new PlanetObj(e, this, path));
                         break;
-                    case "StartInfo":
+                    case "startinfo":
                         mObjects[archive][layer].Add(new StartObj(e, this, path));
                         break;
-                    case "MapPartsInfo":
+                    case "mappartsinfo":
                         mObjects[archive][layer].Add(new MapPartsObj(e, this, path));
                         break;
                 }
@@ -217,6 +245,9 @@ namespace Takochu.smg
 
         public List<string> GetZonesUsedOnLayers(List<string> layers)
         {
+            if (GameUtil.IsSMG1())
+                layers = layers.ConvertAll(l => l.ToLower());
+
             List<string> zones = new List<string>();
             layers.ForEach(l =>
             {

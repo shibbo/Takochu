@@ -14,6 +14,7 @@ using System.Security.Policy;
 using System.Security.Cryptography;
 using Takochu.ui;
 using static Takochu.smg.ObjectDB;
+using Takochu.util;
 
 namespace Takochu.smg.obj
 {
@@ -47,11 +48,18 @@ namespace Takochu.smg.obj
             mSwitchDead = Get<int>("SW_DEAD");
             mSwitchActivate = Get<int>("SW_A");
             mSwitchDeactivate = Get<int>("SW_B");
-            mSwitchAwake = Get<int>("SW_AWAKE");
-            mSwitchParameter = Get<int>("SW_PARAM");
+           
             mMessageID = Get<int>("MessageId");
 
-            mParamScale = Get<float>("ParamScale");
+            if (GameUtil.IsSMG2())
+            {
+                mSwitchAwake = Get<int>("SW_AWAKE");
+                mSwitchParameter = Get<int>("SW_PARAM");
+                mParamScale = Get<float>("ParamScale");
+                mObjID = Get<short>("Obj_ID");
+                mGeneratorID = Get<short>("GeneratorID");
+            }
+            
             mCastID = Get<int>("CastId");
             mViewGroupID = Get<int>("ViewGroupId");
             mShapeModelNo = Get<short>("ShapeModelNo");
@@ -60,8 +68,7 @@ namespace Takochu.smg.obj
             mGroupID = Get<short>("GroupId");
             mDemoGroupID = Get<short>("DemoGroupId");
             mMapPartsID = Get<short>("MapParts_ID");
-            mObjID = Get<short>("Obj_ID");
-            mGeneratorID = Get<short>("GeneratorID");
+            
         }
 
         public override void Save()

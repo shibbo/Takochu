@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Takochu.fmt;
+using Takochu.util;
 
 namespace Takochu.smg
 {
@@ -13,10 +14,15 @@ namespace Takochu.smg
             mScenarioName = mEntry.Get<string>("ScenarioName");
             mPowerStarID = mEntry.Get<int>("PowerStarId");
             mAppearPowerStar = mEntry.Get<string>("AppearPowerStarObj");
-            mPowerStarType = mEntry.Get<string>("PowerStarType");
-            mComet = mEntry.Get<string>("Comet");
-            mCometLimitTimer = mEntry.Get<int>("CometLimitTimer");
 
+            if (GameUtil.IsSMG2())
+            {
+                mPowerStarType = mEntry.Get<string>("PowerStarType");
+                mCometLimitTimer = mEntry.Get<int>("CometLimitTimer");
+            }
+
+            mComet = mEntry.Get<string>("Comet");
+            
             mZoneMasks = new Dictionary<string, int>();
 
             foreach (string zone in zoneList)

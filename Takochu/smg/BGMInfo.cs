@@ -59,6 +59,9 @@ namespace Takochu.smg
 
         public static bool HasBGMInfo(string name)
         {
+            if (mStageEntries == null)
+                return false;
+
             return mStageEntries.ContainsKey(name);
         }
 

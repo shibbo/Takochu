@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Takochu.fmt;
 using Takochu.io;
+using Takochu.util;
 
 namespace Takochu.smg.msg
 {
@@ -20,6 +21,9 @@ namespace Takochu.smg.msg
 
         public static bool HasGalaxyName(string galaxy)
         {
+            if (mGalaxyNames == null)
+                return false;
+
             return mGalaxyNames.HasGalaxyName(galaxy);
         }
 
@@ -37,9 +41,12 @@ namespace Takochu.smg.msg
 
         public static void Close()
         {
-            mGalaxyNames.Close();
-            mScenarioNames.Close();
-            mFilesystem.Close();
+            if (GameUtil.IsSMG2())
+            {
+                mGalaxyNames.Close();
+                mScenarioNames.Close();
+                mFilesystem.Close();
+            }
         }
 
         public static void Save()
