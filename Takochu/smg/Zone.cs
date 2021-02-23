@@ -56,6 +56,9 @@ namespace Takochu.smg
                     LoadObjects("Map", "MapParts", "MapPartsInfo");
                     LoadObjects("Map", "placement", "DemoObjInfo");
                 }
+
+                LoadCameras();
+                LoadPaths();
             }
             else
             {
@@ -93,11 +96,10 @@ namespace Takochu.smg
                     }
                 }
 
+                LoadCameras();
+                LoadPaths();
                 LoadMessages();
             }
-
-            LoadCameras();
-            LoadPaths();
         }
 
         public void LoadObjects(string archive, string directory, string file)
@@ -108,6 +110,9 @@ namespace Takochu.smg
 
         public void LoadCameras()
         {
+            if (!mMapFiles.ContainsKey("Map"))
+                return;
+
             BCSV cameras = new BCSV(mMapFiles["Map"].OpenFile("/root/camera/CameraParam.bcam"));
             cameras.RemoveField("no");
             mCameras = new List<Camera>();
@@ -141,6 +146,9 @@ namespace Takochu.smg
 
         public void LoadPaths()
         {
+            if (!mMapFiles.ContainsKey("Map"))
+                return;
+
             BCSV pathsBCSV = new BCSV(mMapFiles["Map"].OpenFile("/root/jmp/Path/CommonPathInfo"));
 
             mPaths = new List<PathObj>();

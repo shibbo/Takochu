@@ -55,6 +55,9 @@ namespace Takochu.smg.obj
 
                 string type = CameraUtil.GetTypeOfField(field);
 
+                if (!mEntry.ContainsKey(field))
+                    continue;
+
                 switch (type)
                 {
                     case "float":
