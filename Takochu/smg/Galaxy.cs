@@ -10,6 +10,7 @@ using Takochu.fmt;
 using Takochu.io;
 using Takochu.smg.msg;
 using Takochu.smg.obj;
+using Takochu.util;
 
 namespace Takochu.smg
 {
@@ -22,9 +23,9 @@ namespace Takochu.smg
             mName = name;
 
             mZones = new Dictionary<string, Zone>();
-            RARCFilesystem scenarioFile = new RARCFilesystem(mFilesystem.OpenFile($"/StageData/{name}/{name}Scenario.arc"));
+            mScenarioFile = new RARCFilesystem(mFilesystem.OpenFile($"/StageData/{name}/{name}Scenario.arc"));
             
-            BCSV zonesBCSV = new BCSV(scenarioFile.OpenFile("/root/ZoneList.bcsv"));
+            BCSV zonesBCSV = new BCSV(mScenarioFile.OpenFile("/root/ZoneList.bcsv"));
 
             foreach(BCSV.Entry e in zonesBCSV.mEntries)
             {
@@ -34,7 +35,7 @@ namespace Takochu.smg
 
             zonesBCSV.Close();
 
-            BCSV scenarioBCSV = new BCSV(scenarioFile.OpenFile("/root/ScenarioData.bcsv"));
+            BCSV scenarioBCSV = new BCSV(mScenarioFile.OpenFile("/root/ScenarioData.bcsv"));
 
             mScenarios = new Dictionary<int, Scenario>();
 
@@ -44,7 +45,6 @@ namespace Takochu.smg
             }
 
             scenarioBCSV.Close();
-            scenarioFile.Close();
 
             if (!NameHolder.HasGalaxyName(name))
                 return;
@@ -60,6 +60,8 @@ namespace Takochu.smg
             {
                 zone.Close();
             }
+
+            mScenarioFile.Close();
         }
 
         public void SetScenario(int no)
@@ -131,6 +133,11 @@ namespace Takochu.smg
             return mScenarios[mScenarioNo].mEntry;
         }
 
+        public Scenario GetScenario(int scenarioNo)
+        {
+            return mScenarios[scenarioNo];
+        }
+
         public int GetMaskUsedInZoneOnCurrentScenario(string zoneName)
         {
             return GetScenarioInfoForCurrentScenario().Get<int>(zoneName);
@@ -146,44 +153,23 @@ namespace Takochu.smg
             NameHolder.Save();
         }
 
-        public List<string> GetGalaxyLayers(int mask)
+        public void SaveScenario()
         {
-            List<string> layers = new List<string>
-            {
-                "Common",
-            };
+            BCSV scenarioBCSV = new BCSV(mScenarioFile.OpenFile("/root/ScenarioData.bcsv"));
+            scenarioBCSV.mEntries.Clear();
 
-            string[] GalaxyLayers = new string[]
+            foreach(KeyValuePair<int, Scenario> scenario in mScenarios)
             {
-                "LayerA",
-                "LayerB",
-                "LayerC",
-                "LayerD",
-                "LayerE",
-                "LayerF",
-                "LayerG",
-                "LayerH",
-                "LayerI",
-                "LayerJ",
-                "LayerK",
-                "LayerL",
-                "LayerM",
-                "LayerN",
-                "LayerO",
-                "LayerP"
-            };
-
-            for (int i = 0; i < 16; i++)
-            {
-                if (((mask >> i) & 0x1) != 0x0)
-                    layers.Add(GalaxyLayers[i]);
+                scenarioBCSV.mEntries.Add(scenario.Value.mEntry);
             }
 
-            return layers;
+            scenarioBCSV.Save();
+            mScenarioFile.Save();
         }
 
         public Game mGame;
         public FilesystemBase mFilesystem;
+        public RARCFilesystem mScenarioFile;
         public Dictionary<int, Scenario> mScenarios;
         int mScenarioNo;
 

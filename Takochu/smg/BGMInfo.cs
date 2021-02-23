@@ -21,6 +21,7 @@ namespace Takochu.smg
             {
                 BGMInfoEntry bgmEntry = new BGMInfoEntry
                 {
+                    Entry = e,
                     StageName = e.Get<string>("StageName"),
 
                     ChangeBGMIDName = new string[5],
@@ -43,6 +44,7 @@ namespace Takochu.smg
             {
                 ScenarioBGMEntry scenarioEntry = new ScenarioBGMEntry
                 {
+                    Entry = e,
                     StageName = e.Get<string>("StageName"),
                     ScenarioNo = e.Get<int>("ScenarioNo"),
                     BGMName = e.Get<string>("BgmIdName"),
@@ -55,21 +57,52 @@ namespace Takochu.smg
             }
         }
 
+        public static bool HasBGMInfo(string name)
+        {
+            return mStageEntries.ContainsKey(name);
+        }
+
         public static void GetBGMInfo(string name, out BGMInfoEntry stageEntry, out List<ScenarioBGMEntry> scenarioEntry)
         {
             stageEntry = mStageEntries[name];
             scenarioEntry = mScenarioEntries.FindAll(e => e.StageName == name);
         }
 
-        public struct BGMInfoEntry
+        public static void Save()
         {
+            BCSV stageBgm = new BCSV(mFilesystem.OpenFile("/StageBgmInfo/StageBgmInfo.bcsv"));
+            stageBgm.mEntries.Clear();
+
+            foreach (KeyValuePair<string, BGMInfoEntry> entry in mStageEntries)
+            {
+                stageBgm.mEntries.Add(entry.Value.Entry);
+            }
+
+            stageBgm.Save();
+
+            BCSV scenarioBgm = new BCSV(mFilesystem.OpenFile("/StageBgmInfo/ScenarioBgmInfo.bcsv"));
+            scenarioBgm.mEntries.Clear();
+
+            foreach (ScenarioBGMEntry entry in mScenarioEntries)
+            {
+                scenarioBgm.mEntries.Add(entry.Entry);
+            }
+
+            scenarioBgm.Save();
+            mFilesystem.Save();
+        }
+
+        public class BGMInfoEntry
+        {
+            public BCSV.Entry Entry;
             public string StageName;
             public string[] ChangeBGMIDName;
             public int[] ChangeBGMState;
         };
 
-        public struct ScenarioBGMEntry
+        public class ScenarioBGMEntry
         {
+            public BCSV.Entry Entry;
             public string StageName;
             public int ScenarioNo;
             public string BGMName;

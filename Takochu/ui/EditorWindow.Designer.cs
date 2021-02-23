@@ -33,6 +33,10 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.toolStrip3 = new System.Windows.Forms.ToolStrip();
+            this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.sceneListView = new GL_EditorFramework.SceneListView();
             this.objUIControl = new GL_EditorFramework.ObjectUIControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -42,6 +46,7 @@
             this.lightsUIControl = new GL_EditorFramework.ObjectUIControl();
             this.lightsSceneListView = new GL_EditorFramework.SceneListView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.stageInformationBtn = new System.Windows.Forms.ToolStripButton();
             this.layerViewerDropDown = new System.Windows.Forms.ToolStripDropDownButton();
             this.openMsgEditorButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
@@ -55,19 +60,14 @@
             this.saveGalaxyBtn = new System.Windows.Forms.ToolStripButton();
             this.closeEditorBtn = new System.Windows.Forms.ToolStripButton();
             this.galaxyViewControl = new GL_EditorFramework.GL_Core.GL_ControlModern();
-            this.toolStrip3 = new System.Windows.Forms.ToolStrip();
-            this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.toolStrip3.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.toolStrip2.SuspendLayout();
-            this.toolStrip3.SuspendLayout();
             this.SuspendLayout();
             // 
             // scenarioTreeView
@@ -116,6 +116,46 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Objects";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // toolStrip3
+            // 
+            this.toolStrip3.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSplitButton1,
+            this.toolStripButton1,
+            this.toolStripButton4});
+            this.toolStrip3.Location = new System.Drawing.Point(3, 3);
+            this.toolStrip3.Name = "toolStrip3";
+            this.toolStrip3.Size = new System.Drawing.Size(336, 25);
+            this.toolStrip3.TabIndex = 6;
+            this.toolStrip3.Text = "toolStrip3";
+            // 
+            // toolStripSplitButton1
+            // 
+            this.toolStripSplitButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripSplitButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButton1.Image")));
+            this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButton1.Name = "toolStripSplitButton1";
+            this.toolStripSplitButton1.Size = new System.Drawing.Size(83, 22);
+            this.toolStripSplitButton1.Text = "Add Object";
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(82, 22);
+            this.toolStripButton1.Text = "Delete Object";
+            // 
+            // toolStripButton4
+            // 
+            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
+            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton4.Name = "toolStripButton4";
+            this.toolStripButton4.Size = new System.Drawing.Size(99, 22);
+            this.toolStripButton4.Text = "Duplicate Object";
             // 
             // sceneListView
             // 
@@ -206,7 +246,7 @@
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton5,
+            this.stageInformationBtn,
             this.layerViewerDropDown,
             this.openMsgEditorButton,
             this.toolStripButton2,
@@ -221,6 +261,16 @@
             this.toolStrip1.Size = new System.Drawing.Size(1237, 25);
             this.toolStrip1.TabIndex = 7;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // stageInformationBtn
+            // 
+            this.stageInformationBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.stageInformationBtn.Image = ((System.Drawing.Image)(resources.GetObject("stageInformationBtn.Image")));
+            this.stageInformationBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.stageInformationBtn.Name = "stageInformationBtn";
+            this.stageInformationBtn.Size = new System.Drawing.Size(106, 22);
+            this.stageInformationBtn.Text = "Stage Information";
+            this.stageInformationBtn.Click += new System.EventHandler(this.stageInformationBtn_Click);
             // 
             // layerViewerDropDown
             // 
@@ -263,6 +313,7 @@
             // 
             // galaxyNameTxtBox
             // 
+            this.galaxyNameTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.galaxyNameTxtBox.Name = "galaxyNameTxtBox";
             this.galaxyNameTxtBox.Size = new System.Drawing.Size(300, 25);
             // 
@@ -274,6 +325,7 @@
             // 
             // scenarioNameTxtBox
             // 
+            this.scenarioNameTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.scenarioNameTxtBox.Name = "scenarioNameTxtBox";
             this.scenarioNameTxtBox.Size = new System.Drawing.Size(300, 25);
             // 
@@ -343,55 +395,6 @@
             this.galaxyViewControl.ZNear = 0.32F;
             this.galaxyViewControl.Load += new System.EventHandler(this.galaxyViewControl_Load);
             // 
-            // toolStrip3
-            // 
-            this.toolStrip3.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripSplitButton1,
-            this.toolStripButton1,
-            this.toolStripButton4});
-            this.toolStrip3.Location = new System.Drawing.Point(3, 3);
-            this.toolStrip3.Name = "toolStrip3";
-            this.toolStrip3.Size = new System.Drawing.Size(336, 25);
-            this.toolStrip3.TabIndex = 6;
-            this.toolStrip3.Text = "toolStrip3";
-            // 
-            // toolStripSplitButton1
-            // 
-            this.toolStripSplitButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripSplitButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButton1.Image")));
-            this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripSplitButton1.Name = "toolStripSplitButton1";
-            this.toolStripSplitButton1.Size = new System.Drawing.Size(83, 22);
-            this.toolStripSplitButton1.Text = "Add Object";
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(82, 22);
-            this.toolStripButton1.Text = "Delete Object";
-            // 
-            // toolStripButton4
-            // 
-            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
-            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(99, 22);
-            this.toolStripButton4.Text = "Duplicate Object";
-            // 
-            // toolStripButton5
-            // 
-            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
-            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton5.Name = "toolStripButton5";
-            this.toolStripButton5.Size = new System.Drawing.Size(106, 22);
-            this.toolStripButton5.Text = "Stage Information";
-            // 
             // EditorWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -409,14 +412,14 @@
             this.tabPage4.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.toolStrip3.ResumeLayout(false);
+            this.toolStrip3.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.toolStrip2.ResumeLayout(false);
             this.toolStrip2.PerformLayout();
-            this.toolStrip3.ResumeLayout(false);
-            this.toolStrip3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -454,6 +457,6 @@
         private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton4;
-        private System.Windows.Forms.ToolStripButton toolStripButton5;
+        private System.Windows.Forms.ToolStripButton stageInformationBtn;
     }
 }

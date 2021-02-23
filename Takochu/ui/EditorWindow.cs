@@ -51,6 +51,9 @@ namespace Takochu.ui
                 scenarioTreeView.Nodes.Add(n);
             }
 
+            if (!BGMInfo.HasBGMInfo(mGalaxy.mName))
+                stageInformationBtn.Enabled = false;
+
             galaxyViewControl.MainDrawable = scene;
             galaxyViewControl.ActiveCamera = new GL_EditorFramework.StandardCameras.InspectCamera(1000f);
             galaxyViewControl.CameraDistance = 20.0f;
@@ -107,7 +110,7 @@ namespace Takochu.ui
             scenarioNameTxtBox.Text = mGalaxy.mCurScenarioName;
 
             // first we need to get the proper layers that the galaxy itself uses
-            List<string> layers = mGalaxy.GetGalaxyLayers(mGalaxy.GetMaskUsedInZoneOnCurrentScenario(mGalaxyName));
+            List<string> layers = GameUtil.GetGalaxyLayers(mGalaxy.GetMaskUsedInZoneOnCurrentScenario(mGalaxyName));
 
             layers.ForEach(l => layerViewerDropDown.DropDownItems.Add(l));
 
@@ -136,7 +139,7 @@ namespace Takochu.ui
                 zoneMasks.Add(zone, mGalaxy.GetMaskUsedInZoneOnCurrentScenario(zone));
 
                 Zone z = mGalaxy.GetZone(zone);
-                ObjectHolder curHolder = z.GetAllObjectsFromLayers(mGalaxy.GetGalaxyLayers(zoneMasks[zone]));
+                ObjectHolder curHolder = z.GetAllObjectsFromLayers(GameUtil.GetGalaxyLayers(zoneMasks[zone]));
 
                 foreach (PathObj pobj in z.mPaths)
                 {
@@ -153,7 +156,7 @@ namespace Takochu.ui
                     Zone galaxyZone = mGalaxy.GetGalaxyZone();
 
                     // the first step
-                    List<string> galaxyLayers = mGalaxy.GetGalaxyLayers(zoneMasks[mGalaxy.mName]);
+                    List<string> galaxyLayers = GameUtil.GetGalaxyLayers(zoneMasks[mGalaxy.mName]);
 
                     foreach(string layer in galaxyLayers)
                     {
@@ -535,6 +538,12 @@ namespace Takochu.ui
         {
             mGalaxy.Close();
             Close();
+        }
+
+        private void stageInformationBtn_Click(object sender, EventArgs e)
+        {
+            StageInfoEditor stageInfo = new StageInfoEditor(ref mGalaxy, mCurrentScenario);
+            stageInfo.Show();
         }
     }
 }

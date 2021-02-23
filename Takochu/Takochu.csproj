@@ -178,6 +178,9 @@
     <EmbeddedResource Include="ui\MessageEditor.resx">
       <DependentUpon>MessageEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ui\StageInfoEditor.resx">
+      <DependentUpon>StageInfoEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

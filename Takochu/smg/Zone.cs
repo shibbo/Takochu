@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Takochu.fmt;
 using Takochu.io;
 using Takochu.smg.obj;
+using Takochu.util;
 
 namespace Takochu.smg
 {
@@ -90,7 +91,7 @@ namespace Takochu.smg
         public void LoadLight()
         {
             // thank you, DrillUpDownHardPlanetZone for having a empty light file for god knows why
-            if (mMapFiles["Light"].GetFiles("/root/csv").Count == 0)
+            if (mMapFiles["Light"].GetFiles("/").Count == 0)
                 return;
 
             BCSV light = new BCSV(mMapFiles["Light"].OpenFile($"/root/csv/{mZoneName}Light.bcsv"));
@@ -302,7 +303,7 @@ namespace Takochu.smg
 
         public List<string> GetLayersUsedOnZoneForCurrentScenario()
         {
-            return mGalaxy.GetGalaxyLayers(mGalaxy.GetMaskUsedInZoneOnCurrentScenario(mZoneName));
+            return GameUtil.GetGalaxyLayers(mGalaxy.GetMaskUsedInZoneOnCurrentScenario(mZoneName));
         }
 
         public void Save()

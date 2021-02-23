@@ -1,14 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Permissions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Takochu.util
 {
     public static class GameUtil
     {
+        public static string[] GalaxyLayers = new string[]
+        {
+            "LayerA",
+            "LayerB",
+            "LayerC",
+            "LayerD",
+            "LayerE",
+            "LayerF",
+            "LayerG",
+            "LayerH",
+            "LayerI",
+            "LayerJ",
+            "LayerK",
+            "LayerL",
+            "LayerM",
+            "LayerN",
+            "LayerO",
+            "LayerP"
+        };
+
+        public static List<string> GetGalaxyLayers(int mask)
+        {
+            List<string> layers = new List<string>
+            {
+                "Common",
+            };
+
+            for (int i = 0; i < 16; i++)
+            {
+                if (((mask >> i) & 0x1) != 0x0)
+                    layers.Add(GameUtil.GalaxyLayers[i]);
+            }
+
+            return layers;
+        }
+
+        public static int SetLayerOnMask(string layer, int mask, bool setBit)
+        {
+            int idx = GalaxyLayers.ToList().IndexOf(layer);
+
+            if (setBit)
+                mask |= 1 << idx;
+            else
+                mask &= ~(1 << idx);
+
+            return mask;
+        }
+
         public enum Game
         {
             SMG1,

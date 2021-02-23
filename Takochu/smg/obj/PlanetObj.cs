@@ -55,6 +55,48 @@ namespace Takochu.smg.obj
             mObjID = Get<short>("Obj_ID");
         }
 
+        public override void Save()
+        {
+            mEntry.Set("name", mName);
+            mEntry.Set("l_id", mID);
+
+            mEntry.Set("pos_x", mTruePosition.X);
+            mEntry.Set("pos_y", mTruePosition.Y);
+            mEntry.Set("pos_z", mTruePosition.Z);
+
+            mEntry.Set("dir_x", mTrueRotation.X);
+            mEntry.Set("dir_y", mTrueRotation.Y);
+            mEntry.Set("dir_z", mTrueRotation.Z);
+
+            mEntry.Set("scale_x", Scale.X);
+            mEntry.Set("scale_y", Scale.Y);
+            mEntry.Set("scale_z", Scale.Z);
+
+            for (int i = 0; i < 4; i++)
+                mEntry.Set($"Obj_arg{i}", mObjArgs[i]);
+
+            mEntry.Set("Range", mRange);
+            mEntry.Set("Distant", mDistant);
+            mEntry.Set("Priority", mPriority);
+            mEntry.Set("Inverse", mInverse);
+            mEntry.Set("Power", mPower);
+            mEntry.Set("Gravity_type", mGravityType);
+
+            mEntry.Set("SW_APPEAR", mSwitchAppear);
+            mEntry.Set("SW_DEAD", mSwitchDead);
+            mEntry.Set("SW_A", mSwitchActivate);
+            mEntry.Set("SW_B", mSwitchDeactivate);
+            mEntry.Set("SW_AWAKE", mSwitchAwake);
+
+            mEntry.Set("FollowId", mFollowID);
+            mEntry.Set("CommonPath_ID", mPathID);
+            mEntry.Set("ClippingGroupId", mClippingGroupID);
+            mEntry.Set("GroupId", mGroupID);
+            mEntry.Set("DemoGroupId", mDemoGroupID);
+            mEntry.Set("MapParts_ID", mMapPartsID);
+            mEntry.Set("Obj_ID", mObjID);
+        }
+
         int mID;
         int[] mObjArgs;
         float mRange;

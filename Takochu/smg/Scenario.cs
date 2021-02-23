@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Takochu.fmt;
 
 namespace Takochu.smg
@@ -21,11 +17,10 @@ namespace Takochu.smg
             mComet = mEntry.Get<string>("Comet");
             mCometLimitTimer = mEntry.Get<int>("CometLimitTimer");
 
-            mZoneMasks = new int[zoneList.Count];
-            int curIdx = 0;
+            mZoneMasks = new Dictionary<string, int>();
 
             foreach (string zone in zoneList)
-                mZoneMasks[curIdx++] = mEntry.Get<int>(zone);
+                mZoneMasks.Add(zone, mEntry.Get<int>(zone));
         }
 
         public BCSV.Entry mEntry;
@@ -37,6 +32,6 @@ namespace Takochu.smg
         public string mComet;
         public int mCometLimitTimer;
 
-        public int[] mZoneMasks;
+        public Dictionary<string, int> mZoneMasks;
     }
 }
