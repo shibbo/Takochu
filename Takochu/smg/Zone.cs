@@ -56,9 +56,6 @@ namespace Takochu.smg
                     LoadObjects("Map", "MapParts", "MapPartsInfo");
                     LoadObjects("Map", "placement", "DemoObjInfo");
                 }
-
-                LoadCameras();
-                LoadPaths();
             }
             else
             {
@@ -95,11 +92,11 @@ namespace Takochu.smg
                         }
                     }
                 }
-
-                LoadCameras();
-                LoadPaths();
                 LoadMessages();
             }
+
+            LoadCameras();
+            LoadPaths();
         }
 
         public void LoadObjects(string archive, string directory, string file)
