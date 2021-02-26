@@ -40,9 +40,6 @@ namespace Takochu
             if (gamePath != "" && Directory.Exists(gamePath))
             {
                 Setup();
-
-                if (GameUtil.IsSMG2())
-                    NameHolder.Initialize();
             }
         }
 
@@ -53,6 +50,9 @@ namespace Takochu
 
             if (GameUtil.IsSMG2())
                 BGMInfo.Initialize();
+
+            if (GameUtil.IsSMG2())
+                NameHolder.Initialize();
 
             bcsvEditorBtn.Enabled = true;
             galaxyTreeView.Nodes.Clear();
