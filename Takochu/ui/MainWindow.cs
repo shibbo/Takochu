@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using Takochu.fmt;
 using Takochu.io;
 using Takochu.smg;
+using Takochu.smg.img;
 using Takochu.smg.msg;
 using Takochu.ui;
 using Takochu.util;
@@ -52,6 +53,7 @@ namespace Takochu
                 BGMInfo.Initialize();
 
             NameHolder.Initialize();
+            ImageHolder.Initialize();
 
             bcsvEditorBtn.Enabled = true;
             galaxyTreeView.Nodes.Clear();

@@ -68,6 +68,7 @@
     <Compile Include="fmt\BCSV.cs" />
     <Compile Include="fmt\BMD.cs" />
     <Compile Include="fmt\BMG.cs" />
+    <Compile Include="fmt\BTI.cs" />
     <Compile Include="fmt\MSBF.cs" />
     <Compile Include="fmt\MSBT.cs" />
     <Compile Include="io\ExternalFile.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="io\ExternalFilesystem.cs" />
     <Compile Include="io\FileBase.cs" />
     <Compile Include="io\MemoryFile.cs" />
+    <Compile Include="smg\img\ImageHolder.cs" />
     <Compile Include="smg\msg\MessageBase.cs" />
     <Compile Include="ui\MainWindow.cs">
       <SubType>Form</SubType>
@@ -150,6 +152,7 @@
     <Compile Include="ui\MessageEditor.Designer.cs">
       <DependentUpon>MessageEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="util\ImageUtil.cs" />
     <Compile Include="util\SettingsUtil.cs" />
     <Compile Include="util\Translator.cs" />
     <EmbeddedResource Include="ui\MainWindow.resx">

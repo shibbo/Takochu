@@ -97,6 +97,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.saveScenarioBtn = new System.Windows.Forms.ToolStripButton();
+            this.galaxyInfoTexture = new System.Windows.Forms.PictureBox();
             this.tabControl2.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.layerMasksBox.SuspendLayout();
@@ -116,15 +117,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.scenarioBGMStartFrame)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.scenarioBGMStartType)).BeginInit();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.galaxyInfoTexture)).BeginInit();
             this.SuspendLayout();
             // 
             // scenarioListTreeView
             // 
             this.scenarioListTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.scenarioListTreeView.Location = new System.Drawing.Point(12, 34);
+            this.scenarioListTreeView.Location = new System.Drawing.Point(12, 28);
             this.scenarioListTreeView.Name = "scenarioListTreeView";
-            this.scenarioListTreeView.Size = new System.Drawing.Size(216, 433);
+            this.scenarioListTreeView.Size = new System.Drawing.Size(216, 456);
             this.scenarioListTreeView.TabIndex = 0;
             this.scenarioListTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.scenarioListTreeView_AfterSelect);
             // 
@@ -138,7 +140,7 @@
             this.tabControl2.Location = new System.Drawing.Point(234, 28);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(853, 446);
+            this.tabControl2.Size = new System.Drawing.Size(853, 456);
             this.tabControl2.TabIndex = 3;
             this.tabControl2.SelectedIndexChanged += new System.EventHandler(this.tabControl2_SelectedIndexChanged);
             // 
@@ -149,7 +151,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(845, 420);
+            this.tabPage4.Size = new System.Drawing.Size(845, 430);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "Scenario";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -158,6 +160,7 @@
             // 
             this.layerMasksBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.layerMasksBox.Controls.Add(this.galaxyInfoTexture);
             this.layerMasksBox.Controls.Add(this.layerO);
             this.layerMasksBox.Controls.Add(this.layerN);
             this.layerMasksBox.Controls.Add(this.layerM);
@@ -175,9 +178,9 @@
             this.layerMasksBox.Controls.Add(this.layerB);
             this.layerMasksBox.Controls.Add(this.layerA);
             this.layerMasksBox.Controls.Add(this.zoneListsBox);
-            this.layerMasksBox.Location = new System.Drawing.Point(7, 177);
+            this.layerMasksBox.Location = new System.Drawing.Point(6, 192);
             this.layerMasksBox.Name = "layerMasksBox";
-            this.layerMasksBox.Size = new System.Drawing.Size(819, 240);
+            this.layerMasksBox.Size = new System.Drawing.Size(814, 235);
             this.layerMasksBox.TabIndex = 1;
             this.layerMasksBox.TabStop = false;
             this.layerMasksBox.Text = "Layer Masks";
@@ -897,6 +900,14 @@
             this.saveScenarioBtn.Text = "Save";
             this.saveScenarioBtn.Click += new System.EventHandler(this.saveScenarioBtn_Click);
             // 
+            // galaxyInfoTexture
+            // 
+            this.galaxyInfoTexture.Location = new System.Drawing.Point(552, 19);
+            this.galaxyInfoTexture.Name = "galaxyInfoTexture";
+            this.galaxyInfoTexture.Size = new System.Drawing.Size(256, 72);
+            this.galaxyInfoTexture.TabIndex = 5;
+            this.galaxyInfoTexture.TabStop = false;
+            // 
             // StageInfoEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -931,6 +942,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.scenarioBGMStartType)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.galaxyInfoTexture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1006,5 +1018,6 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton saveScenarioBtn;
+        private System.Windows.Forms.PictureBox galaxyInfoTexture;
     }
 }

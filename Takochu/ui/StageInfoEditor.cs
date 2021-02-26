@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Takochu.fmt;
 using Takochu.smg;
+using Takochu.smg.img;
 using Takochu.util;
 
 namespace Takochu.ui
@@ -23,6 +24,8 @@ namespace Takochu.ui
             mGalaxy = galaxy;
             mScenarios = new Dictionary<int, Scenario>();
             mBGMRestrictedIDs = new List<int>();
+
+            galaxyInfoTexture.Image = ImageHolder.GetImage(mGalaxy.mName);
 
             bool indexFound = false;
             int idx = 0;

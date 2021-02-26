@@ -15,12 +15,8 @@ namespace Takochu.fmt
         public BMD(FileBase file)
         {
             mFile = file;
-            byte[] data = mFile.GetBuffer();
-            Stream stream = new MemoryStream(data);
-            mModel = Model.Load(stream);
         }
 
-        public Model mModel;
         private FileBase mFile;
     }
 }
