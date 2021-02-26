@@ -30,7 +30,7 @@ namespace Takochu.smg.obj
 
             Position = new Vector3(Get<float>("pos_x") / 100, Get<float>("pos_y") / 100, Get<float>("pos_z") / 100);
             Rotation = new Vector3(Get<float>("dir_x"), Get<float>("dir_y"), Get<float>("dir_z"));
-            Scale = new Vector3(Get<float>("scale_x"), Get<float>("scale_y"), Get<float>("scale_z"));
+            mScale = Scale = new Vector3(Get<float>("scale_x"), Get<float>("scale_y"), Get<float>("scale_z"));
 
             mID = Get<int>("l_id");
             mObjArgs = new int[8];
@@ -251,9 +251,9 @@ namespace Takochu.smg.obj
                 control.VerticalSeperator();
 
                 control.PlainText("Scale");
-                obj.mScale.X = control.NumberInput(obj.Scale.X, "X:");
-                obj.mScale.Y = control.NumberInput(obj.Scale.Y, "Y:");
-                obj.mScale.Z = control.NumberInput(obj.Scale.Z, "Z:");
+                obj.mScale.X = control.NumberInput(obj.mScale.X, "X:");
+                obj.mScale.Y = control.NumberInput(obj.mScale.Y, "Y:");
+                obj.mScale.Z = control.NumberInput(obj.mScale.Z, "Z:");
             }
 
             public void OnValueChangeStart() { }

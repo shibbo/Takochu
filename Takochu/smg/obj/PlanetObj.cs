@@ -26,7 +26,7 @@ namespace Takochu.smg.obj
 
             Position = new Vector3(Get<float>("pos_x") / 100, Get<float>("pos_y") / 100, Get<float>("pos_z") / 100);
             Rotation = new Vector3(Get<float>("dir_x"), Get<float>("dir_y"), Get<float>("dir_z"));
-            Scale = new Vector3(Get<float>("scale_x"), Get<float>("scale_y"), Get<float>("scale_z"));
+            mScale = Scale = new Vector3(Get<float>("scale_x"), Get<float>("scale_y"), Get<float>("scale_z"));
 
             mID = Get<int>("l_id");
             mObjArgs = new int[4];
@@ -71,9 +71,9 @@ namespace Takochu.smg.obj
             mEntry.Set("dir_y", mTrueRotation.Y);
             mEntry.Set("dir_z", mTrueRotation.Z);
 
-            mEntry.Set("scale_x", Scale.X);
-            mEntry.Set("scale_y", Scale.Y);
-            mEntry.Set("scale_z", Scale.Z);
+            mEntry.Set("scale_x", mScale.X);
+            mEntry.Set("scale_y", mScale.Y);
+            mEntry.Set("scale_z", mScale.Z);
 
             for (int i = 0; i < 4; i++)
                 mEntry.Set($"Obj_arg{i}", mObjArgs[i]);

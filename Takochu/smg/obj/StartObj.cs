@@ -24,10 +24,11 @@ namespace Takochu.smg.obj
             mType = "StartObj";
 
             mTruePosition = new Vector3(Get<float>("pos_x"), Get<float>("pos_y"), Get<float>("pos_z"));
+            mTrueRotation = new Vector3(Get<float>("dir_x"), Get<float>("dir_y"), Get<float>("dir_z"));
 
             Position = new Vector3(Get<float>("pos_x") / 100, Get<float>("pos_y") / 100, Get<float>("pos_z") / 100);
             Rotation = new Vector3(Get<float>("dir_x"), Get<float>("dir_y"), Get<float>("dir_z"));
-            Scale = new Vector3(Get<float>("scale_x"), Get<float>("scale_y"), Get<float>("scale_z"));
+            mScale = Scale = new Vector3(Get<float>("scale_x"), Get<float>("scale_y"), Get<float>("scale_z"));
 
             mMarioNo = Get<int>("MarioNo");
             mCameraID = Get<int>("Camera_id");
@@ -44,9 +45,9 @@ namespace Takochu.smg.obj
             mEntry.Set("pos_y", mTruePosition.Y);
             mEntry.Set("pos_z", mTruePosition.Z);
 
-            mEntry.Set("dir_x", Rotation.X);
-            mEntry.Set("dir_y", Rotation.Y);
-            mEntry.Set("dir_z", Rotation.Z);
+            mEntry.Set("dir_x", mTrueRotation.X);
+            mEntry.Set("dir_y", mTrueRotation.Y);
+            mEntry.Set("dir_z", mTrueRotation.Z);
 
             mEntry.Set("scale_x", Scale.X);
             mEntry.Set("scale_y", Scale.Y);
@@ -122,7 +123,7 @@ namespace Takochu.smg.obj
             if (!Selected)
                 return false;
 
-            objectUIControl.AddObjectUIContainer(new PropertyProvider(this, scene), "Transform");
+            //objectUIControl.AddObjectUIContainer(new PropertyProvider(this, scene), "Transform");
             objectUIControl.AddObjectUIContainer(new StartObjUI(this, scene), "Starting Point Settings");
             return true;
         }
