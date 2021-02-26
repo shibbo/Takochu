@@ -251,9 +251,9 @@ namespace Takochu.smg.obj
                 control.VerticalSeperator();
 
                 control.PlainText("Scale");
-                obj.mScale.X = control.NumberInput(obj.mScale.X, "X:");
-                obj.mScale.Y = control.NumberInput(obj.mScale.Y, "Y:");
-                obj.mScale.Z = control.NumberInput(obj.mScale.Z, "Z:");
+                obj.mScale.X = control.NumberInput(obj.Scale.X, "X:");
+                obj.mScale.Y = control.NumberInput(obj.Scale.Y, "Y:");
+                obj.mScale.Z = control.NumberInput(obj.Scale.Z, "Z:");
             }
 
             public void OnValueChangeStart() { }
