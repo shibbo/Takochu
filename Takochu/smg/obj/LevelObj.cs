@@ -59,7 +59,7 @@ namespace Takochu.smg.obj
                 mObjID = Get<short>("Obj_ID");
                 mGeneratorID = Get<short>("GeneratorID");
             }
-            
+
             mCastID = Get<int>("CastId");
             mViewGroupID = Get<int>("ViewGroupId");
             mShapeModelNo = Get<short>("ShapeModelNo");

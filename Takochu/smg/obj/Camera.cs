@@ -39,6 +39,7 @@ namespace Takochu.smg.obj
             mEntry = entry;
 
             mName = mEntry.Get<string>("id");
+
             mParentZone = parent;
 
             mType = mEntry.Get<string>("camtype");
@@ -129,6 +130,9 @@ namespace Takochu.smg.obj
 
         public CameraType GetCameraType()
         {
+            if (mName == "")
+                return CameraType.Cube;
+
             string type = mName.Substring(0, 1);
             return cameraDict.ContainsKey(type) ? cameraDict[type] : CameraType.Cube;
         }

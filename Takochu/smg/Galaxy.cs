@@ -30,6 +30,10 @@ namespace Takochu.smg
             foreach(BCSV.Entry e in zonesBCSV.mEntries)
             {
                 string n = e.Get<string>("ZoneName");
+
+                if (n == "PoleUnizoZone")
+                    continue;
+
                 mZones.Add(n, new Zone(this, n));
             }
 
