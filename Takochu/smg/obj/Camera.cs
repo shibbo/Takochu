@@ -139,6 +139,9 @@ namespace Takochu.smg.obj
 
         public override string ToString()
         {
+            if (mName == "")
+                return $"Default Camera [{mParentZone.mZoneName}]";
+
             return $"{mName} [{mParentZone.mZoneName}]";
         }
 
