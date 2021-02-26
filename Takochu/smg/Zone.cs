@@ -118,8 +118,7 @@ namespace Takochu.smg
 
         public void LoadLight()
         {
-            // thank you, DrillUpDownHardPlanetZone for having a empty light file for god knows why
-            if (mMapFiles["Light"].GetFiles("/").Count == 0)
+            if (!mMapFiles["Light"].DoesFileExist($"/root/csv/{mZoneName}Light.bcsv"))
                 return;
 
             BCSV light = new BCSV(mMapFiles["Light"].OpenFile($"/root/csv/{mZoneName}Light.bcsv"));
