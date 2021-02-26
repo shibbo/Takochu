@@ -13,30 +13,114 @@ namespace Takochu.smg.msg
     {
         public static void Initialize()
         {
-            mFilesystem = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile("/LocalizeData/UsEnglish/MessageData/SystemMessage.arc"));
+            if (GameUtil.IsSMG1())
+            {
+                mFilesystem = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile("/UsEnglish/MessageData/Message.arc"));
+                mMessages = new BMG(mFilesystem.OpenFile("/message/message.bmg"));
+                mMessageTable = new Dictionary<string, int>();
 
-            mGalaxyNames = new MSBT(mFilesystem.OpenFile("/boop/GalaxyName.msbt"));
-            mScenarioNames = new MSBT(mFilesystem.OpenFile("/boop/ScenarioName.msbt"));
+                BCSV tbl = new BCSV(mFilesystem.OpenFile("/message/messageid.tbl"));
+
+                foreach(BCSV.Entry e in tbl.mEntries)
+                {
+                    mMessageTable.Add(e.Get<string>("MessageId"), e.Get<int>("Index"));
+                }
+
+                tbl.Close();
+            }
+
+            else
+            {
+                mFilesystem = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile("/LocalizeData/UsEnglish/MessageData/SystemMessage.arc"));
+
+                mGalaxyNames = new MSBT(mFilesystem.OpenFile("/boop/GalaxyName.msbt"));
+                mScenarioNames = new MSBT(mFilesystem.OpenFile("/boop/ScenarioName.msbt"));
+            }
+        }
+
+        public static bool DoesMsgTblContain(string zone)
+        {
+            foreach(KeyValuePair<string, int> pair in mMessageTable)
+            {
+                if (pair.Key.StartsWith(zone))
+                    return true;
+            }
+
+            return false;
+        }
+
+        public static Dictionary<string, List<MessageBase>> GetAllMessagesInZone(string zone)
+        {
+            Dictionary<string, List<MessageBase>> msgs = new Dictionary<string, List<MessageBase>>();
+
+            foreach (KeyValuePair<string, int> pair in mMessageTable)
+            {
+                if (pair.Key.StartsWith(zone))
+                    msgs.Add(pair.Key, mMessages.GetMessageAtIdx(pair.Value));
+            }
+
+            return msgs;
         }
 
         public static bool HasGalaxyName(string galaxy)
         {
-            if (mGalaxyNames == null)
-                return false;
+            bool ret;
 
-            return mGalaxyNames.HasGalaxyName(galaxy);
+            if (GameUtil.IsSMG1())
+            {
+                ret = mMessageTable.ContainsKey($"GalaxyName_{galaxy}");
+            }
+            else
+            {
+                if (mGalaxyNames == null)
+                    return false;
+
+                ret = mGalaxyNames.HasGalaxyName(galaxy);
+            }
+
+            return ret;
         }
 
         public static string GetGalaxyName(string galaxy)
         {
+            string ret;
+
             string name = $"GalaxyName_{galaxy}";
-            return mGalaxyNames.GetStringFromLabelNoTag(name);
+
+            if (GameUtil.IsSMG1())
+            {
+                int idx = mMessageTable[name];
+                ret = mMessages.GetStringAtIdx(idx);
+            }
+            else
+            {
+                ret = mGalaxyNames.GetStringFromLabelNoTag(name);
+            }
+
+            return ret;
         }
 
         public static string GetScenarioName(string galaxy, int scenarioNo)
         {
+            string ret;
             string name = $"ScenarioName_{galaxy}{scenarioNo}";
-            return mScenarioNames.GetStringFromLabelNoTag(name);
+
+            if (GameUtil.IsSMG1())
+            {
+                if (!mMessageTable.ContainsKey(name))
+                    ret = "";
+                else
+                {
+                    int idx = mMessageTable[name];
+                    ret = mMessages.GetStringAtIdx(idx);
+                }
+            }
+            else
+            {
+                ret = mScenarioNames.GetStringFromLabelNoTag(name);
+            }
+
+            return ret;
         }
 
         public static void Close()
@@ -59,5 +143,9 @@ namespace Takochu.smg.msg
         private static RARCFilesystem mFilesystem;
         private static MSBT mGalaxyNames;
         private static MSBT mScenarioNames;
+
+        private static BMG mMessages;
+
+        private static Dictionary<string, int> mMessageTable;
     }
 }

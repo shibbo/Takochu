@@ -36,10 +36,10 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.flowNamesListBox = new System.Windows.Forms.ListBox();
-            this.testMSBFBtn = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
             this.flowNamesList = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.testMSBFBtn = new System.Windows.Forms.Button();
+            this.flowNamesListBox = new System.Windows.Forms.ListBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -68,6 +68,7 @@
             this.labelTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelTextBox.Location = new System.Drawing.Point(7, 30);
             this.labelTextBox.Name = "labelTextBox";
             this.labelTextBox.Size = new System.Drawing.Size(878, 425);
@@ -115,7 +116,7 @@
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(891, 461);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "MSBT";
+            this.tabPage1.Text = "Text";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // tabPage2
@@ -129,18 +130,26 @@
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(891, 461);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "MSBF";
+            this.tabPage2.Text = "Flow";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // flowNamesListBox
+            // flowNamesList
             // 
-            this.flowNamesListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.flowNamesListBox.FormattingEnabled = true;
-            this.flowNamesListBox.Location = new System.Drawing.Point(6, 73);
-            this.flowNamesListBox.Name = "flowNamesListBox";
-            this.flowNamesListBox.Size = new System.Drawing.Size(176, 381);
-            this.flowNamesListBox.TabIndex = 0;
+            this.flowNamesList.FormattingEnabled = true;
+            this.flowNamesList.Location = new System.Drawing.Point(49, 10);
+            this.flowNamesList.Name = "flowNamesList";
+            this.flowNamesList.Size = new System.Drawing.Size(836, 21);
+            this.flowNamesList.TabIndex = 3;
+            this.flowNamesList.SelectedIndexChanged += new System.EventHandler(this.flowNamesList_SelectedIndexChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 13);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(37, 13);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Flows:";
             // 
             // testMSBFBtn
             // 
@@ -152,23 +161,15 @@
             this.testMSBFBtn.UseVisualStyleBackColor = true;
             this.testMSBFBtn.Click += new System.EventHandler(this.testMSBFBtn_Click);
             // 
-            // label3
+            // flowNamesListBox
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 13);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(37, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Flows:";
-            // 
-            // flowNamesList
-            // 
-            this.flowNamesList.FormattingEnabled = true;
-            this.flowNamesList.Location = new System.Drawing.Point(49, 10);
-            this.flowNamesList.Name = "flowNamesList";
-            this.flowNamesList.Size = new System.Drawing.Size(836, 21);
-            this.flowNamesList.TabIndex = 3;
-            this.flowNamesList.SelectedIndexChanged += new System.EventHandler(this.flowNamesList_SelectedIndexChanged);
+            this.flowNamesListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.flowNamesListBox.FormattingEnabled = true;
+            this.flowNamesListBox.Location = new System.Drawing.Point(6, 73);
+            this.flowNamesListBox.Name = "flowNamesListBox";
+            this.flowNamesListBox.Size = new System.Drawing.Size(176, 381);
+            this.flowNamesListBox.TabIndex = 0;
             // 
             // MessageEditor
             // 

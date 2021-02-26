@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="fmt\BCSV.cs" />
     <Compile Include="fmt\BMD.cs" />
+    <Compile Include="fmt\BMG.cs" />
     <Compile Include="fmt\MSBF.cs" />
     <Compile Include="fmt\MSBT.cs" />
     <Compile Include="io\ExternalFile.cs" />
@@ -77,10 +78,11 @@
     <Compile Include="io\ExternalFilesystem.cs" />
     <Compile Include="io\FileBase.cs" />
     <Compile Include="io\MemoryFile.cs" />
-    <Compile Include="MainWindow.cs">
+    <Compile Include="smg\msg\MessageBase.cs" />
+    <Compile Include="ui\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainWindow.Designer.cs">
+    <Compile Include="ui\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -150,7 +152,7 @@
     </Compile>
     <Compile Include="util\SettingsUtil.cs" />
     <Compile Include="util\Translator.cs" />
-    <EmbeddedResource Include="MainWindow.resx">
+    <EmbeddedResource Include="ui\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

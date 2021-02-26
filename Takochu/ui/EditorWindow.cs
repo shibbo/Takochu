@@ -26,6 +26,9 @@ namespace Takochu.ui
         {
             InitializeComponent();
             mGalaxyName = galaxyName;
+
+            if (GameUtil.IsSMG1())
+                saveGalaxyBtn.Enabled = false;
         }
 
         protected override void OnLoad(EventArgs e)

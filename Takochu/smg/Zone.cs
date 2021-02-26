@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Takochu.fmt;
 using Takochu.io;
+using Takochu.smg.msg;
 using Takochu.smg.obj;
 using Takochu.util;
 
@@ -318,7 +319,10 @@ namespace Takochu.smg
 
         public bool HasMessages()
         {
-            return mMessages != null;
+            if (GameUtil.IsSMG1())
+                return NameHolder.DoesMsgTblContain(mZoneName);
+            else
+                return mMessages != null;
         }
 
         public MSBT GetMessages()

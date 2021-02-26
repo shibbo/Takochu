@@ -31,6 +31,7 @@ namespace Takochu.util
         private MSBT mCurMessages;
         private MSBF mCurFlow;
         private string mCurrentSelectedFlow;
+        private Dictionary<string, List<MessageBase>> mCurMessageDict;
 
         private void zoneNamesComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -41,25 +42,40 @@ namespace Takochu.util
                 string name = (string)zoneNamesComboBox.SelectedItem;
                 mSelectedZone = name;
 
-                mCurMessages = mGalaxy.GetZone(name).GetMessages();
-
-                Dictionary<string, List<MessageBase>> dur = mCurMessages.GetMessages();
-
-                foreach(string str in dur.Keys)
+                if (GameUtil.IsSMG1())
                 {
-                    labelsComboBox.Items.Add(str);
-                }
+                    // disable flows for now
+                    ((Control)tabPage2).Enabled = false;
 
-                flowNamesList.Items.Clear();
+                    mCurMessageDict = NameHolder.GetAllMessagesInZone(mSelectedZone);
 
-                if (mGalaxy.GetZone(name).HasFlows())
-                {
-                    ((Control)tabPage2).Enabled = true;
-                    mCurFlow = mGalaxy.GetZone(name).GetFlows();
-                    mCurFlow.GetFlowNames().ForEach(l => flowNamesList.Items.Add(l));
+                    foreach (string str in mCurMessageDict.Keys)
+                    {
+                        labelsComboBox.Items.Add(str);
+                    }
                 }
                 else
-                    ((Control)tabPage2).Enabled = false;
+                {
+                    mCurMessages = mGalaxy.GetZone(name).GetMessages();
+
+                    Dictionary<string, List<MessageBase>> dur = mCurMessages.GetMessages();
+
+                    foreach (string str in dur.Keys)
+                    {
+                        labelsComboBox.Items.Add(str);
+                    }
+
+                    flowNamesList.Items.Clear();
+
+                    if (mGalaxy.GetZone(name).HasFlows())
+                    {
+                        ((Control)tabPage2).Enabled = true;
+                        mCurFlow = mGalaxy.GetZone(name).GetFlows();
+                        mCurFlow.GetFlowNames().ForEach(l => flowNamesList.Items.Add(l));
+                    }
+                    else
+                        ((Control)tabPage2).Enabled = false;
+                }
             }
         }
 
@@ -70,7 +86,13 @@ namespace Takochu.util
                 labelTextBox.Text = "";
 
                 string lbl = labelsComboBox.Text;
-                List<MessageBase> msg = mCurMessages.GetMessageFromLabel(lbl);
+
+                List<MessageBase> msg;
+
+                if (GameUtil.IsSMG1())
+                    msg = mCurMessageDict[lbl];
+                else
+                    msg = mCurMessages.GetMessageFromLabel(lbl);
 
                 foreach(MessageBase m in msg)
                 {

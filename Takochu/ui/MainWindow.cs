@@ -51,8 +51,7 @@ namespace Takochu
             if (GameUtil.IsSMG2())
                 BGMInfo.Initialize();
 
-            if (GameUtil.IsSMG2())
-                NameHolder.Initialize();
+            NameHolder.Initialize();
 
             bcsvEditorBtn.Enabled = true;
             galaxyTreeView.Nodes.Clear();

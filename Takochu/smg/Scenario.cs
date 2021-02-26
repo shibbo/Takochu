@@ -21,7 +21,10 @@ namespace Takochu.smg
                 mCometLimitTimer = mEntry.Get<int>("CometLimitTimer");
             }
 
-            mComet = mEntry.Get<string>("Comet");
+            if (!mEntry.ContainsKey("Comet"))
+                mComet = "";
+            else
+                mComet = mEntry.Get<string>("Comet");
             
             mZoneMasks = new Dictionary<string, int>();
 
