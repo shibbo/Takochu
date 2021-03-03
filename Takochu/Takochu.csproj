@@ -81,6 +81,10 @@
     <Compile Include="io\MemoryFile.cs" />
     <Compile Include="smg\img\ImageHolder.cs" />
     <Compile Include="smg\msg\MessageBase.cs" />
+    <Compile Include="smg\ZoneAttributes.cs" />
+    <Compile Include="ui\editor\GeneralUI.cs" />
+    <Compile Include="ui\editor\ParameterUI.cs" />
+    <Compile Include="ui\editor\PositionUI.cs" />
     <Compile Include="ui\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>

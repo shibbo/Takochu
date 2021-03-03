@@ -1,4 +1,6 @@
-﻿using GL_EditorFramework.GL_Core;
+﻿using GL_EditorFramework;
+using GL_EditorFramework.EditorDrawables;
+using GL_EditorFramework.GL_Core;
 using OpenTK;
 using System;
 using System.Collections.Generic;
@@ -6,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Takochu.fmt;
+using Takochu.ui.editor;
 
 namespace Takochu.smg.obj
 {
@@ -45,6 +48,16 @@ namespace Takochu.smg.obj
             mEntry.Set("dir_y", mTrueRotation.Y);
             mEntry.Set("dir_z", mTrueRotation.Z);
             mEntry.Set("Obj_ID", mObjID);
+        }
+
+        public override bool TrySetupObjectUIControl(EditorSceneBase scene, ObjectUIControl objectUIControl)
+        {
+            if (!Selected)
+                return false;
+
+            objectUIControl.AddObjectUIContainer(new GeneralUI(this, scene), "General");
+            objectUIControl.AddObjectUIContainer(new PositionUI(this, scene, false), "Position");
+            return true;
         }
 
         string mPosName;

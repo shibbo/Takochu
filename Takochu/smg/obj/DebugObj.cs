@@ -1,10 +1,13 @@
-﻿using OpenTK;
+﻿using GL_EditorFramework;
+using GL_EditorFramework.EditorDrawables;
+using OpenTK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Takochu.fmt;
+using Takochu.ui.editor;
 
 namespace Takochu.smg.obj
 {
@@ -52,6 +55,15 @@ namespace Takochu.smg.obj
         public override string ToString()
         {
             return $"[{Get<int>("l_id")}] {mName} [{mLayer}] [{mParentZone.mZoneName}]";
+        }
+
+        public override bool TrySetupObjectUIControl(EditorSceneBase scene, ObjectUIControl objectUIControl)
+        {
+            if (!Selected)
+                return false;
+
+            objectUIControl.AddObjectUIContainer(new PositionUI(this, scene), "Position");
+            return true;
         }
     }
 }

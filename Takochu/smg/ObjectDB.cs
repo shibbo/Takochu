@@ -73,6 +73,9 @@ namespace Takochu.smg
 
         public static Actor GetActorFromObjectName(string objName)
         {
+            if (!Objects.ContainsKey(objName))
+                return null;
+
             Object obj = Objects[objName];
 
             if (obj.Actor == "")

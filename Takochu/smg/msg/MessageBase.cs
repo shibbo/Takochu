@@ -168,14 +168,11 @@ namespace Takochu.smg.msg
             base.Save(ref file);
             file.Write((short)1);
             file.Write(mType);
-            // data length
-            file.Write((short)2);
 
             if (mType != 0)
-                file.Write(0);
+                file.Write((short)0);
             else
             {
-                file.Write((short)0);
                 file.Write(mFrames);
             }
         }

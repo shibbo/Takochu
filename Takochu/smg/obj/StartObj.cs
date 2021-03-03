@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Takochu.fmt;
+using Takochu.ui.editor;
 
 namespace Takochu.smg.obj
 {
@@ -32,13 +33,15 @@ namespace Takochu.smg.obj
 
             mMarioNo = Get<int>("MarioNo");
             mCameraID = Get<int>("Camera_id");
-            mObjArg0 = Get<int>("Obj_arg0");
+
+            mObjArgs = new int[1];
+            mObjArgs[0] = Get<int>("Obj_arg0");
         }
 
         public override void Save()
         {
             mEntry.Set("MarioNo", mMarioNo);
-            mEntry.Set("Obj_arg0", mObjArg0);
+            mEntry.Set("Obj_arg0", mObjArgs[0]);
             mEntry.Set("Camera_id", mCameraID);
 
             mEntry.Set("pos_x", mTruePosition.X);
@@ -55,7 +58,6 @@ namespace Takochu.smg.obj
         }
 
         int mMarioNo;
-        int mObjArg0;
         int mCameraID;
 
         public override string ToString()
@@ -123,7 +125,9 @@ namespace Takochu.smg.obj
             if (!Selected)
                 return false;
 
-            //objectUIControl.AddObjectUIContainer(new PropertyProvider(this, scene), "Transform");
+            objectUIControl.AddObjectUIContainer(new GeneralUI(this, scene), "General");
+            objectUIControl.AddObjectUIContainer(new PositionUI(this, scene), "Position");
+            objectUIControl.AddObjectUIContainer(new ParameterUI(this, scene, 1), "Object Parameters");
             objectUIControl.AddObjectUIContainer(new StartObjUI(this, scene), "Starting Point Settings");
             return true;
         }
@@ -133,27 +137,15 @@ namespace Takochu.smg.obj
             StartObj obj;
             EditorSceneBase scene;
 
-            string text = "";
-            string zone = "";
-
-            static List<string> zones;
-
             public StartObjUI(AbstractObj obj, EditorSceneBase scene)
             {
                 this.obj = obj as StartObj;
                 this.scene = scene;
-
-                zones = new List<string>();
-                zones.AddRange(obj.mParentZone.mGalaxy.GetZones().Keys);
             }
 
             public void DoUI(IObjectUIControl control)
             {
-                text = control.TextInput(obj.Get<string>("name"), "Name");
-                zone = control.DropDownTextInput("Zone", obj.mParentZone.mZoneName, zones.ToArray(), false);
-
                 obj.mMarioNo = (int)control.NumberInput(obj.mMarioNo, "Mario Number");
-                obj.mObjArg0 =  (int)control.NumberInput(obj.mObjArg0, "Obj_arg0");
                 obj.mCameraID = (int)control.NumberInput(obj.mCameraID, "Camera ID");
             }
 

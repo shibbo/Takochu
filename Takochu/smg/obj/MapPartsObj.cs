@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Takochu.fmt;
+using Takochu.ui.editor;
 using Takochu.util;
 
 namespace Takochu.smg.obj
@@ -132,7 +133,6 @@ namespace Takochu.smg.obj
         }
 
         int mID;
-        int[] mObjArgs;
 
         int mFarClip;
         int mPressType;
@@ -226,8 +226,9 @@ namespace Takochu.smg.obj
             if (!Selected)
                 return false;
 
-            //objectUIControl.AddObjectUIContainer(new PropertyProvider(this, scene), "Transform");
-            //objectUIControl.AddObjectUIContainer(new MapPartsObjUI(this, scene), "Example Controls");
+            objectUIControl.AddObjectUIContainer(new GeneralUI(this, scene), "General");
+            objectUIControl.AddObjectUIContainer(new PositionUI(this, scene), "Position");
+            objectUIControl.AddObjectUIContainer(new ParameterUI(this, scene, 4), "Object Parameters");
             return true;
         }
 

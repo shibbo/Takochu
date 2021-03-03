@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Takochu.fmt;
+using Takochu.ui.editor;
 using Takochu.util;
 using static Takochu.smg.ObjectDB;
 
@@ -98,7 +99,6 @@ namespace Takochu.smg.obj
         }
 
         int mID;
-        int[] mObjArgs;
         int mPriority;
         int mSwitchAppear;
         int mSwitchActivate;
@@ -180,148 +180,12 @@ namespace Takochu.smg.obj
             if (!Selected)
                 return false;
 
-            objectUIControl.AddObjectUIContainer(new AreaObjectUI(this, scene), "General");
+            objectUIControl.AddObjectUIContainer(new GeneralUI(this, scene), "General");
             objectUIControl.AddObjectUIContainer(new PositionUI(this, scene), "Position");
-            objectUIControl.AddObjectUIContainer(new AreaObjParameterUI(this, scene), "Object Parameters");
+            objectUIControl.AddObjectUIContainer(new ParameterUI(this, scene, 8), "Object Parameters");
             objectUIControl.AddObjectUIContainer(new AreaObjSwitchParameters(this, scene), "Switch Parameters");
             objectUIControl.AddObjectUIContainer(new AreaObjGeneralParameterUI(this, scene), "Misc Parameters");
             return true;
-        }
-
-        public class AreaObjectUI : IObjectUIContainer
-        {
-            AreaObj obj;
-            EditorSceneBase scene;
-
-            List<string> zones;
-
-            public AreaObjectUI(AreaObj obj, EditorSceneBase scene)
-            {
-                this.obj = obj;
-                this.scene = scene;
-
-                zones = new List<string>();
-                zones.AddRange(obj.mParentZone.mGalaxy.GetZones().Keys);
-            }
-
-            public void DoUI(IObjectUIControl control)
-            {
-                control.PlainText(obj.mName);
-                obj.mName = control.FullWidthTextInput(obj.mName, "Name");
-                obj.mID = (int)control.NumberInput(obj.mID, "ID");
-                control.DropDownTextInput("Zone", obj.mParentZone.mZoneName, zones.ToArray(), false);
-                control.DropDownTextInput("Layer", obj.mLayer, obj.mParentZone.GetLayersUsedOnZoneForCurrentScenario().ToArray(), false);
-            }
-
-            public void OnValueChangeStart() { }
-            public void OnValueChanged()
-            {
-                scene.Refresh();
-            }
-
-            public void OnValueSet() { }
-            public void UpdateProperties() { }
-        }
-
-        public class PositionUI : IObjectUIContainer
-        {
-            AreaObj obj;
-            EditorSceneBase scene;
-
-            public PositionUI(AreaObj obj, EditorSceneBase scene)
-            {
-                this.obj = obj;
-                this.scene = scene;
-            }
-
-            public void DoUI(IObjectUIControl control)
-            {
-                control.PlainText("Position");
-                obj.mTruePosition.X = control.NumberInput(obj.mTruePosition.X, "X:");
-                obj.mTruePosition.Y = control.NumberInput(obj.mTruePosition.Y, "Y:");
-                obj.mTruePosition.Z = control.NumberInput(obj.mTruePosition.Z, "Z:");
-
-                control.VerticalSeperator();
-
-                control.PlainText("Rotation");
-                obj.mTrueRotation.X = control.NumberInput(obj.mTrueRotation.X, "X:");
-                obj.mTrueRotation.Y = control.NumberInput(obj.mTrueRotation.Y, "Y:");
-                obj.mTrueRotation.Z = control.NumberInput(obj.mTrueRotation.Z, "Z:");
-
-                control.VerticalSeperator();
-
-                control.PlainText("Scale");
-                obj.mScale.X = control.NumberInput(obj.mScale.X, "X:");
-                obj.mScale.Y = control.NumberInput(obj.mScale.Y, "Y:");
-                obj.mScale.Z = control.NumberInput(obj.mScale.Z, "Z:");
-            }
-
-            public void OnValueChangeStart() { }
-            public void OnValueChanged()
-            {
-                scene.Refresh();
-            }
-
-            public void OnValueSet() { }
-            public void UpdateProperties() { }
-        }
-
-        public class AreaObjParameterUI : IObjectUIContainer
-        {
-            AreaObj obj;
-            EditorSceneBase scene;
-
-            public AreaObjParameterUI(AreaObj obj, EditorSceneBase scene)
-            {
-                this.obj = obj;
-                this.scene = scene;
-            }
-
-            public void DoUI(IObjectUIControl control)
-            {
-                for (int i = 0; i < 8; i++)
-                {
-                    if (ObjectDB.UsesObjArg(obj.mName, i))
-                    {
-                        Actor actor = ObjectDB.GetActorFromObjectName(obj.mName);
-                        ActorField field = GetFieldFromActor(actor, i);
-
-                        switch (field.Type)
-                        {
-                            case "checkbox":
-                                bool check = obj.mObjArgs[i] == Int32.Parse(field.Value);
-                                int intVal = Int32.Parse(field.Value);
-                                obj.mObjArgs[i] = control.CheckBox(field.Name, check) ? intVal : -1;
-                                break;
-                            case "list":
-                                // this code is a little complicated, but to sum it up:
-                                // the list has a syntax, value = name
-                                // so we get the fields as a list, then we get the index of the field we need to select, based on the Obj_arg value
-                                // then after that, we insert the list into the combo box, and set the current selected index based on our Obj_arg value
-                                // to properly set the value again, we simply take the selected item and set the value on the left side and set it to that
-                                string[] fields = ObjectDB.GetFieldAsList(field);
-                                int index = ObjectDB.IndexOfSelectedListField(field, obj.mObjArgs[i]);
-                                string val = control.DropDownTextInput(field.Name, fields[index], fields, false);
-                                obj.mObjArgs[i] = Int32.Parse(val.Split('=')[0]);
-                                break;
-                            case "value":
-                                obj.mObjArgs[i] = (int)control.NumberInput(obj.mObjArgs[i], field.Name);
-                                break;
-                        }
-                    }
-                    else
-                        obj.mObjArgs[i] = (int)control.NumberInput(obj.mObjArgs[i], $"Obj_arg{i}");
-                }
-            }
-
-            public void OnValueChangeStart() { }
-            public void OnValueChanged()
-            {
-                scene.Refresh();
-            }
-
-            public void OnValueSet() { }
-            public void UpdateProperties() { }
         }
 
         public class AreaObjSwitchParameters : IObjectUIContainer

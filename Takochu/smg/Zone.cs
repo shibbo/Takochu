@@ -16,7 +16,7 @@ namespace Takochu.smg
 {
     public class Zone
     {
-        public string[] cPossibleFiles = { "Design", "Light", "Map", "Sound" };
+        public string[] cPossibleFiles = { "Design", "Light", "Map", "Sound", "ZoneInfo" };
 
         public Zone(Galaxy galaxy, string name)
         {
@@ -74,6 +74,10 @@ namespace Takochu.smg
                         {
                             LoadLight();
                         }
+                        else if (file == "ZoneInfo")
+                        {
+                            LoadAttributes();
+                        }
                         else
                         {
                             // we load our StageObjInfo first because objects can use their offsets
@@ -115,6 +119,11 @@ namespace Takochu.smg
             cameras.RemoveField("no");
             mCameras = new List<Camera>();
             cameras.mEntries.ForEach(c => mCameras.Add(new Camera(c, this)));
+        }
+
+        public void LoadAttributes()
+        {
+            mAttributes = new ZoneAttributes(mMapFiles["ZoneInfo"]);
         }
 
         public void LoadLight()
@@ -349,6 +358,9 @@ namespace Takochu.smg
         {
             foreach (KeyValuePair<string, FilesystemBase> p in mMapFiles)
             {
+                if (p.Key == "ZoneInfo")
+                    continue;
+
                 SaveObjects(p.Key, "Placement", "AreaObjInfo");
                 SaveObjects(p.Key, "Placement", "CameraCubeInfo");
                 SaveObjects(p.Key, "Placement", "DemoObjInfo");
@@ -360,14 +372,18 @@ namespace Takochu.smg
                 SaveObjects(p.Key, "GeneralPos", "GeneralPosInfo");
             }
 
-            if (mMessages != null)
-                mMessages.Save();
+            // todo -- why does this zone's MSBT not save right
+            if (mZoneName != "MarioFaceShipZone")
+            {
+                if (mMessages != null)
+                    mMessages.Save();
 
-            if (mMessageFlows != null)
-                mMessageFlows.Save();
+                if (mMessageFlows != null)
+                    mMessageFlows.Save();
 
-            if (mMessagesFile != null)
-                mMessagesFile.Save();
+                if (mMessagesFile != null)
+                    mMessagesFile.Save();
+            }
 
             SaveCameras();
 
@@ -515,5 +531,6 @@ namespace Takochu.smg
         private RARCFilesystem mMessagesFile;
         private MSBT mMessages;
         private MSBF mMessageFlows;
+        public ZoneAttributes mAttributes;
     }
 }

@@ -39,6 +39,8 @@ namespace Takochu.ui
             cameraScene.Visible = false;
             lightScene = new EditorScene();
             lightScene.Visible = false;
+            zoneScene = new EditorScene();
+            zoneScene.Visible = false;
 
             mGalaxy = Program.sGame.OpenGalaxy(mGalaxyName);
             galaxyNameTxtBox.Text = mGalaxy.mGalaxyName;
@@ -88,6 +90,7 @@ namespace Takochu.ui
         private EditorScene scene;
         private EditorScene cameraScene;
         private EditorScene lightScene;
+        private EditorScene zoneScene;
         private string mGalaxyName;
         public int mCurrentScenario;
 
@@ -98,10 +101,12 @@ namespace Takochu.ui
             sceneListView.RootLists.Clear();
             cameraListView.RootLists.Clear();
             lightsSceneListView.RootLists.Clear();
+            zoneScene.objects.Clear();
 
             scene.objects.Clear();
             cameraScene.objects.Clear();
             lightScene.objects.Clear();
+            zoneScene.objects.Clear();
 
             layerViewerDropDown.DropDownItems.Clear();
 
@@ -126,7 +131,7 @@ namespace Takochu.ui
                 // add our galaxy name itself so we can properly add it to a scene list with the other zones
                 mGalaxyName
             };
-
+            
             zonesUsed.AddRange(mainZone.GetZonesUsedOnLayers(layers));
 
             Dictionary<string, int> zoneMasks = new Dictionary<string, int>();
@@ -137,11 +142,22 @@ namespace Takochu.ui
             List<Light> lights = new List<Light>();
             List<PathPointObj> pathpoints = new List<PathPointObj>();
 
+            List<ZoneAttributes.ShadowParam> shadowParams = new List<ZoneAttributes.ShadowParam>();
+            List<ZoneAttributes.FlagNameTable> flags = new List<ZoneAttributes.FlagNameTable>();
+            List<ZoneAttributes.WaterCameraParam> waterParams = new List<ZoneAttributes.WaterCameraParam>();
+
             foreach (string zone in zonesUsed)
             {
                 zoneMasks.Add(zone, mGalaxy.GetMaskUsedInZoneOnCurrentScenario(zone));
 
                 Zone z = mGalaxy.GetZone(zone);
+                if (z.mAttributes != null)
+                {
+                    shadowParams.AddRange(z.mAttributes.mShadowParams);
+                    flags.AddRange(z.mAttributes.mFlagTable);
+                    waterParams.AddRange(z.mAttributes.mWaterParams);
+                }
+
                 List<string> curlayers = GameUtil.GetGalaxyLayers(zoneMasks[zone]);
 
                 if (GameUtil.IsSMG1())
@@ -271,6 +287,13 @@ namespace Takochu.ui
 
             lightScene.objects.AddRange(lights);
 
+            zonesListView.RootLists.Add("Flags", flags);
+            zonesListView.RootLists.Add("Shadow Parameters", shadowParams);
+            zonesListView.RootLists.Add("Water Camera Parameters", waterParams);
+            zonesListView.UpdateComboBoxItems();
+            zonesListView.SelectedItems = zoneScene.SelectedObjects;
+            zonesListView.SetRootList("Flags");
+
             galaxyViewControl.Refresh();
         }
 
@@ -321,7 +344,7 @@ namespace Takochu.ui
             if (scene.SelectedObjects.Count != 0)
             {
                 // now we can jump to the object in the scene view list for easy access
-                tabControl1.SelectedIndex = 1;
+                tabControl1.SelectedIndex = 2;
 
                 // now let's get the type so we can jump to the right category
                 // since you can select multiple objects, we will just jump to the first one

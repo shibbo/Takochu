@@ -74,5 +74,7 @@ namespace Takochu.smg.obj
 
         public string mName;
         public string mType;
+
+        public int[] mObjArgs;
     }
 }
