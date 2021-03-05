@@ -17,7 +17,14 @@ namespace Takochu.smg
 
             using (var c = new WebClient())
             {
-                c.DownloadFile("http://shibboleet.us.to/new_db/generate.php", "res/objectdb.xml");
+                try
+                {
+                    c.DownloadFile("http://shibboleet.us.to/new_db/generate.php", "res/objectdb.xml");
+                }
+                catch
+                {
+                    // do nothing
+                }
             }
 
             XmlDocument db = new XmlDocument();

@@ -21,6 +21,7 @@ namespace Takochu.io
         public virtual int Position() { return 0; }
         public virtual void Seek(int where) { }
         public virtual void Skip(int numBytes) { }
+        public virtual bool IsType(FileBase file) { return false; }
         public virtual char ReadChar() { return (char)0; }
         public virtual byte ReadByte() { return 0; }
         public virtual short ReadInt16() { return 0; }

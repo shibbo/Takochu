@@ -35,6 +35,7 @@
             this.rarcExplorer_Btn = new System.Windows.Forms.ToolStripButton();
             this.galaxyTreeView = new System.Windows.Forms.TreeView();
             this.glControl1 = new OpenTK.GLControl();
+            this.showMessageEditorBtn = new System.Windows.Forms.ToolStripButton();
             this.mainToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -44,7 +45,8 @@
             this.mainToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.selectGameFolderBtn,
             this.bcsvEditorBtn,
-            this.rarcExplorer_Btn});
+            this.rarcExplorer_Btn,
+            this.showMessageEditorBtn});
             this.mainToolStrip.Location = new System.Drawing.Point(0, 0);
             this.mainToolStrip.Name = "mainToolStrip";
             this.mainToolStrip.Size = new System.Drawing.Size(800, 25);
@@ -100,6 +102,16 @@
             this.glControl1.TabIndex = 2;
             this.glControl1.VSync = false;
             // 
+            // showMessageEditorBtn
+            // 
+            this.showMessageEditorBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.showMessageEditorBtn.Image = ((System.Drawing.Image)(resources.GetObject("showMessageEditorBtn.Image")));
+            this.showMessageEditorBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.showMessageEditorBtn.Name = "showMessageEditorBtn";
+            this.showMessageEditorBtn.Size = new System.Drawing.Size(91, 22);
+            this.showMessageEditorBtn.Text = "Message Editor";
+            this.showMessageEditorBtn.Click += new System.EventHandler(this.showMessageEditorBtn_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -126,6 +138,7 @@
         private System.Windows.Forms.TreeView galaxyTreeView;
         private System.Windows.Forms.ToolStripButton rarcExplorer_Btn;
         private OpenTK.GLControl glControl1;
+        private System.Windows.Forms.ToolStripButton showMessageEditorBtn;
     }
 }
 

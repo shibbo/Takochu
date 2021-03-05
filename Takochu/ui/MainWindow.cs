@@ -141,5 +141,11 @@ namespace Takochu
         {
             NameHolder.Close();
         }
+
+        private void showMessageEditorBtn_Click(object sender, EventArgs e)
+        {
+            MessageEditor editor = new MessageEditor();
+            editor.Show();
+        }
     }
 }

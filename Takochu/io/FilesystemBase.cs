@@ -10,7 +10,6 @@ namespace Takochu.io
     {
         public virtual void Save() { }
         public virtual void Close() { }
-
         public virtual List<string> GetDirectories(string directory) { return null; }
         public virtual bool DoesDirectoryExist(string dir) { return false; }
         public virtual List<string> GetFiles(string dir) { return null; }

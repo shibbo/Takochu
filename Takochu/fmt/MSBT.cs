@@ -102,6 +102,11 @@ namespace Takochu.fmt
             return ret;
         }
 
+        public ATR1.AttributeEntry GetAttributeEntry(int idx)
+        {
+            return mAttributes.GetEntryAtIndex(idx);
+        }
+
         public void Save()
         {
             int size = 0x20;
@@ -323,10 +328,9 @@ namespace Takochu.fmt
                     _1 = file.ReadByte(),
                     _2 = file.ReadByte(),
                     _3 = file.ReadByte(),
-                    _4 = file.ReadByte(),
+                    _4 = file.ReadInt16(),
                     _5 = file.ReadByte(),
-                    _6 = file.ReadByte(),
-                    _7 = file.ReadByte()
+                    _6 = file.ReadByte()
                 };
 
                 file.ReadInt32();
@@ -338,6 +342,11 @@ namespace Takochu.fmt
 
             while (file.Position() % 0x10 != 0)
                 file.Skip(0x1);
+        }
+
+        public AttributeEntry GetEntryAtIndex(int idx)
+        {
+            return mAttributes[idx];
         }
 
         public int CalcSize()
@@ -380,7 +389,6 @@ namespace Takochu.fmt
                 file.Write(e._4);
                 file.Write(e._5);
                 file.Write(e._6);
-                file.Write(e._7);
                 file.Write(dataOffset);
 
                 dataOffset += 2;
@@ -402,10 +410,9 @@ namespace Takochu.fmt
             public byte _1;
             public byte _2;
             public byte _3;
-            public byte _4;
+            public short _4;
             public byte _5;
             public byte _6;
-            public byte _7;
             public string mString;
         }
     }
