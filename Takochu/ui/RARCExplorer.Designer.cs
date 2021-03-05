@@ -34,8 +34,8 @@
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.rarcName_TextBox = new System.Windows.Forms.ToolStripTextBox();
             this.openRARC_Btn = new System.Windows.Forms.ToolStripButton();
-            this.rarc_TreeView = new System.Windows.Forms.TreeView();
             this.export_Btn = new System.Windows.Forms.ToolStripButton();
+            this.rarc_TreeView = new System.Windows.Forms.TreeView();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -65,6 +65,7 @@
             this.rarcName_TextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.rarcName_TextBox.Name = "rarcName_TextBox";
             this.rarcName_TextBox.Size = new System.Drawing.Size(700, 25);
+            this.rarcName_TextBox.TextChanged += new System.EventHandler(this.rarcName_TextBox_TextChanged);
             // 
             // openRARC_Btn
             // 
@@ -76,15 +77,6 @@
             this.openRARC_Btn.Text = "Open";
             this.openRARC_Btn.Click += new System.EventHandler(this.openRARC_Btn_Click);
             // 
-            // rarc_TreeView
-            // 
-            this.rarc_TreeView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rarc_TreeView.Location = new System.Drawing.Point(0, 25);
-            this.rarc_TreeView.Name = "rarc_TreeView";
-            this.rarc_TreeView.Size = new System.Drawing.Size(1033, 425);
-            this.rarc_TreeView.TabIndex = 1;
-            this.rarc_TreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.rarc_TreeView_AfterSelect);
-            // 
             // export_Btn
             // 
             this.export_Btn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -95,6 +87,15 @@
             this.export_Btn.Size = new System.Drawing.Size(45, 22);
             this.export_Btn.Text = "Export";
             this.export_Btn.Click += new System.EventHandler(this.export_Btn_Click);
+            // 
+            // rarc_TreeView
+            // 
+            this.rarc_TreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rarc_TreeView.Location = new System.Drawing.Point(0, 25);
+            this.rarc_TreeView.Name = "rarc_TreeView";
+            this.rarc_TreeView.Size = new System.Drawing.Size(1033, 425);
+            this.rarc_TreeView.TabIndex = 1;
+            this.rarc_TreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.rarc_TreeView_AfterSelect);
             // 
             // imageList1
             // 

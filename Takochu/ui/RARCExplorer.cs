@@ -17,6 +17,7 @@ namespace Takochu.ui
         public RARCExplorer()
         {
             InitializeComponent();
+            openRARC_Btn.Enabled = false;
         }
 
         private void PopulateTreeView(ref TreeNode node, string parent)
@@ -129,6 +130,14 @@ namespace Takochu.ui
                     ExportFilesAndDirs(rarc_TreeView.SelectedNode, (string)rarc_TreeView.SelectedNode.Tag, d.SelectedPath);
                 }
             }
+        }
+
+        private void rarcName_TextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (Program.sGame.DoesFileExist(rarcName_TextBox.Text))
+                openRARC_Btn.Enabled = true;
+            else
+                openRARC_Btn.Enabled = false;
         }
     }
 }
