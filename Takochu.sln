@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Takochu-Framework", "Takochu\Takochu-Framework.csproj", "{2B69F139-E33C-4D77-AC4D-2C73923902BC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Takochu", "Takochu\Takochu.csproj", "{2B69F139-E33C-4D77-AC4D-2C73923902BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Takochu-Core", "Takochu-Core\Takochu-Core.csproj", "{0212DDD1-F46F-4C8D-8255-3CB82C71813F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Takochu-Core", "Takochu-Core\Takochu-Core.csproj", "{0212DDD1-F46F-4C8D-8255-3CB82C71813F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
