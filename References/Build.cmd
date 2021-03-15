@@ -6,6 +6,9 @@ nuget restore
 msbuild SuperBMD.sln -p:Configuration=Release
 cd ..\
 copy "SuperBMD\SuperBMDLib\bin\Release\SuperBMDLib.dll" %CD%
+cd Spotlight
+nuget restore
+cd ..\
 cd GL_EditorFramework
 git pull https://github.com/jupahe64/GL_EditorFramework.git master
 nuget restore
