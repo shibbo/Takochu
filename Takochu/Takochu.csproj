@@ -38,13 +38,6 @@
     <ApplicationIcon>Takochu.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Fasterflect, Version=3.0.0.0, Culture=neutral, PublicKeyToken=38d18473284c1ca7, processorArchitecture=MSIL">
-      <HintPath>..\packages\fasterflect.3.0.0\lib\netstandard20\netstandard20\Fasterflect.dll</HintPath>
-    </Reference>
-    <Reference Include="GL_EditorFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\References\GL_EditorFramework.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -53,10 +46,6 @@
     </Reference>
     <Reference Include="OpenTK.GLControl, Version=3.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <HintPath>..\packages\OpenTK.GLControl.3.1.0\lib\net20\OpenTK.GLControl.dll</HintPath>
-    </Reference>
-    <Reference Include="SuperBMDLib, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\References\SuperBMDLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -235,6 +224,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\References\GL_EditorFramework\Gl_EditorFramework\Gl_EditorFramework.csproj">
+      <Project>{d593a72d-554d-40fb-9967-503cb15a744f}</Project>
+      <Name>Gl_EditorFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\References\SuperBMD\SuperBMDLib\SuperBMDLib.csproj">
+      <Project>{828be5e5-9e98-46c9-b63e-d2d03322a825}</Project>
+      <Name>SuperBMDLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
