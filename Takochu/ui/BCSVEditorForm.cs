@@ -25,7 +25,7 @@ namespace Takochu.ui
             mFiles = new Dictionary<string, BCSV>();
         }
 
-        private void openBCSVBtn_Click(object sender, EventArgs e)
+        private void OpenBCSV()
         {
             if (mFilesystem != null)
             {
@@ -50,6 +50,11 @@ namespace Takochu.ui
             PopulateTreeView(ref root, "/root");
 
             filesystemView.Nodes.Add(root);
+        }
+
+        private void openBCSVBtn_Click(object sender, EventArgs e)
+        {
+            OpenBCSV();
         }
 
         private void PopulateTreeView(ref TreeNode node, string parent)
@@ -372,6 +377,14 @@ namespace Takochu.ui
                 PopulateTreeView(ref root, "/root");
 
                 filesystemView.Nodes.Add(root);
+            }
+        }
+
+        private void archiveTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Return)
+            {
+                OpenBCSV();
             }
         }
     }

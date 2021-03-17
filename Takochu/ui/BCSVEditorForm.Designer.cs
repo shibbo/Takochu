@@ -34,11 +34,11 @@
             this.archiveTextBox = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.openBCSVBtn = new System.Windows.Forms.ToolStripButton();
+            this.openExternalBtn = new System.Windows.Forms.ToolStripButton();
             this.saveBCSVBtn = new System.Windows.Forms.ToolStripButton();
             this.saveAll_Btn = new System.Windows.Forms.ToolStripButton();
             this.filesystemView = new System.Windows.Forms.TreeView();
             this.bcsvEditorsTabControl = new System.Windows.Forms.TabControl();
-            this.openExternalBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -75,6 +75,7 @@
             this.archiveTextBox.Name = "archiveTextBox";
             this.archiveTextBox.Size = new System.Drawing.Size(750, 25);
             this.archiveTextBox.Text = "/ObjectData/Kuribo.arc";
+            this.archiveTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.archiveTextBox_KeyPress);
             // 
             // toolStripSeparator1
             // 
@@ -90,6 +91,16 @@
             this.openBCSVBtn.Size = new System.Drawing.Size(40, 22);
             this.openBCSVBtn.Text = "Open";
             this.openBCSVBtn.Click += new System.EventHandler(this.openBCSVBtn_Click);
+            // 
+            // openExternalBtn
+            // 
+            this.openExternalBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.openExternalBtn.Image = ((System.Drawing.Image)(resources.GetObject("openExternalBtn.Image")));
+            this.openExternalBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.openExternalBtn.Name = "openExternalBtn";
+            this.openExternalBtn.Size = new System.Drawing.Size(49, 22);
+            this.openExternalBtn.Text = "Open...";
+            this.openExternalBtn.Click += new System.EventHandler(this.openExternalBtn_Click);
             // 
             // saveBCSVBtn
             // 
@@ -135,16 +146,6 @@
             this.bcsvEditorsTabControl.SelectedIndex = 0;
             this.bcsvEditorsTabControl.Size = new System.Drawing.Size(1052, 123);
             this.bcsvEditorsTabControl.TabIndex = 3;
-            // 
-            // openExternalBtn
-            // 
-            this.openExternalBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.openExternalBtn.Image = ((System.Drawing.Image)(resources.GetObject("openExternalBtn.Image")));
-            this.openExternalBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.openExternalBtn.Name = "openExternalBtn";
-            this.openExternalBtn.Size = new System.Drawing.Size(49, 22);
-            this.openExternalBtn.Text = "Open...";
-            this.openExternalBtn.Click += new System.EventHandler(this.openExternalBtn_Click);
             // 
             // BCSVEditorForm
             // 
