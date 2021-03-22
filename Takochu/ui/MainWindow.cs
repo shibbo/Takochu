@@ -15,6 +15,7 @@ using Takochu.smg.img;
 using Takochu.smg.msg;
 using Takochu.ui;
 using Takochu.util;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace Takochu
 {
@@ -96,18 +97,21 @@ namespace Takochu
 
         private bool SetGamePath()
         {
-            FolderBrowserDialog dialog = new FolderBrowserDialog();
-
-            if (dialog.ShowDialog() == DialogResult.OK)
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog
             {
-                string path = dialog.SelectedPath;
+                IsFolderPicker = true
+            };
+            
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                string path = dialog.FileName;
                 if (Directory.Exists($"{path}/StageData") && Directory.Exists($"{path}/ObjectData"))
                 {
 
-                    Properties.Settings.Default.GamePath = dialog.SelectedPath;
+                    Properties.Settings.Default.GamePath = dialog.FileName;
                     Properties.Settings.Default.Save();
 
-                    Program.sGame = new smg.Game(new ExternalFilesystem(dialog.SelectedPath));
+                    Program.sGame = new smg.Game(new ExternalFilesystem(dialog.FileName));
 
                     MessageBox.Show("Path set successfully! You may now use Takochu.");
                     return true;
