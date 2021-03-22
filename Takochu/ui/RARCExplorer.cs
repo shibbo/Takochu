@@ -67,7 +67,7 @@ namespace Takochu.ui
             }
         }
 
-        public RARCFilesystem mFilesystem;
+        private RARCFilesystem mFilesystem;
 
         private void openRARC_Btn_Click(object sender, EventArgs e)
         {
