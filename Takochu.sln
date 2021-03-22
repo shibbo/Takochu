@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gl_EditorFramework", "Refer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperBMDLib", "References\SuperBMD\SuperBMDLib\SuperBMDLib.csproj", "{828BE5E5-9E98-46C9-B63E-D2D03322A825}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotLight", "References\Spotlight\SpotLight\SpotLight.csproj", "{392B74FE-63C9-45C4-8535-8B254E53164D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug Moonlight|Any CPU = Debug Moonlight|Any CPU
@@ -181,6 +183,54 @@ Global
 		{828BE5E5-9E98-46C9-B63E-D2D03322A825}.Release|x64.Build.0 = Release|Any CPU
 		{828BE5E5-9E98-46C9-B63E-D2D03322A825}.Release|x86.ActiveCfg = Release|Any CPU
 		{828BE5E5-9E98-46C9-B63E-D2D03322A825}.Release|x86.Build.0 = Release|Any CPU
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Debug Moonlight|Any CPU.ActiveCfg = Debug Moonlight|Any CPU
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Debug Moonlight|Any CPU.Build.0 = Debug Moonlight|Any CPU
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Debug Moonlight|x64.ActiveCfg = Debug Moonlight|x64
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Debug Moonlight|x64.Build.0 = Debug Moonlight|x64
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Debug Moonlight|x86.ActiveCfg = Debug Moonlight|x86
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Debug Moonlight|x86.Build.0 = Debug Moonlight|x86
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Debug Odyssey|Any CPU.ActiveCfg = Debug Spotlight|Any CPU
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Debug Odyssey|Any CPU.Build.0 = Debug Spotlight|Any CPU
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Debug Odyssey|x64.ActiveCfg = Debug Spotlight|x64
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Debug Odyssey|x64.Build.0 = Debug Spotlight|x64
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Debug Odyssey|x86.ActiveCfg = Debug Spotlight|x86
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Debug Odyssey|x86.Build.0 = Debug Spotlight|x86
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Debug Spotlight|Any CPU.ActiveCfg = Debug Spotlight|Any CPU
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Debug Spotlight|Any CPU.Build.0 = Debug Spotlight|Any CPU
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Debug Spotlight|x64.ActiveCfg = Debug Spotlight|x64
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Debug Spotlight|x64.Build.0 = Debug Spotlight|x64
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Debug Spotlight|x86.ActiveCfg = Debug Spotlight|x86
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Debug Spotlight|x86.Build.0 = Debug Spotlight|x86
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Debug|Any CPU.ActiveCfg = Debug Spotlight|Any CPU
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Debug|Any CPU.Build.0 = Debug Spotlight|Any CPU
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Debug|x64.ActiveCfg = Debug Spotlight|x64
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Debug|x64.Build.0 = Debug Spotlight|x64
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Debug|x86.ActiveCfg = Debug Spotlight|x86
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Debug|x86.Build.0 = Debug Spotlight|x86
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Release Moonlight|Any CPU.ActiveCfg = Release Moonlight|Any CPU
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Release Moonlight|Any CPU.Build.0 = Release Moonlight|Any CPU
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Release Moonlight|x64.ActiveCfg = Release Moonlight|x64
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Release Moonlight|x64.Build.0 = Release Moonlight|x64
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Release Moonlight|x86.ActiveCfg = Release Moonlight|x86
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Release Moonlight|x86.Build.0 = Release Moonlight|x86
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Release Odyssey|Any CPU.ActiveCfg = Release Spotlight|Any CPU
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Release Odyssey|Any CPU.Build.0 = Release Spotlight|Any CPU
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Release Odyssey|x64.ActiveCfg = Release Spotlight|x64
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Release Odyssey|x64.Build.0 = Release Spotlight|x64
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Release Odyssey|x86.ActiveCfg = Release Spotlight|x86
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Release Odyssey|x86.Build.0 = Release Spotlight|x86
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Release Spotlight|Any CPU.ActiveCfg = Release Spotlight|Any CPU
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Release Spotlight|Any CPU.Build.0 = Release Spotlight|Any CPU
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Release Spotlight|x64.ActiveCfg = Release Spotlight|x64
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Release Spotlight|x64.Build.0 = Release Spotlight|x64
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Release Spotlight|x86.ActiveCfg = Release Spotlight|x86
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Release Spotlight|x86.Build.0 = Release Spotlight|x86
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Release|Any CPU.ActiveCfg = Release Spotlight|Any CPU
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Release|Any CPU.Build.0 = Release Spotlight|Any CPU
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Release|x64.ActiveCfg = Release Spotlight|x64
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Release|x64.Build.0 = Release Spotlight|x64
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Release|x86.ActiveCfg = Release Spotlight|x86
+		{392B74FE-63C9-45C4-8535-8B254E53164D}.Release|x86.Build.0 = Release Spotlight|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
