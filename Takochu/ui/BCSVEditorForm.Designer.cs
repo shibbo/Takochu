@@ -74,6 +74,7 @@
             this.archiveTextBox.Name = "archiveTextBox";
             this.archiveTextBox.Size = new System.Drawing.Size(750, 25);
             this.archiveTextBox.Text = "/ObjectData/Kuribo.arc";
+            this.archiveTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.archiveTextBox_KeyPress);
             // 
             // toolStripSeparator1
             // 

@@ -102,6 +102,7 @@ namespace Takochu.ui
             cameraListView.RootLists.Clear();
             lightsSceneListView.RootLists.Clear();
             zoneScene.objects.Clear();
+            zonesListView.RootLists.Clear();
 
             scene.objects.Clear();
             cameraScene.objects.Clear();
