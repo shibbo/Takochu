@@ -33,7 +33,6 @@
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.layerMasksBox = new System.Windows.Forms.GroupBox();
-            this.galaxyInfoTexture = new System.Windows.Forms.PictureBox();
             this.layerO = new System.Windows.Forms.CheckBox();
             this.layerN = new System.Windows.Forms.CheckBox();
             this.layerM = new System.Windows.Forms.CheckBox();
@@ -98,10 +97,10 @@
             this.label11 = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.saveScenarioBtn = new System.Windows.Forms.ToolStripButton();
+            this.galaxyInfoTexture = new System.Windows.Forms.PictureBox();
             this.tabControl2.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.layerMasksBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.galaxyInfoTexture)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cometTimer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.powerStarID)).BeginInit();
@@ -118,6 +117,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.scenarioBGMStartFrame)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.scenarioBGMStartType)).BeginInit();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.galaxyInfoTexture)).BeginInit();
             this.SuspendLayout();
             // 
             // scenarioListTreeView
@@ -184,14 +184,6 @@
             this.layerMasksBox.TabIndex = 1;
             this.layerMasksBox.TabStop = false;
             this.layerMasksBox.Text = "Layer Masks";
-            // 
-            // galaxyInfoTexture
-            // 
-            this.galaxyInfoTexture.Location = new System.Drawing.Point(552, 19);
-            this.galaxyInfoTexture.Name = "galaxyInfoTexture";
-            this.galaxyInfoTexture.Size = new System.Drawing.Size(256, 72);
-            this.galaxyInfoTexture.TabIndex = 5;
-            this.galaxyInfoTexture.TabStop = false;
             // 
             // layerO
             // 
@@ -541,7 +533,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(845, 430);
+            this.tabPage3.Size = new System.Drawing.Size(845, 420);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "BGM";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -554,7 +546,7 @@
             this.tabControl1.Location = new System.Drawing.Point(3, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(839, 424);
+            this.tabControl1.Size = new System.Drawing.Size(839, 414);
             this.tabControl1.TabIndex = 2;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -564,7 +556,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(831, 398);
+            this.tabPage1.Size = new System.Drawing.Size(831, 388);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Stage";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -594,7 +586,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(825, 392);
+            this.groupBox1.Size = new System.Drawing.Size(825, 382);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Tag = "0";
@@ -908,6 +900,14 @@
             this.saveScenarioBtn.Text = "Save";
             this.saveScenarioBtn.Click += new System.EventHandler(this.saveScenarioBtn_Click);
             // 
+            // galaxyInfoTexture
+            // 
+            this.galaxyInfoTexture.Location = new System.Drawing.Point(552, 19);
+            this.galaxyInfoTexture.Name = "galaxyInfoTexture";
+            this.galaxyInfoTexture.Size = new System.Drawing.Size(256, 72);
+            this.galaxyInfoTexture.TabIndex = 5;
+            this.galaxyInfoTexture.TabStop = false;
+            // 
             // StageInfoEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -916,14 +916,12 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.tabControl2);
             this.Controls.Add(this.scenarioListTreeView);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "StageInfoEditor";
             this.Text = "StageInfoEditor";
             this.tabControl2.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
             this.layerMasksBox.ResumeLayout(false);
             this.layerMasksBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.galaxyInfoTexture)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cometTimer)).EndInit();
@@ -944,6 +942,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.scenarioBGMStartType)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.galaxyInfoTexture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

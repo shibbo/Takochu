@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
-
-namespace Takochu.ui
+﻿namespace Takochu.ui
 {
     partial class RARCExplorer
     {
@@ -113,14 +110,12 @@ namespace Takochu.ui
             this.ClientSize = new System.Drawing.Size(1033, 450);
             this.Controls.Add(this.rarc_TreeView);
             this.Controls.Add(this.toolStrip1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "RARCExplorer";
             this.Text = "RARCExplorer";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-            this.FormClosing += new FormClosingEventHandler(RARCExplorer_Closing);
 
         }
 

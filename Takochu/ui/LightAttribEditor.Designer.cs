@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LightAttribEditor));
             this.lightsList = new System.Windows.Forms.ListBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -346,7 +345,7 @@
             this.lightsList.FormattingEnabled = true;
             this.lightsList.Location = new System.Drawing.Point(12, 25);
             this.lightsList.Name = "lightsList";
-            this.lightsList.Size = new System.Drawing.Size(273, 719);
+            this.lightsList.Size = new System.Drawing.Size(273, 901);
             this.lightsList.TabIndex = 0;
             this.lightsList.SelectedIndexChanged += new System.EventHandler(this.lightsList_SelectedIndexChanged);
             // 
@@ -396,7 +395,7 @@
             this.editorsTabControl.Location = new System.Drawing.Point(291, 27);
             this.editorsTabControl.Name = "editorsTabControl";
             this.editorsTabControl.SelectedIndex = 0;
-            this.editorsTabControl.Size = new System.Drawing.Size(503, 721);
+            this.editorsTabControl.Size = new System.Drawing.Size(503, 902);
             this.editorsTabControl.TabIndex = 2;
             // 
             // tabPage1
@@ -409,7 +408,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(495, 695);
+            this.tabPage1.Size = new System.Drawing.Size(495, 876);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "General";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -3077,11 +3076,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(806, 749);
+            this.ClientSize = new System.Drawing.Size(806, 930);
             this.Controls.Add(this.editorsTabControl);
             this.Controls.Add(this.lightsList);
             this.Controls.Add(this.menuStrip1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "LightAttribEditor";
             this.Text = "LightAttribEditor";

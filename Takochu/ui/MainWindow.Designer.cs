@@ -33,9 +33,9 @@
             this.selectGameFolderBtn = new System.Windows.Forms.ToolStripButton();
             this.bcsvEditorBtn = new System.Windows.Forms.ToolStripButton();
             this.rarcExplorer_Btn = new System.Windows.Forms.ToolStripButton();
-            this.showMessageEditorBtn = new System.Windows.Forms.ToolStripButton();
             this.galaxyTreeView = new System.Windows.Forms.TreeView();
             this.glControl1 = new OpenTK.GLControl();
+            this.showMessageEditorBtn = new System.Windows.Forms.ToolStripButton();
             this.mainToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -84,16 +84,6 @@
             this.rarcExplorer_Btn.Text = "RARC Explorer";
             this.rarcExplorer_Btn.Click += new System.EventHandler(this.rarcExplorer_Btn_Click);
             // 
-            // showMessageEditorBtn
-            // 
-            this.showMessageEditorBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.showMessageEditorBtn.Image = ((System.Drawing.Image)(resources.GetObject("showMessageEditorBtn.Image")));
-            this.showMessageEditorBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.showMessageEditorBtn.Name = "showMessageEditorBtn";
-            this.showMessageEditorBtn.Size = new System.Drawing.Size(91, 22);
-            this.showMessageEditorBtn.Text = "Message Editor";
-            this.showMessageEditorBtn.Click += new System.EventHandler(this.showMessageEditorBtn_Click);
-            // 
             // galaxyTreeView
             // 
             this.galaxyTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -112,6 +102,16 @@
             this.glControl1.TabIndex = 2;
             this.glControl1.VSync = false;
             // 
+            // showMessageEditorBtn
+            // 
+            this.showMessageEditorBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.showMessageEditorBtn.Image = ((System.Drawing.Image)(resources.GetObject("showMessageEditorBtn.Image")));
+            this.showMessageEditorBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.showMessageEditorBtn.Name = "showMessageEditorBtn";
+            this.showMessageEditorBtn.Size = new System.Drawing.Size(91, 22);
+            this.showMessageEditorBtn.Text = "Message Editor";
+            this.showMessageEditorBtn.Click += new System.EventHandler(this.showMessageEditorBtn_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -120,7 +120,6 @@
             this.Controls.Add(this.glControl1);
             this.Controls.Add(this.galaxyTreeView);
             this.Controls.Add(this.mainToolStrip);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainWindow";
             this.Text = "Takochu";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);

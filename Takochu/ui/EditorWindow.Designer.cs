@@ -33,8 +33,6 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.zonesObjectUI = new GL_EditorFramework.ObjectUIControl();
-            this.zonesListView = new GL_EditorFramework.SceneListView();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.toolStrip3 = new System.Windows.Forms.ToolStrip();
             this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
@@ -63,6 +61,8 @@
             this.saveGalaxyBtn = new System.Windows.Forms.ToolStripButton();
             this.closeEditorBtn = new System.Windows.Forms.ToolStripButton();
             this.galaxyViewControl = new GL_EditorFramework.GL_Core.GL_ControlModern();
+            this.zonesListView = new GL_EditorFramework.SceneListView();
+            this.zonesObjectUI = new GL_EditorFramework.ObjectUIControl();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
@@ -79,7 +79,7 @@
             this.scenarioTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.scenarioTreeView.Location = new System.Drawing.Point(0, 0);
             this.scenarioTreeView.Name = "scenarioTreeView";
-            this.scenarioTreeView.Size = new System.Drawing.Size(342, 694);
+            this.scenarioTreeView.Size = new System.Drawing.Size(342, 776);
             this.scenarioTreeView.TabIndex = 2;
             this.scenarioTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.scenarioTreeView_AfterSelect);
             this.scenarioTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.scenarioTreeView_NodeMouseClick);
@@ -96,7 +96,7 @@
             this.tabControl1.Location = new System.Drawing.Point(2, 29);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(350, 720);
+            this.tabControl1.Size = new System.Drawing.Size(350, 802);
             this.tabControl1.TabIndex = 6;
             // 
             // tabPage4
@@ -104,7 +104,7 @@
             this.tabPage4.Controls.Add(this.scenarioTreeView);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(342, 694);
+            this.tabPage4.Size = new System.Drawing.Size(342, 776);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Scenario";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -119,27 +119,6 @@
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Zones";
             this.tabPage5.UseVisualStyleBackColor = true;
-            // 
-            // zonesObjectUI
-            // 
-            this.zonesObjectUI.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.zonesObjectUI.BackColor = System.Drawing.SystemColors.Control;
-            this.zonesObjectUI.Location = new System.Drawing.Point(0, 311);
-            this.zonesObjectUI.Name = "zonesObjectUI";
-            this.zonesObjectUI.Size = new System.Drawing.Size(342, 469);
-            this.zonesObjectUI.TabIndex = 1;
-            // 
-            // zonesListView
-            // 
-            this.zonesListView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.zonesListView.Location = new System.Drawing.Point(0, 0);
-            this.zonesListView.Name = "zonesListView";
-            this.zonesListView.RootLists = ((System.Collections.Generic.Dictionary<string, System.Collections.IList>)(resources.GetObject("zonesListView.RootLists")));
-            this.zonesListView.Size = new System.Drawing.Size(342, 305);
-            this.zonesListView.TabIndex = 0;
             // 
             // tabPage1
             // 
@@ -350,6 +329,7 @@
             // 
             // galaxyNameTxtBox
             // 
+            this.galaxyNameTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.galaxyNameTxtBox.Name = "galaxyNameTxtBox";
             this.galaxyNameTxtBox.Size = new System.Drawing.Size(300, 25);
             // 
@@ -361,6 +341,7 @@
             // 
             // scenarioNameTxtBox
             // 
+            this.scenarioNameTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.scenarioNameTxtBox.Name = "scenarioNameTxtBox";
             this.scenarioNameTxtBox.Size = new System.Drawing.Size(300, 25);
             // 
@@ -422,7 +403,7 @@
             this.galaxyViewControl.Name = "galaxyViewControl";
             this.galaxyViewControl.NormPickingDepth = 0F;
             this.galaxyViewControl.ShowOrientationCube = true;
-            this.galaxyViewControl.Size = new System.Drawing.Size(1000, 716);
+            this.galaxyViewControl.Size = new System.Drawing.Size(1148, 798);
             this.galaxyViewControl.Stereoscopy = GL_EditorFramework.GL_Core.GL_ControlBase.StereoscopyType.DISABLED;
             this.galaxyViewControl.TabIndex = 0;
             this.galaxyViewControl.VSync = false;
@@ -430,16 +411,36 @@
             this.galaxyViewControl.ZNear = 0.32F;
             this.galaxyViewControl.Load += new System.EventHandler(this.galaxyViewControl_Load);
             // 
+            // zonesListView
+            // 
+            this.zonesListView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.zonesListView.Location = new System.Drawing.Point(0, 0);
+            this.zonesListView.Name = "zonesListView";
+            this.zonesListView.RootLists = ((System.Collections.Generic.Dictionary<string, System.Collections.IList>)(resources.GetObject("zonesListView.RootLists")));
+            this.zonesListView.Size = new System.Drawing.Size(342, 305);
+            this.zonesListView.TabIndex = 0;
+            // 
+            // zonesObjectUI
+            // 
+            this.zonesObjectUI.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.zonesObjectUI.BackColor = System.Drawing.SystemColors.Control;
+            this.zonesObjectUI.Location = new System.Drawing.Point(0, 311);
+            this.zonesObjectUI.Name = "zonesObjectUI";
+            this.zonesObjectUI.Size = new System.Drawing.Size(342, 469);
+            this.zonesObjectUI.TabIndex = 1;
+            // 
             // EditorWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1370, 749);
+            this.ClientSize = new System.Drawing.Size(1518, 831);
             this.Controls.Add(this.toolStrip2);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.galaxyViewControl);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "EditorWindow";
             this.Text = "EditorWindow";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditorWindow_FormClosing);

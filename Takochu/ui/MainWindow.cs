@@ -15,7 +15,6 @@ using Takochu.smg.img;
 using Takochu.smg.msg;
 using Takochu.ui;
 using Takochu.util;
-using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace Takochu
 {
@@ -62,7 +61,7 @@ namespace Takochu
             List<string> galaxies = Program.sGame.GetGalaxies();
             Dictionary<string, string> simpleNames = Program.sTranslator.GetGalaxyNames();
 
-            foreach (string galaxy in galaxies)
+            foreach(string galaxy in galaxies)
             {
                 if (simpleNames.ContainsKey(galaxy))
                 {
@@ -97,21 +96,18 @@ namespace Takochu
 
         private bool SetGamePath()
         {
-            CommonOpenFileDialog dialog = new CommonOpenFileDialog
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+
+            if (dialog.ShowDialog() == DialogResult.OK)
             {
-                IsFolderPicker = true
-            };
-            
-            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
-            {
-                string path = dialog.FileName;
+                string path = dialog.SelectedPath;
                 if (Directory.Exists($"{path}/StageData") && Directory.Exists($"{path}/ObjectData"))
                 {
 
-                    Properties.Settings.Default.GamePath = dialog.FileName;
+                    Properties.Settings.Default.GamePath = dialog.SelectedPath;
                     Properties.Settings.Default.Save();
 
-                    Program.sGame = new smg.Game(new ExternalFilesystem(dialog.FileName));
+                    Program.sGame = new smg.Game(new ExternalFilesystem(dialog.SelectedPath));
 
                     MessageBox.Show("Path set successfully! You may now use Takochu.");
                     return true;
@@ -128,7 +124,7 @@ namespace Takochu
 
         private void galaxyTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if (galaxyTreeView.SelectedNode != null)
+            if (galaxyTreeView.SelectedNode != null) 
             {
                 EditorWindow win = new EditorWindow(Convert.ToString(galaxyTreeView.SelectedNode.Tag));
                 win.Show();

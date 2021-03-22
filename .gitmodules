@@ -4,6 +4,3 @@
 [submodule "References/SuperBMD"]
 	path = References/SuperBMD
 	url = https://github.com/Sage-of-Mirrors/SuperBMD.git
-[submodule "References/Spotlight"]
-	path = References/Spotlight
-	url = https://github.com/jupahe64/Spotlight.git

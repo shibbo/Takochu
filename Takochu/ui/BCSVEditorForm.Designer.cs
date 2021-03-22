@@ -58,7 +58,7 @@
             this.saveAll_Btn});
             this.toolStrip1.Location = new System.Drawing.Point(4, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(987, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1017, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -71,6 +71,7 @@
             // 
             // archiveTextBox
             // 
+            this.archiveTextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.archiveTextBox.Name = "archiveTextBox";
             this.archiveTextBox.Size = new System.Drawing.Size(750, 25);
             this.archiveTextBox.Text = "/ObjectData/Kuribo.arc";
@@ -154,7 +155,6 @@
             this.Controls.Add(this.bcsvEditorsTabControl);
             this.Controls.Add(this.filesystemView);
             this.Controls.Add(this.toolStrip1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "BCSVEditorForm";
             this.Text = "BCSVEditorForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BCSVEditorForm_FormClosing);
