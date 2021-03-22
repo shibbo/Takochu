@@ -67,12 +67,11 @@ namespace Takochu.ui
             }
         }
 
-        private RARCFilesystem mFilesystem;
+        public RARCFilesystem mFilesystem;
 
         private void openRARC_Btn_Click(object sender, EventArgs e)
         {
             rarc_TreeView.Nodes.Clear();
-
             if (mFilesystem != null)
             {
                 mFilesystem.Close();
@@ -138,6 +137,14 @@ namespace Takochu.ui
                 openRARC_Btn.Enabled = true;
             else
                 openRARC_Btn.Enabled = false;
+        }
+
+        private void RARCExplorer_Closing(object sender, FormClosingEventArgs e)
+        {
+            if (mFilesystem != null)
+            {
+                mFilesystem.Close();
+            }
         }
     }
 }

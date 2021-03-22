@@ -1,4 +1,7 @@
-﻿namespace Takochu.ui
+﻿using System;
+using System.Windows.Forms;
+
+namespace Takochu.ui
 {
     partial class RARCExplorer
     {
@@ -117,6 +120,7 @@
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
+            this.FormClosing += new FormClosingEventHandler(RARCExplorer_Closing);
 
         }
 

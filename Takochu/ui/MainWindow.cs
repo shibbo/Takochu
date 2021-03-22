@@ -61,7 +61,7 @@ namespace Takochu
             List<string> galaxies = Program.sGame.GetGalaxies();
             Dictionary<string, string> simpleNames = Program.sTranslator.GetGalaxyNames();
 
-            foreach(string galaxy in galaxies)
+            foreach (string galaxy in galaxies)
             {
                 if (simpleNames.ContainsKey(galaxy))
                 {
@@ -124,7 +124,7 @@ namespace Takochu
 
         private void galaxyTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if (galaxyTreeView.SelectedNode != null) 
+            if (galaxyTreeView.SelectedNode != null)
             {
                 EditorWindow win = new EditorWindow(Convert.ToString(galaxyTreeView.SelectedNode.Tag));
                 win.Show();
