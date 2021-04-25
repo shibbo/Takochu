@@ -231,7 +231,7 @@ namespace Takochu.smg.obj
 
                 if (obj.mSwitchAppear != -1 || obj.mSwitchDead != -1 || obj.mSwitchActivate != -1 || obj.mSwitchDeactivate != -1 || obj.mSwitchAwake != -1 || obj.mSwitchParameter != -1)
                 {
-                    if (control.Button("View Swich Usage"))
+                    if (control.Button("View Switch Usage"))
                     {
                         if (obj.mSwitchAppear != -1)
                             obj.GetObjsWithSameField("SW_APPEAR", obj.mSwitchAppear).ForEach(o => scene.SelectedObjects.Add(o));
