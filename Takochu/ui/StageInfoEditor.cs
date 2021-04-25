@@ -64,7 +64,8 @@ namespace Takochu.ui
 
             // if there is no scenario selected, we just have it select the first one (since it does this by default)
             // otherwise, select the entry for the scenario we have selected in the editor
-            if (scenarioNo != 0)
+            // or if it's a green star, don't select anything
+            if (scenarioNo != 0 && idx < scenarioListTreeView.Nodes.Count)
                 scenarioListTreeView.SelectedNode = scenarioListTreeView.Nodes[idx];
 
             changeBgmIdName_0.Text = mInfoEntry.Entry.Get<string>("ChangeBgmIdName0");
