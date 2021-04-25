@@ -7,7 +7,7 @@ Requirements:
 - [gitforwindows](https://gitforwindows.org/) (It makes life nicer)
 
 Cloning:
-To clone this repo either use Visual Studio's git repo extension to clone the repo properly (Will include the submodules.) or use `git clone https://github.com/Lord-Giganticus/Takochu.git --recursive` (THE URL IS DIFFERENT ON OTHER FORKS/THE MASTER REPO)
+To clone this repo either use Visual Studio's git repo extension to clone the repo properly (Will include the submodules.) or use `git clone https://github.com/shibbo/Takochu.git --recursive` (THE URL IS DIFFERENT ON FORKS)
 
 Building:
-Use Visual Studio's Build option. Don't use msbuild unless you are that cool.
+Use Visual Studio's Build option.
