@@ -139,5 +139,11 @@ namespace Takochu.ui
             else
                 openRARC_Btn.Enabled = false;
         }
+
+        private void RARCExplorer_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (mFilesystem != null)
+                mFilesystem.Close();
+        }
     }
 }

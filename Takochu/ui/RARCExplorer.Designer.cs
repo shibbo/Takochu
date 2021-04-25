@@ -112,6 +112,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Name = "RARCExplorer";
             this.Text = "RARCExplorer";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RARCExplorer_FormClosing);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
