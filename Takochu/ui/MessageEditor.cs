@@ -20,6 +20,8 @@ namespace Takochu.util
         public MessageEditor()
         {
             InitializeComponent();
+
+            zoneNamesComboBox.Enabled = false;
         }
 
         public MessageEditor(ref Galaxy galaxy)
@@ -179,7 +181,6 @@ namespace Takochu.util
                 if (mFilesystem.DoesFileExist($"/derp/{filename}.msbf"))
                     mCurFlow = new MSBF(mFilesystem.OpenFile($"/derp/{filename}.msbf"));
 
-                zoneNamesComboBox.Enabled = false;
                 labelsComboBox.Items.Clear();
 
                 Dictionary<string, List<MessageBase>> dur = mCurMessages.GetMessages();
