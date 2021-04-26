@@ -96,14 +96,21 @@ namespace Takochu.util
 
                 string lbl = labelsComboBox.Text;
 
-                ATR1.AttributeEntry entry = mCurMessages.GetAttributeEntry(labelsComboBox.SelectedIndex);
-                attribute0.Value = entry._0;
-                cameraTypeComboBox.SelectedIndex = entry._1;
-                talkTypeList.SelectedIndex = entry._2;
-                dialogTypeList.SelectedIndex = entry._3;
-                attribute4.Value = entry._4;
-                attribute5.Value = entry._5;
-                attribute6.Value = entry._6;
+                if (GameUtil.IsSMG1())
+                {
+                    // todo -- attributes
+                }
+                else
+                {
+                    ATR1.AttributeEntry entry = mCurMessages.GetAttributeEntry(labelsComboBox.SelectedIndex);
+                    attribute0.Value = entry._0;
+                    cameraTypeComboBox.SelectedIndex = entry._1;
+                    talkTypeList.SelectedIndex = entry._2;
+                    dialogTypeList.SelectedIndex = entry._3;
+                    attribute4.Value = entry._4;
+                    attribute5.Value = entry._5;
+                    attribute6.Value = entry._6;
+                }
 
                 List<MessageBase> msg;
 
