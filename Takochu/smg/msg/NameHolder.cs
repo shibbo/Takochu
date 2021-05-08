@@ -11,11 +11,17 @@ namespace Takochu.smg.msg
 {
     public class NameHolder
     {
+        private static string[] sPossibleLangs = { "UsEnglish", "EuEnglish", "JpJapanese", "KrKorean" };
         public static void Initialize()
         {
             if (GameUtil.IsSMG1())
             {
-                mFilesystem = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile("/UsEnglish/MessageData/Message.arc"));
+                foreach (string lang in sPossibleLangs)
+                {
+                    if (Program.sGame.mFilesystem.DoesDirectoryExist($"/{lang}"))
+                        mFilesystem = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile($"/{lang}/MessageData/Message.arc"));
+                }
+                
                 mMessages = new BMG(mFilesystem.OpenFile("/message/message.bmg"));
                 mMessageTable = new Dictionary<string, int>();
 
@@ -31,7 +37,11 @@ namespace Takochu.smg.msg
 
             else
             {
-                mFilesystem = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile("/LocalizeData/UsEnglish/MessageData/SystemMessage.arc"));
+                foreach (string lang in sPossibleLangs)
+                {
+                    if (Program.sGame.mFilesystem.DoesDirectoryExist($"/LocalizeData/{lang}"))
+                        mFilesystem = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile($"/LocalizeData/{lang}/MessageData/SystemMessage.arc"));
+                }
 
                 mGalaxyNames = new MSBT(mFilesystem.OpenFile("/boop/GalaxyName.msbt"));
                 mScenarioNames = new MSBT(mFilesystem.OpenFile("/boop/ScenarioName.msbt"));
