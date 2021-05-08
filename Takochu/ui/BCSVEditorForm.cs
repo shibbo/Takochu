@@ -23,6 +23,16 @@ namespace Takochu.ui
             InitializeComponent();
             mEditors = new Dictionary<string, DataGridView>();
             mFiles = new Dictionary<string, BCSV>();
+
+            int count = Properties.Settings.Default.BCSVPaths.Count;
+
+            for (int i = count; i < count + 10; i--)
+            {
+                if (i == 0)
+                    break;
+
+                recentFilesListDropDown.DropDownItems.Add(Properties.Settings.Default.BCSVPaths[i - 1]);
+            }
         }
 
         private void OpenBCSV()
@@ -36,6 +46,29 @@ namespace Takochu.ui
             {
                 file.Close();
             }
+
+            Properties.Settings.Default.BCSVPaths.Add(archiveTextBox.Text);
+            recentFilesListDropDown.DropDownItems.Add(archiveTextBox.Text);
+
+            // yeet 40 of the entries so we don't keep growing over and over again
+            if (Properties.Settings.Default.BCSVPaths.Count == 50)
+            {
+                Properties.Settings.Default.BCSVPaths.RemoveRange(0, 40);
+
+                recentFilesListDropDown.DropDownItems.Clear();
+
+                int count = Properties.Settings.Default.BCSVPaths.Count;
+
+                for (int i = count; i < count + 10; i--)
+                {
+                    if (i == 0)
+                        break;
+
+                    recentFilesListDropDown.DropDownItems.Add(Properties.Settings.Default.BCSVPaths[i - 1]);
+                }
+            }
+
+            Properties.Settings.Default.Save();
 
             mFiles.Clear();
             mEditors.Clear();
@@ -89,7 +122,6 @@ namespace Takochu.ui
         }
 
         private RARCFilesystem mFilesystem;
-        //private BCSV mFile;
 
         private void filesystemView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
@@ -386,6 +418,14 @@ namespace Takochu.ui
             {
                 OpenBCSV();
             }
+        }
+
+        private void recentFilesListDropDown_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            string file = e.ClickedItem.Text;
+            archiveTextBox.Text = file;
+
+            OpenBCSV();
         }
     }
 }

@@ -39,6 +39,7 @@
             this.saveAll_Btn = new System.Windows.Forms.ToolStripButton();
             this.filesystemView = new System.Windows.Forms.TreeView();
             this.bcsvEditorsTabControl = new System.Windows.Forms.TabControl();
+            this.recentFilesListDropDown = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,11 +55,12 @@
             this.toolStripSeparator1,
             this.openBCSVBtn,
             this.openExternalBtn,
+            this.recentFilesListDropDown,
             this.saveBCSVBtn,
             this.saveAll_Btn});
             this.toolStrip1.Location = new System.Drawing.Point(4, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1017, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1093, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -71,7 +73,6 @@
             // 
             // archiveTextBox
             // 
-            this.archiveTextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.archiveTextBox.Name = "archiveTextBox";
             this.archiveTextBox.Size = new System.Drawing.Size(750, 25);
             this.archiveTextBox.Text = "/ObjectData/Kuribo.arc";
@@ -132,7 +133,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.filesystemView.Location = new System.Drawing.Point(0, 28);
             this.filesystemView.Name = "filesystemView";
-            this.filesystemView.Size = new System.Drawing.Size(1052, 451);
+            this.filesystemView.Size = new System.Drawing.Size(1128, 451);
             this.filesystemView.TabIndex = 2;
             this.filesystemView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.filesystemView_NodeMouseDoubleClick);
             // 
@@ -144,14 +145,24 @@
             this.bcsvEditorsTabControl.Location = new System.Drawing.Point(0, 485);
             this.bcsvEditorsTabControl.Name = "bcsvEditorsTabControl";
             this.bcsvEditorsTabControl.SelectedIndex = 0;
-            this.bcsvEditorsTabControl.Size = new System.Drawing.Size(1052, 123);
+            this.bcsvEditorsTabControl.Size = new System.Drawing.Size(1128, 123);
             this.bcsvEditorsTabControl.TabIndex = 3;
+            // 
+            // recentFilesListDropDown
+            // 
+            this.recentFilesListDropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.recentFilesListDropDown.Image = ((System.Drawing.Image)(resources.GetObject("recentFilesListDropDown.Image")));
+            this.recentFilesListDropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.recentFilesListDropDown.Name = "recentFilesListDropDown";
+            this.recentFilesListDropDown.Size = new System.Drawing.Size(82, 22);
+            this.recentFilesListDropDown.Text = "Recent Files";
+            this.recentFilesListDropDown.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.recentFilesListDropDown_DropDownItemClicked);
             // 
             // BCSVEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1052, 608);
+            this.ClientSize = new System.Drawing.Size(1128, 608);
             this.Controls.Add(this.bcsvEditorsTabControl);
             this.Controls.Add(this.filesystemView);
             this.Controls.Add(this.toolStrip1);
@@ -178,5 +189,6 @@
         private System.Windows.Forms.TabControl bcsvEditorsTabControl;
         private System.Windows.Forms.ToolStripButton saveAll_Btn;
         private System.Windows.Forms.ToolStripButton openExternalBtn;
+        private System.Windows.Forms.ToolStripDropDownButton recentFilesListDropDown;
     }
 }

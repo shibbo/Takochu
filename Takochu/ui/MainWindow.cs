@@ -24,6 +24,11 @@ namespace Takochu
         {
             InitializeComponent();
 
+            if (Properties.Settings.Default.BCSVPaths == null)
+            {
+                Properties.Settings.Default.BCSVPaths = new List<string>();
+            }
+
             Program.sTranslator = new Translator("English");
 
             string gamePath = Properties.Settings.Default.GamePath;
