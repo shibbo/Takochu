@@ -122,7 +122,7 @@ namespace Takochu.ui
 
                 BGMInfo.ScenarioBGMEntry scenarioEntry = mScenarioEntries.Find(entry => entry.ScenarioNo == scenarioNo);
 
-                if (mBGMRestrictedIDs.Contains(scenarioNo))
+                if (scenarioNo != 0)
                 {
                     scenarioBGMId.Text = scenarioEntry.Entry.Get<string>("BgmIdName");
                     scenarioBGMStartType.Value = scenarioEntry.Entry.Get<int>("StartType");
