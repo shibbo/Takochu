@@ -31,4 +31,4 @@ jobs:
         prerelease: true
         title: "Auto Build"
         files: |
-          "Release.zip"
+          Release.zip
