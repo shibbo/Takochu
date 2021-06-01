@@ -1,7 +1,7 @@
 nuget restore
 pushd %CD%
 cd References
-cmd /c Updater
+cmd /c Update
 cd GL_EditorFramework
 git remote add upstream https://github.com/Lord-Giganticus/GL_EditorFramework.git
 git fetch upstream
