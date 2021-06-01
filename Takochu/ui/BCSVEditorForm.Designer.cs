@@ -35,11 +35,11 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.openBCSVBtn = new System.Windows.Forms.ToolStripButton();
             this.openExternalBtn = new System.Windows.Forms.ToolStripButton();
+            this.recentFilesListDropDown = new System.Windows.Forms.ToolStripDropDownButton();
             this.saveBCSVBtn = new System.Windows.Forms.ToolStripButton();
             this.saveAll_Btn = new System.Windows.Forms.ToolStripButton();
             this.filesystemView = new System.Windows.Forms.TreeView();
             this.bcsvEditorsTabControl = new System.Windows.Forms.TabControl();
-            this.recentFilesListDropDown = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -73,10 +73,12 @@
             // 
             // archiveTextBox
             // 
+            this.archiveTextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.archiveTextBox.Name = "archiveTextBox";
             this.archiveTextBox.Size = new System.Drawing.Size(750, 25);
             this.archiveTextBox.Text = "/ObjectData/Kuribo.arc";
             this.archiveTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.archiveTextBox_KeyPress);
+            this.archiveTextBox.TextChanged += new System.EventHandler(this.archiveTextBox_TextChanged);
             // 
             // toolStripSeparator1
             // 
@@ -102,6 +104,16 @@
             this.openExternalBtn.Size = new System.Drawing.Size(49, 22);
             this.openExternalBtn.Text = "Open...";
             this.openExternalBtn.Click += new System.EventHandler(this.openExternalBtn_Click);
+            // 
+            // recentFilesListDropDown
+            // 
+            this.recentFilesListDropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.recentFilesListDropDown.Image = ((System.Drawing.Image)(resources.GetObject("recentFilesListDropDown.Image")));
+            this.recentFilesListDropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.recentFilesListDropDown.Name = "recentFilesListDropDown";
+            this.recentFilesListDropDown.Size = new System.Drawing.Size(82, 22);
+            this.recentFilesListDropDown.Text = "Recent Files";
+            this.recentFilesListDropDown.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.recentFilesListDropDown_DropDownItemClicked);
             // 
             // saveBCSVBtn
             // 
@@ -147,16 +159,6 @@
             this.bcsvEditorsTabControl.SelectedIndex = 0;
             this.bcsvEditorsTabControl.Size = new System.Drawing.Size(1128, 123);
             this.bcsvEditorsTabControl.TabIndex = 3;
-            // 
-            // recentFilesListDropDown
-            // 
-            this.recentFilesListDropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.recentFilesListDropDown.Image = ((System.Drawing.Image)(resources.GetObject("recentFilesListDropDown.Image")));
-            this.recentFilesListDropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.recentFilesListDropDown.Name = "recentFilesListDropDown";
-            this.recentFilesListDropDown.Size = new System.Drawing.Size(82, 22);
-            this.recentFilesListDropDown.Text = "Recent Files";
-            this.recentFilesListDropDown.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.recentFilesListDropDown_DropDownItemClicked);
             // 
             // BCSVEditorForm
             // 

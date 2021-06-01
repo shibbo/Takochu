@@ -414,7 +414,7 @@ namespace Takochu.ui
 
         private void archiveTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)Keys.Return)
+            if (e.KeyChar == (char)Keys.Return && Program.sGame.DoesFileExist(archiveTextBox.Text))
             {
                 OpenBCSV();
             }
@@ -426,6 +426,14 @@ namespace Takochu.ui
             archiveTextBox.Text = file;
 
             OpenBCSV();
+        }
+
+        private void archiveTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (Program.sGame.DoesFileExist(archiveTextBox.Text))
+                openBCSVBtn.Enabled = true;
+            else
+                openBCSVBtn.Enabled = false;
         }
     }
 }

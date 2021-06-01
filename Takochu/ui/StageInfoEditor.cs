@@ -107,11 +107,12 @@ namespace Takochu.ui
 
         private void scenarioListTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (scenarioListTreeView.SelectedNode != null)
+            int scenarioNo = Convert.ToInt32(scenarioListTreeView.SelectedNode.Tag);
+
+            if (scenarioListTreeView.SelectedNode != null && !mBGMRestrictedIDs.Contains(scenarioNo))
             {
                 mIsInitialized = false;
 
-                int scenarioNo = Convert.ToInt32(scenarioListTreeView.SelectedNode.Tag);
                 mCurScenario = scenarioNo;
 
                 if (mIsRestrictBGM || mBGMRestrictedIDs.Contains(scenarioNo))
@@ -155,7 +156,9 @@ namespace Takochu.ui
                     foreach (TreeNode n in scenarioListTreeView.Nodes)
                     {
                         if (mBGMRestrictedIDs.Contains(Convert.ToInt32(n.Tag)))
+                        {
                             n.ForeColor = SystemColors.ControlText;
+                        }
                     }
                 }
             }

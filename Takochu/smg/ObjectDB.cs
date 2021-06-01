@@ -15,17 +15,7 @@ namespace Takochu.smg
             Actors = new Dictionary<string, Actor>();
             Objects = new Dictionary<string, Object>();
 
-            using (var c = new WebClient())
-            {
-                try
-                {
-                    c.DownloadFile("http://shibboleet.us.to/new_db/generate.php", "res/objectdb.xml");
-                }
-                catch
-                {
-                    // do nothing
-                }
-            }
+            GenDB();
 
             XmlDocument db = new XmlDocument();
             db.Load("res/objectdb.xml");
@@ -77,6 +67,22 @@ namespace Takochu.smg
                 Objects.Add(obj.InternalName, obj);
             }
         }
+
+        public static void GenDB()
+        {
+            using (var c = new WebClient())
+            {
+                try
+                {
+                    c.DownloadFile("http://shibboleet.us.to/new_db/generate.php", "res/objectdb.xml");
+                }
+                catch
+                {
+                    // do nothing
+                }
+            }
+        }
+
 
         public static Actor GetActorFromObjectName(string objName)
         {

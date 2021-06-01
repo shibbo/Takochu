@@ -37,6 +37,7 @@
             this.export_Btn = new System.Windows.Forms.ToolStripButton();
             this.rarc_TreeView = new System.Windows.Forms.TreeView();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.openExternal = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,6 +48,7 @@
             this.toolStripLabel1,
             this.rarcName_TextBox,
             this.openRARC_Btn,
+            this.openExternal,
             this.export_Btn});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
@@ -65,6 +67,7 @@
             this.rarcName_TextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.rarcName_TextBox.Name = "rarcName_TextBox";
             this.rarcName_TextBox.Size = new System.Drawing.Size(700, 25);
+            this.rarcName_TextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rarcName_TextBox_KeyPress);
             this.rarcName_TextBox.TextChanged += new System.EventHandler(this.rarcName_TextBox_TextChanged);
             // 
             // openRARC_Btn
@@ -103,6 +106,16 @@
             this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
+            // openExternal
+            // 
+            this.openExternal.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.openExternal.Image = ((System.Drawing.Image)(resources.GetObject("openExternal.Image")));
+            this.openExternal.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.openExternal.Name = "openExternal";
+            this.openExternal.Size = new System.Drawing.Size(49, 22);
+            this.openExternal.Text = "Open...";
+            this.openExternal.Click += new System.EventHandler(this.openExternal_Click);
+            // 
             // RARCExplorer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -129,5 +142,6 @@
         private System.Windows.Forms.TreeView rarc_TreeView;
         private System.Windows.Forms.ToolStripButton export_Btn;
         private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.ToolStripButton openExternal;
     }
 }

@@ -42,10 +42,6 @@
     <Reference Include="Fasterflect, Version=3.0.0.0, Culture=neutral, PublicKeyToken=38d18473284c1ca7, processorArchitecture=MSIL">
       <HintPath>..\packages\fasterflect.3.0.0\lib\netstandard20\netstandard20\Fasterflect.dll</HintPath>
     </Reference>
-    <Reference Include="GL_EditorFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\Hacking\Wii\GL_EditorFramework\Gl_EditorFramework\bin\Debug\GL_EditorFramework.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\WindowsAPICodePack-Core.1.1.2\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
     </Reference>
@@ -63,10 +59,6 @@
     </Reference>
     <Reference Include="OpenTK.GLControl, Version=3.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <HintPath>..\packages\OpenTK.GLControl.3.1.0\lib\net20\OpenTK.GLControl.dll</HintPath>
-    </Reference>
-    <Reference Include="SuperBMDLib, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Downloads\SuperBMD\SuperBMDLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -129,6 +121,12 @@
     <Compile Include="ui\LightAttribEditor.Designer.cs">
       <DependentUpon>LightAttribEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="ui\SettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ui\StageInfoEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -173,6 +171,7 @@
       <DependentUpon>MessageEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="util\ImageUtil.cs" />
+    <Compile Include="util\ProgramUtil.cs" />
     <Compile Include="util\SettingsUtil.cs" />
     <Compile Include="util\Translator.cs" />
     <EmbeddedResource Include="ui\MainWindow.resx">
@@ -202,6 +201,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ui\MessageEditor.resx">
       <DependentUpon>MessageEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ui\StageInfoEditor.resx">
       <DependentUpon>StageInfoEditor.cs</DependentUpon>
@@ -243,6 +245,16 @@
     <Content Include="res\translations\de\SimpleGalaxyNames_SMG2.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\References\GL_EditorFramework\Gl_EditorFramework\Gl_EditorFramework.csproj">
+      <Project>{d593a72d-554d-40fb-9967-503cb15a744f}</Project>
+      <Name>Gl_EditorFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\References\SuperBMD\SuperBMDLib\SuperBMDLib.csproj">
+      <Project>{828be5e5-9e98-46c9-b63e-d2d03322a825}</Project>
+      <Name>SuperBMDLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

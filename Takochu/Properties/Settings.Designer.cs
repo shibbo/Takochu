@@ -45,5 +45,29 @@ namespace Takochu.Properties {
                 this["BCSVPaths"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("English")]
+        public string Translation {
+            get {
+                return ((string)(this["Translation"]));
+            }
+            set {
+                this["Translation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowArgs {
+            get {
+                return ((bool)(this["ShowArgs"]));
+            }
+            set {
+                this["ShowArgs"] = value;
+            }
+        }
     }
 }

@@ -1,3 +1,4 @@
+using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -71,6 +72,11 @@ namespace Takochu.ui
 
         private void openRARC_Btn_Click(object sender, EventArgs e)
         {
+            OpenRARC();
+        }
+
+        public void OpenRARC()
+        {
             rarc_TreeView.Nodes.Clear();
 
             if (mFilesystem != null)
@@ -123,11 +129,11 @@ namespace Takochu.ui
             else
             {
                 // directory
-                FolderBrowserDialog d = new FolderBrowserDialog();
+                CommonSaveFileDialog d = new CommonSaveFileDialog();
 
-                if (d.ShowDialog() == DialogResult.OK)
+                if (d.ShowDialog() == CommonFileDialogResult.Ok)
                 {
-                    ExportFilesAndDirs(rarc_TreeView.SelectedNode, (string)rarc_TreeView.SelectedNode.Tag, d.SelectedPath);
+                    ExportFilesAndDirs(rarc_TreeView.SelectedNode, (string)rarc_TreeView.SelectedNode.Tag, d.FileName);
                 }
             }
         }
@@ -144,6 +150,35 @@ namespace Takochu.ui
         {
             if (mFilesystem != null)
                 mFilesystem.Close();
+        }
+
+        private void rarcName_TextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Return && Program.sGame.DoesFileExist(rarcName_TextBox.Text))
+            {
+                OpenRARC();
+            }
+        }
+
+        private void openExternal_Click(object sender, EventArgs e)
+        {
+            if (mFilesystem != null)
+            {
+                mFilesystem.Close();
+            }
+
+            OpenFileDialog dlg = new OpenFileDialog();
+
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                mFilesystem = new RARCFilesystem(new ExternalFile(dlg.FileName));
+
+                TreeNode root = new TreeNode("/");
+
+                PopulateTreeView(ref root, "/root");
+
+                rarc_TreeView.Nodes.Add(root);
+            }
         }
     }
 }

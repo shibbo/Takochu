@@ -63,6 +63,7 @@
             this.saveGalaxyBtn = new System.Windows.Forms.ToolStripButton();
             this.closeEditorBtn = new System.Windows.Forms.ToolStripButton();
             this.galaxyViewControl = new GL_EditorFramework.GL_Core.GL_ControlModern();
+            this.SettingsBtn = new System.Windows.Forms.ToolStripButton();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
@@ -382,10 +383,11 @@
             this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveGalaxyBtn,
-            this.closeEditorBtn});
+            this.closeEditorBtn,
+            this.SettingsBtn});
             this.toolStrip2.Location = new System.Drawing.Point(6, 1);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(78, 25);
+            this.toolStrip2.Size = new System.Drawing.Size(162, 25);
             this.toolStrip2.TabIndex = 8;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -432,6 +434,16 @@
             this.galaxyViewControl.ZFar = 32000F;
             this.galaxyViewControl.ZNear = 0.32F;
             this.galaxyViewControl.Load += new System.EventHandler(this.galaxyViewControl_Load);
+            // 
+            // SettingsBtn
+            // 
+            this.SettingsBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.SettingsBtn.Image = ((System.Drawing.Image)(resources.GetObject("SettingsBtn.Image")));
+            this.SettingsBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.SettingsBtn.Name = "SettingsBtn";
+            this.SettingsBtn.Size = new System.Drawing.Size(53, 22);
+            this.SettingsBtn.Text = "Settings";
+            this.SettingsBtn.Click += new System.EventHandler(this.SettingsBtn_Click);
             // 
             // EditorWindow
             // 
@@ -500,5 +512,6 @@
         private System.Windows.Forms.TabPage tabPage5;
         private GL_EditorFramework.ObjectUIControl zonesObjectUI;
         private GL_EditorFramework.SceneListView zonesListView;
+        private System.Windows.Forms.ToolStripButton SettingsBtn;
     }
 }
