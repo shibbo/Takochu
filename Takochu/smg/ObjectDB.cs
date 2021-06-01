@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -15,7 +16,8 @@ namespace Takochu.smg
             Actors = new Dictionary<string, Actor>();
             Objects = new Dictionary<string, Object>();
 
-            GenDB();
+            if (!File.Exists("res/objectdb.xml"))
+                GenDB();
 
             XmlDocument db = new XmlDocument();
             db.Load("res/objectdb.xml");

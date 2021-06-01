@@ -109,7 +109,7 @@ namespace Takochu.ui
         {
             int scenarioNo = Convert.ToInt32(scenarioListTreeView.SelectedNode.Tag);
 
-            if (scenarioListTreeView.SelectedNode != null && !mBGMRestrictedIDs.Contains(scenarioNo))
+            if (scenarioListTreeView.SelectedNode != null)
             {
                 mIsInitialized = false;
 
@@ -122,10 +122,13 @@ namespace Takochu.ui
 
                 BGMInfo.ScenarioBGMEntry scenarioEntry = mScenarioEntries.Find(entry => entry.ScenarioNo == scenarioNo);
 
-                scenarioBGMId.Text = scenarioEntry.Entry.Get<string>("BgmIdName");
-                scenarioBGMStartType.Value = scenarioEntry.Entry.Get<int>("StartType");
-                scenarioBGMStartFrame.Value = scenarioEntry.Entry.Get<int>("StartFrame");
-                scenarioBGMIsPrepare.Checked = scenarioEntry.Entry.Get<int>("IsPrepare") != 0;
+                if (mBGMRestrictedIDs.Contains(scenarioNo))
+                {
+                    scenarioBGMId.Text = scenarioEntry.Entry.Get<string>("BgmIdName");
+                    scenarioBGMStartType.Value = scenarioEntry.Entry.Get<int>("StartType");
+                    scenarioBGMStartFrame.Value = scenarioEntry.Entry.Get<int>("StartFrame");
+                    scenarioBGMIsPrepare.Checked = scenarioEntry.Entry.Get<int>("IsPrepare") != 0;
+                }
 
                 Scenario scenario = mScenarios[mCurScenario];
                 scenarioNameTxt.Text = scenario.mEntry.Get<string>("ScenarioName");
