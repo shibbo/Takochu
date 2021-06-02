@@ -38,8 +38,10 @@ namespace Takochu.ui
             this.editorGroupBox = new System.Windows.Forms.GroupBox();
             this.ShowArgs = new System.Windows.Forms.CheckBox();
             this.miscGroupBox = new System.Windows.Forms.GroupBox();
+            this.useDevCheckBox = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.LanguageComboBox = new System.Windows.Forms.ComboBox();
+            this.tryUpdateBtn = new System.Windows.Forms.Button();
             this.DBGroupBox.SuspendLayout();
             this.editorGroupBox.SuspendLayout();
             this.miscGroupBox.SuspendLayout();
@@ -126,6 +128,7 @@ namespace Takochu.ui
             // 
             // miscGroupBox
             // 
+            this.miscGroupBox.Controls.Add(this.useDevCheckBox);
             this.miscGroupBox.Controls.Add(this.label2);
             this.miscGroupBox.Controls.Add(this.LanguageComboBox);
             this.miscGroupBox.Location = new System.Drawing.Point(15, 150);
@@ -134,6 +137,17 @@ namespace Takochu.ui
             this.miscGroupBox.TabIndex = 5;
             this.miscGroupBox.TabStop = false;
             this.miscGroupBox.Text = "Miscellaneous";
+            // 
+            // useDevCheckBox
+            // 
+            this.useDevCheckBox.AutoSize = true;
+            this.useDevCheckBox.Location = new System.Drawing.Point(335, 24);
+            this.useDevCheckBox.Name = "useDevCheckBox";
+            this.useDevCheckBox.Size = new System.Drawing.Size(134, 17);
+            this.useDevCheckBox.TabIndex = 2;
+            this.useDevCheckBox.Text = "Download pre-releases";
+            this.useDevCheckBox.UseVisualStyleBackColor = true;
+            this.useDevCheckBox.CheckedChanged += new System.EventHandler(this.useDevCheckBox_CheckedChanged);
             // 
             // label2
             // 
@@ -153,11 +167,22 @@ namespace Takochu.ui
             this.LanguageComboBox.TabIndex = 0;
             this.LanguageComboBox.SelectedIndexChanged += new System.EventHandler(this.LanguageComboBox_SelectedIndexChanged);
             // 
+            // tryUpdateBtn
+            // 
+            this.tryUpdateBtn.Location = new System.Drawing.Point(15, 218);
+            this.tryUpdateBtn.Name = "tryUpdateBtn";
+            this.tryUpdateBtn.Size = new System.Drawing.Size(108, 23);
+            this.tryUpdateBtn.TabIndex = 2;
+            this.tryUpdateBtn.Text = "Check for updates";
+            this.tryUpdateBtn.UseVisualStyleBackColor = true;
+            this.tryUpdateBtn.Click += new System.EventHandler(this.tryUpdateBtn_Click);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(504, 225);
+            this.ClientSize = new System.Drawing.Size(504, 253);
+            this.Controls.Add(this.tryUpdateBtn);
             this.Controls.Add(this.miscGroupBox);
             this.Controls.Add(this.editorGroupBox);
             this.Controls.Add(this.DBGroupBox);
@@ -192,5 +217,7 @@ namespace Takochu.ui
         private System.Windows.Forms.GroupBox miscGroupBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox LanguageComboBox;
+        private System.Windows.Forms.Button tryUpdateBtn;
+        private System.Windows.Forms.CheckBox useDevCheckBox;
     }
 }

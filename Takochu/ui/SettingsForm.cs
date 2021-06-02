@@ -25,6 +25,7 @@ namespace Takochu.ui
             DbInfoLbl.Text = "ObjectDatabase last generated on: " + File.GetLastWriteTime("res/objectdb.xml").ToString();
             ShowArgs.Checked = Convert.ToBoolean(SettingsUtil.GetSetting("ShowArgs"));
             LanguageComboBox.Text = Convert.ToString(SettingsUtil.GetSetting("Translation"));
+            useDevCheckBox.Checked = Convert.ToBoolean(SettingsUtil.GetSetting("Dev"));
 
             foreach (string langs in Translator.sStringToLang.Keys)
             {
@@ -64,6 +65,16 @@ namespace Takochu.ui
 
             SettingsUtil.SetSetting("Translation", LanguageComboBox.SelectedItem);
             ProgramUtil.UpdateTranslation();
+        }
+
+        private void tryUpdateBtn_Click(object sender, EventArgs e)
+        {
+            Updater.Update(Convert.ToBoolean(SettingsUtil.GetSetting("Dev")));
+        }
+
+        private void useDevCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            SettingsUtil.SetSetting("Dev", useDevCheckBox.Checked);
         }
     }
 }

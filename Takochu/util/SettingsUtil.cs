@@ -21,6 +21,9 @@ namespace Takochu.util
                 case "Translation":
                     Properties.Settings.Default.Translation = Convert.ToString(value);
                     break;
+                case "Dev":
+                    Properties.Settings.Default.IsBleedingEdge = Convert.ToBoolean(value);
+                    break;
             }
 
             Properties.Settings.Default.Save();
@@ -40,6 +43,9 @@ namespace Takochu.util
                     break;
                 case "Translation":
                     val = Properties.Settings.Default.Translation;
+                    break;
+                case "Dev":
+                    val = Properties.Settings.Default.IsBleedingEdge;
                     break;
             }
 

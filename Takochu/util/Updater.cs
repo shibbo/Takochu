@@ -32,7 +32,9 @@ namespace Takochu.util
         {
             Client.GetReleases(ref Releases);
             Client.GetCommits(CompileDate, ref CurrentRelease, ref CommitList);
+
             if (IsBleedingEdge)
+            {
                 foreach (var r in Releases)
                     if (r.Prerelease)
                     {
@@ -41,7 +43,9 @@ namespace Takochu.util
                     }
                     else
                         continue;
+            }
             else
+            {
                 foreach (var r in Releases)
                     if (!r.Prerelease)
                     {
@@ -50,13 +54,16 @@ namespace Takochu.util
                     }
                     else
                         break;
-            if (LatestRelease.Assets[0].CreatedAt.DateTime != CurrentRelease.DateTime)
+            }
+
+            if (LatestRelease.Assets[0].CreatedAt.DateTime < CurrentRelease.DateTime)
             {
                 Download(LatestRelease.Assets[0].BrowserDownloadUrl, LatestRelease.Assets[0].Name);
                 MessageBox.Show("Release zip downloaded. You'll have to unzip it yourself.");
-            } else
+            } 
+            else
             {
-                MessageBox.Show("No need toupdate!");
+                MessageBox.Show("No need to update!");
             }
         }
 
@@ -69,7 +76,7 @@ namespace Takochu.util
 
     internal static class OctoExtensions
     {
-        internal static void GetReleases(this GitHubClient client, ref List<Release> releases, string user = "Lord-Giganticus", string repo = "Takochu")
+        internal static void GetReleases(this GitHubClient client, ref List<Release> releases, string user = "Someone-some", string repo = "Takochu")
         {
             releases = new List<Release>();
             foreach (var r in client.Repository.Release.GetAll(user, repo).GetAwaiter().GetResult())

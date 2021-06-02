@@ -69,5 +69,17 @@ namespace Takochu.Properties {
                 this["ShowArgs"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsBleedingEdge {
+            get {
+                return ((bool)(this["IsBleedingEdge"]));
+            }
+            set {
+                this["IsBleedingEdge"] = value;
+            }
+        }
     }
 }
