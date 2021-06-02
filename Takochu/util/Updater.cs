@@ -76,7 +76,7 @@ namespace Takochu.util
 
     internal static class OctoExtensions
     {
-        internal static void GetReleases(this GitHubClient client, ref List<Release> releases, string user = "Someone-some", string repo = "Takochu")
+        internal static void GetReleases(this GitHubClient client, ref List<Release> releases, string user = "shibbs", string repo = "Takochu")
         {
             releases = new List<Release>();
             foreach (var r in client.Repository.Release.GetAll(user, repo).GetAwaiter().GetResult())
@@ -85,7 +85,7 @@ namespace Takochu.util
             }
         }
 
-        internal static void GetCommits(this GitHubClient client, string time, ref DateTimeOffset offset, ref List<GitHubCommit> commits, string user = "Lord-Giganticus", string repo = "Takochu")
+        internal static void GetCommits(this GitHubClient client, string time, ref DateTimeOffset offset, ref List<GitHubCommit> commits, string user = "shibbs", string repo = "Takochu")
         {
             var IsValid = DateTimeOffset.TryParse(time, out offset);
 
