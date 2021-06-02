@@ -16,7 +16,7 @@ namespace Takochu.ui
 {
     public partial class StageInfoEditor : Form
     {
-        public static string[] cCometTypes = { "Red", "Purple", "Dark", "Mimic", "Quick", "Exterminate" };
+        public static string[] cCometTypes = { "None", "Speedrun", "Purple Coins", "Daredevil", "Cosmic Clones", "Romp", "Double Time" };
         public static string[] cStarTypes = { "Normal", "Hidden", "Grand", "Green" };
 
         public StageInfoEditor(ref Galaxy galaxy, int scenarioNo)
@@ -141,7 +141,7 @@ namespace Takochu.ui
                 powerStarID.Value = scenario.mEntry.Get<int>("PowerStarId");
                 appearPowerStarTxt.Text = scenario.mEntry.Get<string>("AppearPowerStarObj");
                 powerStarTypeComboBox.Text = scenario.mEntry.Get<string>("PowerStarType");
-                cometTypeComboBox.Text = scenario.mEntry.Get<string>("Comet");
+                cometTypeComboBox.Text = CometNameConverter(scenario.mEntry.Get<string>("Comet"), true);     
                 cometTimer.Value = scenario.mEntry.Get<int>("CometLimitTimer");
 
                 mIsInitialized = true;
@@ -355,6 +355,73 @@ namespace Takochu.ui
             string zone = zoneListsBox.SelectedItem.ToString();
             int newMask = GameUtil.SetLayerOnMask(c.Tag.ToString(), mScenarios[mCurScenario].mEntry.Get<int>(zone), c.Checked);
             mScenarios[mCurScenario].mEntry.Set(zone, newMask);
+        }
+
+        private string CometNameConverter(string cometType, bool reverse)
+        {
+            if (reverse)
+            {
+                switch (cometType)
+                {
+                    case "":
+                        cometType = "None";
+                        break;
+                    case "Red":
+                        cometType = "Speedrun";
+                        break;
+                    case "Purple":
+                        cometType = "Purple Coins";
+                        break;
+                    case "Dark":
+                        cometType = "Daredevil";
+                        break;
+                    case "Mimic":
+                        cometType = "Cosmic Clones";
+                        break;
+                    case "Exterminate":
+                        cometType = "Romp";
+                        break;
+                    case "Quick":
+                        cometType = "Double Time";
+                        break;
+                }
+            }
+            else
+            {
+                switch (cometType)
+                {
+                    case "None":
+                        cometType = "";
+                        break;
+                    case "Speedrun":
+                        cometType = "Red";
+                        break;
+                    case "Purple Coins":
+                        cometType = "Purple";
+                        break;
+                    case "Daredevil":
+                        cometType = "Dark";
+                        break;
+                    case "Cosmic Clones":
+                        cometType = "Mimic";
+                        break;
+                    case "Romp":
+                        cometType = "Exterminate";
+                        break;
+                    case "Double Time":
+                        cometType = "Quick";
+                        break;
+                }
+            }
+
+            return cometType;
+        }
+
+        private void cometTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string cometType = CometNameConverter(cometTypeComboBox.Text, false);
+
+            mScenarios[mCurScenario].mEntry.Set("Comet", cometType);
         }
     }
 }

@@ -436,7 +436,7 @@
             this.cometTypeComboBox.Size = new System.Drawing.Size(693, 21);
             this.cometTypeComboBox.TabIndex = 17;
             this.cometTypeComboBox.Tag = "Comet";
-            this.cometTypeComboBox.SelectedIndexChanged += new System.EventHandler(this.ComboBox_SelectedIndexChanged);
+            this.cometTypeComboBox.SelectedIndexChanged += new System.EventHandler(this.cometTypeComboBox_SelectedIndexChanged);
             this.cometTypeComboBox.TextChanged += new System.EventHandler(this.ComboBox_SelectedIndexChanged);
             // 
             // cometTimer
