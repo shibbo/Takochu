@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using Takochu.fmt;
 using Takochu.io;
 using Takochu.smg;
+using Takochu.smg.msg;
 using Takochu.smg.obj;
 using Takochu.util;
 using static GL_EditorFramework.EditorDrawables.EditorSceneBase;
@@ -584,6 +585,11 @@ namespace Takochu.ui
         {
             SettingsForm settings = new SettingsForm();
             settings.Show();
+        }
+
+        private void saveNameHolderBtn_Click(object sender, EventArgs e)
+        {
+            NameHolder.Save();
         }
     }
 }

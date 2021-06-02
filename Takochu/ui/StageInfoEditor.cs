@@ -16,6 +16,9 @@ namespace Takochu.ui
 {
     public partial class StageInfoEditor : Form
     {
+        public static string[] cCometTypes = { "Red", "Purple", "Dark", "Mimic", "Quick", "Exterminate" };
+        public static string[] cStarTypes = { "Normal", "Hidden", "Grand", "Green" };
+
         public StageInfoEditor(ref Galaxy galaxy, int scenarioNo)
         {
             InitializeComponent();
@@ -38,8 +41,8 @@ namespace Takochu.ui
             {
                 Scenario s = scenarios.Value;
 
-                if (s.mPowerStarType == "Green")
-                    continue;
+               // if (s.mPowerStarType == "Green")
+                   // continue;
 
                 if (!mScenarioEntries.Any(e => e.ScenarioNo == s.mScenarioNo))
                     mBGMRestrictedIDs.Add(s.mScenarioNo);
@@ -67,6 +70,9 @@ namespace Takochu.ui
             // or if it's a green star, don't select anything
             if (scenarioNo != 0 && idx < scenarioListTreeView.Nodes.Count)
                 scenarioListTreeView.SelectedNode = scenarioListTreeView.Nodes[idx];
+
+            cometTypeComboBox.Items.AddRange(cCometTypes);
+            powerStarTypeComboBox.Items.AddRange(cStarTypes);
 
             changeBgmIdName_0.Text = mInfoEntry.Entry.Get<string>("ChangeBgmIdName0");
             changeBgmIdName_1.Text = mInfoEntry.Entry.Get<string>("ChangeBgmIdName1");
@@ -134,8 +140,8 @@ namespace Takochu.ui
                 scenarioNameTxt.Text = scenario.mEntry.Get<string>("ScenarioName");
                 powerStarID.Value = scenario.mEntry.Get<int>("PowerStarId");
                 appearPowerStarTxt.Text = scenario.mEntry.Get<string>("AppearPowerStarObj");
-                powerStarTypeTxt.Text = scenario.mEntry.Get<string>("PowerStarType");
-                cometTypeTxt.Text = scenario.mEntry.Get<string>("Comet");
+                powerStarTypeComboBox.Text = scenario.mEntry.Get<string>("PowerStarType");
+                cometTypeComboBox.Text = scenario.mEntry.Get<string>("Comet");
                 cometTimer.Value = scenario.mEntry.Get<int>("CometLimitTimer");
 
                 mIsInitialized = true;
@@ -272,6 +278,39 @@ namespace Takochu.ui
             TextBox n = sender as TextBox;
 
             // time for some hacks
+            if (tabControl2.SelectedTab.Text == "BGM")
+            {
+                if (tabControl1.SelectedTab.Text == "Stage")
+                {
+                    mInfoEntry.Entry.Set(n.Tag.ToString(), n.Text);
+                }
+                else
+                {
+                    int scenario = 0;
+
+                    // if we are in a restricted scenario, we default to changing the entry with scenario 0
+                    if (!mBGMRestrictedIDs.Contains(mCurScenario))
+                    {
+                        scenario = mCurScenario;
+                    }
+
+                    BGMInfo.ScenarioBGMEntry scenarioEntry = mScenarioEntries.Find(entry => entry.Entry.Get<int>("ScenarioNo") == 0);
+                    scenarioEntry.Entry.Set(n.Tag.ToString(), n.Text);
+                }
+            }
+            else
+            {
+                mScenarios[mCurScenario].mEntry.Set(n.Tag.ToString(), n.Text);
+            }
+        }
+
+        private void ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!mIsInitialized)
+                return;
+
+            ComboBox n = sender as ComboBox;
+
             if (tabControl2.SelectedTab.Text == "BGM")
             {
                 if (tabControl1.SelectedTab.Text == "Stage")

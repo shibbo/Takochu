@@ -33,6 +33,8 @@
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.layerMasksBox = new System.Windows.Forms.GroupBox();
+            this.powerStarTypeComboBox = new System.Windows.Forms.ComboBox();
+            this.galaxyInfoTexture = new System.Windows.Forms.PictureBox();
             this.layerO = new System.Windows.Forms.CheckBox();
             this.layerN = new System.Windows.Forms.CheckBox();
             this.layerM = new System.Windows.Forms.CheckBox();
@@ -51,11 +53,10 @@
             this.layerA = new System.Windows.Forms.CheckBox();
             this.zoneListsBox = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cometTypeComboBox = new System.Windows.Forms.ComboBox();
             this.cometTimer = new System.Windows.Forms.NumericUpDown();
             this.label19 = new System.Windows.Forms.Label();
-            this.cometTypeTxt = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
-            this.powerStarTypeTxt = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.appearPowerStarTxt = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
@@ -97,10 +98,10 @@
             this.label11 = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.saveScenarioBtn = new System.Windows.Forms.ToolStripButton();
-            this.galaxyInfoTexture = new System.Windows.Forms.PictureBox();
             this.tabControl2.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.layerMasksBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.galaxyInfoTexture)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cometTimer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.powerStarID)).BeginInit();
@@ -117,7 +118,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.scenarioBGMStartFrame)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.scenarioBGMStartType)).BeginInit();
             this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.galaxyInfoTexture)).BeginInit();
             this.SuspendLayout();
             // 
             // scenarioListTreeView
@@ -184,6 +184,25 @@
             this.layerMasksBox.TabIndex = 1;
             this.layerMasksBox.TabStop = false;
             this.layerMasksBox.Text = "Layer Masks";
+            // 
+            // powerStarTypeComboBox
+            // 
+            this.powerStarTypeComboBox.FormattingEnabled = true;
+            this.powerStarTypeComboBox.Location = new System.Drawing.Point(121, 91);
+            this.powerStarTypeComboBox.Name = "powerStarTypeComboBox";
+            this.powerStarTypeComboBox.Size = new System.Drawing.Size(693, 21);
+            this.powerStarTypeComboBox.TabIndex = 17;
+            this.powerStarTypeComboBox.Tag = "PowerStarType";
+            this.powerStarTypeComboBox.SelectedIndexChanged += new System.EventHandler(this.ComboBox_SelectedIndexChanged);
+            this.powerStarTypeComboBox.TextChanged += new System.EventHandler(this.ComboBox_SelectedIndexChanged);
+            // 
+            // galaxyInfoTexture
+            // 
+            this.galaxyInfoTexture.Location = new System.Drawing.Point(552, 19);
+            this.galaxyInfoTexture.Name = "galaxyInfoTexture";
+            this.galaxyInfoTexture.Size = new System.Drawing.Size(256, 72);
+            this.galaxyInfoTexture.TabIndex = 5;
+            this.galaxyInfoTexture.TabStop = false;
             // 
             // layerO
             // 
@@ -390,11 +409,11 @@
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.powerStarTypeComboBox);
+            this.groupBox2.Controls.Add(this.cometTypeComboBox);
             this.groupBox2.Controls.Add(this.cometTimer);
             this.groupBox2.Controls.Add(this.label19);
-            this.groupBox2.Controls.Add(this.cometTypeTxt);
             this.groupBox2.Controls.Add(this.label18);
-            this.groupBox2.Controls.Add(this.powerStarTypeTxt);
             this.groupBox2.Controls.Add(this.label17);
             this.groupBox2.Controls.Add(this.appearPowerStarTxt);
             this.groupBox2.Controls.Add(this.label16);
@@ -408,6 +427,17 @@
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Scenario Information";
+            // 
+            // cometTypeComboBox
+            // 
+            this.cometTypeComboBox.FormattingEnabled = true;
+            this.cometTypeComboBox.Location = new System.Drawing.Point(121, 117);
+            this.cometTypeComboBox.Name = "cometTypeComboBox";
+            this.cometTypeComboBox.Size = new System.Drawing.Size(693, 21);
+            this.cometTypeComboBox.TabIndex = 17;
+            this.cometTypeComboBox.Tag = "Comet";
+            this.cometTypeComboBox.SelectedIndexChanged += new System.EventHandler(this.ComboBox_SelectedIndexChanged);
+            this.cometTypeComboBox.TextChanged += new System.EventHandler(this.ComboBox_SelectedIndexChanged);
             // 
             // cometTimer
             // 
@@ -432,15 +462,6 @@
             this.label19.TabIndex = 10;
             this.label19.Text = "Comet Timer:";
             // 
-            // cometTypeTxt
-            // 
-            this.cometTypeTxt.Location = new System.Drawing.Point(121, 119);
-            this.cometTypeTxt.Name = "cometTypeTxt";
-            this.cometTypeTxt.Size = new System.Drawing.Size(693, 20);
-            this.cometTypeTxt.TabIndex = 9;
-            this.cometTypeTxt.Tag = "Comet";
-            this.cometTypeTxt.TextChanged += new System.EventHandler(this.TextBox_ValueChanged);
-            // 
             // label18
             // 
             this.label18.AutoSize = true;
@@ -449,15 +470,6 @@
             this.label18.Size = new System.Drawing.Size(67, 13);
             this.label18.TabIndex = 8;
             this.label18.Text = "Comet Type:";
-            // 
-            // powerStarTypeTxt
-            // 
-            this.powerStarTypeTxt.Location = new System.Drawing.Point(121, 91);
-            this.powerStarTypeTxt.Name = "powerStarTypeTxt";
-            this.powerStarTypeTxt.Size = new System.Drawing.Size(693, 20);
-            this.powerStarTypeTxt.TabIndex = 7;
-            this.powerStarTypeTxt.Tag = "PowerStarType";
-            this.powerStarTypeTxt.TextChanged += new System.EventHandler(this.TextBox_ValueChanged);
             // 
             // label17
             // 
@@ -533,7 +545,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(845, 420);
+            this.tabPage3.Size = new System.Drawing.Size(845, 430);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "BGM";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -546,7 +558,7 @@
             this.tabControl1.Location = new System.Drawing.Point(3, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(839, 414);
+            this.tabControl1.Size = new System.Drawing.Size(839, 424);
             this.tabControl1.TabIndex = 2;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -556,7 +568,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(831, 388);
+            this.tabPage1.Size = new System.Drawing.Size(831, 398);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Stage";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -586,7 +598,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(825, 382);
+            this.groupBox1.Size = new System.Drawing.Size(825, 392);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Tag = "0";
@@ -809,7 +821,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(831, 388);
+            this.tabPage2.Size = new System.Drawing.Size(831, 398);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Tag = "1";
             this.tabPage2.Text = "Scenario";
@@ -900,14 +912,6 @@
             this.saveScenarioBtn.Text = "Save";
             this.saveScenarioBtn.Click += new System.EventHandler(this.saveScenarioBtn_Click);
             // 
-            // galaxyInfoTexture
-            // 
-            this.galaxyInfoTexture.Location = new System.Drawing.Point(552, 19);
-            this.galaxyInfoTexture.Name = "galaxyInfoTexture";
-            this.galaxyInfoTexture.Size = new System.Drawing.Size(256, 72);
-            this.galaxyInfoTexture.TabIndex = 5;
-            this.galaxyInfoTexture.TabStop = false;
-            // 
             // StageInfoEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -922,6 +926,7 @@
             this.tabPage4.ResumeLayout(false);
             this.layerMasksBox.ResumeLayout(false);
             this.layerMasksBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.galaxyInfoTexture)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cometTimer)).EndInit();
@@ -942,7 +947,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.scenarioBGMStartType)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.galaxyInfoTexture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -992,7 +996,6 @@
         private System.Windows.Forms.NumericUpDown powerStarID;
         private System.Windows.Forms.TextBox appearPowerStarTxt;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.TextBox powerStarTypeTxt;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.GroupBox layerMasksBox;
         private System.Windows.Forms.CheckBox layerO;
@@ -1014,10 +1017,11 @@
         private System.Windows.Forms.ComboBox zoneListsBox;
         private System.Windows.Forms.NumericUpDown cometTimer;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.TextBox cometTypeTxt;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton saveScenarioBtn;
         private System.Windows.Forms.PictureBox galaxyInfoTexture;
+        private System.Windows.Forms.ComboBox cometTypeComboBox;
+        private System.Windows.Forms.ComboBox powerStarTypeComboBox;
     }
 }

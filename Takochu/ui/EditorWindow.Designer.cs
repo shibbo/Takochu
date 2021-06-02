@@ -58,12 +58,12 @@
             this.galaxyNameTxtBox = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.scenarioNameTxtBox = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.saveNameHolderBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.saveGalaxyBtn = new System.Windows.Forms.ToolStripButton();
             this.closeEditorBtn = new System.Windows.Forms.ToolStripButton();
-            this.galaxyViewControl = new GL_EditorFramework.GL_Core.GL_ControlModern();
             this.SettingsBtn = new System.Windows.Forms.ToolStripButton();
+            this.galaxyViewControl = new GL_EditorFramework.GL_Core.GL_ControlModern();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
@@ -80,7 +80,7 @@
             this.scenarioTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.scenarioTreeView.Location = new System.Drawing.Point(0, 0);
             this.scenarioTreeView.Name = "scenarioTreeView";
-            this.scenarioTreeView.Size = new System.Drawing.Size(342, 776);
+            this.scenarioTreeView.Size = new System.Drawing.Size(342, 808);
             this.scenarioTreeView.TabIndex = 2;
             this.scenarioTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.scenarioTreeView_AfterSelect);
             this.scenarioTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.scenarioTreeView_NodeMouseClick);
@@ -97,7 +97,7 @@
             this.tabControl1.Location = new System.Drawing.Point(2, 29);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(350, 802);
+            this.tabControl1.Size = new System.Drawing.Size(350, 834);
             this.tabControl1.TabIndex = 6;
             // 
             // tabPage4
@@ -105,7 +105,7 @@
             this.tabPage4.Controls.Add(this.scenarioTreeView);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(342, 776);
+            this.tabPage4.Size = new System.Drawing.Size(342, 808);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Scenario";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -116,7 +116,7 @@
             this.tabPage5.Controls.Add(this.zonesListView);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(342, 776);
+            this.tabPage5.Size = new System.Drawing.Size(342, 808);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Zones";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -150,7 +150,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(342, 776);
+            this.tabPage1.Size = new System.Drawing.Size(342, 808);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Objects";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -200,7 +200,7 @@
             this.sceneListView.Location = new System.Drawing.Point(0, 27);
             this.sceneListView.Name = "sceneListView";
             this.sceneListView.RootLists = ((System.Collections.Generic.Dictionary<string, System.Collections.IList>)(resources.GetObject("sceneListView.RootLists")));
-            this.sceneListView.Size = new System.Drawing.Size(342, 602);
+            this.sceneListView.Size = new System.Drawing.Size(342, 379);
             this.sceneListView.TabIndex = 4;
             this.sceneListView.ItemClicked += new GL_EditorFramework.ItemClickedEventHandler(this.sceneListView_ItemClicked);
             // 
@@ -210,9 +210,9 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.objUIControl.BackColor = System.Drawing.SystemColors.Control;
             this.objUIControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.objUIControl.Location = new System.Drawing.Point(3, 638);
+            this.objUIControl.Location = new System.Drawing.Point(3, 412);
             this.objUIControl.Name = "objUIControl";
-            this.objUIControl.Size = new System.Drawing.Size(339, 138);
+            this.objUIControl.Size = new System.Drawing.Size(339, 396);
             this.objUIControl.TabIndex = 5;
             // 
             // tabPage2
@@ -222,7 +222,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(342, 776);
+            this.tabPage2.Size = new System.Drawing.Size(342, 808);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Cameras";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -233,9 +233,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cameraUIControl.BackColor = System.Drawing.SystemColors.Control;
-            this.cameraUIControl.Location = new System.Drawing.Point(0, 533);
+            this.cameraUIControl.Location = new System.Drawing.Point(0, 385);
             this.cameraUIControl.Name = "cameraUIControl";
-            this.cameraUIControl.Size = new System.Drawing.Size(342, 243);
+            this.cameraUIControl.Size = new System.Drawing.Size(342, 420);
             this.cameraUIControl.TabIndex = 5;
             // 
             // cameraListView
@@ -245,7 +245,7 @@
             this.cameraListView.Location = new System.Drawing.Point(0, 0);
             this.cameraListView.Name = "cameraListView";
             this.cameraListView.RootLists = ((System.Collections.Generic.Dictionary<string, System.Collections.IList>)(resources.GetObject("cameraListView.RootLists")));
-            this.cameraListView.Size = new System.Drawing.Size(342, 527);
+            this.cameraListView.Size = new System.Drawing.Size(342, 379);
             this.cameraListView.TabIndex = 4;
             // 
             // tabPage3
@@ -254,7 +254,7 @@
             this.tabPage3.Controls.Add(this.lightsSceneListView);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(342, 776);
+            this.tabPage3.Size = new System.Drawing.Size(342, 808);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Light";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -294,7 +294,7 @@
             this.galaxyNameTxtBox,
             this.toolStripLabel2,
             this.scenarioNameTxtBox,
-            this.toolStripButton3});
+            this.saveNameHolderBtn});
             this.toolStrip1.Location = new System.Drawing.Point(358, 1);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1206, 25);
@@ -368,14 +368,14 @@
             this.scenarioNameTxtBox.Name = "scenarioNameTxtBox";
             this.scenarioNameTxtBox.Size = new System.Drawing.Size(300, 25);
             // 
-            // toolStripButton3
+            // saveNameHolderBtn
             // 
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(42, 22);
-            this.toolStripButton3.Text = "Apply";
+            this.saveNameHolderBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.saveNameHolderBtn.Image = ((System.Drawing.Image)(resources.GetObject("saveNameHolderBtn.Image")));
+            this.saveNameHolderBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.saveNameHolderBtn.Name = "saveNameHolderBtn";
+            this.saveNameHolderBtn.Size = new System.Drawing.Size(42, 22);
+            this.saveNameHolderBtn.Text = "Apply";
             // 
             // toolStrip2
             // 
@@ -387,7 +387,7 @@
             this.SettingsBtn});
             this.toolStrip2.Location = new System.Drawing.Point(6, 1);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(162, 25);
+            this.toolStrip2.Size = new System.Drawing.Size(131, 25);
             this.toolStrip2.TabIndex = 8;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -411,6 +411,16 @@
             this.closeEditorBtn.Text = "Close";
             this.closeEditorBtn.Click += new System.EventHandler(this.closeEditorBtn_Click);
             // 
+            // SettingsBtn
+            // 
+            this.SettingsBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.SettingsBtn.Image = ((System.Drawing.Image)(resources.GetObject("SettingsBtn.Image")));
+            this.SettingsBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.SettingsBtn.Name = "SettingsBtn";
+            this.SettingsBtn.Size = new System.Drawing.Size(53, 22);
+            this.SettingsBtn.Text = "Settings";
+            this.SettingsBtn.Click += new System.EventHandler(this.SettingsBtn_Click);
+            // 
             // galaxyViewControl
             // 
             this.galaxyViewControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -427,7 +437,7 @@
             this.galaxyViewControl.Name = "galaxyViewControl";
             this.galaxyViewControl.NormPickingDepth = 0F;
             this.galaxyViewControl.ShowOrientationCube = true;
-            this.galaxyViewControl.Size = new System.Drawing.Size(1148, 798);
+            this.galaxyViewControl.Size = new System.Drawing.Size(1148, 830);
             this.galaxyViewControl.Stereoscopy = GL_EditorFramework.GL_Core.GL_ControlBase.StereoscopyType.DISABLED;
             this.galaxyViewControl.TabIndex = 0;
             this.galaxyViewControl.VSync = false;
@@ -435,21 +445,11 @@
             this.galaxyViewControl.ZNear = 0.32F;
             this.galaxyViewControl.Load += new System.EventHandler(this.galaxyViewControl_Load);
             // 
-            // SettingsBtn
-            // 
-            this.SettingsBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.SettingsBtn.Image = ((System.Drawing.Image)(resources.GetObject("SettingsBtn.Image")));
-            this.SettingsBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.SettingsBtn.Name = "SettingsBtn";
-            this.SettingsBtn.Size = new System.Drawing.Size(53, 22);
-            this.SettingsBtn.Text = "Settings";
-            this.SettingsBtn.Click += new System.EventHandler(this.SettingsBtn_Click);
-            // 
             // EditorWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1518, 831);
+            this.ClientSize = new System.Drawing.Size(1518, 863);
             this.Controls.Add(this.toolStrip2);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.tabControl1);
@@ -495,7 +495,7 @@
         private System.Windows.Forms.ToolStripTextBox galaxyNameTxtBox;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripTextBox scenarioNameTxtBox;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.ToolStripButton saveNameHolderBtn;
         private System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.ToolStripButton saveGalaxyBtn;
         private System.Windows.Forms.ToolStripButton closeEditorBtn;
