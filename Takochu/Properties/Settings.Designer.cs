@@ -81,5 +81,17 @@ namespace Takochu.Properties {
                 this["IsBleedingEdge"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UseInternalNames {
+            get {
+                return ((bool)(this["UseInternalNames"]));
+            }
+            set {
+                this["UseInternalNames"] = value;
+            }
+        }
     }
 }

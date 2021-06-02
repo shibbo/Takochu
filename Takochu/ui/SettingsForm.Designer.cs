@@ -42,6 +42,7 @@ namespace Takochu.ui
             this.label2 = new System.Windows.Forms.Label();
             this.LanguageComboBox = new System.Windows.Forms.ComboBox();
             this.tryUpdateBtn = new System.Windows.Forms.Button();
+            this.useInternalNames = new System.Windows.Forms.CheckBox();
             this.DBGroupBox.SuspendLayout();
             this.editorGroupBox.SuspendLayout();
             this.miscGroupBox.SuspendLayout();
@@ -61,12 +62,12 @@ namespace Takochu.ui
             this.GamePathTextBox.Location = new System.Drawing.Point(102, 17);
             this.GamePathTextBox.Name = "GamePathTextBox";
             this.GamePathTextBox.ReadOnly = true;
-            this.GamePathTextBox.Size = new System.Drawing.Size(351, 20);
+            this.GamePathTextBox.Size = new System.Drawing.Size(372, 20);
             this.GamePathTextBox.TabIndex = 1;
             // 
             // updateGamePathBtn
             // 
-            this.updateGamePathBtn.Location = new System.Drawing.Point(459, 17);
+            this.updateGamePathBtn.Location = new System.Drawing.Point(480, 17);
             this.updateGamePathBtn.Name = "updateGamePathBtn";
             this.updateGamePathBtn.Size = new System.Drawing.Size(31, 20);
             this.updateGamePathBtn.TabIndex = 2;
@@ -81,7 +82,7 @@ namespace Takochu.ui
             this.DBGroupBox.Controls.Add(this.RegenDBBtn);
             this.DBGroupBox.Location = new System.Drawing.Point(15, 46);
             this.DBGroupBox.Name = "DBGroupBox";
-            this.DBGroupBox.Size = new System.Drawing.Size(475, 49);
+            this.DBGroupBox.Size = new System.Drawing.Size(498, 49);
             this.DBGroupBox.TabIndex = 3;
             this.DBGroupBox.TabStop = false;
             this.DBGroupBox.Text = "Object Database";
@@ -110,7 +111,7 @@ namespace Takochu.ui
             this.editorGroupBox.Controls.Add(this.ShowArgs);
             this.editorGroupBox.Location = new System.Drawing.Point(15, 101);
             this.editorGroupBox.Name = "editorGroupBox";
-            this.editorGroupBox.Size = new System.Drawing.Size(475, 43);
+            this.editorGroupBox.Size = new System.Drawing.Size(498, 43);
             this.editorGroupBox.TabIndex = 4;
             this.editorGroupBox.TabStop = false;
             this.editorGroupBox.Text = "Editor";
@@ -128,12 +129,13 @@ namespace Takochu.ui
             // 
             // miscGroupBox
             // 
+            this.miscGroupBox.Controls.Add(this.useInternalNames);
             this.miscGroupBox.Controls.Add(this.useDevCheckBox);
             this.miscGroupBox.Controls.Add(this.label2);
             this.miscGroupBox.Controls.Add(this.LanguageComboBox);
             this.miscGroupBox.Location = new System.Drawing.Point(15, 150);
             this.miscGroupBox.Name = "miscGroupBox";
-            this.miscGroupBox.Size = new System.Drawing.Size(475, 57);
+            this.miscGroupBox.Size = new System.Drawing.Size(498, 57);
             this.miscGroupBox.TabIndex = 5;
             this.miscGroupBox.TabStop = false;
             this.miscGroupBox.Text = "Miscellaneous";
@@ -141,7 +143,7 @@ namespace Takochu.ui
             // useDevCheckBox
             // 
             this.useDevCheckBox.AutoSize = true;
-            this.useDevCheckBox.Location = new System.Drawing.Point(335, 24);
+            this.useDevCheckBox.Location = new System.Drawing.Point(362, 27);
             this.useDevCheckBox.Name = "useDevCheckBox";
             this.useDevCheckBox.Size = new System.Drawing.Size(134, 17);
             this.useDevCheckBox.TabIndex = 2;
@@ -177,11 +179,22 @@ namespace Takochu.ui
             this.tryUpdateBtn.UseVisualStyleBackColor = true;
             this.tryUpdateBtn.Click += new System.EventHandler(this.tryUpdateBtn_Click);
             // 
+            // useInternalNames
+            // 
+            this.useInternalNames.AutoSize = true;
+            this.useInternalNames.Location = new System.Drawing.Point(202, 27);
+            this.useInternalNames.Name = "useInternalNames";
+            this.useInternalNames.Size = new System.Drawing.Size(154, 17);
+            this.useInternalNames.TabIndex = 3;
+            this.useInternalNames.Text = "Use Internal Galaxy Names";
+            this.useInternalNames.UseVisualStyleBackColor = true;
+            this.useInternalNames.CheckedChanged += new System.EventHandler(this.useInternalNames_CheckedChanged);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(504, 253);
+            this.ClientSize = new System.Drawing.Size(550, 253);
             this.Controls.Add(this.tryUpdateBtn);
             this.Controls.Add(this.miscGroupBox);
             this.Controls.Add(this.editorGroupBox);
@@ -219,5 +232,6 @@ namespace Takochu.ui
         private System.Windows.Forms.ComboBox LanguageComboBox;
         private System.Windows.Forms.Button tryUpdateBtn;
         private System.Windows.Forms.CheckBox useDevCheckBox;
+        private System.Windows.Forms.CheckBox useInternalNames;
     }
 }
