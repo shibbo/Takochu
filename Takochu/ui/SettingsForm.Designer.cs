@@ -184,9 +184,9 @@ namespace Takochu.ui
             this.useInternalNames.AutoSize = true;
             this.useInternalNames.Location = new System.Drawing.Point(202, 27);
             this.useInternalNames.Name = "useInternalNames";
-            this.useInternalNames.Size = new System.Drawing.Size(154, 17);
+            this.useInternalNames.Size = new System.Drawing.Size(119, 17);
             this.useInternalNames.TabIndex = 3;
-            this.useInternalNames.Text = "Use Internal Galaxy Names";
+            this.useInternalNames.Text = "Use Internal Names";
             this.useInternalNames.UseVisualStyleBackColor = true;
             this.useInternalNames.CheckedChanged += new System.EventHandler(this.useInternalNames_CheckedChanged);
             // 

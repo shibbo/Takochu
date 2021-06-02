@@ -17,6 +17,8 @@ namespace Takochu.ui
     public partial class StageInfoEditor : Form
     {
         public static string[] cCometTypes = { "None", "Speedrun", "Purple Coins", "Daredevil", "Cosmic Clones", "Romp", "Double Time" };
+        public static string[] cInternalCometNames = { "Red", "Purple", "Dark", "Mimic", "Romp", "Quick" };
+
         public static string[] cStarTypes = { "Normal", "Hidden", "Grand", "Green" };
 
         public StageInfoEditor(ref Galaxy galaxy, int scenarioNo)
@@ -40,9 +42,6 @@ namespace Takochu.ui
             foreach (KeyValuePair<int, Scenario> scenarios in mGalaxy.mScenarios)
             {
                 Scenario s = scenarios.Value;
-
-               // if (s.mPowerStarType == "Green")
-                   // continue;
 
                 if (!mScenarioEntries.Any(e => e.ScenarioNo == s.mScenarioNo))
                     mBGMRestrictedIDs.Add(s.mScenarioNo);
@@ -71,7 +70,11 @@ namespace Takochu.ui
             if (scenarioNo != 0 && idx < scenarioListTreeView.Nodes.Count)
                 scenarioListTreeView.SelectedNode = scenarioListTreeView.Nodes[idx];
 
-            cometTypeComboBox.Items.AddRange(cCometTypes);
+            if (Convert.ToBoolean(SettingsUtil.GetSetting("InternalNames")))
+                cometTypeComboBox.Items.AddRange(cInternalCometNames);
+            else
+                cometTypeComboBox.Items.AddRange(cCometTypes);
+
             powerStarTypeComboBox.Items.AddRange(cStarTypes);
 
             changeBgmIdName_0.Text = mInfoEntry.Entry.Get<string>("ChangeBgmIdName0");
@@ -141,7 +144,12 @@ namespace Takochu.ui
                 powerStarID.Value = scenario.mEntry.Get<int>("PowerStarId");
                 appearPowerStarTxt.Text = scenario.mEntry.Get<string>("AppearPowerStarObj");
                 powerStarTypeComboBox.Text = scenario.mEntry.Get<string>("PowerStarType");
-                cometTypeComboBox.Text = CometNameConverter(scenario.mEntry.Get<string>("Comet"), true);     
+
+                if (Convert.ToBoolean(SettingsUtil.GetSetting("InternalNames")))
+                    cometTypeComboBox.Text = scenario.mEntry.Get<string>("Comet");     
+                else
+                    cometTypeComboBox.Text = CometNameConverter(scenario.mEntry.Get<string>("Comet"), true);
+
                 cometTimer.Value = scenario.mEntry.Get<int>("CometLimitTimer");
 
                 mIsInitialized = true;
@@ -421,7 +429,10 @@ namespace Takochu.ui
         {
             string cometType = CometNameConverter(cometTypeComboBox.Text, false);
 
-            mScenarios[mCurScenario].mEntry.Set("Comet", cometType);
+            if (Convert.ToBoolean(SettingsUtil.GetSetting("InternalNames")))
+                mScenarios[mCurScenario].mEntry.Set("Comet", cometTypeComboBox.Text);
+            else
+                mScenarios[mCurScenario].mEntry.Set("Comet", cometType);
         }
     }
 }
