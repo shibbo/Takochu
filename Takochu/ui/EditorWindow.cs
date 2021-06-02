@@ -419,7 +419,6 @@ namespace Takochu.ui
         {
             if (e.Lists.Contains(sceneListView.CurrentList))
             {
-                sceneListView.UpdateAutoScrollHeight();
                 sceneListView.Refresh();
             }
         }
