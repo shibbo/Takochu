@@ -38,11 +38,12 @@ namespace Takochu.ui
             this.editorGroupBox = new System.Windows.Forms.GroupBox();
             this.ShowArgs = new System.Windows.Forms.CheckBox();
             this.miscGroupBox = new System.Windows.Forms.GroupBox();
+            this.useInternalNames = new System.Windows.Forms.CheckBox();
             this.useDevCheckBox = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.LanguageComboBox = new System.Windows.Forms.ComboBox();
             this.tryUpdateBtn = new System.Windows.Forms.Button();
-            this.useInternalNames = new System.Windows.Forms.CheckBox();
+            this.BuildLabel = new System.Windows.Forms.Label();
             this.DBGroupBox.SuspendLayout();
             this.editorGroupBox.SuspendLayout();
             this.miscGroupBox.SuspendLayout();
@@ -140,6 +141,17 @@ namespace Takochu.ui
             this.miscGroupBox.TabStop = false;
             this.miscGroupBox.Text = "Miscellaneous";
             // 
+            // useInternalNames
+            // 
+            this.useInternalNames.AutoSize = true;
+            this.useInternalNames.Location = new System.Drawing.Point(202, 27);
+            this.useInternalNames.Name = "useInternalNames";
+            this.useInternalNames.Size = new System.Drawing.Size(119, 17);
+            this.useInternalNames.TabIndex = 3;
+            this.useInternalNames.Text = "Use Internal Names";
+            this.useInternalNames.UseVisualStyleBackColor = true;
+            this.useInternalNames.CheckedChanged += new System.EventHandler(this.useInternalNames_CheckedChanged);
+            // 
             // useDevCheckBox
             // 
             this.useDevCheckBox.AutoSize = true;
@@ -171,7 +183,7 @@ namespace Takochu.ui
             // 
             // tryUpdateBtn
             // 
-            this.tryUpdateBtn.Location = new System.Drawing.Point(15, 218);
+            this.tryUpdateBtn.Location = new System.Drawing.Point(405, 218);
             this.tryUpdateBtn.Name = "tryUpdateBtn";
             this.tryUpdateBtn.Size = new System.Drawing.Size(108, 23);
             this.tryUpdateBtn.TabIndex = 2;
@@ -179,22 +191,21 @@ namespace Takochu.ui
             this.tryUpdateBtn.UseVisualStyleBackColor = true;
             this.tryUpdateBtn.Click += new System.EventHandler(this.tryUpdateBtn_Click);
             // 
-            // useInternalNames
+            // BuildLabel
             // 
-            this.useInternalNames.AutoSize = true;
-            this.useInternalNames.Location = new System.Drawing.Point(202, 27);
-            this.useInternalNames.Name = "useInternalNames";
-            this.useInternalNames.Size = new System.Drawing.Size(119, 17);
-            this.useInternalNames.TabIndex = 3;
-            this.useInternalNames.Text = "Use Internal Names";
-            this.useInternalNames.UseVisualStyleBackColor = true;
-            this.useInternalNames.CheckedChanged += new System.EventHandler(this.useInternalNames_CheckedChanged);
+            this.BuildLabel.AutoSize = true;
+            this.BuildLabel.Location = new System.Drawing.Point(28, 223);
+            this.BuildLabel.Name = "BuildLabel";
+            this.BuildLabel.Size = new System.Drawing.Size(134, 13);
+            this.BuildLabel.TabIndex = 6;
+            this.BuildLabel.Text = "Takochu was last built on: ";
             // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(550, 253);
+            this.Controls.Add(this.BuildLabel);
             this.Controls.Add(this.tryUpdateBtn);
             this.Controls.Add(this.miscGroupBox);
             this.Controls.Add(this.editorGroupBox);
@@ -233,5 +244,6 @@ namespace Takochu.ui
         private System.Windows.Forms.Button tryUpdateBtn;
         private System.Windows.Forms.CheckBox useDevCheckBox;
         private System.Windows.Forms.CheckBox useInternalNames;
+        private System.Windows.Forms.Label BuildLabel;
     }
 }

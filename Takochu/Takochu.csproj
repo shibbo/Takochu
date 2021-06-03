@@ -121,6 +121,12 @@
     <Compile Include="ui\LightAttribEditor.Designer.cs">
       <DependentUpon>LightAttribEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="ui\RepoOwnerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\RepoOwnerForm.Designer.cs">
+      <DependentUpon>RepoOwnerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ui\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -202,6 +208,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ui\MessageEditor.resx">
       <DependentUpon>MessageEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\RepoOwnerForm.resx">
+      <DependentUpon>RepoOwnerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ui\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
