@@ -16,6 +16,8 @@ namespace Takochu.ui
 {
     public partial class SettingsForm : Form
     {
+        internal static string User = "shibbo";
+
         public SettingsForm()
         {
             InitializeComponent();
@@ -32,6 +34,8 @@ namespace Takochu.ui
             {
                 LanguageComboBox.Items.Add(langs);
             }
+
+            BuildLabel.Text += Updater.CompileDate;
         }
 
         private void updateGamePathBtn_Click(object sender, EventArgs e)
@@ -70,14 +74,14 @@ namespace Takochu.ui
 
         private void tryUpdateBtn_Click(object sender, EventArgs e)
         {
-            Updater.Update(Convert.ToBoolean(SettingsUtil.GetSetting("Dev")));
+            var RoF = new RepoOwnerForm();
+            RoF.ShowDialog();
         }
 
         private void useDevCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             SettingsUtil.SetSetting("Dev", useDevCheckBox.Checked);
         }
-
         private void useInternalNames_CheckedChanged(object sender, EventArgs e)
         {
             // Luma48 was here
