@@ -19,7 +19,7 @@ namespace Takochu.ui
         public static string[] cCometTypes = { "None", "Speedrun", "Purple Coins", "Daredevil", "Cosmic Clones", "Romp", "Double Time" };
         public static string[] cInternalCometNames = { "Red", "Purple", "Dark", "Mimic", "Romp", "Quick" };
 
-        public static string[] cStarTypes = { "Normal", "Hidden", "Grand", "Green" };
+        public static string[] cStarTypes = { "Normal", "Hidden", "Green" };
 
         public StageInfoEditor(ref Galaxy galaxy, int scenarioNo)
         {

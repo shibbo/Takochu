@@ -213,6 +213,7 @@ namespace Takochu.ui
             this.Controls.Add(this.updateGamePathBtn);
             this.Controls.Add(this.GamePathTextBox);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SettingsForm";
