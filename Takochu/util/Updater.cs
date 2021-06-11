@@ -11,9 +11,9 @@ namespace Takochu.util
 {
     public class Updater
     {
-        internal static string CompileDate = new FileInfo(Assembly.GetExecutingAssembly().Location).LastWriteTime.ToString();
+        internal static DateTime CompileDate = new FileInfo(Assembly.GetExecutingAssembly().Location).LastWriteTime;
 
-        static string ExeDir = new FileInfo(Assembly.GetExecutingAssembly().Location).Directory.FullName;
+        static readonly string ExeDir = new FileInfo(Assembly.GetExecutingAssembly().Location).Directory.FullName;
 
         static List<Release> Releases = new List<Release>();
 
@@ -107,9 +107,9 @@ namespace Takochu.util
             }
         }
 
-        internal static void GetCommits(this GitHubClient client, string time, ref DateTimeOffset offset, ref List<GitHubCommit> commits, string user = "shibbo", string repo = "Takochu")
+        internal static void GetCommits(this GitHubClient client, in DateTime time, ref DateTimeOffset offset, ref List<GitHubCommit> commits, string user = "shibbo", string repo = "Takochu")
         {
-            var IsValid = DateTimeOffset.TryParse(time, out offset);
+            var IsValid = DateTimeOffset.TryParse(time.ToString(), out offset);
 
             foreach (var c in client.Repository.Commit.GetAll(user,repo).GetAwaiter().GetResult())
             {
