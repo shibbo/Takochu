@@ -28,6 +28,7 @@ namespace Takochu
         }
 
         public static Translator sTranslator;
+        public static string lang;
         public static Game sGame;
     }
 }

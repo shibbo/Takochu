@@ -31,7 +31,10 @@ namespace Takochu.smg.img
 
         public static Bitmap GetImage(string stage)
         {
-            return mImages[stage].GetImg();
+            if (mImages.ContainsKey(stage))
+                return mImages[stage].GetImg();
+            else
+                return null;
         }
 
         private static Dictionary<string, BTI> mImages;

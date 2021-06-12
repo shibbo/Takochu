@@ -45,5 +45,53 @@ namespace Takochu.Properties {
                 this["BCSVPaths"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("English")]
+        public string Translation {
+            get {
+                return ((string)(this["Translation"]));
+            }
+            set {
+                this["Translation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowArgs {
+            get {
+                return ((bool)(this["ShowArgs"]));
+            }
+            set {
+                this["ShowArgs"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsBleedingEdge {
+            get {
+                return ((bool)(this["IsBleedingEdge"]));
+            }
+            set {
+                this["IsBleedingEdge"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UseInternalNames {
+            get {
+                return ((bool)(this["UseInternalNames"]));
+            }
+            set {
+                this["UseInternalNames"] = value;
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Takochu.smg;
 using Takochu.smg.obj;
+using Takochu.util;
 using static Takochu.smg.ObjectDB;
 
 namespace Takochu.ui.editor
@@ -57,7 +58,10 @@ namespace Takochu.ui.editor
                     }
                 }
                 else
-                    obj.mObjArgs[i] = (int)control.NumberInput(obj.mObjArgs[i], $"Obj_arg{i}");
+                {
+                    if (Convert.ToBoolean(SettingsUtil.GetSetting("ShowArgs")))
+                        obj.mObjArgs[i] = (int)control.NumberInput(obj.mObjArgs[i], $"Obj_arg{i}");
+                }
             }
         }
 

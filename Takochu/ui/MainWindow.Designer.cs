@@ -33,9 +33,10 @@
             this.selectGameFolderBtn = new System.Windows.Forms.ToolStripButton();
             this.bcsvEditorBtn = new System.Windows.Forms.ToolStripButton();
             this.rarcExplorer_Btn = new System.Windows.Forms.ToolStripButton();
+            this.showMessageEditorBtn = new System.Windows.Forms.ToolStripButton();
             this.galaxyTreeView = new System.Windows.Forms.TreeView();
             this.glControl1 = new OpenTK.GLControl();
-            this.showMessageEditorBtn = new System.Windows.Forms.ToolStripButton();
+            this.SettingsBtn = new System.Windows.Forms.ToolStripButton();
             this.mainToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,7 +47,8 @@
             this.selectGameFolderBtn,
             this.bcsvEditorBtn,
             this.rarcExplorer_Btn,
-            this.showMessageEditorBtn});
+            this.showMessageEditorBtn,
+            this.SettingsBtn});
             this.mainToolStrip.Location = new System.Drawing.Point(0, 0);
             this.mainToolStrip.Name = "mainToolStrip";
             this.mainToolStrip.Size = new System.Drawing.Size(800, 25);
@@ -84,6 +86,16 @@
             this.rarcExplorer_Btn.Text = "RARC Explorer";
             this.rarcExplorer_Btn.Click += new System.EventHandler(this.rarcExplorer_Btn_Click);
             // 
+            // showMessageEditorBtn
+            // 
+            this.showMessageEditorBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.showMessageEditorBtn.Image = ((System.Drawing.Image)(resources.GetObject("showMessageEditorBtn.Image")));
+            this.showMessageEditorBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.showMessageEditorBtn.Name = "showMessageEditorBtn";
+            this.showMessageEditorBtn.Size = new System.Drawing.Size(91, 22);
+            this.showMessageEditorBtn.Text = "Message Editor";
+            this.showMessageEditorBtn.Click += new System.EventHandler(this.showMessageEditorBtn_Click);
+            // 
             // galaxyTreeView
             // 
             this.galaxyTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -102,15 +114,15 @@
             this.glControl1.TabIndex = 2;
             this.glControl1.VSync = false;
             // 
-            // showMessageEditorBtn
+            // SettingsBtn
             // 
-            this.showMessageEditorBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.showMessageEditorBtn.Image = ((System.Drawing.Image)(resources.GetObject("showMessageEditorBtn.Image")));
-            this.showMessageEditorBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.showMessageEditorBtn.Name = "showMessageEditorBtn";
-            this.showMessageEditorBtn.Size = new System.Drawing.Size(91, 22);
-            this.showMessageEditorBtn.Text = "Message Editor";
-            this.showMessageEditorBtn.Click += new System.EventHandler(this.showMessageEditorBtn_Click);
+            this.SettingsBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.SettingsBtn.Image = ((System.Drawing.Image)(resources.GetObject("SettingsBtn.Image")));
+            this.SettingsBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.SettingsBtn.Name = "SettingsBtn";
+            this.SettingsBtn.Size = new System.Drawing.Size(53, 22);
+            this.SettingsBtn.Text = "Settings";
+            this.SettingsBtn.Click += new System.EventHandler(this.SettingsBtn_Click);
             // 
             // MainWindow
             // 
@@ -139,6 +151,7 @@
         private System.Windows.Forms.ToolStripButton rarcExplorer_Btn;
         private OpenTK.GLControl glControl1;
         private System.Windows.Forms.ToolStripButton showMessageEditorBtn;
+        private System.Windows.Forms.ToolStripButton SettingsBtn;
     }
 }
 

@@ -419,7 +419,6 @@ namespace Takochu.ui
         {
             if (e.Lists.Contains(sceneListView.CurrentList))
             {
-                sceneListView.UpdateAutoScrollHeight();
                 sceneListView.Refresh();
             }
         }
@@ -578,6 +577,12 @@ namespace Takochu.ui
         {
             StageInfoEditor stageInfo = new StageInfoEditor(ref mGalaxy, mCurrentScenario);
             stageInfo.Show();
+        }
+
+        private void SettingsBtn_Click(object sender, EventArgs e)
+        {
+            SettingsForm settings = new SettingsForm();
+            settings.Show();
         }
     }
 }
