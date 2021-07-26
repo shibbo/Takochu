@@ -24,9 +24,6 @@ namespace Takochu.util
                 case "Dev":
                     Properties.Settings.Default.IsBleedingEdge = Convert.ToBoolean(value);
                     break;
-                case "InternalNames":
-                    Properties.Settings.Default.UseInternalNames = Convert.ToBoolean(value);
-                    break;
             }
 
             Properties.Settings.Default.Save();
@@ -49,9 +46,6 @@ namespace Takochu.util
                     break;
                 case "Dev":
                     val = Properties.Settings.Default.IsBleedingEdge;
-                    break;
-                case "InternalNames":
-                    val = Properties.Settings.Default.UseInternalNames;
                     break;
             }
 

@@ -38,7 +38,6 @@ namespace Takochu.ui
             this.editorGroupBox = new System.Windows.Forms.GroupBox();
             this.ShowArgs = new System.Windows.Forms.CheckBox();
             this.miscGroupBox = new System.Windows.Forms.GroupBox();
-            this.useInternalNames = new System.Windows.Forms.CheckBox();
             this.useDevCheckBox = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.LanguageComboBox = new System.Windows.Forms.ComboBox();
@@ -130,7 +129,6 @@ namespace Takochu.ui
             // 
             // miscGroupBox
             // 
-            this.miscGroupBox.Controls.Add(this.useInternalNames);
             this.miscGroupBox.Controls.Add(this.useDevCheckBox);
             this.miscGroupBox.Controls.Add(this.label2);
             this.miscGroupBox.Controls.Add(this.LanguageComboBox);
@@ -140,17 +138,6 @@ namespace Takochu.ui
             this.miscGroupBox.TabIndex = 5;
             this.miscGroupBox.TabStop = false;
             this.miscGroupBox.Text = "Miscellaneous";
-            // 
-            // useInternalNames
-            // 
-            this.useInternalNames.AutoSize = true;
-            this.useInternalNames.Location = new System.Drawing.Point(202, 27);
-            this.useInternalNames.Name = "useInternalNames";
-            this.useInternalNames.Size = new System.Drawing.Size(119, 17);
-            this.useInternalNames.TabIndex = 3;
-            this.useInternalNames.Text = "Use Internal Names";
-            this.useInternalNames.UseVisualStyleBackColor = true;
-            this.useInternalNames.CheckedChanged += new System.EventHandler(this.useInternalNames_CheckedChanged);
             // 
             // useDevCheckBox
             // 
@@ -244,7 +231,6 @@ namespace Takochu.ui
         private System.Windows.Forms.ComboBox LanguageComboBox;
         private System.Windows.Forms.Button tryUpdateBtn;
         private System.Windows.Forms.CheckBox useDevCheckBox;
-        private System.Windows.Forms.CheckBox useInternalNames;
         private System.Windows.Forms.Label BuildLabel;
     }
 }

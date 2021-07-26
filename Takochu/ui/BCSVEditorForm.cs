@@ -35,6 +35,8 @@ namespace Takochu.ui
             }
         }
 
+        private DataGridView mDataGrid;
+
         private void OpenBCSV()
         {
             if (mFilesystem != null)
@@ -142,26 +144,26 @@ namespace Takochu.ui
 
 
                 TabPage tab = new TabPage(tag);
-                DataGridView dataGrid = new DataGridView();
-                dataGrid.CellValueChanged += Grid_CellValueChanged;
-                dataGrid.Dock = DockStyle.Fill;
-                tab.Controls.Add(dataGrid);
+                mDataGrid = new DataGridView();
+                mDataGrid.CellValueChanged += Grid_CellValueChanged;
+                mDataGrid.Dock = DockStyle.Fill;
+                tab.Controls.Add(mDataGrid);
                 bcsvEditorsTabControl.TabPages.Add(tab);
-                mEditors.Add(tag, dataGrid);
+                mEditors.Add(tag, mDataGrid);
 
                 saveBCSVBtn.Enabled = true;
                 saveAll_Btn.Enabled = true;
 
-                dataGrid.Rows.Clear();
-                dataGrid.Columns.Clear();
+                mDataGrid.Rows.Clear();
+                mDataGrid.Columns.Clear();
 
                 foreach (BCSV.Field f in file.mFields.Values)
                 {
-                    int columnIdx = dataGrid.Columns.Add(f.mHash.ToString("X8"), f.mName);
+                    int columnIdx = mDataGrid.Columns.Add(f.mHash.ToString("X8"), f.mName);
 
                     // format floating point cells to show the first decimal point
                     if (f.mType == 2)
-                        dataGrid.Columns[columnIdx].DefaultCellStyle.Format = "N1";
+                        mDataGrid.Columns[columnIdx].DefaultCellStyle.Format = "N1";
                 }
 
                 foreach (BCSV.Entry entry in file.mEntries)
@@ -175,7 +177,7 @@ namespace Takochu.ui
                         row[i++] = val;
                     }
 
-                    dataGrid.Rows.Add(row);
+                    mDataGrid.Rows.Add(row);
                 }
 
                 // now we can jump to that page
@@ -434,6 +436,19 @@ namespace Takochu.ui
                 openBCSVBtn.Enabled = true;
             else
                 openBCSVBtn.Enabled = false;
+        }
+
+        private void RemoveEntryBtn_Click(object sender, EventArgs e)
+        {
+            BCSV file = mFiles[bcsvEditorsTabControl.SelectedTab.Text];
+            file.mEntries.RemoveAt(mDataGrid.CurrentCell.RowIndex);
+            mDataGrid.Rows.RemoveAt(mDataGrid.CurrentCell.RowIndex);
+        }
+
+        private void HashGenBtn_Click(object sender, EventArgs e)
+        {
+            HashGenForm hash = new HashGenForm();
+            hash.Show();
         }
     }
 }

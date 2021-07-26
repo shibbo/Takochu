@@ -373,8 +373,8 @@ namespace Takochu.smg
             }
 
             // todo -- why does this zone's MSBT not save right
-            if (mZoneName != "MarioFaceShipZone")
-            {
+            //if (mZoneName != "MarioFaceShipZone")
+            //{ 
                 if (mMessages != null)
                     mMessages.Save();
 
@@ -383,7 +383,7 @@ namespace Takochu.smg
 
                 if (mMessagesFile != null)
                     mMessagesFile.Save();
-            }
+            //}
 
             SaveCameras();
 

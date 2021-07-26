@@ -48,7 +48,7 @@ namespace Takochu.util
 
             foreach (string galaxy in galaxies)
             {
-                if (simpleNames.ContainsKey(galaxy) && !Convert.ToBoolean(SettingsUtil.GetSetting("InternalNames")))
+                if (simpleNames.ContainsKey(galaxy))
                 {
                     TreeNode node = new TreeNode(simpleNames[galaxy]);
                     node.ToolTipText = galaxy;

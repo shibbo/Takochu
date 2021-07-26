@@ -53,6 +53,7 @@ namespace Takochu.ui
         private void RegenDBBtn_Click(object sender, EventArgs e)
         {
             ObjectDB.GenDB();
+            ObjectDB.Load();
             DbInfoLbl.Text = "ObjectDatabase last generated on: " + File.GetLastWriteTime("res/objectdb.xml").ToString();
         }
 
@@ -81,12 +82,6 @@ namespace Takochu.ui
         private void useDevCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             SettingsUtil.SetSetting("Dev", useDevCheckBox.Checked);
-        }
-        private void useInternalNames_CheckedChanged(object sender, EventArgs e)
-        {
-            // Luma48 was here
-            SettingsUtil.SetSetting("InternalNames", useInternalNames.Checked);
-            ProgramUtil.UpdateTranslation();
         }
     }
 }

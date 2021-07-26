@@ -93,6 +93,12 @@
     <Compile Include="ui\editor\GeneralUI.cs" />
     <Compile Include="ui\editor\ParameterUI.cs" />
     <Compile Include="ui\editor\PositionUI.cs" />
+    <Compile Include="ui\HashGenForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\HashGenForm.Designer.cs">
+      <DependentUpon>HashGenForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ui\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -181,6 +187,9 @@
     <Compile Include="util\SettingsUtil.cs" />
     <Compile Include="util\Translator.cs" />
     <Compile Include="util\Updater.cs" />
+    <EmbeddedResource Include="ui\HashGenForm.resx">
+      <DependentUpon>HashGenForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ui\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>

@@ -40,6 +40,8 @@
             this.saveAll_Btn = new System.Windows.Forms.ToolStripButton();
             this.filesystemView = new System.Windows.Forms.TreeView();
             this.bcsvEditorsTabControl = new System.Windows.Forms.TabControl();
+            this.RemoveEntryBtn = new System.Windows.Forms.ToolStripButton();
+            this.HashGenBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,10 +59,12 @@
             this.openExternalBtn,
             this.recentFilesListDropDown,
             this.saveBCSVBtn,
-            this.saveAll_Btn});
+            this.saveAll_Btn,
+            this.RemoveEntryBtn,
+            this.HashGenBtn});
             this.toolStrip1.Location = new System.Drawing.Point(4, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1093, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1077, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -75,7 +79,7 @@
             // 
             this.archiveTextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.archiveTextBox.Name = "archiveTextBox";
-            this.archiveTextBox.Size = new System.Drawing.Size(750, 25);
+            this.archiveTextBox.Size = new System.Drawing.Size(550, 25);
             this.archiveTextBox.Text = "/ObjectData/Kuribo.arc";
             this.archiveTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.archiveTextBox_KeyPress);
             this.archiveTextBox.TextChanged += new System.EventHandler(this.archiveTextBox_TextChanged);
@@ -160,6 +164,26 @@
             this.bcsvEditorsTabControl.Size = new System.Drawing.Size(1128, 123);
             this.bcsvEditorsTabControl.TabIndex = 3;
             // 
+            // RemoveEntryBtn
+            // 
+            this.RemoveEntryBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.RemoveEntryBtn.Image = ((System.Drawing.Image)(resources.GetObject("RemoveEntryBtn.Image")));
+            this.RemoveEntryBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.RemoveEntryBtn.Name = "RemoveEntryBtn";
+            this.RemoveEntryBtn.Size = new System.Drawing.Size(84, 22);
+            this.RemoveEntryBtn.Text = "Remove Entry";
+            this.RemoveEntryBtn.Click += new System.EventHandler(this.RemoveEntryBtn_Click);
+            // 
+            // HashGenBtn
+            // 
+            this.HashGenBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.HashGenBtn.Image = ((System.Drawing.Image)(resources.GetObject("HashGenBtn.Image")));
+            this.HashGenBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.HashGenBtn.Name = "HashGenBtn";
+            this.HashGenBtn.Size = new System.Drawing.Size(93, 22);
+            this.HashGenBtn.Text = "Hash Generator";
+            this.HashGenBtn.Click += new System.EventHandler(this.HashGenBtn_Click);
+            // 
             // BCSVEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -192,5 +216,7 @@
         private System.Windows.Forms.ToolStripButton saveAll_Btn;
         private System.Windows.Forms.ToolStripButton openExternalBtn;
         private System.Windows.Forms.ToolStripDropDownButton recentFilesListDropDown;
+        private System.Windows.Forms.ToolStripButton RemoveEntryBtn;
+        private System.Windows.Forms.ToolStripButton HashGenBtn;
     }
 }
