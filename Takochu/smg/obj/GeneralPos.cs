@@ -1,7 +1,4 @@
-﻿using GL_EditorFramework;
-using GL_EditorFramework.EditorDrawables;
-using GL_EditorFramework.GL_Core;
-using OpenTK;
+﻿using OpenTK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,8 +24,8 @@ namespace Takochu.smg.obj
             mTruePosition = new Vector3(Get<float>("pos_x"), Get<float>("pos_y"), Get<float>("pos_z"));
             mTrueRotation = new Vector3(Get<float>("dir_x"), Get<float>("dir_y"), Get<float>("dir_z"));
 
-            Position = new Vector3(Get<float>("pos_x") / 100, Get<float>("pos_y") / 100, Get<float>("pos_z") / 100);
-            Rotation = new Vector3(Get<float>("dir_x"), Get<float>("dir_y"), Get<float>("dir_z"));
+            mPosition = new Vector3(Get<float>("pos_x") / 100, Get<float>("pos_y") / 100, Get<float>("pos_z") / 100);
+            mRotation = new Vector3(Get<float>("dir_x"), Get<float>("dir_y"), Get<float>("dir_z"));
 
             mPosName = Get<string>("PosName");
             mObjID = Get<short>("Obj_ID");
@@ -48,16 +45,6 @@ namespace Takochu.smg.obj
             mEntry.Set("dir_y", mTrueRotation.Y);
             mEntry.Set("dir_z", mTrueRotation.Z);
             mEntry.Set("Obj_ID", mObjID);
-        }
-
-        public override bool TrySetupObjectUIControl(EditorSceneBase scene, ObjectUIControl objectUIControl)
-        {
-            if (!Selected)
-                return false;
-
-            objectUIControl.AddObjectUIContainer(new GeneralUI(this, scene), "General");
-            objectUIControl.AddObjectUIContainer(new PositionUI(this, scene, false), "Position");
-            return true;
         }
 
         string mPosName;

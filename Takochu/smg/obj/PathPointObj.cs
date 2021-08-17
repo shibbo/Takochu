@@ -1,5 +1,4 @@
-﻿using GL_EditorFramework.EditorDrawables;
-using OpenTK;
+﻿using OpenTK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +8,9 @@ using Takochu.fmt;
 
 namespace Takochu.smg.obj
 {
-    public class PathPointObj : TransformableObject
+    public class PathPointObj
     {
-        public PathPointObj(PathObj parent, BCSV.Entry entry) : base(Vector3.Zero, Vector3.Zero, Vector3.One)
+        public PathPointObj(PathObj parent, BCSV.Entry entry)
         {
             mEntry = entry;
             mParent = parent;

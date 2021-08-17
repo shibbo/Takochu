@@ -1,5 +1,4 @@
-﻿using GL_EditorFramework.EditorDrawables;
-using OpenTK;
+﻿using OpenTK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,9 +72,9 @@ namespace Takochu.smg
         public List<WaterCameraParam> mWaterParams;
         public List<FlagNameTable> mFlagTable;
 
-        public class ShadowParam : SingleObject
+        public class ShadowParam
         {
-            public ShadowParam() : base(Vector3.Zero) { }
+            public ShadowParam() { }
 
             public override string ToString()
             {
@@ -86,9 +85,9 @@ namespace Takochu.smg
             public float FarClipDistance;
         }
 
-        public class WaterCameraParam : SingleObject
+        public class WaterCameraParam
         {
-            public WaterCameraParam() : base(Vector3.Zero) { }
+            public WaterCameraParam() { }
 
             public override string ToString()
             {
@@ -109,9 +108,9 @@ namespace Takochu.smg
             public byte LowA;
         }
 
-        public class FlagNameTable : SingleObject
+        public class FlagNameTable
         {
-            public FlagNameTable() : base(Vector3.Zero) { }
+            public FlagNameTable() { }
 
             public override string ToString()
             {

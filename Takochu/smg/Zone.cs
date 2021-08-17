@@ -1,5 +1,4 @@
-﻿using GL_EditorFramework.EditorDrawables;
-using Microsoft.SqlServer.Server;
+﻿using Microsoft.SqlServer.Server;
 using OpenTK;
 using System;
 using System.Collections.Generic;

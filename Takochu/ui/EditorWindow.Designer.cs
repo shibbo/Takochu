@@ -33,21 +33,13 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.zonesObjectUI = new GL_EditorFramework.ObjectUIControl();
-            this.zonesListView = new GL_EditorFramework.SceneListView();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.toolStrip3 = new System.Windows.Forms.ToolStrip();
             this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
-            this.sceneListView = new GL_EditorFramework.SceneListView();
-            this.objUIControl = new GL_EditorFramework.ObjectUIControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.cameraUIControl = new GL_EditorFramework.ObjectUIControl();
-            this.cameraListView = new GL_EditorFramework.SceneListView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.lightsUIControl = new GL_EditorFramework.ObjectUIControl();
-            this.lightsSceneListView = new GL_EditorFramework.SceneListView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.stageInformationBtn = new System.Windows.Forms.ToolStripButton();
             this.layerViewerDropDown = new System.Windows.Forms.ToolStripDropDownButton();
@@ -62,14 +54,10 @@
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.saveGalaxyBtn = new System.Windows.Forms.ToolStripButton();
             this.closeEditorBtn = new System.Windows.Forms.ToolStripButton();
-            this.galaxyViewControl = new GL_EditorFramework.GL_Core.GL_ControlModern();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
-            this.tabPage5.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.toolStrip3.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            this.tabPage3.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.toolStrip2.SuspendLayout();
             this.SuspendLayout();
@@ -111,8 +99,6 @@
             // 
             // tabPage5
             // 
-            this.tabPage5.Controls.Add(this.zonesObjectUI);
-            this.tabPage5.Controls.Add(this.zonesListView);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Size = new System.Drawing.Size(342, 776);
@@ -120,32 +106,9 @@
             this.tabPage5.Text = "Zones";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
-            // zonesObjectUI
-            // 
-            this.zonesObjectUI.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.zonesObjectUI.BackColor = System.Drawing.SystemColors.Control;
-            this.zonesObjectUI.Location = new System.Drawing.Point(0, 311);
-            this.zonesObjectUI.Name = "zonesObjectUI";
-            this.zonesObjectUI.Size = new System.Drawing.Size(342, 469);
-            this.zonesObjectUI.TabIndex = 1;
-            // 
-            // zonesListView
-            // 
-            this.zonesListView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.zonesListView.Location = new System.Drawing.Point(0, 0);
-            this.zonesListView.Name = "zonesListView";
-            this.zonesListView.RootLists = ((System.Collections.Generic.Dictionary<string, System.Collections.IList>)(resources.GetObject("zonesListView.RootLists")));
-            this.zonesListView.Size = new System.Drawing.Size(342, 305);
-            this.zonesListView.TabIndex = 0;
-            // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.toolStrip3);
-            this.tabPage1.Controls.Add(this.sceneListView);
-            this.tabPage1.Controls.Add(this.objUIControl);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -194,30 +157,8 @@
             this.toolStripButton4.Size = new System.Drawing.Size(99, 22);
             this.toolStripButton4.Text = "Duplicate Object";
             // 
-            // sceneListView
-            // 
-            this.sceneListView.Location = new System.Drawing.Point(0, 27);
-            this.sceneListView.Name = "sceneListView";
-            this.sceneListView.RootLists = ((System.Collections.Generic.Dictionary<string, System.Collections.IList>)(resources.GetObject("sceneListView.RootLists")));
-            this.sceneListView.Size = new System.Drawing.Size(342, 602);
-            this.sceneListView.TabIndex = 4;
-            this.sceneListView.ItemClicked += new GL_EditorFramework.ItemClickedEventHandler(this.sceneListView_ItemClicked);
-            // 
-            // objUIControl
-            // 
-            this.objUIControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.objUIControl.BackColor = System.Drawing.SystemColors.Control;
-            this.objUIControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.objUIControl.Location = new System.Drawing.Point(3, 638);
-            this.objUIControl.Name = "objUIControl";
-            this.objUIControl.Size = new System.Drawing.Size(339, 138);
-            this.objUIControl.TabIndex = 5;
-            // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.cameraUIControl);
-            this.tabPage2.Controls.Add(this.cameraListView);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -226,58 +167,14 @@
             this.tabPage2.Text = "Cameras";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // cameraUIControl
-            // 
-            this.cameraUIControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cameraUIControl.BackColor = System.Drawing.SystemColors.Control;
-            this.cameraUIControl.Location = new System.Drawing.Point(0, 533);
-            this.cameraUIControl.Name = "cameraUIControl";
-            this.cameraUIControl.Size = new System.Drawing.Size(342, 243);
-            this.cameraUIControl.TabIndex = 5;
-            // 
-            // cameraListView
-            // 
-            this.cameraListView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cameraListView.Location = new System.Drawing.Point(0, 0);
-            this.cameraListView.Name = "cameraListView";
-            this.cameraListView.RootLists = ((System.Collections.Generic.Dictionary<string, System.Collections.IList>)(resources.GetObject("cameraListView.RootLists")));
-            this.cameraListView.Size = new System.Drawing.Size(342, 527);
-            this.cameraListView.TabIndex = 4;
-            // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.lightsUIControl);
-            this.tabPage3.Controls.Add(this.lightsSceneListView);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(342, 776);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Light";
             this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // lightsUIControl
-            // 
-            this.lightsUIControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lightsUIControl.BackColor = System.Drawing.SystemColors.Control;
-            this.lightsUIControl.Location = new System.Drawing.Point(0, 517);
-            this.lightsUIControl.Name = "lightsUIControl";
-            this.lightsUIControl.Size = new System.Drawing.Size(342, 256);
-            this.lightsUIControl.TabIndex = 1;
-            // 
-            // lightsSceneListView
-            // 
-            this.lightsSceneListView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lightsSceneListView.Location = new System.Drawing.Point(0, 0);
-            this.lightsSceneListView.Name = "lightsSceneListView";
-            this.lightsSceneListView.RootLists = ((System.Collections.Generic.Dictionary<string, System.Collections.IList>)(resources.GetObject("lightsSceneListView.RootLists")));
-            this.lightsSceneListView.Size = new System.Drawing.Size(342, 511);
-            this.lightsSceneListView.TabIndex = 0;
             // 
             // toolStrip1
             // 
@@ -409,30 +306,6 @@
             this.closeEditorBtn.Text = "Close";
             this.closeEditorBtn.Click += new System.EventHandler(this.closeEditorBtn_Click);
             // 
-            // galaxyViewControl
-            // 
-            this.galaxyViewControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.galaxyViewControl.BackColor = System.Drawing.Color.Black;
-            this.galaxyViewControl.CameraDistance = 10F;
-            this.galaxyViewControl.CameraTarget = ((OpenTK.Vector3)(resources.GetObject("galaxyViewControl.CameraTarget")));
-            this.galaxyViewControl.CamRotX = 0F;
-            this.galaxyViewControl.CamRotY = 0F;
-            this.galaxyViewControl.CurrentShader = null;
-            this.galaxyViewControl.Fov = 0.7853982F;
-            this.galaxyViewControl.Location = new System.Drawing.Point(358, 29);
-            this.galaxyViewControl.Name = "galaxyViewControl";
-            this.galaxyViewControl.NormPickingDepth = 0F;
-            this.galaxyViewControl.ShowOrientationCube = true;
-            this.galaxyViewControl.Size = new System.Drawing.Size(1148, 798);
-            this.galaxyViewControl.Stereoscopy = GL_EditorFramework.GL_Core.GL_ControlBase.StereoscopyType.DISABLED;
-            this.galaxyViewControl.TabIndex = 0;
-            this.galaxyViewControl.VSync = false;
-            this.galaxyViewControl.ZFar = 32000F;
-            this.galaxyViewControl.ZNear = 0.32F;
-            this.galaxyViewControl.Load += new System.EventHandler(this.galaxyViewControl_Load);
-            // 
             // EditorWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -441,20 +314,16 @@
             this.Controls.Add(this.toolStrip2);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.galaxyViewControl);
             this.Name = "EditorWindow";
             this.Text = "EditorWindow";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditorWindow_FormClosing);
             this.Load += new System.EventHandler(this.EditorWindow_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
-            this.tabPage5.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.toolStrip3.ResumeLayout(false);
             this.toolStrip3.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage3.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.toolStrip2.ResumeLayout(false);
@@ -465,15 +334,11 @@
         }
 
         #endregion
-
-        private GL_EditorFramework.GL_Core.GL_ControlModern galaxyViewControl;
         private System.Windows.Forms.TreeView scenarioTreeView;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
-        private GL_EditorFramework.SceneListView cameraListView;
-        private GL_EditorFramework.ObjectUIControl cameraUIControl;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripDropDownButton layerViewerDropDown;
         private System.Windows.Forms.ToolStripButton openMsgEditorButton;
@@ -487,18 +352,12 @@
         private System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.ToolStripButton saveGalaxyBtn;
         private System.Windows.Forms.ToolStripButton closeEditorBtn;
-        private GL_EditorFramework.ObjectUIControl lightsUIControl;
-        private GL_EditorFramework.SceneListView lightsSceneListView;
         private System.Windows.Forms.TabPage tabPage1;
-        private GL_EditorFramework.SceneListView sceneListView;
-        private GL_EditorFramework.ObjectUIControl objUIControl;
         private System.Windows.Forms.ToolStrip toolStrip3;
         private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton4;
         private System.Windows.Forms.ToolStripButton stageInformationBtn;
         private System.Windows.Forms.TabPage tabPage5;
-        private GL_EditorFramework.ObjectUIControl zonesObjectUI;
-        private GL_EditorFramework.SceneListView zonesListView;
     }
 }

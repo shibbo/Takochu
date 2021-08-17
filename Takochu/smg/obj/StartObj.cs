@@ -1,7 +1,4 @@
-﻿using GL_EditorFramework;
-using GL_EditorFramework.EditorDrawables;
-using GL_EditorFramework.GL_Core;
-using OpenTK;
+﻿using OpenTK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,9 +24,9 @@ namespace Takochu.smg.obj
             mTruePosition = new Vector3(Get<float>("pos_x"), Get<float>("pos_y"), Get<float>("pos_z"));
             mTrueRotation = new Vector3(Get<float>("dir_x"), Get<float>("dir_y"), Get<float>("dir_z"));
 
-            Position = new Vector3(Get<float>("pos_x") / 100, Get<float>("pos_y") / 100, Get<float>("pos_z") / 100);
-            Rotation = new Vector3(Get<float>("dir_x"), Get<float>("dir_y"), Get<float>("dir_z"));
-            mScale = Scale = new Vector3(Get<float>("scale_x"), Get<float>("scale_y"), Get<float>("scale_z"));
+            mPosition = new Vector3(Get<float>("pos_x") / 100, Get<float>("pos_y") / 100, Get<float>("pos_z") / 100);
+            mRotation = new Vector3(Get<float>("dir_x"), Get<float>("dir_y"), Get<float>("dir_z"));
+            mScale = new Vector3(Get<float>("scale_x"), Get<float>("scale_y"), Get<float>("scale_z"));
 
             mMarioNo = Get<int>("MarioNo");
             mCameraID = Get<int>("Camera_id");
@@ -52,9 +49,9 @@ namespace Takochu.smg.obj
             mEntry.Set("dir_y", mTrueRotation.Y);
             mEntry.Set("dir_z", mTrueRotation.Z);
 
-            mEntry.Set("scale_x", Scale.X);
-            mEntry.Set("scale_y", Scale.Y);
-            mEntry.Set("scale_z", Scale.Z);
+            mEntry.Set("scale_x", mScale.X);
+            mEntry.Set("scale_y", mScale.Y);
+            mEntry.Set("scale_z", mScale.Z);
         }
 
         int mMarioNo;
@@ -63,111 +60,6 @@ namespace Takochu.smg.obj
         public override string ToString()
         {
             return $"[{mMarioNo}] {mName} [{mLayer}] [{mParentZone.mZoneName}]";
-        }
-
-        public override uint Select(int index, GL_ControlBase control)
-        {
-
-            if (!Selected)
-            {
-                Selected = true;
-                control.AttachPickingRedrawer();
-            }
-            return 0;
-        }
-
-        public override uint SelectDefault(GL_ControlBase control)
-        {
-
-            if (!Selected)
-            {
-                Selected = true;
-                control.AttachPickingRedrawer();
-            }
-            return 0;
-        }
-
-        public override uint SelectAll(GL_ControlBase control)
-        {
-
-            if (!Selected)
-            {
-                Selected = true;
-                control.AttachPickingRedrawer();
-            }
-            return 0;
-        }
-
-        public override uint Deselect(int index, GL_ControlBase control)
-        {
-
-            if (Selected)
-            {
-                Selected = false;
-                control.DetachPickingRedrawer();
-            }
-            return 0;
-        }
-
-        public override uint DeselectAll(GL_ControlBase control)
-        {
-
-            if (Selected)
-            {
-                Selected = false;
-                control.DetachPickingRedrawer();
-            }
-            return 0;
-        }
-
-        public override bool TrySetupObjectUIControl(EditorSceneBase scene, ObjectUIControl objectUIControl)
-        {
-            if (!Selected)
-                return false;
-
-            objectUIControl.AddObjectUIContainer(new GeneralUI(this, scene), "General");
-            objectUIControl.AddObjectUIContainer(new PositionUI(this, scene), "Position");
-            objectUIControl.AddObjectUIContainer(new ParameterUI(this, scene, 1), "Object Parameters");
-            objectUIControl.AddObjectUIContainer(new StartObjUI(this, scene), "Starting Point Settings");
-            return true;
-        }
-
-        public class StartObjUI : IObjectUIContainer
-        {
-            StartObj obj;
-            EditorSceneBase scene;
-
-            public StartObjUI(AbstractObj obj, EditorSceneBase scene)
-            {
-                this.obj = obj as StartObj;
-                this.scene = scene;
-            }
-
-            public void DoUI(IObjectUIControl control)
-            {
-                obj.mMarioNo = (int)control.NumberInput(obj.mMarioNo, "Mario Number");
-                obj.mCameraID = (int)control.NumberInput(obj.mCameraID, "Camera ID");
-            }
-
-            public void OnValueChangeStart()
-            {
-
-            }
-
-            public void OnValueChanged()
-            {
-                scene.Refresh();
-            }
-
-            public void OnValueSet()
-            {
-
-            }
-
-            public void UpdateProperties()
-            {
-
-            }
         }
     }
 }

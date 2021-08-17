@@ -1,8 +1,4 @@
-﻿using GL_EditorFramework;
-using GL_EditorFramework.EditorDrawables;
-using GL_EditorFramework.GL_Core;
-using GL_EditorFramework.Interfaces;
-using OpenTK;
+﻿using OpenTK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,19 +8,20 @@ using Takochu.fmt;
 
 namespace Takochu.smg.obj
 {
-    public class AbstractObj : TransformableObject
+    public class AbstractObj
     {
-        public AbstractObj(BCSV.Entry entry) : base(Vector3.Zero, Vector3.Zero, Vector3.Zero)
+        public AbstractObj(BCSV.Entry entry)
         {
             mEntry = entry;
             mName = Get<string>("name");
         }
-        
         public void ApplyZoneOffset(Vector3 pos, Vector3 rot)
         {
-            Position += pos;
+            mPosition += pos;
             //Rotation = rot + Rotation;
         }
+
+        public virtual void Save() { }
 
         public List<AbstractObj> GetObjsWithSameField(string type, int value)
         {
@@ -48,9 +45,6 @@ namespace Takochu.smg.obj
             return ret;
         }
 
-        public virtual void Save() { }
-        public virtual void InitializeRender() { }
-        public virtual void StopRender() { }
         public override string ToString()
         {
             return "AbstractObj";
@@ -66,6 +60,9 @@ namespace Takochu.smg.obj
 
         public Vector3 mTruePosition;
         public Vector3 mTrueRotation;
+
+        public Vector3 mPosition;
+        public Vector3 mRotation;
         public Vector3 mScale;
 
         public string mDirectory;
