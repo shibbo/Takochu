@@ -70,7 +70,6 @@ namespace Takochu.util
 
                     Dictionary<string, List<MessageBase>> dur = mCurMessages.GetMessages();
 
-
                     foreach (string str in dur.Keys)
                     {
                         labelsComboBox.Items.Add(str);
@@ -203,6 +202,17 @@ namespace Takochu.util
                 testMSBFBtn.Enabled = false;
                 this.Text = $"MessageEditor -- {filename}";
             }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Zone curZone = mGalaxy.GetZone(zoneNamesComboBox.Text);
+            curZone.Save();
+        }
+
+        private void applyMsgBtn_Click(object sender, EventArgs e)
+        {
+            mCurMessages.GenerateMessageToLabel(labelsComboBox.SelectedItem.ToString(), labelTextBox.Text);
         }
     }
 }

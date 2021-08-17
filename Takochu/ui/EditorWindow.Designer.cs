@@ -50,7 +50,7 @@
             this.galaxyNameTxtBox = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.scenarioNameTxtBox = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.applyGalaxyNameBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.saveGalaxyBtn = new System.Windows.Forms.ToolStripButton();
             this.closeEditorBtn = new System.Windows.Forms.ToolStripButton();
@@ -190,10 +190,10 @@
             this.galaxyNameTxtBox,
             this.toolStripLabel2,
             this.scenarioNameTxtBox,
-            this.toolStripButton3});
+            this.applyGalaxyNameBtn});
             this.toolStrip1.Location = new System.Drawing.Point(358, 1);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1206, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1237, 25);
             this.toolStrip1.TabIndex = 7;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -264,14 +264,16 @@
             this.scenarioNameTxtBox.Name = "scenarioNameTxtBox";
             this.scenarioNameTxtBox.Size = new System.Drawing.Size(300, 25);
             // 
-            // toolStripButton3
+            // applyGalaxyNameBtn
             // 
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(42, 22);
-            this.toolStripButton3.Text = "Apply";
+            this.applyGalaxyNameBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.applyGalaxyNameBtn.Enabled = false;
+            this.applyGalaxyNameBtn.Image = ((System.Drawing.Image)(resources.GetObject("applyGalaxyNameBtn.Image")));
+            this.applyGalaxyNameBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.applyGalaxyNameBtn.Name = "applyGalaxyNameBtn";
+            this.applyGalaxyNameBtn.Size = new System.Drawing.Size(42, 22);
+            this.applyGalaxyNameBtn.Text = "Apply";
+            this.applyGalaxyNameBtn.Click += new System.EventHandler(this.applyGalaxyNameBtn_Click);
             // 
             // toolStrip2
             // 
@@ -310,7 +312,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1518, 831);
+            this.ClientSize = new System.Drawing.Size(1565, 831);
             this.Controls.Add(this.toolStrip2);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.tabControl1);
@@ -348,7 +350,7 @@
         private System.Windows.Forms.ToolStripTextBox galaxyNameTxtBox;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripTextBox scenarioNameTxtBox;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.ToolStripButton applyGalaxyNameBtn;
         private System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.ToolStripButton saveGalaxyBtn;
         private System.Windows.Forms.ToolStripButton closeEditorBtn;

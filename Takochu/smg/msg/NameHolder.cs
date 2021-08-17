@@ -133,6 +133,16 @@ namespace Takochu.smg.msg
             return ret;
         }
 
+        public static void AssignToGalaxy(string galaxy_label, string text)
+        {
+            mGalaxyNames.GenerateMessageToLabel(galaxy_label, text);
+        }
+
+        public static void AssignToScenario(string scenario_label, string text)
+        {
+            mScenarioNames.GenerateMessageToLabel(scenario_label, text);
+        }
+
         public static void Close()
         {
             if (GameUtil.IsSMG2())

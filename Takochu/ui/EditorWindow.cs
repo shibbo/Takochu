@@ -15,6 +15,7 @@ using Takochu.smg;
 using Takochu.smg.obj;
 using Takochu.util;
 using OpenTK;
+using Takochu.smg.msg;
 
 namespace Takochu.ui
 {
@@ -202,6 +203,7 @@ namespace Takochu.ui
             if (scenarioTreeView.SelectedNode != null)
             {
                 mCurrentScenario = Convert.ToInt32(scenarioTreeView.SelectedNode.Tag);
+                applyGalaxyNameBtn.Enabled = true;
                 LoadScenario(mCurrentScenario);
             }
         }
@@ -241,6 +243,15 @@ namespace Takochu.ui
         {
             StageInfoEditor stageInfo = new StageInfoEditor(ref mGalaxy, mCurrentScenario);
             stageInfo.Show();
+        }
+
+        private void applyGalaxyNameBtn_Click(object sender, EventArgs e)
+        {
+            string galaxy_lbl = $"GalaxyName_{mGalaxyName}";
+            string scenario_lbl = $"ScenarioName_{mGalaxyName}{mCurrentScenario}";
+
+            NameHolder.AssignToGalaxy(galaxy_lbl, galaxyNameTxtBox.Text);
+            NameHolder.AssignToScenario(scenario_lbl, scenarioNameTxtBox.Text);
         }
     }
 }

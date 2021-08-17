@@ -35,36 +35,37 @@
             this.zoneNamesComboBox = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.dialogTypeList = new System.Windows.Forms.ComboBox();
+            this.talkTypeList = new System.Windows.Forms.ComboBox();
+            this.cameraTypeComboBox = new System.Windows.Forms.ComboBox();
+            this.attribute6 = new System.Windows.Forms.NumericUpDown();
+            this.label10 = new System.Windows.Forms.Label();
+            this.attribute5 = new System.Windows.Forms.NumericUpDown();
+            this.label9 = new System.Windows.Forms.Label();
+            this.attribute4 = new System.Windows.Forms.NumericUpDown();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.attribute0 = new System.Windows.Forms.NumericUpDown();
+            this.label4 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.flowNamesList = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.testMSBFBtn = new System.Windows.Forms.Button();
             this.flowNamesListBox = new System.Windows.Forms.ListBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.attribute0 = new System.Windows.Forms.NumericUpDown();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.attribute4 = new System.Windows.Forms.NumericUpDown();
-            this.label8 = new System.Windows.Forms.Label();
-            this.attribute5 = new System.Windows.Forms.NumericUpDown();
-            this.label9 = new System.Windows.Forms.Label();
-            this.attribute6 = new System.Windows.Forms.NumericUpDown();
-            this.label10 = new System.Windows.Forms.Label();
-            this.cameraTypeComboBox = new System.Windows.Forms.ComboBox();
-            this.talkTypeList = new System.Windows.Forms.ComboBox();
-            this.dialogTypeList = new System.Windows.Forms.ComboBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.applyMsgBtn = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.attribute0)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.attribute4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.attribute5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.attribute6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.attribute5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.attribute4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.attribute0)).BeginInit();
+            this.tabPage2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -93,7 +94,7 @@
             this.labelTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelTextBox.Location = new System.Drawing.Point(7, 215);
             this.labelTextBox.Name = "labelTextBox";
-            this.labelTextBox.Size = new System.Drawing.Size(878, 537);
+            this.labelTextBox.Size = new System.Drawing.Size(878, 514);
             this.labelTextBox.TabIndex = 2;
             this.labelTextBox.Text = "";
             // 
@@ -130,6 +131,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.applyMsgBtn);
             this.tabPage1.Controls.Add(this.dialogTypeList);
             this.tabPage1.Controls.Add(this.talkTypeList);
             this.tabPage1.Controls.Add(this.cameraTypeComboBox);
@@ -154,6 +156,160 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Text";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // dialogTypeList
+            // 
+            this.dialogTypeList.FormattingEnabled = true;
+            this.dialogTypeList.Items.AddRange(new object[] {
+            "Unknown 0",
+            "Unknown 1",
+            "Unknown 2",
+            "Unknown 3",
+            "Unknown 4",
+            "Storyboard Text (Top)",
+            "Storyboard Text (Center)",
+            "Storyboard Text (Bottom)",
+            "Unknown 8"});
+            this.dialogTypeList.Location = new System.Drawing.Point(75, 113);
+            this.dialogTypeList.Name = "dialogTypeList";
+            this.dialogTypeList.Size = new System.Drawing.Size(261, 21);
+            this.dialogTypeList.TabIndex = 19;
+            // 
+            // talkTypeList
+            // 
+            this.talkTypeList.FormattingEnabled = true;
+            this.talkTypeList.Items.AddRange(new object[] {
+            "Normal",
+            "Shout",
+            "Event",
+            "Compose"});
+            this.talkTypeList.Location = new System.Drawing.Point(75, 87);
+            this.talkTypeList.Name = "talkTypeList";
+            this.talkTypeList.Size = new System.Drawing.Size(261, 21);
+            this.talkTypeList.TabIndex = 18;
+            // 
+            // cameraTypeComboBox
+            // 
+            this.cameraTypeComboBox.FormattingEnabled = true;
+            this.cameraTypeComboBox.Items.AddRange(new object[] {
+            "Normal",
+            "Event",
+            "Unknown"});
+            this.cameraTypeComboBox.Location = new System.Drawing.Point(75, 58);
+            this.cameraTypeComboBox.Name = "cameraTypeComboBox";
+            this.cameraTypeComboBox.Size = new System.Drawing.Size(261, 21);
+            this.cameraTypeComboBox.TabIndex = 17;
+            // 
+            // attribute6
+            // 
+            this.attribute6.Location = new System.Drawing.Point(75, 189);
+            this.attribute6.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.attribute6.Name = "attribute6";
+            this.attribute6.Size = new System.Drawing.Size(260, 20);
+            this.attribute6.TabIndex = 16;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(5, 191);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(62, 13);
+            this.label10.TabIndex = 15;
+            this.label10.Text = "Unknown 6";
+            // 
+            // attribute5
+            // 
+            this.attribute5.Location = new System.Drawing.Point(75, 163);
+            this.attribute5.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.attribute5.Name = "attribute5";
+            this.attribute5.Size = new System.Drawing.Size(260, 20);
+            this.attribute5.TabIndex = 14;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(5, 165);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(62, 13);
+            this.label9.TabIndex = 13;
+            this.label9.Text = "Unknown 5";
+            // 
+            // attribute4
+            // 
+            this.attribute4.Location = new System.Drawing.Point(75, 137);
+            this.attribute4.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.attribute4.Name = "attribute4";
+            this.attribute4.Size = new System.Drawing.Size(260, 20);
+            this.attribute4.TabIndex = 12;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(5, 139);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(62, 13);
+            this.label8.TabIndex = 11;
+            this.label8.Text = "Unknown 4";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(5, 89);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(55, 13);
+            this.label7.TabIndex = 9;
+            this.label7.Text = "Talk Type";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(5, 113);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(64, 13);
+            this.label6.TabIndex = 7;
+            this.label6.Text = "Dialog Type";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(5, 61);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(70, 13);
+            this.label5.TabIndex = 5;
+            this.label5.Text = "Camera Type";
+            // 
+            // attribute0
+            // 
+            this.attribute0.Location = new System.Drawing.Point(75, 33);
+            this.attribute0.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.attribute0.Name = "attribute0";
+            this.attribute0.Size = new System.Drawing.Size(260, 20);
+            this.attribute0.TabIndex = 4;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(5, 35);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(52, 13);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "Sound ID";
             // 
             // tabPage2
             // 
@@ -208,160 +364,6 @@
             this.flowNamesListBox.Size = new System.Drawing.Size(176, 667);
             this.flowNamesListBox.TabIndex = 0;
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(5, 35);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(52, 13);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Sound ID";
-            // 
-            // attribute0
-            // 
-            this.attribute0.Location = new System.Drawing.Point(75, 33);
-            this.attribute0.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.attribute0.Name = "attribute0";
-            this.attribute0.Size = new System.Drawing.Size(260, 20);
-            this.attribute0.TabIndex = 4;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(5, 61);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(70, 13);
-            this.label5.TabIndex = 5;
-            this.label5.Text = "Camera Type";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(5, 113);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(64, 13);
-            this.label6.TabIndex = 7;
-            this.label6.Text = "Dialog Type";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(5, 89);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(55, 13);
-            this.label7.TabIndex = 9;
-            this.label7.Text = "Talk Type";
-            // 
-            // attribute4
-            // 
-            this.attribute4.Location = new System.Drawing.Point(75, 137);
-            this.attribute4.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.attribute4.Name = "attribute4";
-            this.attribute4.Size = new System.Drawing.Size(260, 20);
-            this.attribute4.TabIndex = 12;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(5, 139);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(62, 13);
-            this.label8.TabIndex = 11;
-            this.label8.Text = "Unknown 4";
-            // 
-            // attribute5
-            // 
-            this.attribute5.Location = new System.Drawing.Point(75, 163);
-            this.attribute5.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.attribute5.Name = "attribute5";
-            this.attribute5.Size = new System.Drawing.Size(260, 20);
-            this.attribute5.TabIndex = 14;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(5, 165);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(62, 13);
-            this.label9.TabIndex = 13;
-            this.label9.Text = "Unknown 5";
-            // 
-            // attribute6
-            // 
-            this.attribute6.Location = new System.Drawing.Point(75, 189);
-            this.attribute6.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.attribute6.Name = "attribute6";
-            this.attribute6.Size = new System.Drawing.Size(260, 20);
-            this.attribute6.TabIndex = 16;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(5, 191);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(62, 13);
-            this.label10.TabIndex = 15;
-            this.label10.Text = "Unknown 6";
-            // 
-            // cameraTypeComboBox
-            // 
-            this.cameraTypeComboBox.FormattingEnabled = true;
-            this.cameraTypeComboBox.Items.AddRange(new object[] {
-            "Normal",
-            "Event",
-            "Unknown"});
-            this.cameraTypeComboBox.Location = new System.Drawing.Point(75, 58);
-            this.cameraTypeComboBox.Name = "cameraTypeComboBox";
-            this.cameraTypeComboBox.Size = new System.Drawing.Size(261, 21);
-            this.cameraTypeComboBox.TabIndex = 17;
-            // 
-            // talkTypeList
-            // 
-            this.talkTypeList.FormattingEnabled = true;
-            this.talkTypeList.Items.AddRange(new object[] {
-            "Normal",
-            "Shout",
-            "Event",
-            "Compose"});
-            this.talkTypeList.Location = new System.Drawing.Point(75, 87);
-            this.talkTypeList.Name = "talkTypeList";
-            this.talkTypeList.Size = new System.Drawing.Size(261, 21);
-            this.talkTypeList.TabIndex = 18;
-            // 
-            // dialogTypeList
-            // 
-            this.dialogTypeList.FormattingEnabled = true;
-            this.dialogTypeList.Items.AddRange(new object[] {
-            "Unknown 0",
-            "Unknown 1",
-            "Unknown 2",
-            "Unknown 3",
-            "Unknown 4",
-            "Storyboard Text (Top)",
-            "Storyboard Text (Center)",
-            "Storyboard Text (Bottom)",
-            "Unknown 8"});
-            this.dialogTypeList.Location = new System.Drawing.Point(75, 113);
-            this.dialogTypeList.Name = "dialogTypeList";
-            this.dialogTypeList.Size = new System.Drawing.Size(261, 21);
-            this.dialogTypeList.TabIndex = 19;
-            // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -393,6 +395,17 @@
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // applyMsgBtn
+            // 
+            this.applyMsgBtn.Location = new System.Drawing.Point(7, 732);
+            this.applyMsgBtn.Name = "applyMsgBtn";
+            this.applyMsgBtn.Size = new System.Drawing.Size(878, 23);
+            this.applyMsgBtn.TabIndex = 20;
+            this.applyMsgBtn.Text = "Apply";
+            this.applyMsgBtn.UseVisualStyleBackColor = true;
+            this.applyMsgBtn.Click += new System.EventHandler(this.applyMsgBtn_Click);
             // 
             // MessageEditor
             // 
@@ -409,12 +422,12 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.attribute6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.attribute5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.attribute4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.attribute0)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.attribute0)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.attribute4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.attribute5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.attribute6)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -454,5 +467,6 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.Button applyMsgBtn;
     }
 }

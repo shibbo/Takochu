@@ -70,6 +70,41 @@ namespace Takochu.fmt
             return GetMessages()[label];
         }
 
+        public void GenerateMessageToLabel(string label, string text)
+        {
+            List<MessageBase> msgs = GetMessageFromLabel(label);
+
+            // check to see if we have any tags
+            bool hasAnyTags = msgs.Any(m => !(m is Character));
+            char[] txt_arr = text.ToArray();
+
+            // if we have tags, we treat this stuff differently
+            if (hasAnyTags)
+            {
+                // we don't support saving stuff with tags just yet
+                return;
+            }
+
+            // our new base
+            List<MessageBase> msgbase = new List<MessageBase>();
+
+            foreach (char c in txt_arr)
+            {
+                msgbase.Add(new Character(Convert.ToInt16(c)));
+            }
+
+            AssignMessageToLabel(label, msgbase);
+        }
+
+        public void AssignMessageToLabel(string label, List<MessageBase> msgs)
+        {
+            foreach (var pair in mLabels.mEntries.SelectMany(e => e.Pairs.Where(pair => pair.Label == label)))
+            {
+                mText.SetMessageFromID(pair.TextOffset, msgs);
+                break;
+            }
+        }
+
         public string GetStringFromLabelNoTag(string label)
         {
             string ret = "";
@@ -562,6 +597,11 @@ namespace Takochu.fmt
         public List<MessageBase> GetMessageFromID(uint id)
         {
             return mMessages[id];
+        }
+
+        public void SetMessageFromID(uint id, List<MessageBase> msg)
+        {
+            mMessages[id] = msg;
         }
 
         public void Save(ref FileBase file)

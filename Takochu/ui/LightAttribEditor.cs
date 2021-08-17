@@ -83,10 +83,10 @@ namespace Takochu.ui
 
             strongLight1Color.BackColor = Color.FromArgb((byte)strongLight1ColorR.Value, (byte)strongLight1ColorG.Value, (byte)strongLight1ColorB.Value);
 
-            strongLightAmbientR.Value = Convert.ToDecimal(e.Get<byte>("PlayerAmbientR"));
-            strongLightAmbientG.Value = Convert.ToDecimal(e.Get<byte>("PlayerAmbientG"));
-            strongLightAmbientB.Value = Convert.ToDecimal(e.Get<byte>("PlayerAmbientB"));
-            strongLightAmbientA.Value = Convert.ToDecimal(e.Get<byte>("PlayerAmbientA"));
+            strongLightAmbientR.Value = Convert.ToDecimal(e.Get<byte>("StrongAmbientR"));
+            strongLightAmbientG.Value = Convert.ToDecimal(e.Get<byte>("StrongAmbientG"));
+            strongLightAmbientB.Value = Convert.ToDecimal(e.Get<byte>("StrongAmbientB"));
+            strongLightAmbientA.Value = Convert.ToDecimal(e.Get<byte>("StrongAmbientA"));
 
             strongLightAmbient.BackColor = Color.FromArgb((byte)strongLightAmbientR.Value, (byte)strongLightAmbientG.Value, (byte)strongLightAmbientB.Value);
 
@@ -98,7 +98,7 @@ namespace Takochu.ui
             strongLight1Y.Value = Convert.ToDecimal(e.Get<float>("StrongLight1PosY"));
             strongLight1Z.Value = Convert.ToDecimal(e.Get<float>("StrongLight1PosZ"));
 
-            strongLightAlpha2.Value = Convert.ToDecimal(e.Get<byte>("PlayerAlpha2"));
+            strongLightAlpha2.Value = Convert.ToDecimal(e.Get<byte>("StrongAlpha2"));
 
             strongLight0FollowCamera.Checked = e.Get<int>("StrongLight0FollowCamera") != 0;
             strongLight1FollowCamera.Checked = e.Get<int>("StrongLight1FollowCamera") != 0;
@@ -119,10 +119,10 @@ namespace Takochu.ui
 
             weakLight1Color.BackColor = Color.FromArgb((byte)weakLight1ColorR.Value, (byte)weakLight1ColorG.Value, (byte)weakLight1ColorB.Value);
 
-            weakLightAmbientR.Value = Convert.ToDecimal(e.Get<byte>("PlayerAmbientR"));
-            weakLightAmbientG.Value = Convert.ToDecimal(e.Get<byte>("PlayerAmbientG"));
-            weakLightAmbientB.Value = Convert.ToDecimal(e.Get<byte>("PlayerAmbientB"));
-            weakLightAmbientA.Value = Convert.ToDecimal(e.Get<byte>("PlayerAmbientA"));
+            weakLightAmbientR.Value = Convert.ToDecimal(e.Get<byte>("WeakAmbientR"));
+            weakLightAmbientG.Value = Convert.ToDecimal(e.Get<byte>("WeakAmbientG"));
+            weakLightAmbientB.Value = Convert.ToDecimal(e.Get<byte>("WeakAmbientB"));
+            weakLightAmbientA.Value = Convert.ToDecimal(e.Get<byte>("WeakAmbientA"));
 
             weakLightAmbient.BackColor = Color.FromArgb((byte)weakLightAmbientR.Value, (byte)weakLightAmbientG.Value, (byte)weakLightAmbientB.Value);
 
@@ -134,7 +134,7 @@ namespace Takochu.ui
             weakLight1Y.Value = Convert.ToDecimal(e.Get<float>("WeakLight1PosY"));
             weakLight1Z.Value = Convert.ToDecimal(e.Get<float>("WeakLight1PosZ"));
 
-            weakLightAlpha2.Value = Convert.ToDecimal(e.Get<byte>("PlayerAlpha2"));
+            weakLightAlpha2.Value = Convert.ToDecimal(e.Get<byte>("WeakAlpha2"));
 
             weakLight0FollowCamera.Checked = e.Get<int>("WeakLight0FollowCamera") != 0;
             weakLight1FollowCamera.Checked = e.Get<int>("WeakLight1FollowCamera") != 0;
@@ -155,10 +155,10 @@ namespace Takochu.ui
 
             planetLight1Color.BackColor = Color.FromArgb((byte)planetLight1ColorR.Value, (byte)planetLight1ColorG.Value, (byte)planetLight1ColorB.Value);
 
-            planetLightAmbientR.Value = Convert.ToDecimal(e.Get<byte>("PlayerAmbientR"));
-            planetLightAmbientG.Value = Convert.ToDecimal(e.Get<byte>("PlayerAmbientG"));
-            planetLightAmbientB.Value = Convert.ToDecimal(e.Get<byte>("PlayerAmbientB"));
-            planetLightAmbientA.Value = Convert.ToDecimal(e.Get<byte>("PlayerAmbientA"));
+            planetLightAmbientR.Value = Convert.ToDecimal(e.Get<byte>("PlanetAmbientR"));
+            planetLightAmbientG.Value = Convert.ToDecimal(e.Get<byte>("PlanetAmbientG"));
+            planetLightAmbientB.Value = Convert.ToDecimal(e.Get<byte>("PlanetAmbientB"));
+            planetLightAmbientA.Value = Convert.ToDecimal(e.Get<byte>("PlanetAmbientA"));
 
             planetLightAmbient.BackColor = Color.FromArgb((byte)planetLightAmbientR.Value, (byte)planetLightAmbientG.Value, (byte)planetLightAmbientB.Value);
 
@@ -170,7 +170,7 @@ namespace Takochu.ui
             planetLight1Y.Value = Convert.ToDecimal(e.Get<float>("PlanetLight1PosY"));
             planetLight1Z.Value = Convert.ToDecimal(e.Get<float>("PlanetLight1PosZ"));
 
-            planetLightAlpha2.Value = Convert.ToDecimal(e.Get<byte>("PlayerAlpha2"));
+            planetLightAlpha2.Value = Convert.ToDecimal(e.Get<byte>("PlanetAlpha2"));
 
             planetLight0FollowCamera.Checked = e.Get<int>("PlanetLight0FollowCamera") != 0;
             planetLight1FollowCamera.Checked = e.Get<int>("PlanetLight1FollowCamera") != 0;
