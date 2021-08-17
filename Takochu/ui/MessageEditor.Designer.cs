@@ -35,6 +35,7 @@
             this.zoneNamesComboBox = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.applyMsgBtn = new System.Windows.Forms.Button();
             this.dialogTypeList = new System.Windows.Forms.ComboBox();
             this.talkTypeList = new System.Windows.Forms.ComboBox();
             this.cameraTypeComboBox = new System.Windows.Forms.ComboBox();
@@ -58,7 +59,6 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.applyMsgBtn = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.attribute6)).BeginInit();
@@ -157,6 +157,16 @@
             this.tabPage1.Text = "Text";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // applyMsgBtn
+            // 
+            this.applyMsgBtn.Location = new System.Drawing.Point(7, 732);
+            this.applyMsgBtn.Name = "applyMsgBtn";
+            this.applyMsgBtn.Size = new System.Drawing.Size(878, 23);
+            this.applyMsgBtn.TabIndex = 20;
+            this.applyMsgBtn.Text = "Apply";
+            this.applyMsgBtn.UseVisualStyleBackColor = true;
+            this.applyMsgBtn.Click += new System.EventHandler(this.applyMsgBtn_Click);
+            // 
             // dialogTypeList
             // 
             this.dialogTypeList.FormattingEnabled = true;
@@ -174,6 +184,7 @@
             this.dialogTypeList.Name = "dialogTypeList";
             this.dialogTypeList.Size = new System.Drawing.Size(261, 21);
             this.dialogTypeList.TabIndex = 19;
+            this.dialogTypeList.SelectedIndexChanged += new System.EventHandler(this.dialogTypeList_SelectedIndexChanged);
             // 
             // talkTypeList
             // 
@@ -187,6 +198,7 @@
             this.talkTypeList.Name = "talkTypeList";
             this.talkTypeList.Size = new System.Drawing.Size(261, 21);
             this.talkTypeList.TabIndex = 18;
+            this.talkTypeList.SelectedIndexChanged += new System.EventHandler(this.talkTypeList_SelectedIndexChanged);
             // 
             // cameraTypeComboBox
             // 
@@ -199,18 +211,21 @@
             this.cameraTypeComboBox.Name = "cameraTypeComboBox";
             this.cameraTypeComboBox.Size = new System.Drawing.Size(261, 21);
             this.cameraTypeComboBox.TabIndex = 17;
+            this.cameraTypeComboBox.SelectedIndexChanged += new System.EventHandler(this.cameraTypeComboBox_SelectedIndexChanged);
             // 
             // attribute6
             // 
+            this.attribute6.Enabled = false;
             this.attribute6.Location = new System.Drawing.Point(75, 189);
             this.attribute6.Maximum = new decimal(new int[] {
-            999,
+            255,
             0,
             0,
             0});
             this.attribute6.Name = "attribute6";
             this.attribute6.Size = new System.Drawing.Size(260, 20);
             this.attribute6.TabIndex = 16;
+            this.attribute6.ValueChanged += new System.EventHandler(this.attribute6_ValueChanged);
             // 
             // label10
             // 
@@ -223,15 +238,17 @@
             // 
             // attribute5
             // 
+            this.attribute5.Enabled = false;
             this.attribute5.Location = new System.Drawing.Point(75, 163);
             this.attribute5.Maximum = new decimal(new int[] {
-            999,
+            255,
             0,
             0,
             0});
             this.attribute5.Name = "attribute5";
             this.attribute5.Size = new System.Drawing.Size(260, 20);
             this.attribute5.TabIndex = 14;
+            this.attribute5.ValueChanged += new System.EventHandler(this.attribute5_ValueChanged);
             // 
             // label9
             // 
@@ -244,15 +261,17 @@
             // 
             // attribute4
             // 
+            this.attribute4.Enabled = false;
             this.attribute4.Location = new System.Drawing.Point(75, 137);
             this.attribute4.Maximum = new decimal(new int[] {
-            999,
+            255,
             0,
             0,
             0});
             this.attribute4.Name = "attribute4";
             this.attribute4.Size = new System.Drawing.Size(260, 20);
             this.attribute4.TabIndex = 12;
+            this.attribute4.ValueChanged += new System.EventHandler(this.attribute4_ValueChanged);
             // 
             // label8
             // 
@@ -292,15 +311,17 @@
             // 
             // attribute0
             // 
+            this.attribute0.Enabled = false;
             this.attribute0.Location = new System.Drawing.Point(75, 33);
             this.attribute0.Maximum = new decimal(new int[] {
-            999,
+            255,
             0,
             0,
             0});
             this.attribute0.Name = "attribute0";
             this.attribute0.Size = new System.Drawing.Size(260, 20);
             this.attribute0.TabIndex = 4;
+            this.attribute0.ValueChanged += new System.EventHandler(this.attribute0_ValueChanged);
             // 
             // label4
             // 
@@ -366,8 +387,6 @@
             // 
             // menuStrip1
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(932, 24);
@@ -386,26 +405,16 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
-            // 
-            // applyMsgBtn
-            // 
-            this.applyMsgBtn.Location = new System.Drawing.Point(7, 732);
-            this.applyMsgBtn.Name = "applyMsgBtn";
-            this.applyMsgBtn.Size = new System.Drawing.Size(878, 23);
-            this.applyMsgBtn.TabIndex = 20;
-            this.applyMsgBtn.Text = "Apply";
-            this.applyMsgBtn.UseVisualStyleBackColor = true;
-            this.applyMsgBtn.Click += new System.EventHandler(this.applyMsgBtn_Click);
             // 
             // MessageEditor
             // 

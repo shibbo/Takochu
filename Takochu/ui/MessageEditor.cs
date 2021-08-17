@@ -113,6 +113,11 @@ namespace Takochu.util
                     attribute6.Value = entry._6;
                 }
 
+                attribute0.Enabled = true;
+                attribute4.Enabled = true;
+                attribute5.Enabled = true;
+                attribute6.Enabled = true;
+
                 List<MessageBase> msg;
 
                 if (GameUtil.IsSMG1())
@@ -213,6 +218,62 @@ namespace Takochu.util
         private void applyMsgBtn_Click(object sender, EventArgs e)
         {
             mCurMessages.GenerateMessageToLabel(labelsComboBox.SelectedItem.ToString(), labelTextBox.Text);
+        }
+
+        private void attribute0_ValueChanged(object sender, EventArgs e)
+        {
+            ATR1.AttributeEntry entry = mCurMessages.GetAttributeEntry(labelsComboBox.SelectedIndex);
+            entry._0 = Convert.ToByte(attribute0.Value);
+
+            mCurMessages.SetAttributeEntry(entry, labelsComboBox.SelectedIndex);
+        }
+
+        private void attribute4_ValueChanged(object sender, EventArgs e)
+        {
+            ATR1.AttributeEntry entry = mCurMessages.GetAttributeEntry(labelsComboBox.SelectedIndex);
+            entry._4 = Convert.ToByte(attribute0.Value);
+
+            mCurMessages.SetAttributeEntry(entry, labelsComboBox.SelectedIndex);
+        }
+
+        private void attribute5_ValueChanged(object sender, EventArgs e)
+        {
+            ATR1.AttributeEntry entry = mCurMessages.GetAttributeEntry(labelsComboBox.SelectedIndex);
+            entry._5 = Convert.ToByte(attribute0.Value);
+
+            mCurMessages.SetAttributeEntry(entry, labelsComboBox.SelectedIndex);
+        }
+
+        private void attribute6_ValueChanged(object sender, EventArgs e)
+        {
+            ATR1.AttributeEntry entry = mCurMessages.GetAttributeEntry(labelsComboBox.SelectedIndex);
+            entry._6 = Convert.ToByte(attribute0.Value);
+
+            mCurMessages.SetAttributeEntry(entry, labelsComboBox.SelectedIndex);
+        }
+
+        private void cameraTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ATR1.AttributeEntry entry = mCurMessages.GetAttributeEntry(labelsComboBox.SelectedIndex);
+            entry._1 = Convert.ToByte(cameraTypeComboBox.SelectedIndex);
+
+            mCurMessages.SetAttributeEntry(entry, labelsComboBox.SelectedIndex);
+        }
+
+        private void talkTypeList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ATR1.AttributeEntry entry = mCurMessages.GetAttributeEntry(labelsComboBox.SelectedIndex);
+            entry._2 = Convert.ToByte(talkTypeList.SelectedIndex);
+
+            mCurMessages.SetAttributeEntry(entry, labelsComboBox.SelectedIndex);
+        }
+
+        private void dialogTypeList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ATR1.AttributeEntry entry = mCurMessages.GetAttributeEntry(labelsComboBox.SelectedIndex);
+            entry._3 = Convert.ToByte(dialogTypeList.SelectedIndex);
+
+            mCurMessages.SetAttributeEntry(entry, labelsComboBox.SelectedIndex);
         }
     }
 }

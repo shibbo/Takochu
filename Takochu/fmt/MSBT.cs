@@ -142,6 +142,11 @@ namespace Takochu.fmt
             return mAttributes.GetEntryAtIndex(idx);
         }
 
+        public void SetAttributeEntry(ATR1.AttributeEntry entry, int idx)
+        {
+            mAttributes.SetEntryAtIndex(entry, idx);
+        }
+
         public void Save()
         {
             int size = 0x20;
@@ -382,6 +387,11 @@ namespace Takochu.fmt
         public AttributeEntry GetEntryAtIndex(int idx)
         {
             return mAttributes[idx];
+        }
+
+        public void SetEntryAtIndex(AttributeEntry entry, int idx)
+        {
+            mAttributes[idx] = entry;
         }
 
         public int CalcSize()
