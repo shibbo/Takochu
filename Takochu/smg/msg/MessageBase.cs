@@ -145,16 +145,15 @@ namespace Takochu.smg.msg
             else
             {
                 mType = file.ReadUInt16();
-                file.Skip(0x2);
 
                 if (mType != 0)
                 {
-                    file.Skip(0x4);
+                    mData = file.ReadUInt32();
                 }
                 else
                 {
+                    mExtraData = file.ReadUInt16();
                     mFrames = file.ReadUInt16();
-                    file.Skip(0x2);
                 }
             }
         }
@@ -170,20 +169,29 @@ namespace Takochu.smg.msg
             file.Write(mType);
 
             if (mType != 0)
-                file.Write((short)0);
+            {
+                file.Write(mData);
+            }
             else
             {
+                file.Write(mExtraData);
                 file.Write(mFrames);
             }
         }
 
         public override string ToString()
         {
+            if (mType == 1)
+                return "[newpage]";
+
             return $"[wait={mFrames}]";
         }
 
         ushort mType;
         ushort mFrames;
+
+        uint mData;
+        ushort mExtraData;
     }
 
     class FontSizeGroup : MessageBase
@@ -297,14 +305,14 @@ namespace Takochu.smg.msg
     {
         public LocalizeGroup(ref FileBase file)
         {
-            file.Skip(0x4);
+            mData = file.ReadBytes(0x6);
         }
 
         public override void Save(ref FileBase file)
         {
             base.Save(ref file);
             file.Write((short)5);
-            file.WritePadding(0, 0x4);
+            file.Write(mData);
         }
 
         public override int CalcSize()
@@ -316,6 +324,8 @@ namespace Takochu.smg.msg
         {
             return "[player]";
         }
+
+        byte[] mData;
     }
 
     class StringGroup : MessageBase
