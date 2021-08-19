@@ -54,16 +54,16 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="OpenTK, Version=3.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+    <Reference Include="OpenTK, Version=3.3.2.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\Hacking\Wii\GL_EditorFramework\Gl_EditorFramework\bin\Debug\OpenTK.dll</HintPath>
+      <HintPath>D:\Hacking\General\Toolbox-Latest\Lib\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK.GLControl, Version=3.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
-      <HintPath>..\packages\OpenTK.GLControl.3.1.0\lib\net20\OpenTK.GLControl.dll</HintPath>
-    </Reference>
-    <Reference Include="SuperBMDLib, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Downloads\SuperBMD\SuperBMDLib.dll</HintPath>
+      <HintPath>D:\Hacking\General\Toolbox-Latest\Lib\OpenTK.GLControl.dll</HintPath>
+    </Reference>
+    <Reference Include="SuperBMDLib">
+      <HintPath>..\..\Downloads\SuperBMD\SuperBMDLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -92,6 +92,8 @@
     <Compile Include="io\ExternalFilesystem.cs" />
     <Compile Include="io\FileBase.cs" />
     <Compile Include="io\MemoryFile.cs" />
+    <Compile Include="rnd\BmdRenderer.cs" />
+    <Compile Include="rnd\RenderBase.cs" />
     <Compile Include="smg\img\ImageHolder.cs" />
     <Compile Include="smg\msg\MessageBase.cs" />
     <Compile Include="smg\ZoneAttributes.cs" />
@@ -125,6 +127,12 @@
     </Compile>
     <Compile Include="ui\LightAttribEditor.Designer.cs">
       <DependentUpon>LightAttribEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\RenderingTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\RenderingTest.Designer.cs">
+      <DependentUpon>RenderingTest.cs</DependentUpon>
     </Compile>
     <Compile Include="ui\StageInfoEditor.cs">
       <SubType>Form</SubType>
@@ -201,10 +209,12 @@
     <EmbeddedResource Include="ui\MessageEditor.resx">
       <DependentUpon>MessageEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ui\RenderingTest.resx">
+      <DependentUpon>RenderingTest.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ui\StageInfoEditor.resx">
       <DependentUpon>StageInfoEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

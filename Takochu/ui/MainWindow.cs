@@ -152,5 +152,11 @@ namespace Takochu
             MessageEditor editor = new MessageEditor();
             editor.Show();
         }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            RenderingTest test = new RenderingTest();
+            test.Show();
+        }
     }
 }
