@@ -1,6 +1,6 @@
 ﻿nuget restore
 pushd %CD%
-cd References
+cd ../References
 cmd /c Update
 popd
 msbuild Takochu.sln -p:Configuration=Release
