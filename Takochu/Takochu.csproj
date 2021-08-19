@@ -8,10 +8,26 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Takochu</RootNamespace>
     <AssemblyName>Takochu</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -53,6 +69,9 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Octokit, Version=0.50.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Octokit.0.50.0\lib\net46\Octokit.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK, Version=3.3.2.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -100,6 +119,12 @@
     <Compile Include="ui\editor\GeneralUI.cs" />
     <Compile Include="ui\editor\ParameterUI.cs" />
     <Compile Include="ui\editor\PositionUI.cs" />
+    <Compile Include="ui\HashGenForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\HashGenForm.Designer.cs">
+      <DependentUpon>HashGenForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ui\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -133,6 +158,18 @@
     </Compile>
     <Compile Include="ui\RenderingTest.Designer.cs">
       <DependentUpon>RenderingTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\RepoOwnerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\RepoOwnerForm.Designer.cs">
+      <DependentUpon>RepoOwnerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\SettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ui\StageInfoEditor.cs">
       <SubType>Form</SubType>
@@ -178,9 +215,11 @@
       <DependentUpon>MessageEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="util\ImageUtil.cs" />
+    <Compile Include="util\ProgramUtil.cs" />
     <Compile Include="util\RenderUtil.cs" />
     <Compile Include="util\SettingsUtil.cs" />
     <Compile Include="util\Translator.cs" />
+    <Compile Include="util\Updater.cs" />
     <EmbeddedResource Include="ui\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -192,6 +231,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="ui\BCSVEditorForm.resx">
       <DependentUpon>BCSVEditorForm.cs</DependentUpon>
@@ -251,6 +291,18 @@
     <Content Include="res\translations\de\SimpleGalaxyNames_SMG2.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

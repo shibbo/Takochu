@@ -137,9 +137,9 @@ namespace Takochu.smg
 
         public void LoadMessages()
         {
-            if (mFilesystem.DoesFileExist($"/LocalizeData/UsEnglish/MessageData/{mZoneName}.arc"))
+            if (mFilesystem.DoesFileExist($"/LocalizeData/{Program.sLanguage}/MessageData/{mZoneName}.arc"))
             {
-                mMessagesFile = new RARCFilesystem(mFilesystem.OpenFile($"/LocalizeData/UsEnglish/MessageData/{mZoneName}.arc"));
+                mMessagesFile = new RARCFilesystem(mFilesystem.OpenFile($"/LocalizeData/{Program.sLanguage}/MessageData/{mZoneName}.arc"));
 
                 if (mMessagesFile.DoesFileExist($"/root/{mZoneName}.msbt"))
                     mMessages = new MSBT(mMessagesFile.OpenFile($"/root/{mZoneName}.msbt"));

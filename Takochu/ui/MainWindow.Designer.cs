@@ -34,9 +34,10 @@
             this.bcsvEditorBtn = new System.Windows.Forms.ToolStripButton();
             this.rarcExplorer_Btn = new System.Windows.Forms.ToolStripButton();
             this.showMessageEditorBtn = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.settingsBtn = new System.Windows.Forms.ToolStripButton();
             this.galaxyTreeView = new System.Windows.Forms.TreeView();
             this.glControl1 = new OpenTK.GLControl();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.mainToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,7 +49,8 @@
             this.bcsvEditorBtn,
             this.rarcExplorer_Btn,
             this.showMessageEditorBtn,
-            this.toolStripButton1});
+            this.toolStripButton1,
+            this.settingsBtn});
             this.mainToolStrip.Location = new System.Drawing.Point(0, 0);
             this.mainToolStrip.Name = "mainToolStrip";
             this.mainToolStrip.Size = new System.Drawing.Size(800, 25);
@@ -96,6 +98,26 @@
             this.showMessageEditorBtn.Text = "Message Editor";
             this.showMessageEditorBtn.Click += new System.EventHandler(this.showMessageEditorBtn_Click);
             // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(78, 22);
+            this.toolStripButton1.Text = "Model Thing";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
+            // settingsBtn
+            // 
+            this.settingsBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.settingsBtn.Image = ((System.Drawing.Image)(resources.GetObject("settingsBtn.Image")));
+            this.settingsBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.settingsBtn.Name = "settingsBtn";
+            this.settingsBtn.Size = new System.Drawing.Size(53, 22);
+            this.settingsBtn.Text = "Settings";
+            this.settingsBtn.Click += new System.EventHandler(this.settingsBtn_Click);
+            // 
             // galaxyTreeView
             // 
             this.galaxyTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -113,16 +135,6 @@
             this.glControl1.Size = new System.Drawing.Size(0, 0);
             this.glControl1.TabIndex = 2;
             this.glControl1.VSync = false;
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(78, 22);
-            this.toolStripButton1.Text = "Model Thing";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // MainWindow
             // 
@@ -152,6 +164,7 @@
         private OpenTK.GLControl glControl1;
         private System.Windows.Forms.ToolStripButton showMessageEditorBtn;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton settingsBtn;
     }
 }
 

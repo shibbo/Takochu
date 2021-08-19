@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -10,8 +11,27 @@ namespace Takochu.smg
 {
     class ObjectDB
     {
+
+        public static void GenDB()
+        {
+            using (var c = new WebClient())
+            {
+                try
+                {
+                    c.DownloadFile("http://shibboleet.us.to/new_db/generate.php", "res/objectdb.xml");
+                }
+                catch
+                {
+                    // do nothing
+                }
+            }
+        }
+
         public static void Load()
         {
+            if (!File.Exists("res/objectdb.xml"))
+                GenDB();
+
             Actors = new Dictionary<string, Actor>();
             Objects = new Dictionary<string, Object>();
 

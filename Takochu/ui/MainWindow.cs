@@ -158,5 +158,11 @@ namespace Takochu
             RenderingTest test = new RenderingTest();
             test.Show();
         }
+
+        private void settingsBtn_Click(object sender, EventArgs e)
+        {
+            SettingsForm settings = new SettingsForm();
+            settings.Show();
+        }
     }
 }

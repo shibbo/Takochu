@@ -19,7 +19,10 @@ namespace Takochu.smg.msg
                 foreach (string lang in sPossibleLangs)
                 {
                     if (Program.sGame.mFilesystem.DoesDirectoryExist($"/{lang}"))
+                    {
                         mFilesystem = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile($"/{lang}/MessageData/Message.arc"));
+                        Program.sLanguage = lang;
+                    }
                 }
                 
                 mMessages = new BMG(mFilesystem.OpenFile("/message/message.bmg"));
@@ -40,7 +43,10 @@ namespace Takochu.smg.msg
                 foreach (string lang in sPossibleLangs)
                 {
                     if (Program.sGame.mFilesystem.DoesDirectoryExist($"/LocalizeData/{lang}"))
+                    {
                         mFilesystem = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile($"/LocalizeData/{lang}/MessageData/SystemMessage.arc"));
+                        Program.sLanguage = lang;
+                    }
                 }
 
                 mGalaxyNames = new MSBT(mFilesystem.OpenFile("/boop/GalaxyName.msbt"));
