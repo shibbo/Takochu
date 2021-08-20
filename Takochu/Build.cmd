@@ -1,5 +1,6 @@
+cd ../
 pushd %CD%
-cd ../References
+cd References
 cmd /c Update
 popd
 nuget restore
