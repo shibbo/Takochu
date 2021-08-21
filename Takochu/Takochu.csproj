@@ -101,6 +101,7 @@
     <Compile Include="fmt\BMD.cs" />
     <Compile Include="fmt\BMG.cs" />
     <Compile Include="fmt\BTI.cs" />
+    <Compile Include="fmt\CANM.cs" />
     <Compile Include="fmt\MSBF.cs" />
     <Compile Include="fmt\MSBT.cs" />
     <Compile Include="io\ExternalFile.cs" />
@@ -124,6 +125,12 @@
     </Compile>
     <Compile Include="ui\HashGenForm.Designer.cs">
       <DependentUpon>HashGenForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\IntroEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\IntroEditor.Designer.cs">
+      <DependentUpon>IntroEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="ui\MainWindow.cs">
       <SubType>Form</SubType>
@@ -220,6 +227,9 @@
     <Compile Include="util\SettingsUtil.cs" />
     <Compile Include="util\Translator.cs" />
     <Compile Include="util\Updater.cs" />
+    <EmbeddedResource Include="ui\IntroEditor.resx">
+      <DependentUpon>IntroEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ui\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -255,6 +265,7 @@
     <EmbeddedResource Include="ui\StageInfoEditor.resx">
       <DependentUpon>StageInfoEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Build.cmd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

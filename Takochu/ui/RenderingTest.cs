@@ -235,8 +235,8 @@ namespace Takochu.ui
 
             GL.NewList(mainlist, ListMode.Compile);
 
-            RARCFilesystem rarc = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile("/ObjectData/Dossun.arc"));
-            BMD bmd = new BMD(rarc.OpenFile("/asdf/Dossun.bdl"));
+            RARCFilesystem rarc = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile("/ObjectData/CloudSky.arc"));
+            BMD bmd = new BMD(rarc.OpenFile("/asdf/CloudSky.bdl"));
 
             GL.PushMatrix();
 

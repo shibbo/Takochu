@@ -174,7 +174,7 @@ namespace Takochu.smg
         public FilesystemBase mFilesystem;
         public RARCFilesystem mScenarioFile;
         public Dictionary<int, Scenario> mScenarios;
-        int mScenarioNo;
+        public int mScenarioNo;
 
         public string mName;
         private Dictionary<string, Zone> mZones;

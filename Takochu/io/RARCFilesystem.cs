@@ -391,6 +391,24 @@ namespace Takochu.io
             return ret;
         }
 
+        public override List<string> GetFilesWithExt(string directory, string ext)
+        {
+            if (!mDirectoryEntries.ContainsKey(PathToKey(directory)))
+                return null;
+
+            DirectoryEntry d = mDirectoryEntries[PathToKey(directory)];
+
+            List<string> ret = new List<string>();
+
+            foreach (FileEntry e in d.mChildrenFiles)
+            {
+                if (e.mName.EndsWith(ext))
+                    ret.Add(e.mName);
+            }
+
+            return ret;
+        }
+
         public override FileBase OpenFile(string file)
         {
             if (!mFileEntries.ContainsKey(PathToKey(file)))

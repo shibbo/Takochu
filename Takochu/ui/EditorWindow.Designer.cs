@@ -54,6 +54,7 @@
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.saveGalaxyBtn = new System.Windows.Forms.ToolStripButton();
             this.closeEditorBtn = new System.Windows.Forms.ToolStripButton();
+            this.introCameraEditorBtn = new System.Windows.Forms.ToolStripButton();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -182,6 +183,7 @@
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.stageInformationBtn,
+            this.introCameraEditorBtn,
             this.layerViewerDropDown,
             this.openMsgEditorButton,
             this.toolStripButton2,
@@ -193,7 +195,7 @@
             this.applyGalaxyNameBtn});
             this.toolStrip1.Location = new System.Drawing.Point(358, 1);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1237, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1307, 25);
             this.toolStrip1.TabIndex = 7;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -248,7 +250,6 @@
             // 
             // galaxyNameTxtBox
             // 
-            this.galaxyNameTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.galaxyNameTxtBox.Name = "galaxyNameTxtBox";
             this.galaxyNameTxtBox.Size = new System.Drawing.Size(300, 25);
             // 
@@ -260,7 +261,6 @@
             // 
             // scenarioNameTxtBox
             // 
-            this.scenarioNameTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.scenarioNameTxtBox.Name = "scenarioNameTxtBox";
             this.scenarioNameTxtBox.Size = new System.Drawing.Size(300, 25);
             // 
@@ -308,11 +308,22 @@
             this.closeEditorBtn.Text = "Close";
             this.closeEditorBtn.Click += new System.EventHandler(this.closeEditorBtn_Click);
             // 
+            // introCameraEditorBtn
+            // 
+            this.introCameraEditorBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.introCameraEditorBtn.Enabled = false;
+            this.introCameraEditorBtn.Image = ((System.Drawing.Image)(resources.GetObject("introCameraEditorBtn.Image")));
+            this.introCameraEditorBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.introCameraEditorBtn.Name = "introCameraEditorBtn";
+            this.introCameraEditorBtn.Size = new System.Drawing.Size(70, 22);
+            this.introCameraEditorBtn.Text = "Intro Editor";
+            this.introCameraEditorBtn.Click += new System.EventHandler(this.introCameraEditorBtn_Click);
+            // 
             // EditorWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1565, 831);
+            this.ClientSize = new System.Drawing.Size(1842, 831);
             this.Controls.Add(this.toolStrip2);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.tabControl1);
@@ -361,5 +372,6 @@
         private System.Windows.Forms.ToolStripButton toolStripButton4;
         private System.Windows.Forms.ToolStripButton stageInformationBtn;
         private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.ToolStripButton introCameraEditorBtn;
     }
 }

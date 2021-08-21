@@ -118,6 +118,15 @@ namespace Takochu.smg
             cameras.RemoveField("no");
             mCameras = new List<Camera>();
             cameras.mEntries.ForEach(c => mCameras.Add(new Camera(c, this)));
+
+            mIntroCameras = new Dictionary<string, CANM>();
+
+            List<string> intro_cameras = mMapFiles["Map"].GetFilesWithExt("/root/camera", "canm");
+
+            foreach(string intCamera in intro_cameras)
+            {
+                mIntroCameras.Add(intCamera, new CANM(mMapFiles["Map"].OpenFile($"/root/camera/{intCamera}")));
+            }
         }
 
         public void LoadAttributes()
@@ -325,6 +334,11 @@ namespace Takochu.smg
             return mCameras.Find(c => c.mName == cameraName);
         }
 
+        public CANM GetIntroCamera(int scenarioNo)
+        {
+            return mIntroCameras[$"StartScenario{scenarioNo + 1}.canm"];
+        }
+
         public bool HasMessages()
         {
             if (GameUtil.IsSMG1())
@@ -522,6 +536,7 @@ namespace Takochu.smg
         public Dictionary<string, Dictionary<string, List<AbstractObj>>> mObjects;
         public Dictionary<string, List<StageObj>> mZones;
         public List<Camera> mCameras;
+        public Dictionary<string, CANM> mIntroCameras;
         public List<Light> mLights;
         public List<PathObj> mPaths;
 

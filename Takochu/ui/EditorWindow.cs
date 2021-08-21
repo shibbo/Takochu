@@ -205,6 +205,11 @@ namespace Takochu.ui
                 mCurrentScenario = Convert.ToInt32(scenarioTreeView.SelectedNode.Tag);
                 applyGalaxyNameBtn.Enabled = true;
                 LoadScenario(mCurrentScenario);
+
+                if (mGalaxy.GetGalaxyZone().mIntroCameras.ContainsKey($"StartScenario{mCurrentScenario}.canm"))
+                    introCameraEditorBtn.Enabled = true;
+                else
+                    introCameraEditorBtn.Enabled = false;
             }
         }
 
@@ -252,6 +257,12 @@ namespace Takochu.ui
 
             NameHolder.AssignToGalaxy(galaxy_lbl, galaxyNameTxtBox.Text);
             NameHolder.AssignToScenario(scenario_lbl, scenarioNameTxtBox.Text);
+        }
+
+        private void introCameraEditorBtn_Click(object sender, EventArgs e)
+        {
+            IntroEditor intro = new IntroEditor(ref mGalaxy);
+            intro.Show();
         }
     }
 }
