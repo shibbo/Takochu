@@ -470,6 +470,13 @@ namespace Takochu.io
             return mFile.ReadBytes(f.mDataSize);
         }
 
+        public override void ReplaceFileContents(string file, byte[] contents)
+        {
+            FileEntry f = mFileEntries[file];
+            f.mData = contents;
+            f.mDataSize = contents.Length;
+        }
+
         public void ReinsertFile(RARCFile file)
         {
             FileEntry f = mFileEntries[PathToKey(file.mFileName)];

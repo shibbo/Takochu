@@ -19,5 +19,6 @@ namespace Takochu.io
         public virtual void CreateFile(string dir, string file) { }
         public virtual void RenameFile(string old, string newname) { }
         public virtual void DeleteFile(string file) { }
+        public virtual void ReplaceFileContents(string file, byte[] contents) { }
     }
 }

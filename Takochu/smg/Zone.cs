@@ -339,6 +339,13 @@ namespace Takochu.smg
             return mIntroCameras[$"StartScenario{scenarioNo + 1}.canm"];
         }
 
+        public void SetIntroCamera(int scenarioNo, CANM camera)
+        {
+            //mIntroCameras[$"StartScenario{scenarioNo - 1}.canm"] = camera;
+            //mMapFiles["Map"].Save();
+            mMapFiles["Map"].ReplaceFileContents($"/camera/startscenario{scenarioNo + 1}.canm", camera.mFile.GetBuffer());
+        }
+
         public bool HasMessages()
         {
             if (GameUtil.IsSMG1())

@@ -30,17 +30,19 @@ namespace Takochu.fmt
 
             mKeyFrameIndicies = new Dictionary<string, KeyFrameIndexer>();
 
-            foreach(string s in sNames)
+            foreach (string s in sNames)
             {
                 KeyFrameIndexer idxer = new KeyFrameIndexer
                 {
                     mKeyFrameCount = mFile.ReadInt32(),
-                    mStartIdx = mFile.ReadInt32()
+                    mStartIdx = mFile.ReadInt32(),
                 };
 
                 mFile.Skip(0x4);
 
                 mKeyFrameIndicies.Add(s, idxer);
+
+                Console.WriteLine($"Count: {idxer.mKeyFrameCount} -- Start Index: {idxer.mStartIdx}");
             }
 
             int tableCount = mFile.ReadInt32() / 4;
@@ -72,6 +74,71 @@ namespace Takochu.fmt
             }
         }
 
+        public void Save()
+        {
+            mFile.SetBuffer(new byte[0]);
+            mFile.Seek(0);
+            mFile.WriteString("ANDOCKAN");
+            mFile.Write(1);
+            mFile.Write(0);
+            mFile.Write(1);
+            mFile.Write(4);
+            mFile.Write(0x1E0);
+            mFile.Write(0x60);
+
+            // so for saving, we first have to write the count, and the starting index
+            int curIdx = 0;
+
+            foreach (KeyValuePair<string, KeyFrames> frame in mKeyFrames)
+            {
+                if (frame.Value.GetCount() == 3)
+                {
+                    mFile.Write(1);
+                    mFile.Write(curIdx);
+                    mFile.Write(0);
+                    curIdx += 1;
+                }
+                else
+                {
+                    int count = frame.Value.GetData().Length / 3;
+                    mFile.Write(count);
+                    mFile.Write(curIdx);
+                    mFile.Write(0);
+                    curIdx += frame.Value.GetData().Length;
+                }
+            }
+
+            int pos = mFile.Position();
+            mFile.Write(0);
+
+            // now we re-iterate through the frames and write the floating data
+            foreach (KeyValuePair<string, KeyFrames> frame in mKeyFrames)
+            {
+                if (frame.Value.GetCount() == 3)
+                {
+                    // if the count is 1, then we write a single floating value
+                    mFile.Write(frame.Value.GetData()[1]);
+                }
+                else
+                {
+                    for (int i = 0; i < frame.Value.GetData().Length; i++)
+                        mFile.Write(frame.Value.GetData()[i]);
+                }
+            }
+
+            int dist = mFile.Position() - pos;
+            int curPos = mFile.Position();
+            mFile.Seek(pos);
+            mFile.Write(dist - 0x4);
+            mFile.Seek(curPos);
+
+            mFile.Write(-1);
+            // keyframes (0xC is each size), + 0x4 at the bottom (-1), 0x20 for the header, 0x4 for the table size,
+            // then the floating table
+            mFile.SetLength(mKeyFrames.Count * 0xC + 0x4 + 0x20 + 0x4 + dist - 0x4);
+            System.IO.File.WriteAllBytes("butts.canm", mFile.GetBuffer());
+        }
+
         public KeyFrames GetKeyFrames(string name)
         {
             return mKeyFrames[name];
@@ -83,7 +150,7 @@ namespace Takochu.fmt
             public int mStartIdx;
         }
 
-        private FileBase mFile;
+        public FileBase mFile;
         private Dictionary<string, KeyFrameIndexer> mKeyFrameIndicies;
         private float[] mTable;
         public Dictionary<string, KeyFrames> mKeyFrames;
@@ -101,6 +168,14 @@ namespace Takochu.fmt
         public KeyFrames(float[] values)
         {
             mValues = values;
+        }
+
+        public void AddKeyframe()
+        {
+            List<float> data = mValues.ToList();
+            // we load our floating values with temporary ones, we replace these when saving
+            data.AddRange(new float[] { 0.0f, 0.0f, 0.0f });
+            mValues = data.ToArray();
         }
 
         public int GetCount()

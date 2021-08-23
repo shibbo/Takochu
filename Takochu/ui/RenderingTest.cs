@@ -101,8 +101,6 @@ namespace Takochu.ui
             GL.ClearColor(0f, 0f, 0.125f, 1f);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            //GL.PolygonMode(MaterialFace.FrontAndBack, m_MouseDown != MouseButtons.None ? PolygonMode.Line : PolygonMode.Fill);
-
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadMatrix(ref m_CamMatrix);
 
@@ -122,10 +120,6 @@ namespace Takochu.ui
 
             GL.Color4(1f, 1f, 1f, 1f);
 
-            /*m_RenderInfo.Mode = RenderMode.Opaque;
-            testrenderer.Render(m_RenderInfo);
-            m_RenderInfo.Mode = RenderMode.Translucent;
-            testrenderer.Render(m_RenderInfo);*/
             GL.CallList(mainlist);
 
             glLevelView.SwapBuffers();
@@ -235,8 +229,8 @@ namespace Takochu.ui
 
             GL.NewList(mainlist, ListMode.Compile);
 
-            RARCFilesystem rarc = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile("/ObjectData/CloudSky.arc"));
-            BMD bmd = new BMD(rarc.OpenFile("/asdf/CloudSky.bdl"));
+            RARCFilesystem rarc = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile("/ObjectData/Kuribo.arc"));
+            BMD bmd = new BMD(rarc.OpenFile("/asdf/Kuribo.bdl"));
 
             GL.PushMatrix();
 

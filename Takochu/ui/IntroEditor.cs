@@ -20,22 +20,64 @@ namespace Takochu.ui
 
             mParentZone = galaxy.GetGalaxyZone();
             mCamera = mParentZone.GetIntroCamera(galaxy.mScenarioNo - 1);
+            mScenarioNo = galaxy.mScenarioNo - 1;
 
             this.Text = $"Intro Editor -- Editing {galaxy.mName}, Scenario {galaxy.mScenarioNo}";
         }
 
+        int mScenarioNo;
         Zone mParentZone;
         CANM mCamera;
+        bool mIsLoaded = false;
 
         private void framesList_SelectedIndexChanged(object sender, EventArgs e)
         {
             framesDataGrid.Rows.Clear();
+
+            mIsLoaded = false;
 
             KeyFrames frames = mCamera.GetKeyFrames(framesList.SelectedItem.ToString());
 
             for (int i = 0; i < frames.GetCount(); i += 3)
             {
                 framesDataGrid.Rows.Add(frames.GetData()[i + 0], frames.GetData()[i + 1], frames.GetData()[i + 2]);
+            }
+
+            mIsLoaded = true;
+        }
+
+        private void closeBtn_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void saveBtn_Click(object sender, EventArgs e)
+        {
+            mCamera.Save();
+            mParentZone.SetIntroCamera(mScenarioNo, mCamera);
+        }
+
+        private void framesDataGrid_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            if (mIsLoaded)
+            {
+                //KeyFrames frames = mCamera.GetKeyFrames(framesList.SelectedItem.ToString());
+                //frames.AddKeyframe();
+            }
+        }
+
+        private void framesDataGrid_CellValueChanged(object sender, EventArgs e)
+        {
+            if (mIsLoaded)
+            {
+                KeyFrames frames = mCamera.GetKeyFrames(framesList.SelectedItem.ToString());
+
+                // find what value we are at
+                int floatIdx = (framesDataGrid.CurrentCell.RowIndex * 3) + (framesDataGrid.CurrentCell.ColumnIndex);
+
+                // and now we replace it
+                float[] fr = frames.GetData();
+                float.TryParse(framesDataGrid.CurrentCell.Value.ToString(), out fr[floatIdx]);
             }
         }
     }
