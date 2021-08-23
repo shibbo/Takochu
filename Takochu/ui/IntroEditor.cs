@@ -32,9 +32,9 @@ namespace Takochu.ui
 
         private void framesList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            framesDataGrid.Rows.Clear();
-
             mIsLoaded = false;
+
+            framesDataGrid.Rows.Clear();
 
             KeyFrames frames = mCamera.GetKeyFrames(framesList.SelectedItem.ToString());
 
@@ -61,8 +61,8 @@ namespace Takochu.ui
         {
             if (mIsLoaded)
             {
-                //KeyFrames frames = mCamera.GetKeyFrames(framesList.SelectedItem.ToString());
-                //frames.AddKeyframe();
+                KeyFrames frames = mCamera.GetKeyFrames(framesList.SelectedItem.ToString());
+                frames.AddKeyframe();
             }
         }
 
@@ -78,6 +78,18 @@ namespace Takochu.ui
                 // and now we replace it
                 float[] fr = frames.GetData();
                 float.TryParse(framesDataGrid.CurrentCell.Value.ToString(), out fr[floatIdx]);
+            }
+        }
+
+        private void framesDataGrid_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            if (mIsLoaded)
+            {
+                KeyFrames frames = mCamera.GetKeyFrames(framesList.SelectedItem.ToString());
+
+                List<float> fr = frames.GetData().ToList();
+                fr.RemoveRange(e.RowIndex * 3, 3);
+                frames.SetData(fr.ToArray());
             }
         }
     }

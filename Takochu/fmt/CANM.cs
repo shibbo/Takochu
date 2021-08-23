@@ -188,6 +188,11 @@ namespace Takochu.fmt
             return mValues;
         }
 
+        public void SetData(float[] newData)
+        {
+            mValues = newData;
+        }
+
         float[] mValues;
     }
 

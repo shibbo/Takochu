@@ -76,8 +76,9 @@ namespace Takochu.ui
             this.framesDataGrid.Name = "framesDataGrid";
             this.framesDataGrid.Size = new System.Drawing.Size(357, 458);
             this.framesDataGrid.TabIndex = 1;
-            this.framesDataGrid.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.framesDataGrid_RowsAdded);
             this.framesDataGrid.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.framesDataGrid_CellValueChanged);
+            this.framesDataGrid.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.framesDataGrid_RowsAdded);
+            this.framesDataGrid.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.framesDataGrid_RowsRemoved);
             // 
             // Column1
             // 
