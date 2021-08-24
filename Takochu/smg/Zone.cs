@@ -15,7 +15,7 @@ namespace Takochu.smg
 {
     public class Zone
     {
-        public string[] cPossibleFiles = { "Design", "Light", "Map", "Sound", "ZoneInfo" };
+        public string[] cPossibleFiles = { "Design", "Light", "Ghost", "Map", "Sound", "ZoneInfo" };
 
         public Zone(Galaxy galaxy, string name)
         {
@@ -76,6 +76,10 @@ namespace Takochu.smg
                         else if (file == "ZoneInfo")
                         {
                             LoadAttributes();
+                        }
+                        else if (file == "Ghost")
+                        {
+                            LoadGhost();
                         }
                         else
                         {
@@ -170,6 +174,23 @@ namespace Takochu.smg
             foreach (BCSV.Entry e in pathsBCSV.mEntries)
             {
                 mPaths.Add(new PathObj(e, this, (RARCFilesystem)mMapFiles["Map"]));
+            }
+        }
+
+        public void LoadGhost()
+        {
+            if (!mMapFiles.ContainsKey("Ghost"))
+            {
+                return;
+            }
+
+            mGhostFiles = new Dictionary<string, GST>();
+
+            List<string> ghost_files = mMapFiles["Ghost"].GetFilesWithExt("/root/gst", "gst");
+
+            foreach(string gst in ghost_files)
+            {
+                mGhostFiles.Add(gst, new GST(mMapFiles["Ghost"].OpenFile($"/root/gst/{gst.ToLower()}")));
             }
         }
 
@@ -544,6 +565,7 @@ namespace Takochu.smg
         public Dictionary<string, List<StageObj>> mZones;
         public List<Camera> mCameras;
         public Dictionary<string, CANM> mIntroCameras;
+        public Dictionary<string, GST> mGhostFiles;
         public List<Light> mLights;
         public List<PathObj> mPaths;
 

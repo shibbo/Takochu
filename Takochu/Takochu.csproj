@@ -102,6 +102,7 @@
     <Compile Include="fmt\BMG.cs" />
     <Compile Include="fmt\BTI.cs" />
     <Compile Include="fmt\CANM.cs" />
+    <Compile Include="fmt\GST.cs" />
     <Compile Include="fmt\MSBF.cs" />
     <Compile Include="fmt\MSBT.cs" />
     <Compile Include="io\ExternalFile.cs" />
