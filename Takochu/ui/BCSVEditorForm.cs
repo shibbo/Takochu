@@ -131,6 +131,8 @@ namespace Takochu.ui
                 if (filesystemView.SelectedNode.Tag == null)
                     return;
 
+                addFieldBtn.Enabled = true;
+
                 string tag = Convert.ToString(filesystemView.SelectedNode.Tag);
 
                 if (mFiles.ContainsKey(tag))
@@ -139,7 +141,6 @@ namespace Takochu.ui
 
                 BCSV file = new BCSV(mFilesystem.OpenFile(tag));
                 mFiles.Add(tag, file);
-
 
                 TabPage tab = new TabPage(tag);
                 DataGridView dataGrid = new DataGridView();
@@ -426,6 +427,82 @@ namespace Takochu.ui
             archiveTextBox.Text = file;
 
             OpenBCSV();
+        }
+
+        private void addFieldBtn_Click(object sender, EventArgs e)
+        {
+            string fieldName = newFieldNameTxt.Text;
+
+            if (fieldName.Length == 0)
+            {
+                MessageBox.Show("Please include a field name.");
+            }
+            else
+            {
+                if (fieldTypesComboBox.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Please select a field type.");
+                }
+                else
+                {
+                    string fieldType = fieldTypesComboBox.SelectedItem.ToString();
+
+                    int type = 0;
+
+                    switch(fieldType)
+                    {
+                        case "Integer [0]":
+                            type = 0;
+                            break;
+                        case "Integer [3]":
+                            type = 3;
+                            break;
+                        case "Short":
+                            type = 4;
+                            break;
+                        case "Byte":
+                            type = 5;
+                            break;
+                        case "String":
+                            type = 6;
+                            break;
+                        case "Float":
+                            type = 2;
+                            break;
+                    }
+
+                    TabPage curtab = bcsvEditorsTabControl.SelectedTab;
+                    string tabName = curtab.Text.Replace("*", "");
+                    DataGridView dataGrid = mEditors[tabName];
+                    BCSV file = mFiles[tabName];
+
+                    object _val = null;
+
+                    switch (type)
+                    {
+                        case 0:
+                        case 3:
+                        case 4:
+                        case 5:
+                            _val = 0;
+                            break;
+                        case 6:
+                            _val = "Default";
+                            break;
+                        case 2:
+                            _val = 0.0f;
+                            break;
+                    }
+
+                    BCSV.Field f = file.AddField(fieldName, type, _val);
+                    int idx = dataGrid.Columns.Add(f.mHash.ToString("X8"), fieldName);
+
+                    foreach(DataGridViewRow c in dataGrid.Rows)
+                    {
+                        c.Cells[idx].Value = _val;
+                    }
+                }
+            }
         }
     }
 }

@@ -214,6 +214,11 @@ namespace Takochu.fmt
             mFile.Close();
         }
 
+        public Field AddField(string fieldName, int type, object defaultVal)
+        {
+            return AddField(fieldName, -1, type, -1, 0, defaultVal);
+        }
+
         public Field AddField(string name, int offs, int type, int mask, int shift, object val)
         {
             int[] sizes = { 4, -1, 4, 4, 2, 1, 4 };
@@ -246,6 +251,7 @@ namespace Takochu.fmt
 
             foreach(Entry e in mEntries)
             {
+                e.Add(name, val);
                 e.Set(name, val);
             }
 

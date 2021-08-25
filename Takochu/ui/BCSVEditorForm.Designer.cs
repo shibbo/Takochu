@@ -35,12 +35,21 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.openBCSVBtn = new System.Windows.Forms.ToolStripButton();
             this.openExternalBtn = new System.Windows.Forms.ToolStripButton();
+            this.recentFilesListDropDown = new System.Windows.Forms.ToolStripDropDownButton();
             this.saveBCSVBtn = new System.Windows.Forms.ToolStripButton();
             this.saveAll_Btn = new System.Windows.Forms.ToolStripButton();
             this.filesystemView = new System.Windows.Forms.TreeView();
             this.bcsvEditorsTabControl = new System.Windows.Forms.TabControl();
-            this.recentFilesListDropDown = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
+            this.fieldTypesComboBox = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.addFieldBtn = new System.Windows.Forms.ToolStripButton();
+            this.newFieldNameTxt = new System.Windows.Forms.ToolStripTextBox();
             this.toolStrip1.SuspendLayout();
+            this.toolStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -60,7 +69,7 @@
             this.saveAll_Btn});
             this.toolStrip1.Location = new System.Drawing.Point(4, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1093, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1069, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -73,6 +82,7 @@
             // 
             // archiveTextBox
             // 
+            this.archiveTextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.archiveTextBox.Name = "archiveTextBox";
             this.archiveTextBox.Size = new System.Drawing.Size(750, 25);
             this.archiveTextBox.Text = "/ObjectData/Kuribo.arc";
@@ -103,6 +113,16 @@
             this.openExternalBtn.Text = "Open...";
             this.openExternalBtn.Click += new System.EventHandler(this.openExternalBtn_Click);
             // 
+            // recentFilesListDropDown
+            // 
+            this.recentFilesListDropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.recentFilesListDropDown.Image = ((System.Drawing.Image)(resources.GetObject("recentFilesListDropDown.Image")));
+            this.recentFilesListDropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.recentFilesListDropDown.Name = "recentFilesListDropDown";
+            this.recentFilesListDropDown.Size = new System.Drawing.Size(82, 22);
+            this.recentFilesListDropDown.Text = "Recent Files";
+            this.recentFilesListDropDown.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.recentFilesListDropDown_DropDownItemClicked);
+            // 
             // saveBCSVBtn
             // 
             this.saveBCSVBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -131,9 +151,9 @@
             // 
             this.filesystemView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.filesystemView.Location = new System.Drawing.Point(0, 28);
+            this.filesystemView.Location = new System.Drawing.Point(0, 53);
             this.filesystemView.Name = "filesystemView";
-            this.filesystemView.Size = new System.Drawing.Size(1128, 451);
+            this.filesystemView.Size = new System.Drawing.Size(1128, 426);
             this.filesystemView.TabIndex = 2;
             this.filesystemView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.filesystemView_NodeMouseDoubleClick);
             // 
@@ -148,21 +168,83 @@
             this.bcsvEditorsTabControl.Size = new System.Drawing.Size(1128, 123);
             this.bcsvEditorsTabControl.TabIndex = 3;
             // 
-            // recentFilesListDropDown
+            // toolStrip2
             // 
-            this.recentFilesListDropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.recentFilesListDropDown.Image = ((System.Drawing.Image)(resources.GetObject("recentFilesListDropDown.Image")));
-            this.recentFilesListDropDown.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.recentFilesListDropDown.Name = "recentFilesListDropDown";
-            this.recentFilesListDropDown.Size = new System.Drawing.Size(82, 22);
-            this.recentFilesListDropDown.Text = "Recent Files";
-            this.recentFilesListDropDown.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.recentFilesListDropDown_DropDownItemClicked);
+            this.toolStrip2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.toolStrip2.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel2,
+            this.newFieldNameTxt,
+            this.toolStripSeparator2,
+            this.toolStripLabel3,
+            this.fieldTypesComboBox,
+            this.toolStripSeparator3,
+            this.addFieldBtn});
+            this.toolStrip2.Location = new System.Drawing.Point(4, 25);
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.Size = new System.Drawing.Size(560, 25);
+            this.toolStrip2.TabIndex = 4;
+            this.toolStrip2.Text = "toolStrip2";
+            // 
+            // toolStripLabel2
+            // 
+            this.toolStripLabel2.Name = "toolStripLabel2";
+            this.toolStripLabel2.Size = new System.Drawing.Size(97, 22);
+            this.toolStripLabel2.Text = "New Field Name:";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripLabel3
+            // 
+            this.toolStripLabel3.Name = "toolStripLabel3";
+            this.toolStripLabel3.Size = new System.Drawing.Size(62, 22);
+            this.toolStripLabel3.Text = "Field Type:";
+            // 
+            // fieldTypesComboBox
+            // 
+            this.fieldTypesComboBox.Items.AddRange(new object[] {
+            "Integer [0]",
+            "Integer [3]",
+            "Short",
+            "Byte",
+            "String",
+            "Float"});
+            this.fieldTypesComboBox.Name = "fieldTypesComboBox";
+            this.fieldTypesComboBox.Size = new System.Drawing.Size(121, 25);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // addFieldBtn
+            // 
+            this.addFieldBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.addFieldBtn.Enabled = false;
+            this.addFieldBtn.Image = ((System.Drawing.Image)(resources.GetObject("addFieldBtn.Image")));
+            this.addFieldBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.addFieldBtn.Name = "addFieldBtn";
+            this.addFieldBtn.Size = new System.Drawing.Size(61, 22);
+            this.addFieldBtn.Text = "Add Field";
+            this.addFieldBtn.Click += new System.EventHandler(this.addFieldBtn_Click);
+            // 
+            // newFieldNameTxt
+            // 
+            this.newFieldNameTxt.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.newFieldNameTxt.Name = "newFieldNameTxt";
+            this.newFieldNameTxt.Size = new System.Drawing.Size(200, 25);
             // 
             // BCSVEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1128, 608);
+            this.Controls.Add(this.toolStrip2);
             this.Controls.Add(this.bcsvEditorsTabControl);
             this.Controls.Add(this.filesystemView);
             this.Controls.Add(this.toolStrip1);
@@ -172,6 +254,8 @@
             this.Load += new System.EventHandler(this.BCSVEditorForm_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.toolStrip2.ResumeLayout(false);
+            this.toolStrip2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -190,5 +274,13 @@
         private System.Windows.Forms.ToolStripButton saveAll_Btn;
         private System.Windows.Forms.ToolStripButton openExternalBtn;
         private System.Windows.Forms.ToolStripDropDownButton recentFilesListDropDown;
+        private System.Windows.Forms.ToolStrip toolStrip2;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+        private System.Windows.Forms.ToolStripTextBox newFieldNameTxt;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel3;
+        private System.Windows.Forms.ToolStripComboBox fieldTypesComboBox;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripButton addFieldBtn;
     }
 }
