@@ -504,5 +504,40 @@ namespace Takochu.ui
                 }
             }
         }
+
+        private void deleteFieldBtn_Click(object sender, EventArgs e)
+        {
+            TabPage curtab = bcsvEditorsTabControl.SelectedTab;
+            string tabName = curtab.Text.Replace("*", "");
+            DataGridView dataGrid = mEditors[tabName];
+
+            int idxToDelete = -1;
+
+            foreach (DataGridViewColumn c in dataGrid.Columns)
+            {
+                if (c.HeaderText == deletionFieldTxt.Text)
+                {
+                    idxToDelete = c.Index;
+                    Console.WriteLine(c.HeaderText == c.Name);
+                }
+            }
+
+            if (idxToDelete != -1)
+            {
+                BCSV file = mFiles[tabName];
+                file.RemoveField(deletionFieldTxt.Text);
+
+                //foreach (DataGridViewRow c in dataGrid.Rows)
+                //{
+                //    c.Cells.RemoveAt(idxToDelete);
+                //}
+
+                dataGrid.Columns.RemoveAt(idxToDelete);
+            }
+            else
+            {
+                MessageBox.Show("Field not found!");
+            }
+        }
     }
 }

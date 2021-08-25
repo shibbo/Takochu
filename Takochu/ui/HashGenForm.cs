@@ -30,7 +30,7 @@ namespace Takochu.ui
 
         private void AddToFieldNamesBtn_Click(object sender, EventArgs e)
         {
-            BCSV.AddHash(textBox1.Text);
+            BCSV.AddHash(textBox1.Text, true);
         }
     }
 }

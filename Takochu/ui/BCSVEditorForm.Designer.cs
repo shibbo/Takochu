@@ -48,6 +48,10 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.addFieldBtn = new System.Windows.Forms.ToolStripButton();
             this.newFieldNameTxt = new System.Windows.Forms.ToolStripTextBox();
+            this.deleteFieldBtn = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
+            this.deletionFieldTxt = new System.Windows.Forms.ToolStripTextBox();
             this.toolStrip1.SuspendLayout();
             this.toolStrip2.SuspendLayout();
             this.SuspendLayout();
@@ -153,7 +157,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.filesystemView.Location = new System.Drawing.Point(0, 53);
             this.filesystemView.Name = "filesystemView";
-            this.filesystemView.Size = new System.Drawing.Size(1128, 426);
+            this.filesystemView.Size = new System.Drawing.Size(1709, 426);
             this.filesystemView.TabIndex = 2;
             this.filesystemView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.filesystemView_NodeMouseDoubleClick);
             // 
@@ -165,7 +169,7 @@
             this.bcsvEditorsTabControl.Location = new System.Drawing.Point(0, 485);
             this.bcsvEditorsTabControl.Name = "bcsvEditorsTabControl";
             this.bcsvEditorsTabControl.SelectedIndex = 0;
-            this.bcsvEditorsTabControl.Size = new System.Drawing.Size(1128, 123);
+            this.bcsvEditorsTabControl.Size = new System.Drawing.Size(1709, 123);
             this.bcsvEditorsTabControl.TabIndex = 3;
             // 
             // toolStrip2
@@ -181,10 +185,14 @@
             this.toolStripLabel3,
             this.fieldTypesComboBox,
             this.toolStripSeparator3,
-            this.addFieldBtn});
+            this.addFieldBtn,
+            this.toolStripSeparator4,
+            this.toolStripLabel4,
+            this.deletionFieldTxt,
+            this.deleteFieldBtn});
             this.toolStrip2.Location = new System.Drawing.Point(4, 25);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(560, 25);
+            this.toolStrip2.Size = new System.Drawing.Size(907, 25);
             this.toolStrip2.TabIndex = 4;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -239,11 +247,38 @@
             this.newFieldNameTxt.Name = "newFieldNameTxt";
             this.newFieldNameTxt.Size = new System.Drawing.Size(200, 25);
             // 
+            // deleteFieldBtn
+            // 
+            this.deleteFieldBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.deleteFieldBtn.Image = ((System.Drawing.Image)(resources.GetObject("deleteFieldBtn.Image")));
+            this.deleteFieldBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.deleteFieldBtn.Name = "deleteFieldBtn";
+            this.deleteFieldBtn.Size = new System.Drawing.Size(72, 22);
+            this.deleteFieldBtn.Text = "Delete Field";
+            this.deleteFieldBtn.Click += new System.EventHandler(this.deleteFieldBtn_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripLabel4
+            // 
+            this.toolStripLabel4.Name = "toolStripLabel4";
+            this.toolStripLabel4.Size = new System.Drawing.Size(86, 22);
+            this.toolStripLabel4.Text = "Field To Delete:";
+            // 
+            // deletionFieldTxt
+            // 
+            this.deletionFieldTxt.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.deletionFieldTxt.Name = "deletionFieldTxt";
+            this.deletionFieldTxt.Size = new System.Drawing.Size(150, 25);
+            // 
             // BCSVEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1128, 608);
+            this.ClientSize = new System.Drawing.Size(1709, 608);
             this.Controls.Add(this.toolStrip2);
             this.Controls.Add(this.bcsvEditorsTabControl);
             this.Controls.Add(this.filesystemView);
@@ -282,5 +317,9 @@
         private System.Windows.Forms.ToolStripComboBox fieldTypesComboBox;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton addFieldBtn;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripButton deleteFieldBtn;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel4;
+        private System.Windows.Forms.ToolStripTextBox deletionFieldTxt;
     }
 }
