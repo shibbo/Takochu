@@ -476,30 +476,37 @@ namespace Takochu.ui
                     DataGridView dataGrid = mEditors[tabName];
                     BCSV file = mFiles[tabName];
 
-                    object _val = null;
-
-                    switch (type)
+                    if (file.mFields.ContainsKey(BCSV.FieldNameToHash(fieldName)))
                     {
-                        case 0:
-                        case 3:
-                        case 4:
-                        case 5:
-                            _val = 0;
-                            break;
-                        case 6:
-                            _val = "Default";
-                            break;
-                        case 2:
-                            _val = 0.0f;
-                            break;
+                        MessageBox.Show("Field name already exists!");
                     }
-
-                    BCSV.Field f = file.AddField(fieldName, type, _val);
-                    int idx = dataGrid.Columns.Add(f.mHash.ToString("X8"), fieldName);
-
-                    foreach(DataGridViewRow c in dataGrid.Rows)
+                    else
                     {
-                        c.Cells[idx].Value = _val;
+                        object _val = null;
+
+                        switch (type)
+                        {
+                            case 0:
+                            case 3:
+                            case 4:
+                            case 5:
+                                _val = 0;
+                                break;
+                            case 6:
+                                _val = "Default";
+                                break;
+                            case 2:
+                                _val = 0.0f;
+                                break;
+                        }
+
+                        BCSV.Field f = file.AddField(fieldName, type, _val);
+                        int idx = dataGrid.Columns.Add(f.mHash.ToString("X8"), fieldName);
+
+                        foreach (DataGridViewRow c in dataGrid.Rows)
+                        {
+                            c.Cells[idx].Value = _val;
+                        }
                     }
                 }
             }

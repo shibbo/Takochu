@@ -222,7 +222,7 @@ namespace Takochu.fmt
         public Field AddField(string name, int offs, int type, int mask, int shift, object val)
         {
             int[] sizes = { 4, -1, 4, 4, 2, 1, 4 };
-            AddHash(name, true);
+            AddHash(name);
 
             if (type == 2 || type == 6)
             {
@@ -344,26 +344,12 @@ namespace Takochu.fmt
             return sHashTable[hash];
         }
 
-        public static void AddHash(string field, bool forceSave = false)
+        public static void AddHash(string field)
         {
             int hash = FieldNameToHash(field);
 
             if (!sHashTable.ContainsKey(hash))
-            {
                 sHashTable.Add(hash, field);
-
-                if (forceSave)
-                {
-                    string output = "";
-
-                    foreach (KeyValuePair<int, string> kvp in sHashTable)
-                    {
-                        output += kvp.Value + "\n";
-                    }
-
-                    File.WriteAllText("res/FieldNames.txt", output);
-                }
-            }
         }
 
         public static void PopulateHashTable()

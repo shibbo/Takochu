@@ -10,6 +10,7 @@ namespace Takochu.fmt
 {
     public class GST
     {
+
         public GST(FileBase file)
         {
             mFile = file;
@@ -29,38 +30,40 @@ namespace Takochu.fmt
         {
             public GhostPacket(FileBase file)
             {
+                mValues = new Dictionary<string, object>();
+
                 mPacketIndex = file.ReadByte();
                 mPacketLength = file.ReadByte();
                 mFlags = file.ReadInt16();
 
                 if ((mFlags & 0x1) != 0)
                 {
-                    mTranslation = new Vector3(file.ReadInt16(), file.ReadInt16(), file.ReadInt16());
+                    mValues.Add("Translation", new Vector3(file.ReadInt16(), file.ReadInt16(), file.ReadInt16()));
                 }
 
                 if ((mFlags & 0x800) != 0)
                 {
-                    mVelocity = new Vector3(file.ReadByte(), file.ReadByte(), file.ReadByte());
+                    mValues.Add("Velocity", new Vector3(file.ReadByte(), file.ReadByte(), file.ReadByte()));
                 }
 
                 if ((mFlags & 0x400) != 0)
                 {
-                    mScale = new Vector3(file.ReadByte(), file.ReadByte(), file.ReadByte());
+                    mValues.Add("Scale", new Vector3(file.ReadByte(), file.ReadByte(), file.ReadByte()));
                 }
 
                 if ((mFlags & 0x2) != 0)
                 {
-                    _unkFlag2 = file.ReadByte();
+                    mValues.Add("Unk2", (float)file.ReadByte());
                 }
 
                 if ((mFlags & 0x4) != 0)
                 {
-                    _unkFlag4 = file.ReadByte();
+                    mValues.Add("Unk4", (float)file.ReadByte());
                 }
 
                 if ((mFlags & 0x8) != 0)
                 {
-                    _unkFlag8 = file.ReadByte();
+                    mValues.Add("Unk8", (float)file.ReadByte());
                 }
 
                 if ((mFlags & 0xE) != 0)
@@ -70,17 +73,17 @@ namespace Takochu.fmt
 
                 if ((mFlags & 0x10) != 0)
                 {
-                    mCurrentAnimation = file.ReadString();
+                    mValues.Add("CurrentAnimation", file.ReadString());
                 }
 
                 if ((mFlags & 0x2000) != 0)
                 {
-                    mAnimationHash = file.ReadUInt32();
+                    mValues.Add("AnimationHash", file.ReadUInt32());
                 }
 
                 if ((mFlags & 0x20) != 0)
                 {
-                    mBCKRelated = file.ReadInt16();
+                    mValues.Add("BCKRelated", (float)file.ReadInt16());
                 }
 
                 for (int i = 0; i < 4; i++)
@@ -96,36 +99,22 @@ namespace Takochu.fmt
                     if (other == 0x80)
                         other = 0x7F;
 
-                    mWeight = other;
+
+                    mValues.Add($"Weight_{i}", (float)other);
                 }
 
                 if ((mFlags & 0x1000) != 0)
                 {
-                    mBCKRate = file.ReadByte();
+                    mValues.Add("BCKRate", (float)file.ReadByte());
                 }
-
-                //file.ReadBytes(mPacketLength - 0x4);
             }
+
+            Dictionary<string, object> mValues;
 
             byte mPacketIndex;
             byte mPacketLength;
 
             short mFlags;
-
-            Vector3 mTranslation;
-            Vector3 mVelocity;
-            Vector3 mScale;
-
-            float _unkFlag2;
-            float _unkFlag4;
-            float _unkFlag8;
-
-            string mCurrentAnimation;
-            uint mAnimationHash;
-
-            float mBCKRelated;
-            float mWeight;
-            float mBCKRate;
         }
     }
 }

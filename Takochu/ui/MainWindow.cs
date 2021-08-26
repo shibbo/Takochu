@@ -144,6 +144,16 @@ namespace Takochu
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
+            // this is our main program getting closed, so we can update our name table if needed
+            List<string> fields = new List<string>(); 
+
+            foreach(KeyValuePair<int, string> kvp in BCSV.sHashTable)
+            {
+                fields.Add(kvp.Value);
+            }
+
+            File.WriteAllLines("res/FieldNames.txt", fields.ToArray());
+
             NameHolder.Close();
         }
 

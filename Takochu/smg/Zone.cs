@@ -79,7 +79,7 @@ namespace Takochu.smg
                         }
                         else if (file == "Ghost")
                         {
-                            LoadGhost();
+                            //LoadGhost();
                         }
                         else
                         {
