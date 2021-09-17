@@ -82,7 +82,7 @@
       <HintPath>D:\Hacking\General\Toolbox-Latest\Lib\OpenTK.GLControl.dll</HintPath>
     </Reference>
     <Reference Include="SuperBMDLib">
-      <HintPath>..\..\Downloads\SuperBMD\SuperBMDLib.dll</HintPath>
+      <HintPath>..\..\..\SuperBMDLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -150,7 +150,6 @@
     <Compile Include="smg\obj\DebugObj.cs" />
     <Compile Include="smg\obj\DemoObj.cs" />
     <Compile Include="smg\obj\GeneralPos.cs" />
-    <Compile Include="smg\obj\ObjectHolder.cs" />
     <Compile Include="smg\obj\PathObj.cs" />
     <Compile Include="smg\obj\PathPointObj.cs" />
     <Compile Include="smg\obj\PlanetObj.cs" />

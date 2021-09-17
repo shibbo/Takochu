@@ -309,7 +309,7 @@ namespace Takochu.smg
             return mObjects[archive][layer];
         }
 
-        public ObjectHolder GetAllObjectsFromLayers(List<string> layers)
+        public List<AbstractObj> GetAllObjectsFromLayers(List<string> layers)
         {
             List<AbstractObj> ret = new List<AbstractObj>();
 
@@ -327,10 +327,10 @@ namespace Takochu.smg
                 });
             }
 
-            return new ObjectHolder(ref ret);
+            return ret;
         }
 
-        public ObjectHolder GetObjectsFromLayers(string archive, string type, List<string> layers)
+        public List<AbstractObj> GetObjectsFromLayers(string archive, string type, List<string> layers)
         {
             List<AbstractObj> ret = new List<AbstractObj>();
 
@@ -347,7 +347,7 @@ namespace Takochu.smg
                     ret.AddRange(objs[l].FindAll(o => o.mType == type));
             });
 
-            return new ObjectHolder(ref ret);
+            return ret;
         }
 
         public Camera GetCamera(string cameraName)

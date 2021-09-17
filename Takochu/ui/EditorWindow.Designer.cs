@@ -35,13 +35,14 @@
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.toolStrip3 = new System.Windows.Forms.ToolStrip();
-            this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.addObjSplitBtn = new System.Windows.Forms.ToolStripSplitButton();
+            this.deleteObjectBtn = new System.Windows.Forms.ToolStripButton();
+            this.duplicateObjectBtn = new System.Windows.Forms.ToolStripButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.stageInformationBtn = new System.Windows.Forms.ToolStripButton();
+            this.introCameraEditorBtn = new System.Windows.Forms.ToolStripButton();
             this.layerViewerDropDown = new System.Windows.Forms.ToolStripDropDownButton();
             this.openMsgEditorButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
@@ -54,7 +55,9 @@
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.saveGalaxyBtn = new System.Windows.Forms.ToolStripButton();
             this.closeEditorBtn = new System.Windows.Forms.ToolStripButton();
-            this.introCameraEditorBtn = new System.Windows.Forms.ToolStripButton();
+            this.objectTypesCombo = new System.Windows.Forms.ComboBox();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.objectsListTreeView = new System.Windows.Forms.TreeView();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -80,6 +83,7 @@
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Location = new System.Drawing.Point(2, 29);
@@ -109,6 +113,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.objectsListTreeView);
+            this.tabPage1.Controls.Add(this.objectTypesCombo);
             this.tabPage1.Controls.Add(this.toolStrip3);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
@@ -122,41 +128,41 @@
             // 
             this.toolStrip3.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripSplitButton1,
-            this.toolStripButton1,
-            this.toolStripButton4});
+            this.addObjSplitBtn,
+            this.deleteObjectBtn,
+            this.duplicateObjectBtn});
             this.toolStrip3.Location = new System.Drawing.Point(3, 3);
             this.toolStrip3.Name = "toolStrip3";
             this.toolStrip3.Size = new System.Drawing.Size(336, 25);
             this.toolStrip3.TabIndex = 6;
             this.toolStrip3.Text = "toolStrip3";
             // 
-            // toolStripSplitButton1
+            // addObjSplitBtn
             // 
-            this.toolStripSplitButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripSplitButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButton1.Image")));
-            this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripSplitButton1.Name = "toolStripSplitButton1";
-            this.toolStripSplitButton1.Size = new System.Drawing.Size(83, 22);
-            this.toolStripSplitButton1.Text = "Add Object";
+            this.addObjSplitBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.addObjSplitBtn.Image = ((System.Drawing.Image)(resources.GetObject("addObjSplitBtn.Image")));
+            this.addObjSplitBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.addObjSplitBtn.Name = "addObjSplitBtn";
+            this.addObjSplitBtn.Size = new System.Drawing.Size(83, 22);
+            this.addObjSplitBtn.Text = "Add Object";
             // 
-            // toolStripButton1
+            // deleteObjectBtn
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(82, 22);
-            this.toolStripButton1.Text = "Delete Object";
+            this.deleteObjectBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.deleteObjectBtn.Image = ((System.Drawing.Image)(resources.GetObject("deleteObjectBtn.Image")));
+            this.deleteObjectBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.deleteObjectBtn.Name = "deleteObjectBtn";
+            this.deleteObjectBtn.Size = new System.Drawing.Size(82, 22);
+            this.deleteObjectBtn.Text = "Delete Object";
             // 
-            // toolStripButton4
+            // duplicateObjectBtn
             // 
-            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
-            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(99, 22);
-            this.toolStripButton4.Text = "Duplicate Object";
+            this.duplicateObjectBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.duplicateObjectBtn.Image = ((System.Drawing.Image)(resources.GetObject("duplicateObjectBtn.Image")));
+            this.duplicateObjectBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.duplicateObjectBtn.Name = "duplicateObjectBtn";
+            this.duplicateObjectBtn.Size = new System.Drawing.Size(99, 22);
+            this.duplicateObjectBtn.Text = "Duplicate Object";
             // 
             // tabPage2
             // 
@@ -195,7 +201,7 @@
             this.applyGalaxyNameBtn});
             this.toolStrip1.Location = new System.Drawing.Point(358, 1);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1307, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1276, 25);
             this.toolStrip1.TabIndex = 7;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -208,6 +214,17 @@
             this.stageInformationBtn.Size = new System.Drawing.Size(106, 22);
             this.stageInformationBtn.Text = "Stage Information";
             this.stageInformationBtn.Click += new System.EventHandler(this.stageInformationBtn_Click);
+            // 
+            // introCameraEditorBtn
+            // 
+            this.introCameraEditorBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.introCameraEditorBtn.Enabled = false;
+            this.introCameraEditorBtn.Image = ((System.Drawing.Image)(resources.GetObject("introCameraEditorBtn.Image")));
+            this.introCameraEditorBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.introCameraEditorBtn.Name = "introCameraEditorBtn";
+            this.introCameraEditorBtn.Size = new System.Drawing.Size(70, 22);
+            this.introCameraEditorBtn.Text = "Intro Editor";
+            this.introCameraEditorBtn.Click += new System.EventHandler(this.introCameraEditorBtn_Click);
             // 
             // layerViewerDropDown
             // 
@@ -250,6 +267,7 @@
             // 
             // galaxyNameTxtBox
             // 
+            this.galaxyNameTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.galaxyNameTxtBox.Name = "galaxyNameTxtBox";
             this.galaxyNameTxtBox.Size = new System.Drawing.Size(300, 25);
             // 
@@ -261,6 +279,7 @@
             // 
             // scenarioNameTxtBox
             // 
+            this.scenarioNameTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.scenarioNameTxtBox.Name = "scenarioNameTxtBox";
             this.scenarioNameTxtBox.Size = new System.Drawing.Size(300, 25);
             // 
@@ -308,16 +327,41 @@
             this.closeEditorBtn.Text = "Close";
             this.closeEditorBtn.Click += new System.EventHandler(this.closeEditorBtn_Click);
             // 
-            // introCameraEditorBtn
+            // objectTypesCombo
             // 
-            this.introCameraEditorBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.introCameraEditorBtn.Enabled = false;
-            this.introCameraEditorBtn.Image = ((System.Drawing.Image)(resources.GetObject("introCameraEditorBtn.Image")));
-            this.introCameraEditorBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.introCameraEditorBtn.Name = "introCameraEditorBtn";
-            this.introCameraEditorBtn.Size = new System.Drawing.Size(70, 22);
-            this.introCameraEditorBtn.Text = "Intro Editor";
-            this.introCameraEditorBtn.Click += new System.EventHandler(this.introCameraEditorBtn_Click);
+            this.objectTypesCombo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.objectTypesCombo.FormattingEnabled = true;
+            this.objectTypesCombo.Items.AddRange(new object[] {
+            "Areas",
+            "Camera Areas",
+            "Objects",
+            "Gravity Areas",
+            "Starting Points",
+            "Demos",
+            "Map Parts"});
+            this.objectTypesCombo.Location = new System.Drawing.Point(6, 31);
+            this.objectTypesCombo.Name = "objectTypesCombo";
+            this.objectTypesCombo.Size = new System.Drawing.Size(330, 21);
+            this.objectTypesCombo.TabIndex = 7;
+            this.objectTypesCombo.SelectedIndexChanged += new System.EventHandler(this.objectTypesCombo_SelectedIndexChanged);
+            // 
+            // tabPage6
+            // 
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(342, 776);
+            this.tabPage6.TabIndex = 5;
+            this.tabPage6.Text = "Paths";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // objectsListTreeView
+            // 
+            this.objectsListTreeView.Location = new System.Drawing.Point(6, 58);
+            this.objectsListTreeView.Name = "objectsListTreeView";
+            this.objectsListTreeView.Size = new System.Drawing.Size(330, 432);
+            this.objectsListTreeView.TabIndex = 8;
             // 
             // EditorWindow
             // 
@@ -367,11 +411,14 @@
         private System.Windows.Forms.ToolStripButton closeEditorBtn;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.ToolStrip toolStrip3;
-        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton1;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripButton toolStripButton4;
+        private System.Windows.Forms.ToolStripSplitButton addObjSplitBtn;
+        private System.Windows.Forms.ToolStripButton deleteObjectBtn;
+        private System.Windows.Forms.ToolStripButton duplicateObjectBtn;
         private System.Windows.Forms.ToolStripButton stageInformationBtn;
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.ToolStripButton introCameraEditorBtn;
+        private System.Windows.Forms.ComboBox objectTypesCombo;
+        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.TreeView objectsListTreeView;
     }
 }

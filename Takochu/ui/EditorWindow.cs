@@ -87,8 +87,6 @@ namespace Takochu.ui
 
             Dictionary<string, int> zoneMasks = new Dictionary<string, int>();
 
-            ObjectHolder mainHolder = new ObjectHolder();
-
             Dictionary<string, List<Camera>> cameras = new Dictionary<string, List<Camera>>();
             List<Light> lights = new List<Light>();
             List<PathPointObj> pathpoints = new List<PathPointObj>();
@@ -113,7 +111,7 @@ namespace Takochu.ui
 
                 if (GameUtil.IsSMG1())
                     curlayers = curlayers.ConvertAll(l => l.ToLower());
-                ObjectHolder curHolder = z.GetAllObjectsFromLayers(curlayers);
+                List<AbstractObj> objs = z.GetAllObjectsFromLayers(curlayers);
 
                 foreach (PathObj pobj in z.mPaths)
                 {
@@ -143,13 +141,11 @@ namespace Takochu.ui
                         {
                             if (o.mName == z.mZoneName)
                             {
-                                curHolder.ApplyZoneOffset(o.mPosition, o.mRotation);
+                                //curHolder.ApplyZoneOffset(o.mPosition, o.mRotation);
                             }
                         }
                     }
                 }
-
-                mainHolder.AddObjects(curHolder);
             }
 
             List<Camera> cubeCameras = new List<Camera>();
@@ -263,6 +259,47 @@ namespace Takochu.ui
         {
             IntroEditor intro = new IntroEditor(ref mGalaxy);
             intro.Show();
+        }
+
+        private void PopulateTreeView(string type)
+        {
+            switch (type)
+            {
+                case "Objects":
+                    {
+                        
+                        break;
+                    }
+            }
+        }
+
+        private void objectTypesCombo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (objectTypesCombo.SelectedIndex)
+            {
+                // Areas
+                case 0:
+                    break;
+                // Camera Areas
+                case 1:
+                    break;
+                // Objects
+                case 2:
+                    PopulateTreeView("Objects");
+                    break;
+                // Gravity Areas
+                case 3:
+                    break;
+                // Starting Points
+                case 4:
+                    break;
+                // Demos
+                case 5:
+                    break;
+                // Map Parts
+                case 6:
+                    break;
+            }
         }
     }
 }

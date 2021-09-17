@@ -28,10 +28,10 @@ namespace Takochu.smg.obj
             List<AbstractObj> ret = new List<AbstractObj>();
 
             List<string> layers = mParentZone.GetLayersUsedOnZoneForCurrentScenario();
-            ObjectHolder objs = mParentZone.GetObjectsFromLayers("Map", "Obj", layers);
-            objs.AddObjects(mParentZone.GetObjectsFromLayers("Map", "AreaObj", layers));
+            List<AbstractObj> objs = mParentZone.GetObjectsFromLayers("Map", "Obj", layers);
+            objs.AddRange(mParentZone.GetObjectsFromLayers("Map", "AreaObj", layers));
 
-            foreach (AbstractObj o in objs.GetObjs())
+            foreach (AbstractObj o in objs)
             {
                 if (!o.mEntry.ContainsKey(type))
                     continue;
