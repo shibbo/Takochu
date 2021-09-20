@@ -57,6 +57,7 @@ namespace Takochu.ui
 
         private Galaxy mGalaxy;
         private List<AbstractObj> mObjects = new List<AbstractObj>();
+        private List<PathObj> mPaths = new List<PathObj>();
 
         public void LoadScenario(int scenarioNo)
         {
@@ -91,7 +92,6 @@ namespace Takochu.ui
 
             Dictionary<string, List<Camera>> cameras = new Dictionary<string, List<Camera>>();
             List<Light> lights = new List<Light>();
-            List<PathPointObj> pathpoints = new List<PathPointObj>();
 
             List<ZoneAttributes.ShadowParam> shadowParams = new List<ZoneAttributes.ShadowParam>();
             List<ZoneAttributes.FlagNameTable> flags = new List<ZoneAttributes.FlagNameTable>();
@@ -126,10 +126,7 @@ namespace Takochu.ui
                     curlayers = curlayers.ConvertAll(l => l.ToLower());
                 List<AbstractObj> objs = z.GetAllObjectsFromLayers(curlayers);
 
-                foreach (PathObj pobj in z.mPaths)
-                {
-                    pathpoints.AddRange(pobj.mPathPointObjs);
-                }
+                mPaths.AddRange(z.mPaths);
 
                 cameras.Add(zone, z.mCameras);
 
@@ -333,6 +330,12 @@ namespace Takochu.ui
                 int idx = GetIndexOfZoneNode(zone);
                 TreeNode zoneNode = objectsListTreeView.Nodes[idx];
 
+                TreeNode objNode = new TreeNode()
+                {
+                    Text = o.ToString(),
+                    Tag = o
+                };
+
                 /* indicies of nodes
                  * 0 = Areas
                  * 1 = Camera Areas
@@ -347,7 +350,37 @@ namespace Takochu.ui
                  */
 
                 int nodeIdx = GetNodeIndexOfObject(o.mType);
-                zoneNode.Nodes[nodeIdx].Nodes.Add(o.ToString());
+                zoneNode.Nodes[nodeIdx].Nodes.Add(objNode);
+            }
+
+            // path nodes are a little different, so
+            foreach(PathObj o in mPaths)
+            {
+                string zone = o.mParentZone.mZoneName;
+                int idx = GetIndexOfZoneNode(zone);
+                TreeNode zoneNode = objectsListTreeView.Nodes[idx];
+
+                TreeNode pathNode = new TreeNode()
+                {
+                    Text = o.ToString(),
+                    Tag = o
+                };
+
+                int curIdx = 0;
+
+                foreach(PathPointObj pobj in o.mPathPointObjs)
+                {
+                    TreeNode ppNode = new TreeNode()
+                    {
+                        Text = $"Point {curIdx}",
+                        Tag = pobj
+                    };
+
+                    pathNode.Nodes.Add(ppNode);
+                    curIdx++;
+                }
+
+                zoneNode.Nodes[9].Nodes.Add(pathNode);
             }
         }
     }

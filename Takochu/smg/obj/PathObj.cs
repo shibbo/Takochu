@@ -14,6 +14,7 @@ namespace Takochu.smg.obj
         {
             mFilesystem = filesystem;
             mEntry = entry;
+            mParentZone = parentZone;
             mName = mEntry.Get<string>("name");
             mNo = mEntry.Get<short>("no");
             mType = mEntry.Get<string>("type");
@@ -74,6 +75,7 @@ namespace Takochu.smg.obj
 
         public RARCFilesystem mFilesystem;
         public BCSV.Entry mEntry;
+        public Zone mParentZone;
         public string mName;
         public short mNo;
         public string mType;
