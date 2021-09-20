@@ -80,7 +80,7 @@ namespace Takochu.smg.obj
 
         public override string ToString()
         {
-            return $"[{mID}] {mDemoName} [{mLayer}] [{mParentZone.mZoneName}]";
+            return $"[{mID}] {mDemoName} [{mLayer}]";
         }
     }
 }

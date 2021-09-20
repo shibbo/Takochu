@@ -123,7 +123,7 @@ namespace Takochu.smg.obj
 
         public override string ToString()
         {
-            return $"[{Get<int>("l_id")}] {mName} [{mLayer}] [{mParentZone.mZoneName}]";
+            return $"[{Get<int>("l_id")}] {mName} [{mLayer}]";
         }
     }
 }

@@ -31,6 +31,11 @@ namespace Takochu.smg.obj
             mObjID = Get<short>("Obj_ID");
         }
 
+        public override string ToString()
+        {
+            return $"[{mPosName} [{mLayer}]";
+        }
+
         public override void Save()
         {
             mEntry.Set("name", mName);

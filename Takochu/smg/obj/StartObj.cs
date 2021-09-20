@@ -59,7 +59,7 @@ namespace Takochu.smg.obj
 
         public override string ToString()
         {
-            return $"[{mMarioNo}] {mName} [{mLayer}] [{mParentZone.mZoneName}]";
+            return $"[{mMarioNo}] {mName} [{mLayer}]";
         }
     }
 }

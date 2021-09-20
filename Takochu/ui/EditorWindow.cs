@@ -56,10 +56,12 @@ namespace Takochu.ui
         public int mCurrentScenario;
 
         private Galaxy mGalaxy;
+        private List<AbstractObj> mObjects = new List<AbstractObj>();
 
         public void LoadScenario(int scenarioNo)
         {
             layerViewerDropDown.DropDownItems.Clear();
+            objectsListTreeView.Nodes.Clear();
 
             // we want to clear out the children of the 5 camera type root nodes
             //for (int i = 0; i < 5; i++)
@@ -99,6 +101,17 @@ namespace Takochu.ui
             {
                 zoneMasks.Add(zone, mGalaxy.GetMaskUsedInZoneOnCurrentScenario(zone));
 
+                TreeNode zoneNode = new TreeNode()
+                {
+                    Tag = zone,
+                    Text = zone,
+                    Name = zone
+                };
+
+                AssignNodesToZoneNode(ref zoneNode);
+
+                objectsListTreeView.Nodes.Add(zoneNode);
+
                 Zone z = mGalaxy.GetZone(zone);
                 if (z.mAttributes != null)
                 {
@@ -123,15 +136,18 @@ namespace Takochu.ui
                 if (z.mLights != null)
                     lights.AddRange(z.mLights);
 
+                Zone galaxyZone = mGalaxy.GetGalaxyZone();
+                mObjects.AddRange(galaxyZone.GetAllObjectsFromLayers(layers));
+
                 if (!z.mIsMainGalaxy)
                 {
-                    Zone galaxyZone = mGalaxy.GetGalaxyZone();
-
                     // the first step
                     List<string> galaxyLayers = GameUtil.GetGalaxyLayers(zoneMasks[mGalaxy.mName]);
 
                     if (GameUtil.IsSMG1())
                         galaxyLayers = galaxyLayers.ConvertAll(l => l.ToLower());
+
+                    mObjects.AddRange(z.GetAllObjectsFromLayers(galaxyLayers));
 
                     foreach(string layer in galaxyLayers)
                     {
@@ -186,6 +202,8 @@ namespace Takochu.ui
                         otherCameras.Add(c);
                 });
             }
+
+            PopulateTreeView();
         }
 
 
@@ -261,44 +279,75 @@ namespace Takochu.ui
             intro.Show();
         }
 
-        private void PopulateTreeView(string type)
+        private int GetIndexOfZoneNode(string name)
         {
-            switch (type)
-            {
-                case "Objects":
-                    {
-                        
-                        break;
-                    }
-            }
+            return objectsListTreeView.Nodes.IndexOf(objectsListTreeView.Nodes[name]);
         }
 
-        private void objectTypesCombo_SelectedIndexChanged(object sender, EventArgs e)
+        private void AssignNodesToZoneNode(ref TreeNode node)
         {
-            switch (objectTypesCombo.SelectedIndex)
+            node.Nodes.Add("Areas");
+            node.Nodes.Add("Camera Areas");
+            node.Nodes.Add("Objects");
+            node.Nodes.Add("Gravity");
+            node.Nodes.Add("Debug Movement");
+            node.Nodes.Add("Positions");
+            node.Nodes.Add("Demos");
+            node.Nodes.Add("Starting Points");
+            node.Nodes.Add("Map Parts");
+            node.Nodes.Add("Paths");
+        }
+
+        private int GetNodeIndexOfObject(string type)
+        {
+            switch(type)
             {
-                // Areas
-                case 0:
-                    break;
-                // Camera Areas
-                case 1:
-                    break;
-                // Objects
-                case 2:
-                    PopulateTreeView("Objects");
-                    break;
-                // Gravity Areas
-                case 3:
-                    break;
-                // Starting Points
-                case 4:
-                    break;
-                // Demos
-                case 5:
-                    break;
-                // Map Parts
-                case 6:
-                    break;
+                case "AreaObj":
+                    return 0;
+                case "CameraObj":
+                    return 1;
+                case "Obj":
+                    return 2;
+                case "PlanetObj":
+                    return 3;
+                case "DebugMoveObj":
+                    return 4;
+                case "GeneralPosObj":
+                    return 5;
+                case "DemoObj":
+                    return 6;
+                case "StartObj":
+                    return 7;
+                case "MapPartsObj":
+                    return 8;
+            }
+
+            return -1;
+        }
+
+        private void PopulateTreeView()
+        {
+            foreach(AbstractObj o in mObjects)
+            {
+                string zone = o.mParentZone.mZoneName;
+                int idx = GetIndexOfZoneNode(zone);
+                TreeNode zoneNode = objectsListTreeView.Nodes[idx];
+
+                /* indicies of nodes
+                 * 0 = Areas
+                 * 1 = Camera Areas
+                 * 2 = Objects
+                 * 3 = Gravity
+                 * 4 = Debug Movement
+                 * 5 = General Position
+                 * 6 = Demos
+                 * 7 = Starting Points
+                 * 8 = Map Parts
+                 * 9 = Paths
+                 */
+
+                int nodeIdx = GetNodeIndexOfObject(o.mType);
+                zoneNode.Nodes[nodeIdx].Nodes.Add(o.ToString());
             }
         }
     }
