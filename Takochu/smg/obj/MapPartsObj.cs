@@ -1,11 +1,13 @@
 ﻿using OpenTK;
+using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Takochu.fmt;
-using Takochu.ui.editor;
+using Takochu.io;
+using Takochu.rnd;
 using Takochu.util;
 
 namespace Takochu.smg.obj
@@ -71,6 +73,52 @@ namespace Takochu.smg.obj
             mClippingGroupID = Get<short>("ClippingGroupId");
             mGroupID = Get<short>("GroupId");
             mDemoGroupID = Get<short>("DemoGroupId");
+
+            if (ModelCache.HasRenderer(mName))
+                mRenderer = ModelCache.GetRenderer(mName);
+
+            // initalize the renderer
+            if (Program.sGame.DoesFileExist($"/ObjectData/{mName}.arc"))
+            {
+                RARCFilesystem rarc = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile($"/ObjectData/{mName}.arc"));
+
+                if (rarc.DoesFileExist($"/root/{mName}.bdl"))
+                {
+                    mRenderer = new BmdRenderer(new BMD(rarc.OpenFile($"/root/{mName}.bdl")));
+                    ModelCache.AddRenderer(mName, (BmdRenderer)mRenderer);
+                }
+                else
+                {
+                    mRenderer = new ColorCubeRenderer(200f, new Vector4(1f, 1f, 1f, 1f), new Vector4(1f, 0f, 1f, 1f), true);
+                }
+
+                rarc.Close();
+            }
+            else
+            {
+                mRenderer = new ColorCubeRenderer(200f, new Vector4(1f, 1f, 1f, 1f), new Vector4(1f, 0f, 1f, 1f), true);
+            }
+        }
+
+        public override void Render(RenderMode mode)
+        {
+            RenderInfo inf = new RenderInfo();
+            inf.Mode = mode;
+
+            if (!mRenderer.GottaRender(inf))
+                return;
+
+            GL.PushMatrix();
+
+            GL.Translate(mTruePosition);
+            GL.Rotate(mTrueRotation.X, 0f, 0f, 1f);
+            GL.Rotate(mTrueRotation.Y, 0f, 1f, 0f);
+            GL.Rotate(mTrueRotation.Z, 1f, 0f, 0f);
+            GL.Scale(mScale.X, mScale.Y, mScale.Z);
+
+            mRenderer.Render(inf);
+
+            GL.PopMatrix();
         }
 
         public override void Save()

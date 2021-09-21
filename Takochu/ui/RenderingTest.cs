@@ -65,7 +65,7 @@ namespace Takochu.ui
             m_SkyboxMatrix = Matrix4.LookAt(Vector3.Zero, skybox_target, up);
 
             //m_CamMatrix = Matrix4.Mult(Matrix4.Scale(0.0001f), m_CamMatrix);
-            m_CamMatrix = Matrix4.Mult(Matrix4.CreateScale(0.0001f), m_CamMatrix);
+            m_CamMatrix = Matrix4.Mult(Matrix4.Scale(0.0001f), m_CamMatrix);
 
             //GL.NewList(m_RenderInfo.BillboardDL, ListMode.Compile);
             //GL.Rotate(m_CamRotation.Y, 0f, 1f, 0f);
@@ -106,7 +106,7 @@ namespace Takochu.ui
 
             GL.Disable(EnableCap.Texture2D);
 
-            GL.Begin(PrimitiveType.Lines);
+            GL.Begin(BeginMode.Lines);
             GL.Color4(1f, 0f, 0f, 1f);
             GL.Vertex3(0f, 0f, 0f);
             GL.Vertex3(100000f, 0f, 0f);
@@ -229,23 +229,24 @@ namespace Takochu.ui
 
             GL.NewList(mainlist, ListMode.Compile);
 
-            RARCFilesystem rarc = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile("/ObjectData/Kuribo.arc"));
-            BMD bmd = new BMD(rarc.OpenFile("/asdf/Kuribo.bdl"));
+            //RARCFilesystem rarc = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile("/ObjectData/SuperSpinDriver.arc"));
+            //BMD bmd = new BMD(rarc.OpenFile("/asdf/SuperSpinDriver.bdl"));
+            //Bmd bmd = new Bmd(rarc.OpenFile("/asdf/Kuribo.bdl"));
 
             GL.PushMatrix();
 
             GL.Scale(1, 1, 1);
             RenderInfo inf = new RenderInfo();
             inf.Mode = RenderMode.Opaque;
-            BmdRenderer rend = new BmdRenderer(bmd);
+            ColorCubeRenderer rend = new ColorCubeRenderer(200f, new Vector4(1f, 1f, 1f, 1f), new Vector4(1f, 0f, 1f, 1f), true);
             rend.Render(inf);
 
             GL.PopMatrix();
 
             GL.EndList();
 
-            bmd.Close();
-            rarc.Close();
+            //bmd.Close();
+            //rarc.Close();
 
             m_GLLoaded = true;
         }

@@ -1,10 +1,12 @@
 ﻿using OpenTK;
+using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Takochu.fmt;
+using Takochu.rnd;
 
 namespace Takochu.smg.obj
 {
@@ -63,6 +65,36 @@ namespace Takochu.smg.obj
             mEntry.Set("pnt0_z", mPoint2.Z);
         }
 
+        public void Render(int pointNo, OpenTK.Graphics.Color4 color, RenderMode mode)
+        {
+            Vector3 point = Vector3.Zero;
+
+            switch (pointNo)
+            {
+                case 0:
+                    point = mPosition;
+                    break;
+                case 1:
+                    point = mPoint1;
+                    break;
+                default:
+                    point = mPoint2;
+                    break;
+            }
+
+            GL.PushMatrix();
+
+            GL.Translate(point);
+
+            ColorCubeRenderer rend = new ColorCubeRenderer(pointNo == 0 ? 200f : 100f, new Vector4(1f, 1f, 1f, 1f), new Vector4(color.R, color.G, color.B, color.A), true);
+
+            RenderInfo inf = new RenderInfo();
+            inf.Mode = mode;
+            rend.Render(inf);
+
+            GL.PopMatrix();
+        }
+
         public override string ToString()
         {
             return $"[{mParent.mID}] {mParent.mName} (Point {mID}) ({mParent.mZone.mZoneName})";
@@ -71,9 +103,9 @@ namespace Takochu.smg.obj
         public BCSV.Entry mEntry;
         PathObj mParent;
         short mID;
-        Vector3 mPosition;
-        Vector3 mPoint1;
-        Vector3 mPoint2;
+        public Vector3 mPosition;
+        public Vector3 mPoint1;
+        public Vector3 mPoint2;
 
         int[] mPointArgs;
     }

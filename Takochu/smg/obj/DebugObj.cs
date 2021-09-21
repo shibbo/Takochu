@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Takochu.fmt;
-using Takochu.ui.editor;
 
 namespace Takochu.smg.obj
 {

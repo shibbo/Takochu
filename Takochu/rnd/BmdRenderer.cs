@@ -6,7 +6,6 @@ using System.Globalization;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using Takochu.fmt;
-using Takochu.util;
 
 // BMD renderer TODO list
 // * finish TEV/material emulation
@@ -369,11 +368,10 @@ namespace Takochu.rnd
                         // really ugly hack
                         if (ex.Message[0] == '!')
                         {
-                            StringBuilder src = new StringBuilder(10000); int lolz;
-                            string str = src.ToString();
-                            GL.GetShaderSource(m_Shaders[i].FragmentShader, 10000, out lolz, out str);
-                            System.Windows.Forms.MessageBox.Show(ex.Message + "\n" + src.ToString());
-                            throw ex;
+                            //StringBuilder src = new StringBuilder(10000); int lolz;
+                            //GL.GetShaderSource(m_Shaders[i].FragmentShader, 10000, out lolz, src);
+                            //System.Windows.Forms.MessageBox.Show(ex.Message + "\n" + src.ToString());
+                            //throw ex;
                         }
 
                         m_Shaders[i].Program = 0;
@@ -448,7 +446,7 @@ namespace Takochu.rnd
 
                 if (node.MaterialID != 0xFFFF)
                 {
-                    CullFaceMode[] cullmodes = { CullFaceMode.Front, CullFaceMode.Back, CullFaceMode.Front };
+                    CullFaceMode[] cullmodes = { CullFaceMode.Front, CullFaceMode.Back, CullFaceMode.FrontAndBack };
                     DepthFunction[] depthfuncs = { DepthFunction.Never, DepthFunction.Less, DepthFunction.Equal, DepthFunction.Lequal,
                                                      DepthFunction.Greater, DepthFunction.Notequal, DepthFunction.Gequal, DepthFunction.Always };
 
@@ -515,21 +513,7 @@ namespace Takochu.rnd
                         }
                     }
 
-                    SuperBMDLib.Materials.BlendMode m = new SuperBMDLib.Materials.BlendMode();
-                    m.Type = RenderUtil.GetBlendModeType(mat.BlendMode.BlendMode);
-                    m.SourceFact = RenderUtil.GetBlendModeCtrl(mat.BlendMode.SrcFactor);
-                    m.DestinationFact = RenderUtil.GetBlendModeCtrl(mat.BlendMode.DstFactor);
-
-                    SuperBMDLib.Materials.ZMode z_mode = new SuperBMDLib.Materials.ZMode();
-                    z_mode.Enable = mat.ZMode.EnableZTest;
-                    z_mode.Function = RenderUtil.GetCompareType(mat.ZMode.Func);
-                    z_mode.UpdateEnable = mat.ZMode.EnableZWrite;
-                    RenderUtil.SetBlendState(m);
-                    RenderUtil.SetCullState(RenderUtil.GetCullMode(mat.CullMode));
-                    RenderUtil.SetDepthState(z_mode, false);
-                    RenderUtil.SetDitherEnabled(false);
-
-                    /*switch (mat.BlendMode.BlendMode)
+                    switch (mat.BlendMode.BlendMode)
                     {
                         case 0:
                             GL.Disable(EnableCap.Blend);
@@ -546,7 +530,7 @@ namespace Takochu.rnd
                             else
                                 GL.BlendEquation(BlendEquationMode.FuncAdd);
 
-                            GL.BlendFunc((BlendingFactor)blendsrc[mat.BlendMode.SrcFactor], (BlendingFactor)blenddst[mat.BlendMode.DstFactor]);
+                            GL.BlendFunc(blendsrc[mat.BlendMode.SrcFactor], blenddst[mat.BlendMode.DstFactor]);
                             break;
 
                         case 2:
@@ -556,6 +540,7 @@ namespace Takochu.rnd
                             break;
                     }
 
+
                     if (mat.CullMode == 0)
                         GL.Disable(EnableCap.CullFace);
                     else
@@ -563,7 +548,6 @@ namespace Takochu.rnd
                         GL.Enable(EnableCap.CullFace);
                         GL.CullFace(cullmodes[mat.CullMode - 1]);
                     }
-
 
                     if (mat.ZMode.EnableZTest)
                     {
@@ -573,7 +557,7 @@ namespace Takochu.rnd
                     else
                         GL.Disable(EnableCap.DepthTest);
 
-                    GL.DepthMask(mat.ZMode.EnableZWrite);*/
+                    GL.DepthMask(mat.ZMode.EnableZWrite);
                 }
                 else
                 {
@@ -657,15 +641,10 @@ namespace Takochu.rnd
 
                     foreach (BMD.Batch.Packet.Primitive prim in packet.Primitives)
                     {
-                        //BeginMode[] primtypes = { BeginMode.Quads, BeginMode.Points, BeginMode.Triangles, BeginMode.TriangleStrip,
-                        //                            BeginMode.TriangleFan, BeginMode.Lines, BeginMode.LineStrip, BeginMode.Points };
-
-                        PrimitiveType[] primtypes = { PrimitiveType.Quads, PrimitiveType.Points, PrimitiveType.Triangles, PrimitiveType.TriangleStrip,
-                                                        PrimitiveType.TriangleFan, PrimitiveType.Lines, PrimitiveType.LineStrip, PrimitiveType.Points };
-
-
-                        //GL.Begin((PrimitiveType)primtypes[(prim.PrimitiveType - 0x80) / 8]);
+                        BeginMode[] primtypes = { BeginMode.Quads, BeginMode.Points, BeginMode.Triangles, BeginMode.TriangleStrip,
+                                                    BeginMode.TriangleFan, BeginMode.Lines, BeginMode.LineStrip, BeginMode.Points };
                         GL.Begin(primtypes[(prim.PrimitiveType - 0x80) / 8]);
+                        //GL.Begin(BeginMode.Points);
 
                         for (int i = 0; i < prim.NumIndices; i++)
                         {
@@ -699,11 +678,8 @@ namespace Takochu.rnd
                             if ((prim.ArrayMask & (1 << 10)) != 0) GL.Normal3(m_Model.NormalArray[prim.NormalIndices[i]]);
 
                             Vector3 pos = m_Model.PositionArray[prim.PositionIndices[i]];
-                            if ((prim.ArrayMask & (1 << 0)) != 0) 
-                                Vector3.TransformPosition(pos, mtxtable[prim.PosMatrixIndices[i]]);
-                            else 
-                                Vector3.TransformPosition(pos, mtxtable[0]);
-
+                            if ((prim.ArrayMask & (1 << 0)) != 0) Vector3.Transform(ref pos, ref mtxtable[prim.PosMatrixIndices[i]], out pos);
+                            else Vector3.Transform(ref pos, ref mtxtable[0], out pos);
                             GL.Vertex3(pos);
                         }
 

@@ -21,6 +21,7 @@ namespace Takochu
             BCSV.PopulateHashTable();
             CameraUtil.InitCameras();
             ObjectDB.Load();
+            RenderUtil.AssignColors();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -30,5 +31,6 @@ namespace Takochu
         public static Translator sTranslator;
         public static string sLanguage;
         public static Game sGame;
+        public static int sUniqueID;
     }
 }

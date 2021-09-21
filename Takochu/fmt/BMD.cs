@@ -991,30 +991,11 @@ namespace Takochu.fmt
                             }
                             break;
 
-                        case 4: // RGB565
-                            {
-                                image = new byte[width * height * 4];
-
-                                for (int by = 0; by < height; by += 4)
-                                {
-                                    for (int bx = 0; bx < width; bx += 4)
-                                    {
-                                        for (int y = 0; y < 4; y++)
-                                        {
-                                            for (int x = 0; x < 4; x++)
-                                            {
-                                                ushort col = m_File.ReadUInt16();
-
-                                                int outp = (((by + y) * width) + (bx + x)) * 4;
-                                                image[outp++] = (byte)(((col & 0x001F) << 3) | ((col & 0x001F) >> 2));
-                                                image[outp++] = (byte)(((col & 0x07E0) >> 3) | ((col & 0x07E0) >> 8));
-                                                image[outp++] = (byte)(((col & 0xF800) >> 8) | ((col & 0xF800) >> 13));
-                                                image[outp] = 255;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+                        case 4:
+                                image = ImageUtil.DecodeRGB565(ref m_File, height, width);
+                            break;
+                        case 5:
+                            image = ImageUtil.DecodeRGB5A3(ref m_File, height, width);
                             break;
 
                         case 14: // DXT1

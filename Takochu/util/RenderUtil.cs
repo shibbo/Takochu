@@ -7,6 +7,8 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK;
 using SuperBMDLib.Materials;
 using SuperBMDLib.Materials.Enums;
+using Takochu.smg.obj;
+using OpenTK.Graphics;
 
 namespace Takochu.util
 {
@@ -16,7 +18,7 @@ namespace Takochu.util
         {
             Matrix4 ret = Matrix4.Identity;
 
-            Matrix4 mscale = Matrix4.CreateScale(scale);
+            Matrix4 mscale = Matrix4.Scale(scale);
             Matrix4 mxrot = Matrix4.CreateRotationX(rot.X);
             Matrix4 myrot = Matrix4.CreateRotationY(rot.Y);
             Matrix4 mzrot = Matrix4.CreateRotationZ(rot.Z);
@@ -31,232 +33,63 @@ namespace Takochu.util
             return ret;
         }
 
-        public static TextureWrapMode GetWrapMode(BinaryTextureImage.WrapModes fromMode)
+        public static Vector3 ApplyZoneRotation(StageObj stageObj, Vector3 delta)
         {
-            switch (fromMode)
-            {
-                case BinaryTextureImage.WrapModes.ClampToEdge: return TextureWrapMode.ClampToEdge;
-                case BinaryTextureImage.WrapModes.Repeat: return TextureWrapMode.Repeat;
-                case BinaryTextureImage.WrapModes.MirroredRepeat: return TextureWrapMode.MirroredRepeat;
-            }
+            float rotationY = stageObj.mRotation.Y;
+            float xcos = (float)Math.Cos(-((int)stageObj.mRotation.Z * Math.PI) / 180f);
+            float xsin = (float)Math.Sin(-((int)stageObj.mRotation.Z * Math.PI) / 180f);
+            float ycos = (float)Math.Cos(-((int)rotationY * Math.PI) / 180f);
+            float ysin = (float)Math.Sin(-((int)rotationY * Math.PI) / 180f);
+            float zcos = (float)Math.Cos(-((int)stageObj.mRotation.X * Math.PI) / 180f);
+            float zsin = (float)Math.Sin(-((int)stageObj.mRotation.X * Math.PI) / 180f);
 
-            return TextureWrapMode.Repeat;
+            float x1 = (delta.X * zcos) - (delta.Y * zsin);
+            float y1 = (delta.X * zsin) + (delta.Y * zcos);
+            float x2 = (x1 * ycos) + (delta.Z * ysin);
+            float z2 = -(x1 * ysin) + (delta.Z * ycos);
+            float y3 = (y1 * xcos) - (z2 * xsin);
+            float z3 = (y1 * xsin) + (z2 * xcos);
+
+            delta.X = x2;
+            delta.Y = y3;
+            delta.Z = z3;
+
+            return delta;
         }
 
-        public static TextureMinFilter GetMinFilter(BinaryTextureImage.FilterMode fromMode)
+        public static void AssignColors()
         {
-            switch (fromMode)
-            {
-                case BinaryTextureImage.FilterMode.Nearest: return TextureMinFilter.Nearest;
-                case BinaryTextureImage.FilterMode.Linear: return TextureMinFilter.Linear;
-                case BinaryTextureImage.FilterMode.NearestMipmapNearest: return TextureMinFilter.NearestMipmapNearest;
-                case BinaryTextureImage.FilterMode.NearestMipmapLinear: return TextureMinFilter.NearestMipmapLinear;
-                case BinaryTextureImage.FilterMode.LinearMipmapNearest: return TextureMinFilter.LinearMipmapNearest;
-                case BinaryTextureImage.FilterMode.LinearMipmapLinear: return TextureMinFilter.LinearMipmapLinear;
-            }
-
-            return TextureMinFilter.Nearest;
+            sColors = new Color4[8];
+            sColors[0] = sRedColor;
+            sColors[1] = sOrangeColor;
+            sColors[2] = sYellowColor;
+            sColors[3] = sGreenColor;
+            sColors[4] = sLightBlue;
+            sColors[5] = sBlue;
+            sColors[6] = sPurple;
+            sColors[7] = sPink;
         }
 
-        public static TextureMagFilter GetMagFilter(BinaryTextureImage.FilterMode fromMode)
+        public static Color4 GenerateRandomColor()
         {
-            switch (fromMode)
-            {
-                case BinaryTextureImage.FilterMode.Nearest: return TextureMagFilter.Nearest;
-                case BinaryTextureImage.FilterMode.Linear: return TextureMagFilter.Linear;
-            }
+            if (sCurrentColor == sColors.Length)
+                sCurrentColor = 0;
 
-            return TextureMagFilter.Nearest;
+            return sColors[sCurrentColor++];
         }
 
-        public static void SetBlendState(SuperBMDLib.Materials.BlendMode blendMode)
-        {
-            if (blendMode.Type == SuperBMDLib.Materials.Enums.BlendMode.Blend)
-            {
-                GL.Enable(EnableCap.Blend);
-                GL.BlendFunc(GetBlendFactorSrc(blendMode.SourceFact), GetBlendFactorDest(blendMode.DestinationFact));
-            }
-            else if (blendMode.Type == SuperBMDLib.Materials.Enums.BlendMode.None)
-            {
-                GL.Disable(EnableCap.Blend);
-            }
-            else
-            {
-                // Logic, Subtract?
-            }
-        }
+        static int sCurrentColor = 0;
 
-        public static BlendingFactor GetBlendFactorSrc(BlendModeControl sourceFactor)
-        {
-            switch (sourceFactor)
-            {
-                case BlendModeControl.Zero: return BlendingFactor.Zero;
-                case BlendModeControl.One: return BlendingFactor.One;
-                case BlendModeControl.SrcColor: return BlendingFactor.SrcColor;
-                case BlendModeControl.InverseSrcColor: return BlendingFactor.OneMinusSrcColor;
-                case BlendModeControl.SrcAlpha: return BlendingFactor.SrcAlpha;
-                case BlendModeControl.InverseSrcAlpha: return BlendingFactor.OneMinusSrcAlpha;
-                case BlendModeControl.DstAlpha: return BlendingFactor.DstAlpha;
-                case BlendModeControl.InverseDstAlpha: return BlendingFactor.OneMinusDstAlpha;
-                default:
-                    Console.WriteLine("Unsupported GXBlendModeControl: \"{0}\" in GetOpenGLBlendSrc!", sourceFactor);
-                    return BlendingFactor.SrcAlpha;
+        static Color4[] sColors;
 
-            }
-        }
+        static Color4 sRedColor = new Color4(254, 45, 0, 100);
+        static Color4 sOrangeColor = new Color4(253, 130, 0, 100);
+        static Color4 sYellowColor = new Color4(253, 244, 0, 100);
+        static Color4 sGreenColor = new Color4(0, 253, 17, 100);
+        static Color4 sLightBlue = new Color4(0, 236, 253, 100);
+        static Color4 sBlue = new Color4(0, 54, 253, 100);
+        static Color4 sPurple = new Color4(164, 0, 253, 100);
+        static Color4 sPink = new Color4(253, 0, 219, 100);
 
-        public static BlendingFactor GetBlendFactorDest(BlendModeControl destinationFactor)
-        {
-            switch (destinationFactor)
-            {
-                case BlendModeControl.Zero: return BlendingFactor.Zero;
-                case BlendModeControl.One: return BlendingFactor.One;
-                case BlendModeControl.SrcColor: return BlendingFactor.SrcColor;
-                case BlendModeControl.InverseSrcColor: return BlendingFactor.OneMinusSrcColor;
-                case BlendModeControl.SrcAlpha: return BlendingFactor.SrcAlpha;
-                case BlendModeControl.InverseSrcAlpha: return BlendingFactor.OneMinusSrcAlpha;
-                case BlendModeControl.DstAlpha: return BlendingFactor.DstAlpha;
-                case BlendModeControl.InverseDstAlpha: return BlendingFactor.OneMinusDstAlpha;
-                default:
-                    Console.WriteLine("Unsupported GXBlendModeControl: \"{0}\" in GetOpenGLBlendDest!", destinationFactor);
-                    return BlendingFactor.OneMinusSrcAlpha;
-            }
-        }
-
-        public static void SetCullState(CullMode cullState)
-        {
-            GL.Enable(EnableCap.CullFace);
-            switch (cullState)
-            {
-                case CullMode.None: GL.Disable(EnableCap.CullFace); break;
-                case CullMode.Front: GL.CullFace(CullFaceMode.Front); break;
-                case CullMode.Back: GL.CullFace(CullFaceMode.Back); break;
-                case CullMode.All: GL.CullFace(CullFaceMode.FrontAndBack); break;
-            }
-        }
-
-        public static void SetDepthState(ZMode depthState, bool bDepthOnlyPrePass)
-        {
-            if (depthState.Enable || bDepthOnlyPrePass)
-            {
-                GL.Enable(EnableCap.DepthTest);
-                GL.DepthMask(depthState.UpdateEnable || bDepthOnlyPrePass);
-                switch (depthState.Function)
-                {
-                    case CompareType.Never: GL.DepthFunc(DepthFunction.Never); break;
-                    case CompareType.Less: GL.DepthFunc(DepthFunction.Less); break;
-                    case CompareType.Equal: GL.DepthFunc(DepthFunction.Equal); break;
-                    case CompareType.LEqual: GL.DepthFunc(DepthFunction.Lequal); break;
-                    case CompareType.Greater: GL.DepthFunc(DepthFunction.Greater); break;
-                    case CompareType.NEqual: GL.DepthFunc(DepthFunction.Notequal); break;
-                    case CompareType.GEqual: GL.DepthFunc(DepthFunction.Gequal); break;
-                    case CompareType.Always: GL.DepthFunc(DepthFunction.Always); break;
-                    default: Console.WriteLine("Unsupported GXCompareType: \"{0}\" in GetOpenGLDepthFunc!", depthState.Function); break;
-                }
-            }
-            else
-            {
-                GL.Disable(EnableCap.DepthTest);
-                GL.DepthMask(false);
-            }
-        }
-
-        public static void SetDitherEnabled(bool ditherEnabled)
-        {
-            if (ditherEnabled)
-                GL.Enable(EnableCap.Dither);
-            else
-                GL.Disable(EnableCap.Dither);
-        }
-
-        public static SuperBMDLib.Materials.Enums.BlendModeControl GetBlendModeCtrl(byte ctrl)
-        {
-            switch (ctrl)
-            {
-                case 0:
-                    return BlendModeControl.Zero;
-                case 1:
-                    return BlendModeControl.One;
-                case 2:
-                    return BlendModeControl.SrcColor;
-                case 3:
-                    return BlendModeControl.InverseSrcColor;
-                case 4:
-                    return BlendModeControl.SrcAlpha;
-                case 5:
-                    return BlendModeControl.InverseSrcAlpha;
-                case 6:
-                    return BlendModeControl.DstAlpha;
-                case 7:
-                    return BlendModeControl.InverseDstAlpha;
-            }
-
-            return BlendModeControl.Zero;
-        }
-
-        public static SuperBMDLib.Materials.Enums.BlendMode GetBlendModeType(byte type)
-        {
-            SuperBMDLib.Materials.Enums.BlendMode m = SuperBMDLib.Materials.Enums.BlendMode.None;
-
-            switch (type)
-            {
-                case 0:
-                    m = SuperBMDLib.Materials.Enums.BlendMode.None;
-                    break;
-                case 1:
-                    m = SuperBMDLib.Materials.Enums.BlendMode.Blend;
-                    break;
-                case 2:
-                    m = SuperBMDLib.Materials.Enums.BlendMode.Logic;
-                    break;
-                case 3:
-                    m = SuperBMDLib.Materials.Enums.BlendMode.Subtract;
-                    break;
-            }
-
-            return m;
-        }
-
-        public static SuperBMDLib.Materials.Enums.CullMode GetCullMode(byte mode)
-        {
-            switch (mode)
-            {
-                case 0:
-                    return CullMode.None;
-                case 1:
-                    return CullMode.Front;
-                case 2:
-                    return CullMode.Back;
-                case 3:
-                    return CullMode.All;
-            }
-
-            return CullMode.None;
-        }
-
-        public static SuperBMDLib.Materials.Enums.CompareType GetCompareType(byte type)
-        {
-            switch (type)
-            {
-                case 0:
-                    return CompareType.Never;
-                case 1:
-                    return CompareType.Less;
-                case 2:
-                    return CompareType.Equal;
-                case 3:
-                    return CompareType.LEqual;
-                case 4:
-                    return CompareType.Greater;
-                case 5:
-                    return CompareType.NEqual;
-                case 6:
-                    return CompareType.GEqual;
-                case 7:
-                    return CompareType.Always;
-            }
-
-            return CompareType.Never;
-        }
     }
 }

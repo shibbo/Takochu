@@ -11,9 +11,9 @@ using System.Security.Cryptography;
 using Takochu.ui;
 using static Takochu.smg.ObjectDB;
 using Takochu.util;
-using Takochu.ui.editor;
 using Takochu.io;
 using OpenTK.Graphics.OpenGL;
+using Takochu.rnd;
 
 namespace Takochu.smg.obj
 {
@@ -68,12 +68,51 @@ namespace Takochu.smg.obj
             mDemoGroupID = Get<short>("DemoGroupId");
             mMapPartsID = Get<short>("MapParts_ID");
 
-            //FileBase b = Program.sGame.mFilesystem.OpenFile("/ObjectData/Kuribo.arc");
-            //RARCFilesystem system = new RARCFilesystem(b);
-            //render = new BmdRenderer(new BMD(system.OpenFile("/derp/Kuribo.bdl")));
+            if (ModelCache.HasRenderer(mName))
+                mRenderer = ModelCache.GetRenderer(mName);
 
-            //system.Close();
-            //b.Close();
+            // initalize the renderer
+            if (Program.sGame.DoesFileExist($"/ObjectData/{mName}.arc"))
+            {
+                RARCFilesystem rarc = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile($"/ObjectData/{mName}.arc"));
+
+                if (rarc.DoesFileExist($"/root/{mName}.bdl"))
+                {
+                    mRenderer = new BmdRenderer(new BMD(rarc.OpenFile($"/root/{mName}.bdl")));
+                    ModelCache.AddRenderer(mName, (BmdRenderer)mRenderer);
+                }
+                else
+                {
+                    mRenderer = new ColorCubeRenderer(200f, new Vector4(1f, 1f, 1f, 1f), new Vector4(1f, 0f, 1f, 1f), true);
+                }
+
+                rarc.Close();
+            }
+            else
+            {
+                mRenderer = new ColorCubeRenderer(200f, new Vector4(1f, 1f, 1f, 1f), new Vector4(1f, 0f, 1f, 1f), true);
+            }
+        }
+
+        public override void Render(RenderMode mode)
+        {
+            RenderInfo inf = new RenderInfo();
+            inf.Mode = mode;
+
+            if (!mRenderer.GottaRender(inf))
+                return;
+
+            GL.PushMatrix();
+
+            GL.Translate(mTruePosition);
+            GL.Rotate(mTrueRotation.X, 0f, 0f, 1f);
+            GL.Rotate(mTrueRotation.Y, 0f, 1f, 0f);
+            GL.Rotate(mTrueRotation.Z, 1f, 0f, 0f);
+            GL.Scale(mScale.X, mScale.Y, mScale.Z);
+
+            mRenderer.Render(inf);
+
+            GL.PopMatrix();
         }
 
         public override void Save()

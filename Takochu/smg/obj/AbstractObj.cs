@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Takochu.fmt;
+using Takochu.rnd;
 
 namespace Takochu.smg.obj
 {
@@ -14,6 +15,9 @@ namespace Takochu.smg.obj
         {
             mEntry = entry;
             mName = Get<string>("name");
+            mUnique = Program.sUniqueID++;
+
+            
         }
         public void ApplyZoneOffset(Vector3 pos, Vector3 rot)
         {
@@ -45,6 +49,11 @@ namespace Takochu.smg.obj
             return ret;
         }
 
+        public virtual void Render(RenderMode mode)
+        {
+
+        }
+
         public override string ToString()
         {
             return "AbstractObj";
@@ -71,6 +80,9 @@ namespace Takochu.smg.obj
 
         public string mName;
         public string mType;
+
+        public int mUnique;
+        public RendererBase mRenderer;
 
         public int[] mObjArgs;
     }

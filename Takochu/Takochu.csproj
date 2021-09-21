@@ -73,13 +73,16 @@
     <Reference Include="Octokit, Version=0.50.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Octokit.0.50.0\lib\net46\Octokit.dll</HintPath>
     </Reference>
-    <Reference Include="OpenTK, Version=3.3.2.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+    <Reference Include="OpenTK, Version=3.0.1.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\Hacking\General\Toolbox-Latest\Lib\OpenTK.dll</HintPath>
+      <HintPath>..\..\WhiteholeCS-master\bin\Debug\OpenTK.dll</HintPath>
     </Reference>
-    <Reference Include="OpenTK.GLControl, Version=3.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+    <Reference Include="OpenTK.Compatibility">
+      <HintPath>..\..\WhiteholeCS-master\bin\Debug\OpenTK.Compatibility.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK.GLControl, Version=3.0.1.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\Hacking\General\Toolbox-Latest\Lib\OpenTK.GLControl.dll</HintPath>
+      <HintPath>..\..\WhiteholeCS-master\bin\Debug\OpenTK.GLControl.dll</HintPath>
     </Reference>
     <Reference Include="SuperBMDLib">
       <HintPath>..\..\..\SuperBMDLib.dll</HintPath>
@@ -114,13 +117,14 @@
     <Compile Include="io\FileBase.cs" />
     <Compile Include="io\MemoryFile.cs" />
     <Compile Include="rnd\BmdRenderer.cs" />
+    <Compile Include="rnd\ColorCubeRenderer.cs" />
+    <Compile Include="rnd\ModelCache.cs" />
+    <Compile Include="rnd\ModelSubstitutor.cs" />
+    <Compile Include="rnd\MultiBmdRenderer.cs" />
     <Compile Include="rnd\RenderBase.cs" />
     <Compile Include="smg\img\ImageHolder.cs" />
     <Compile Include="smg\msg\MessageBase.cs" />
     <Compile Include="smg\ZoneAttributes.cs" />
-    <Compile Include="ui\editor\GeneralUI.cs" />
-    <Compile Include="ui\editor\ParameterUI.cs" />
-    <Compile Include="ui\editor\PositionUI.cs" />
     <Compile Include="ui\HashGenForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -330,6 +330,21 @@ namespace Takochu.smg
             return ret;
         }
 
+        public List<StageObj> GetAllStageDataFromLayers(List<string> layers)
+        {
+            List<StageObj> ret = new List<StageObj>();
+
+            foreach(string layer in layers)
+            {
+                if (mZones.ContainsKey(layer))
+                {
+                    ret.AddRange(mZones[layer]);
+                }
+            }
+
+            return ret;
+        }
+
         public List<AbstractObj> GetObjectsFromLayers(string archive, string type, List<string> layers)
         {
             List<AbstractObj> ret = new List<AbstractObj>();
