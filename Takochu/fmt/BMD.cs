@@ -992,10 +992,13 @@ namespace Takochu.fmt
                             break;
 
                         case 4:
-                                image = ImageUtil.DecodeRGB565(ref m_File, height, width);
+                            image = ImageUtil.DecodeRGB565(ref m_File, height, width);
                             break;
                         case 5:
                             image = ImageUtil.DecodeRGB5A3(ref m_File, height, width);
+                            break;
+                        case 6:
+                            image = ImageUtil.DecodeRGBA32(ref m_File, (uint)width, (uint)height);
                             break;
 
                         case 14: // DXT1

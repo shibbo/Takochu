@@ -225,7 +225,49 @@ namespace Takochu.util
             return image;
         }
 
-        /* big thanks to Switch Toolbox for CMPR decoding, slightly modified to work with FileBase */
+        /* big thanks to Switch Toolbox for CMPR / RGBA32 decoding, slightly modified to work with FileBase */
+
+        public static byte[] DecodeRGBA32(ref FileBase file, uint width, uint height)
+        {
+            uint numWidthBlocks = width / 4;
+            uint numHeightBlocks = height / 4;
+
+            byte[] dest = new byte[width * height * 4];
+
+            for (int yBlock = 0; yBlock < numHeightBlocks; yBlock++)
+            {
+                for (int xBlock = 0; xBlock < numWidthBlocks; xBlock++)
+                {
+                    for (int pY = 0; pY < 4; pY++)
+                    {
+                        for (int pX = 0; pX < 4; pX++)
+                        {
+                            if ((xBlock * 4 + pX >= width) || (yBlock * 4 + pY >= height))
+                                continue;
+
+                            uint destIndex = (uint)(4 * (width * ((yBlock * 4) + pY) + (xBlock * 4) + pX));
+                            dest[destIndex + 3] = file.ReadByte(); //Alpha
+                            dest[destIndex + 2] = file.ReadByte(); //Red
+                        }
+                    }
+
+                    for (int pY = 0; pY < 4; pY++)
+                    {
+                        for (int pX = 0; pX < 4; pX++)
+                        {
+                            if ((xBlock * 4 + pX >= width) || (yBlock * 4 + pY >= height))
+                                continue;
+                            uint destIndex = (uint)(4 * (width * ((yBlock * 4) + pY) + (xBlock * 4) + pX));
+                            dest[destIndex + 1] = file.ReadByte();
+                            dest[destIndex + 0] = file.ReadByte();
+                        }
+                    }
+
+                }
+            }
+
+            return dest;
+        }
 
         public static byte[] DecodeCMPR(FileBase file, uint width, uint height)
         {
