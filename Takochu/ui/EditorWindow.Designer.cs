@@ -156,6 +156,7 @@
             this.objectsListTreeView.Name = "objectsListTreeView";
             this.objectsListTreeView.Size = new System.Drawing.Size(330, 459);
             this.objectsListTreeView.TabIndex = 8;
+            this.objectsListTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.objectsListTreeView_NodeMouseDoubleClick);
             // 
             // tabPage2
             // 

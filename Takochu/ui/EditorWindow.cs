@@ -103,6 +103,9 @@ namespace Takochu.ui
 
             List<string> currentLayers = new List<string>();
 
+            Zone galaxyZone = mGalaxy.GetGalaxyZone();
+            mObjects.AddRange(galaxyZone.GetAllObjectsFromLayers(layers));
+
             foreach (string zone in mZonesUsed)
             {
                 mZoneMasks.Add(zone, mGalaxy.GetMaskUsedInZoneOnCurrentScenario(zone));
@@ -133,9 +136,6 @@ namespace Takochu.ui
 
                 if (z.mLights != null)
                     lights.AddRange(z.mLights);
-
-                Zone galaxyZone = mGalaxy.GetGalaxyZone();
-                mObjects.AddRange(galaxyZone.GetAllObjectsFromLayers(layers));
 
                 //mCurrentLayers = GameUtil.GetGalaxyLayers(zoneMasks[mGalaxy.mName]);
 
@@ -674,6 +674,29 @@ namespace Takochu.ui
 
             m_MouseDown = e.Button;
             m_LastMouseMove = m_LastMouseClick = e.Location;
+        }
+
+        private void objectsListTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            // don't do anything yet
+            return;
+            AbstractObj abstractObj = e.Node.Tag as AbstractObj;
+
+            if (abstractObj == null)
+                return;
+
+            string type = e.Node.Parent.Text;
+
+            switch(type)
+            {
+                case "Objects":
+                    LevelObj obj = abstractObj as LevelObj;
+
+                    m_CamMatrix = Matrix4.LookAt(obj.mPosition, m_CamTarget, new Vector3(0.0f, 1.0f, 0.0f));
+                    m_CamMatrix = Matrix4.Mult(Matrix4.Scale(0.0001f), m_CamMatrix);
+
+                    break;
+            }
         }
 
         private void glLevelView_Resize(object sender, EventArgs e)
