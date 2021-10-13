@@ -43,6 +43,8 @@ namespace Takochu.smg.obj
             {
                 mPathPointObjs.Add(new PathPointObj(this, e));
             }
+
+            mUnique = Program.sUniqueID++;
         }
 
         public void Save()
@@ -164,6 +166,8 @@ namespace Takochu.smg.obj
 
         public int[] mPathArgs;
         public Zone mZone;
+
+        public int mUnique;
 
         public List<PathPointObj> mPathPointObjs;
         public OpenTK.Graphics.Color4 mPathColor;

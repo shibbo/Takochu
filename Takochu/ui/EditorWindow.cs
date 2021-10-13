@@ -64,6 +64,8 @@ namespace Takochu.ui
 
         Dictionary<string, int> mZoneMasks = new Dictionary<string, int>();
 
+        Dictionary<int, Dictionary<int, int>> mDispLists = new Dictionary<int, Dictionary<int, int>>();
+
         public void LoadScenario(int scenarioNo)
         {
             mStages.Clear();
@@ -75,8 +77,19 @@ namespace Takochu.ui
 
             mObjects.Clear();
 
-            for (int i = 0; i < 3; i++)
-                GL.DeleteLists(mDisplayLists[i], 1);
+            foreach (KeyValuePair<int, Dictionary<int, int>> disp in mDispLists)
+            {
+                foreach (KeyValuePair<int, int> actualList in disp.Value)
+                    GL.DeleteLists(actualList.Value, 1);
+            }
+
+            mDispLists.Clear();
+            mDispLists.Add(0, new Dictionary<int, int>());
+            mDispLists.Add(1, new Dictionary<int, int>());
+            mDispLists.Add(2, new Dictionary<int, int>());
+
+            //for (int i = 0; i < 3; i++)
+            //    GL.DeleteLists(mDisplayLists[i], 1);
 
             // we want to clear out the children of the 5 camera type root nodes
             //for (int i = 0; i < 5; i++)
@@ -448,17 +461,27 @@ namespace Takochu.ui
                     break;
             }
 
-            if (mDisplayLists[t] == 0)
+            /*if (mDisplayLists[t] == 0)
                 mDisplayLists[t] = GL.GenLists(1);
 
-            GL.NewList(mDisplayLists[t], ListMode.Compile);
+            GL.NewList(mDisplayLists[t], ListMode.Compile);*/
 
             if (mode == RenderMode.Picking)
             {
                 foreach(AbstractObj o in mObjects)
                 {
+                    Dictionary<int, int> keyValuePairs = new Dictionary<int, int>();
+
+                    keyValuePairs.Add(o.mUnique, GL.GenLists(1));
+                    mDispLists.Add(t, keyValuePairs);
+
+                    GL.NewList(mDispLists[t][o.mUnique], ListMode.Compile);
+
                     GL.Color4(Color.FromArgb(o.mUnique));
                     o.Render(mode);
+
+                    GL.EndList();
+                    
                 }
             }
             else
@@ -470,25 +493,56 @@ namespace Takochu.ui
                     List<AbstractObj> objsInStage = mObjects.FindAll(o => o.mParentZone.mZoneName == stage.mName);
                     List<PathObj> pathsInStage = mPaths.FindAll(p => p.mParentZone.mZoneName == stage.mName);
 
-                    GL.PushMatrix();
-
-                    GL.Translate(stage.mPosition);
-                    GL.Rotate(stage.mRotation.X, 1f, 0f, 0f);
-                    GL.Rotate(stage.mRotation.Y, 0f, 1f, 0f);
-                    GL.Rotate(stage.mRotation.Z, 0f, 0f, 1f);
-
                     foreach (AbstractObj o in objsInStage)
+                    {
+                        Dictionary<int, int> keyValuePairs = new Dictionary<int, int>();
+
+                        if (mDispLists[t].ContainsKey(o.mUnique))
+                            continue;
+
+                        keyValuePairs.Add(o.mUnique, GL.GenLists(1));
+                        mDispLists[t].Add(o.mUnique, GL.GenLists(1));
+
+                        GL.NewList(mDispLists[t][o.mUnique], ListMode.Compile);
+
+                        GL.PushMatrix();
+
+                        GL.Translate(stage.mPosition);
+                        GL.Rotate(stage.mRotation.X, 1f, 0f, 0f);
+                        GL.Rotate(stage.mRotation.Y, 0f, 1f, 0f);
+                        GL.Rotate(stage.mRotation.Z, 0f, 0f, 1f);
+
                         o.Render(mode);
 
+                        GL.PopMatrix();
+
+                        GL.EndList();
+                    }
+
                     foreach (PathObj p in pathsInStage)
+                    {
+                        Dictionary<int, int> keyValuePairs = new Dictionary<int, int>();
+
+                        if (mDispLists[t].ContainsKey(p.mUnique))
+                            continue;
+
+                        keyValuePairs.Add(p.mUnique, GL.GenLists(1));
+                        mDispLists[t].Add(p.mUnique, GL.GenLists(1));
+
+                        GL.NewList(mDispLists[t][p.mUnique], ListMode.Compile);
+
+                        GL.PushMatrix();
+
+                        GL.Translate(stage.mPosition);
+                        GL.Rotate(stage.mRotation.X, 1f, 0f, 0f);
+                        GL.Rotate(stage.mRotation.Y, 0f, 1f, 0f);
+                        GL.Rotate(stage.mRotation.Z, 0f, 0f, 1f);
                         p.Render(mode);
 
-                    GL.Translate(Vector3.Zero);
-                    GL.Rotate(0f, 1f, 0f, 0f);
-                    GL.Rotate(0f, 0f, 1f, 0f);
-                    GL.Rotate(0f, 0f, 0f, 1f);
+                        GL.PopMatrix();
 
-                    GL.PopMatrix();
+                        GL.EndList();
+                    }                    
                 }
 
                 // and now we just do the regular stage
@@ -496,13 +550,47 @@ namespace Takochu.ui
                 List<PathObj> regularPaths = mPaths.FindAll(p => p.mParentZone.mZoneName == mGalaxyName);
 
                 foreach (AbstractObj o in regularObjs)
+                {
+                    Dictionary<int, int> keyValuePairs = new Dictionary<int, int>();
+
+                    if (mDispLists[t].ContainsKey(o.mUnique))
+                        continue;
+
+                    keyValuePairs.Add(o.mUnique, GL.GenLists(1));
+                    mDispLists[t].Add(o.mUnique, GL.GenLists(1));
+
+                    GL.NewList(mDispLists[t][o.mUnique], ListMode.Compile);
+
+                    GL.PushMatrix();
+
                     o.Render(mode);
 
-                foreach (PathObj path in regularPaths)
-                    path.Render(mode);
-            }
+                    GL.PopMatrix();
 
-            GL.EndList();
+                    GL.EndList();
+                }
+
+                foreach (PathObj path in regularPaths)
+                {
+                    Dictionary<int, int> keyValuePairs = new Dictionary<int, int>();
+
+                    if (mDispLists[t].ContainsKey(path.mUnique))
+                        continue;
+
+                    keyValuePairs.Add(path.mUnique, GL.GenLists(1));
+                    mDispLists[t].Add(path.mUnique, GL.GenLists(1));
+
+                    GL.NewList(mDispLists[t][path.mUnique], ListMode.Compile);
+
+                    GL.PushMatrix();
+
+                    path.Render(mode);
+
+                    GL.PopMatrix();
+
+                    GL.EndList();
+                }
+            }
         }
 
         private void UpdateViewport()
@@ -574,6 +662,12 @@ namespace Takochu.ui
             GL.BindTexture(TextureTarget.Texture2D, 0);
             GL.Disable(EnableCap.Lighting);
 
+            foreach (KeyValuePair<int, Dictionary<int, int>> disp in mDispLists)
+            {
+                foreach (KeyValuePair<int, int> actualList in disp.Value)
+                    GL.CallList(actualList.Value);
+            }
+
             for (int a = 0; a < 3; a++)
             {
                 GL.Color4(Color.FromArgb(a));
@@ -618,8 +712,11 @@ namespace Takochu.ui
 
             GL.Color4(1f, 1f, 1f, 1f);
 
-            for (int i = 0; i < 3; i++)
-                GL.CallList(mDisplayLists[i]);
+            foreach (KeyValuePair<int, Dictionary<int, int>> disp in mDispLists)
+            {
+                foreach (KeyValuePair<int, int> actualList in disp.Value)
+                    GL.CallList(actualList.Value);
+            }
 
             glLevelView.SwapBuffers();
         }
@@ -678,8 +775,6 @@ namespace Takochu.ui
 
         private void objectsListTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            // don't do anything yet
-            return;
             AbstractObj abstractObj = e.Node.Tag as AbstractObj;
 
             if (abstractObj == null)
@@ -692,11 +787,24 @@ namespace Takochu.ui
                 case "Objects":
                     LevelObj obj = abstractObj as LevelObj;
 
-                    m_CamMatrix = Matrix4.LookAt(obj.mPosition, m_CamTarget, new Vector3(0.0f, 1.0f, 0.0f));
-                    m_CamMatrix = Matrix4.Mult(Matrix4.Scale(0.0001f), m_CamMatrix);
+                    m_CamDistance = 0.200f;
+                    m_CamTarget.X = obj.mTruePosition.X / 10000f;
+                    m_CamTarget.Y = obj.mTruePosition.Y / 10000f;
+                    m_CamTarget.Z = obj.mTruePosition.Z / 10000f;
+
+                    m_CamRotation.Y = (float)Math.PI / 8f;
+                    m_CamRotation.X = (-obj.mRotation.Y - 90f) * (float)Math.PI / 180f;
+
+                    UpdateCamera();
+                    glLevelView.Update();
 
                     break;
             }
+        }
+        
+        private void MoveCameraTo(Vector3 target)
+        {
+            
         }
 
         private void glLevelView_Resize(object sender, EventArgs e)

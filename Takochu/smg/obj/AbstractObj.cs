@@ -16,7 +16,6 @@ namespace Takochu.smg.obj
             mEntry = entry;
             mName = Get<string>("name");
             mUnique = Program.sUniqueID++;
-
             
         }
         public void ApplyZoneOffset(Vector3 pos, Vector3 rot)
