@@ -17,6 +17,7 @@ namespace Takochu.util
     {
         public static void Setup(TreeView TView)
         {
+            Console.WriteLine(TView.Name);
             if (TView != null)
                 sTView = TView;
 
@@ -30,17 +31,18 @@ namespace Takochu.util
             NameHolder.Initialize();
             ImageHolder.Initialize();
 
-            UpdateTranslation();
+            UpdateTranslation(TView);
         }
 
-        public static void UpdateTranslation()
+        public static void UpdateTranslation(TreeView tv)
         {
             Program.sTranslator = new Translator(Convert.ToString(SettingsUtil.GetSetting("Translation")));
-            PopulateGalaxyTreeView(sTView);
+            PopulateGalaxyTreeView(tv);
         }
 
         static void PopulateGalaxyTreeView(TreeView TView)
         {
+            Console.WriteLine(TView.Name);
             TView.Nodes.Clear();
 
             List<string> galaxies = Program.sGame.GetGalaxies();

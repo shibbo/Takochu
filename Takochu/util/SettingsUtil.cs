@@ -20,6 +20,7 @@ namespace Takochu.util
                     break;
                 case "Translation":
                     Properties.Settings.Default.Translation = Convert.ToString(value);
+                    Console.WriteLine("ct "+ Convert.ToString(value));
                     break;
                 case "Dev":
                     //Properties.Settings.Default.IsBleedingEdge = Convert.ToBoolean(value);

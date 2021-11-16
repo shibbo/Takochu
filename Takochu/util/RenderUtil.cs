@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 using OpenTK;
-using SuperBMDLib.Materials;
-using SuperBMDLib.Materials.Enums;
+//using SuperBMDLib.Materials;
+//using SuperBMDLib.Materials.Enums;
 using Takochu.smg.obj;
 using OpenTK.Graphics;
 

@@ -29,23 +29,13 @@ namespace Takochu.smg
 
         public static void Load()
         {
-            if (!File.Exists("res/objectdb.xml"))
+            var a = AppDomain.CurrentDomain.BaseDirectory;
+            Console.WriteLine(a + "\\res\\objectdb.xml");
+            if (File.Exists(a+"res\\objectdb.xml") == false)
                 GenDB();
 
             Actors = new Dictionary<string, Actor>();
             Objects = new Dictionary<string, Object>();
-
-            using (var c = new WebClient())
-            {
-                try
-                {
-                    c.DownloadFile("http://shibboleet.us.to/new_db/generate.php", "res/objectdb.xml");
-                }
-                catch
-                {
-                    // do nothing
-                }
-            }
 
             XmlDocument db = new XmlDocument();
             db.Load("res/objectdb.xml");

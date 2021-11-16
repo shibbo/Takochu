@@ -29,7 +29,7 @@ namespace Takochu
                 Properties.Settings.Default.BCSVPaths = new List<string>();
             }
 
-            Program.sTranslator = new Translator("English");
+            Program.sTranslator = new Translator(Properties.Settings.Default.Translation);
 
             string gamePath = Properties.Settings.Default.GamePath;
 
@@ -171,7 +171,7 @@ namespace Takochu
 
         private void settingsBtn_Click(object sender, EventArgs e)
         {
-            SettingsForm settings = new SettingsForm();
+            SettingsForm settings = new SettingsForm(galaxyTreeView);
             settings.Show();
         }
     }

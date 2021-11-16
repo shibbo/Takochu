@@ -50,11 +50,19 @@ namespace Takochu.util
                     path = $"res/translations/de/SimpleGalaxyNames_{(GameUtil.IsSMG1() ? "SMG1.txt" : "SMG2.txt")}";
                     break;
 
+                case Language.Japanese:
+                    path = $"res\\translations\\jp\\SimpleGalaxyNames_{(GameUtil.IsSMG1() ? "SMG1.txt" : "SMG2.txt")}";
+                    break;
+
                 default:
-                    path = $"res/translations/en/SimpleGalaxyNames_{(GameUtil.IsSMG1() ? "SMG1.txt" : "SMG2.txt")}";
+                    path = $"res\\translations\\en\\SimpleGalaxyNames_{(GameUtil.IsSMG1() ? "SMG1.txt" : "SMG2.txt")}";
                     break;
             }
-
+            Properties.Settings.Default.Translation = mLanguage.ToString();
+            Properties.Settings.Default.Save();
+            System.Console.WriteLine(Properties.Settings.Default.Translation);
+            System.Console.WriteLine( path);
+            System.Console.WriteLine(mLanguage.ToString());
             string[] lines = File.ReadAllLines(path);
 
             Dictionary<string, string> ret = new Dictionary<string, string>();
