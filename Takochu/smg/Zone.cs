@@ -23,7 +23,6 @@ namespace Takochu.smg
             mGame = galaxy.mGame;
             mFilesystem = mGame.mFilesystem;
             mZoneName = name;
-
             mIsMainGalaxy = mGalaxy.mName == name;
 
             mMapFiles = new Dictionary<string, FilesystemBase>();
@@ -37,25 +36,27 @@ namespace Takochu.smg
         {
             if (GameUtil.IsSMG1())
             {
-                string path = $"/StageData/{mZoneName}.arc";
+                
+                
+                    string path = $"/StageData/{mZoneName}.arc";
+                    if (mFilesystem.DoesFileExist(path))
+                    {
+                        mMapFiles.Add("Map", new RARCFilesystem(mFilesystem.OpenFile(path)));
+                        Console.WriteLine(path);
+                        if (mIsMainGalaxy)
+                            LoadObjects("Map", "placement", "stageobjinfo");
 
-                if (mFilesystem.DoesFileExist(path))
-                {
-                    mMapFiles.Add("Map", new RARCFilesystem(mFilesystem.OpenFile(path)));
-
-                    if (mIsMainGalaxy)
-                        LoadObjects("Map", "Placement", "StageObjInfo");
-
-                    LoadObjects("Map", "placement", "AreaObjInfo");
-                    LoadObjects("Map", "placement", "CameraCubeInfo");
-                    LoadObjects("Map", "placement", "ObjInfo");
-                    LoadObjects("Map", "placement", "PlanetObjInfo");
-                    LoadObjects("Map", "GeneralPos", "GeneralPosInfo");
-                    LoadObjects("Map", "Debug", "DebugMoveInfo");
-                    LoadObjects("Map", "Start", "StartInfo");
-                    LoadObjects("Map", "MapParts", "MapPartsInfo");
-                    LoadObjects("Map", "placement", "DemoObjInfo");
-                }
+                        LoadObjects("Map", "placement", "areaobjinfo");
+                        LoadObjects("Map", "placement", "cameracubeinfo");
+                        LoadObjects("Map", "placement", "objinfo");
+                        LoadObjects("Map", "placement", "planetobjinfo");
+                        LoadObjects("Map", "generalpos", "generalposinfo");
+                        LoadObjects("Map", "debug", "debugmoveinfo");
+                        LoadObjects("Map", "start", "startinfo");
+                        LoadObjects("Map", "mapparts", "mappartsinfo");
+                        LoadObjects("Map", "placement", "demoobjinfo");
+                    }
+                //LoadMessages();
             }
             else
             {
@@ -109,8 +110,11 @@ namespace Takochu.smg
 
         public void LoadObjects(string archive, string directory, string file)
         {
+            
             List<string> layers = mMapFiles[archive].GetDirectories("/root/jmp/" + directory);
+            //if (GameUtil.IsSMG1()) archive = string.Empty;
             layers.ForEach(l => AssignsObjectsToList(archive, $"{directory}/{l}/{file}"));
+            //Console.WriteLine($"{directory}/{l}/{file}");
         }
 
         public void LoadCameras()
@@ -127,7 +131,7 @@ namespace Takochu.smg
 
             List<string> intro_cameras = mMapFiles["Map"].GetFilesWithExt("/root/camera", "canm");
 
-            foreach(string intCamera in intro_cameras)
+            foreach (string intCamera in intro_cameras)
             {
                 mIntroCameras.Add(intCamera, new CANM(mMapFiles["Map"].OpenFile($"/root/camera/{intCamera}")));
             }
@@ -137,6 +141,8 @@ namespace Takochu.smg
         {
             mAttributes = new ZoneAttributes(mMapFiles["ZoneInfo"]);
         }
+
+        //public void LoadAttributes() { }
 
         public void LoadLight()
         {
@@ -188,7 +194,7 @@ namespace Takochu.smg
 
             List<string> ghost_files = mMapFiles["Ghost"].GetFilesWithExt("/root/gst", "gst");
 
-            foreach(string gst in ghost_files)
+            foreach (string gst in ghost_files)
             {
                 mGhostFiles.Add(gst, new GST(mMapFiles["Ghost"].OpenFile($"/root/gst/{gst.ToLower()}")));
             }
@@ -196,10 +202,12 @@ namespace Takochu.smg
 
         public void AssignsObjectsToList(string archive, string path)
         {
+            Console.WriteLine(path);
             string[] data = path.Split('/');
             string layer = data[1];
             string dir = data[2];
-
+            //Console.WriteLine("Layer "+layer);
+            //Console.WriteLine(data[0] + data[1] + data[2] + "  " + data.Count());
             if (!mObjects.ContainsKey(archive))
             {
                 mObjects.Add(archive, new Dictionary<string, List<AbstractObj>>());
@@ -214,9 +222,14 @@ namespace Takochu.smg
             {
                 mZones.Add(layer, new List<StageObj>());
             }
-
+            Console.WriteLine($"/stage/jmp/{path}");
             BCSV bcsv = new BCSV(mMapFiles[archive].OpenFile($"/stage/jmp/{path}"));
 
+            
+            //        System.Globalization.TextInfo ti =
+            //System.Globalization.CultureInfo.CurrentCulture.TextInfo;
+            //        Console.WriteLine(ti.ToTitleCase(path));
+            //        path = ti.ToTitleCase(path);
             foreach (BCSV.Entry e in bcsv.mEntries)
             {
                 dir = dir.ToLower();
@@ -230,9 +243,11 @@ namespace Takochu.smg
                         mObjects[archive][layer].Add(new CameraObj(e, this, path));
                         break;
                     case "stageobjinfo":
+                        //case "StageObjInfo":
                         mZones[layer].Add(new StageObj(e));
                         break;
                     case "objinfo":
+                        //case "ObjInfo":
                         mObjects[archive][layer].Add(new LevelObj(e, this, path));
                         break;
                     case "demoobjinfo":
@@ -320,10 +335,16 @@ namespace Takochu.smg
 
                 Dictionary<string, List<AbstractObj>> objs = mObjects[archive];
 
+
                 layers.ForEach(l =>
                 {
                     if (objs.ContainsKey(l))
+                    {
                         ret.AddRange(objs[l]);
+                        //if (objs[l].Count > 0) Console.WriteLine(objs[l].ElementAt(0).mName);
+
+                    }
+
                 });
             }
 
@@ -334,11 +355,12 @@ namespace Takochu.smg
         {
             List<StageObj> ret = new List<StageObj>();
 
-            foreach(string layer in layers)
+            foreach (string layer in layers)
             {
                 if (mZones.ContainsKey(layer))
                 {
                     ret.AddRange(mZones[layer]);
+
                 }
             }
 
@@ -574,6 +596,7 @@ namespace Takochu.smg
         private Game mGame;
         private FilesystemBase mFilesystem;
         public string mZoneName;
+
         public bool mIsMainGalaxy;
 
         public Dictionary<string, Dictionary<string, List<AbstractObj>>> mObjects;

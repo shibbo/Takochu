@@ -6,10 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Takochu.fmt;
 
+
+
 namespace Takochu.smg.obj
 {
     public class StageObj
     {
+        
         public StageObj(BCSV.Entry entry)
         {
             mEntry = entry;

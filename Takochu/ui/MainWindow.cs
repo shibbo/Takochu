@@ -15,6 +15,7 @@ using Takochu.smg.img;
 using Takochu.smg.msg;
 using Takochu.ui;
 using Takochu.util;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace Takochu
 {
@@ -51,7 +52,7 @@ namespace Takochu
 
         private void Setup()
         {
-            Program.sGame = new smg.Game(new ExternalFilesystem(Properties.Settings.Default.GamePath));
+            Program.sGame = new Game(new ExternalFilesystem(Properties.Settings.Default.GamePath));
             LightData.Initialize();
 
             if (GameUtil.IsSMG2())
@@ -101,18 +102,23 @@ namespace Takochu
 
         private bool SetGamePath()
         {
-            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            var SetPath = Properties.Settings.Default.GamePath;
+            if (!Directory.Exists(SetPath))
+                SetPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
 
-            if (dialog.ShowDialog() == DialogResult.OK)
+            CommonOpenFileDialog cofd = new CommonOpenFileDialog();
+            cofd.InitialDirectory = SetPath;
+            cofd.IsFolderPicker = true;
+            if (cofd.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                string path = dialog.SelectedPath;
+                string path = cofd.FileName;
                 if (Directory.Exists($"{path}/StageData") && Directory.Exists($"{path}/ObjectData"))
                 {
-
-                    Properties.Settings.Default.GamePath = dialog.SelectedPath;
+                    
+                    Properties.Settings.Default.GamePath = path;
                     Properties.Settings.Default.Save();
 
-                    Program.sGame = new smg.Game(new ExternalFilesystem(dialog.SelectedPath));
+                    Program.sGame = new smg.Game(new ExternalFilesystem(path));
 
                     MessageBox.Show("Path set successfully! You may now use Takochu.");
                     return true;
@@ -123,7 +129,6 @@ namespace Takochu
                     return false;
                 }
             }
-
             return false;
         }
 
@@ -133,6 +138,7 @@ namespace Takochu
             {
                 EditorWindow win = new EditorWindow(Convert.ToString(galaxyTreeView.SelectedNode.Tag));
                 win.Show();
+                
             }
         }
 

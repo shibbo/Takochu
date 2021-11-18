@@ -42,5 +42,6 @@ namespace Takochu.rnd
         public virtual void Render(RenderInfo info)
         {
         }
+
     }
 }

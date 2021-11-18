@@ -23,8 +23,10 @@ namespace Takochu.smg
 
             mZones = new Dictionary<string, Zone>();
             mScenarioFile = new RARCFilesystem(mFilesystem.OpenFile($"/StageData/{name}/{name}Scenario.arc"));
-            
-            BCSV zonesBCSV = new BCSV(mScenarioFile.OpenFile("/root/ZoneList.bcsv"));
+
+            var text = "/root/ZoneList.bcsv";
+            if (GameUtil.IsSMG1()) text = "/root/zonelist.bcsv";
+            BCSV zonesBCSV = new BCSV(mScenarioFile.OpenFile(text));
 
             foreach(BCSV.Entry e in zonesBCSV.mEntries)
             {
@@ -37,7 +39,8 @@ namespace Takochu.smg
             }
 
             zonesBCSV.Close();
-
+            var text2 = "/root/ScenarioData.bcsv";
+            if (GameUtil.IsSMG1()) text2 = "/root/scenariodata.bcsv";
             BCSV scenarioBCSV = new BCSV(mScenarioFile.OpenFile("/root/ScenarioData.bcsv"));
 
             mScenarios = new Dictionary<int, Scenario>();
@@ -63,7 +66,6 @@ namespace Takochu.smg
             {
                 zone.Close();
             }
-
             mScenarioFile.Close();
         }
 
@@ -119,6 +121,31 @@ namespace Takochu.smg
         public Zone GetGalaxyZone()
         {
             return mZones[mName];
+        }
+
+        /// <summary>
+        /// Gets the origin of the zone.<br/>
+        /// ゾーンの原点を取得
+        /// </summary>
+        /// <param name="zoneName">ZoneName</param>
+        /// <returns></returns>
+        public Vector3 GetZoneGlobalOffset(string zoneName)
+        {
+            List<StageObj> SearchFile;
+            var ZoneGlobalOffset = new Vector3(0f,0f,0f);
+
+            if (GameUtil.IsSMG2()) 
+                SearchFile = GetGalaxyZone().mZones["Common"];
+            else 
+                SearchFile = GetGalaxyZone().mZones["common"];
+
+            var FindIndex = SearchFile.FindIndex(x => x.mName == zoneName);
+            if (FindIndex < 0) 
+                return ZoneGlobalOffset;
+            
+            
+            return SearchFile.ElementAt(FindIndex).mPosition;
+
         }
 
         public Zone GetZone(string name)

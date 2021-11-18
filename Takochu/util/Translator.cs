@@ -16,6 +16,13 @@ namespace Takochu.util
             Spanish
         }
 
+        private enum LangageCode
+        {
+            en,
+            du,
+            jp
+        }
+
         public static Dictionary<string, Language> sStringToLang = new Dictionary<string, Language>()
         {
             { "English", Language.English },
@@ -38,24 +45,23 @@ namespace Takochu.util
 
         public Dictionary<string, string> GetGalaxyNames()
         {
-            string path = "";
-
+            string path;
             switch (mLanguage)
             {
                 case Language.English:
-                    path = $"res/translations/en/SimpleGalaxyNames_{(GameUtil.IsSMG1() ? "SMG1.txt" : "SMG2.txt")}";
+                    path = JointSimpleGalaxyName(LangageCode.en);
                     break;
 
                 case Language.German:
-                    path = $"res/translations/de/SimpleGalaxyNames_{(GameUtil.IsSMG1() ? "SMG1.txt" : "SMG2.txt")}";
+                    path = JointSimpleGalaxyName(LangageCode.du);
                     break;
 
                 case Language.Japanese:
-                    path = $"res\\translations\\jp\\SimpleGalaxyNames_{(GameUtil.IsSMG1() ? "SMG1.txt" : "SMG2.txt")}";
+                    path = JointSimpleGalaxyName(LangageCode.jp);
                     break;
 
                 default:
-                    path = $"res\\translations\\en\\SimpleGalaxyNames_{(GameUtil.IsSMG1() ? "SMG1.txt" : "SMG2.txt")}";
+                    path = JointSimpleGalaxyName(0);
                     break;
             }
             Properties.Settings.Default.Translation = mLanguage.ToString();
@@ -74,6 +80,11 @@ namespace Takochu.util
             }
 
             return ret;
+        }
+        
+        private string JointSimpleGalaxyName(LangageCode lc) 
+        {
+            return $"res/translations/{lc}/SimpleGalaxyNames_{(GameUtil.IsSMG1() ? "SMG1.txt" : "SMG2.txt")}";
         }
 
         private Language mLanguage;
