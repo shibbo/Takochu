@@ -69,7 +69,7 @@
             this.scenarioTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.scenarioTreeView.Location = new System.Drawing.Point(0, 0);
             this.scenarioTreeView.Name = "scenarioTreeView";
-            this.scenarioTreeView.Size = new System.Drawing.Size(342, 776);
+            this.scenarioTreeView.Size = new System.Drawing.Size(342, 714);
             this.scenarioTreeView.TabIndex = 2;
             this.scenarioTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.scenarioTreeView_AfterSelect);
             this.scenarioTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.scenarioTreeView_NodeMouseClick);
@@ -83,10 +83,10 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Location = new System.Drawing.Point(2, 29);
+            this.tabControl1.Location = new System.Drawing.Point(2, 27);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(350, 802);
+            this.tabControl1.Size = new System.Drawing.Size(350, 740);
             this.tabControl1.TabIndex = 6;
             // 
             // tabPage4
@@ -94,7 +94,7 @@
             this.tabPage4.Controls.Add(this.scenarioTreeView);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(342, 776);
+            this.tabPage4.Size = new System.Drawing.Size(342, 714);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Scenario";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -103,7 +103,7 @@
             // 
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(342, 776);
+            this.tabPage5.Size = new System.Drawing.Size(342, 714);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Zones";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -115,7 +115,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(342, 776);
+            this.tabPage1.Size = new System.Drawing.Size(342, 714);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Objects";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -152,10 +152,11 @@
             // 
             // objectsListTreeView
             // 
-            this.objectsListTreeView.Location = new System.Drawing.Point(6, 31);
+            this.objectsListTreeView.Location = new System.Drawing.Point(6, 29);
             this.objectsListTreeView.Name = "objectsListTreeView";
-            this.objectsListTreeView.Size = new System.Drawing.Size(330, 459);
+            this.objectsListTreeView.Size = new System.Drawing.Size(330, 424);
             this.objectsListTreeView.TabIndex = 8;
+            this.objectsListTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.objectsListTreeView_NodeMouseClick);
             this.objectsListTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.objectsListTreeView_NodeMouseDoubleClick);
             // 
             // tabPage2
@@ -163,7 +164,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(342, 776);
+            this.tabPage2.Size = new System.Drawing.Size(342, 714);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Cameras";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -172,7 +173,7 @@
             // 
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(342, 776);
+            this.tabPage3.Size = new System.Drawing.Size(342, 714);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Light";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -195,7 +196,7 @@
             this.applyGalaxyNameBtn});
             this.toolStrip1.Location = new System.Drawing.Point(358, 1);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1276, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1272, 25);
             this.toolStrip1.TabIndex = 7;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -205,7 +206,7 @@
             this.stageInformationBtn.Image = ((System.Drawing.Image)(resources.GetObject("stageInformationBtn.Image")));
             this.stageInformationBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.stageInformationBtn.Name = "stageInformationBtn";
-            this.stageInformationBtn.Size = new System.Drawing.Size(106, 22);
+            this.stageInformationBtn.Size = new System.Drawing.Size(105, 22);
             this.stageInformationBtn.Text = "Stage Information";
             this.stageInformationBtn.Click += new System.EventHandler(this.stageInformationBtn_Click);
             // 
@@ -245,7 +246,7 @@
             this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(112, 22);
+            this.toolStripButton2.Size = new System.Drawing.Size(111, 22);
             this.toolStripButton2.Text = "Import New Object";
             // 
             // toolStripSeparator1
@@ -256,7 +257,7 @@
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(80, 22);
+            this.toolStripLabel1.Size = new System.Drawing.Size(79, 22);
             this.toolStripLabel1.Text = "Galaxy Name:";
             // 
             // galaxyNameTxtBox
@@ -268,7 +269,7 @@
             // toolStripLabel2
             // 
             this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(86, 22);
+            this.toolStripLabel2.Size = new System.Drawing.Size(85, 22);
             this.toolStripLabel2.Text = "Mission Name:";
             // 
             // scenarioNameTxtBox
@@ -297,7 +298,7 @@
             this.closeEditorBtn});
             this.toolStrip2.Location = new System.Drawing.Point(6, 1);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(78, 25);
+            this.toolStrip2.Size = new System.Drawing.Size(77, 25);
             this.toolStrip2.TabIndex = 8;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -317,7 +318,7 @@
             this.closeEditorBtn.Image = ((System.Drawing.Image)(resources.GetObject("closeEditorBtn.Image")));
             this.closeEditorBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.closeEditorBtn.Name = "closeEditorBtn";
-            this.closeEditorBtn.Size = new System.Drawing.Size(40, 22);
+            this.closeEditorBtn.Size = new System.Drawing.Size(39, 22);
             this.closeEditorBtn.Text = "Close";
             this.closeEditorBtn.Click += new System.EventHandler(this.closeEditorBtn_Click);
             // 
@@ -327,9 +328,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.glLevelView.BackColor = System.Drawing.Color.Black;
-            this.glLevelView.Location = new System.Drawing.Point(358, 29);
+            this.glLevelView.Location = new System.Drawing.Point(358, 27);
             this.glLevelView.Name = "glLevelView";
-            this.glLevelView.Size = new System.Drawing.Size(1472, 798);
+            this.glLevelView.Size = new System.Drawing.Size(1472, 737);
             this.glLevelView.TabIndex = 9;
             this.glLevelView.VSync = false;
             this.glLevelView.Load += new System.EventHandler(this.glLevelView_Load);
@@ -342,9 +343,9 @@
             // 
             // EditorWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1842, 831);
+            this.ClientSize = new System.Drawing.Size(1842, 767);
             this.Controls.Add(this.glLevelView);
             this.Controls.Add(this.toolStrip2);
             this.Controls.Add(this.toolStrip1);

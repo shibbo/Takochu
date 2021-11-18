@@ -105,6 +105,7 @@ namespace Takochu.ui
 
             // get our main galaxy's zone
             Zone mainZone = mGalaxy.GetZone(mGalaxyName);
+            Console.WriteLine(mGalaxyName);
 
             // now we get the zones used on these layers
             // add our galaxy name itself so we can properly add it to a scene list with the other zones
@@ -133,8 +134,10 @@ namespace Takochu.ui
                 AssignNodesToZoneNode(ref zoneNode);
 
                 objectsListTreeView.Nodes.Add(zoneNode);
+                Console.WriteLine("zone node  "+zoneNode.Text);
 
                 Zone z = mGalaxy.GetZone(zone);
+                Console.WriteLine("zone " + zone);
 
                 currentLayers.AddRange(GameUtil.GetGalaxyLayers(mZoneMasks[zone]));
 
@@ -165,6 +168,7 @@ namespace Takochu.ui
                 {
                     foreach (string layer in currentLayers)
                     {
+                        
                         List<StageObj> stgs = galaxyZone.mZones[layer];
 
                         mStages.Add(layer, stgs);
@@ -242,11 +246,16 @@ namespace Takochu.ui
                 else
                     introCameraEditorBtn.Enabled = false;
             }
+
+            //mGalaxy.GetGalaxyZone().LoadCameras();
+            UpdateCamera();
+            glLevelView.Refresh();
         }
 
         private void EditorWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             mGalaxy.Close();
+            
         }
 
         private void EditorWindow_Load(object sender, EventArgs e)
@@ -271,8 +280,20 @@ namespace Takochu.ui
 
         private void closeEditorBtn_Click(object sender, EventArgs e)
         {
+            
+            mStages.Clear();
+            mZonesUsed.Clear();
+            mZoneMasks.Clear();
+            layerViewerDropDown.DropDownItems.Clear();
+            objectsListTreeView.Nodes.Clear();
+            mPaths.Clear();
+
+            mObjects.Clear();
+            mDispLists.Clear();
+            glLevelView.Dispose();
             mGalaxy.Close();
-            Close();
+
+
         }
 
         private void stageInformationBtn_Click(object sender, EventArgs e)
@@ -479,7 +500,7 @@ namespace Takochu.ui
 
                     GL.Color4(Color.FromArgb(o.mUnique));
                     o.Render(mode);
-
+                    //Console.WriteLine(o.mName);
                     GL.EndList();
                     
                 }
@@ -511,8 +532,10 @@ namespace Takochu.ui
                         GL.Rotate(stage.mRotation.X, 1f, 0f, 0f);
                         GL.Rotate(stage.mRotation.Y, 0f, 1f, 0f);
                         GL.Rotate(stage.mRotation.Z, 0f, 0f, 1f);
-
+                       
                         o.Render(mode);
+
+                        Console.WriteLine(o.mName);
 
                         GL.PopMatrix();
 
@@ -538,7 +561,7 @@ namespace Takochu.ui
                         GL.Rotate(stage.mRotation.Y, 0f, 1f, 0f);
                         GL.Rotate(stage.mRotation.Z, 0f, 0f, 1f);
                         p.Render(mode);
-
+                        Console.WriteLine(p);
                         GL.PopMatrix();
 
                         GL.EndList();
@@ -564,6 +587,8 @@ namespace Takochu.ui
                     GL.PushMatrix();
 
                     o.Render(mode);
+
+                    //Console.WriteLine(o.mName);
 
                     GL.PopMatrix();
 
@@ -595,7 +620,7 @@ namespace Takochu.ui
 
         private void UpdateViewport()
         {
-            GL.Viewport(glLevelView.ClientRectangle);
+            //GL.Viewport(glLevelView.ClientRectangle);
 
             m_AspectRatio = (float)glLevelView.Width / (float)glLevelView.Height;
             GL.MatrixMode(MatrixMode.Projection);
@@ -773,7 +798,7 @@ namespace Takochu.ui
             m_LastMouseMove = m_LastMouseClick = e.Location;
         }
 
-        private void objectsListTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        private void objectsListTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             AbstractObj abstractObj = e.Node.Tag as AbstractObj;
 
@@ -781,31 +806,60 @@ namespace Takochu.ui
                 return;
 
             string type = e.Node.Parent.Text;
-
-            switch(type)
+            switch (type)
             {
                 case "Objects":
                     LevelObj obj = abstractObj as LevelObj;
-
+                    var ZoneName = e.Node.Parent.Parent.Text;
                     m_CamDistance = 0.200f;
-                    m_CamTarget.X = obj.mTruePosition.X / 10000f;
-                    m_CamTarget.Y = obj.mTruePosition.Y / 10000f;
-                    m_CamTarget.Z = obj.mTruePosition.Z / 10000f;
-
+                    m_CamTarget = (mGalaxy.GetZoneGlobalOffset(ZoneName) + obj.mTruePosition) / 10000f;
+                    m_CamPosition = obj.mTruePosition / 10000f;
                     m_CamRotation.Y = (float)Math.PI / 8f;
-                    m_CamRotation.X = (-obj.mRotation.Y - 90f) * (float)Math.PI / 180f;
+                    m_CamRotation.X = (-obj.mRotation.Y) * (float)Math.PI / 180f;
 
+                    //ModelCache.GetRenderer(obj.mName).ChengeColor();
+                    //RARCFilesystem rarc = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile($"/ObjectData/{obj.mName}.arc"));
+                    //obj.mRenderer = new BmdRenderer(new BMD(rarc.OpenFile($"/root/{obj.mName}.bdl")));
+                    //obj.ReRender();
+                    //UpdateViewport();
                     UpdateCamera();
-                    glLevelView.Update();
-
+                    glLevelView.Refresh();
+                    break;
+                case "Areas":
+                    AreaObj area = abstractObj as AreaObj;
+                    ZoneName = e.Node.Parent.Parent.Text;
+                    m_CamDistance = 0.200f;
+                    m_CamTarget = (mGalaxy.GetZoneGlobalOffset(ZoneName) + area.mTruePosition) / 10000f;
+                    m_CamPosition = area.mTruePosition / 10000f;
+                    m_CamRotation.Y = (float)Math.PI / 8f;
+                    m_CamRotation.X = (-area.mRotation.Y) * (float)Math.PI / 180f;
+                    UpdateCamera();
+                    glLevelView.Refresh();
+                    break;
+                case "MapPartsObj":
+                    MapPartsObj mapparts = abstractObj as MapPartsObj;
+                    ZoneName = e.Node.Parent.Parent.Text;
+                    m_CamDistance = 0.200f;
+                    m_CamTarget = (mGalaxy.GetZoneGlobalOffset(ZoneName) + mapparts.mTruePosition) / 10000f;
+                    m_CamPosition = mapparts.mTruePosition / 10000f;
+                    m_CamRotation.Y = (float)Math.PI / 8f;
+                    m_CamRotation.X = (-mapparts.mRotation.Y) * (float)Math.PI / 180f;
+                    UpdateCamera();
+                    glLevelView.Refresh();
                     break;
             }
+        }
+
+        private void objectsListTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
         }
         
         private void MoveCameraTo(Vector3 target)
         {
             
         }
+
+        
 
         private void glLevelView_Resize(object sender, EventArgs e)
         {
@@ -826,16 +880,22 @@ namespace Takochu.ui
 
             GL.FrontFace(FrontFaceDirection.Cw);
 
+            //UpdateViewport();
             m_CamRotation = new Vector2(0.0f, 0.0f);
             m_CamTarget = new Vector3(0.0f, 0.0f, 0.0f);
             m_CamDistance = 1f;// 700.0f;
 
             m_RenderInfo = new RenderInfo();
 
-            UpdateViewport();
-            UpdateCamera();
 
+
+            UpdateViewport();
+            Vector3 CameraDefaultVector3 = new Vector3(0f, 0f, 0f);
             m_GLLoaded = true;
+            m_CamDistance = 0.200f;
+            m_CamTarget = CameraDefaultVector3;
+            UpdateCamera();
+            glLevelView.Refresh();
         }
 
         private void glLevelView_MouseWheel(object sender, MouseEventArgs e)

@@ -379,7 +379,7 @@ namespace Takochu.rnd
                 }
             }
         }
-
+        
         public override void Close()
         {
             if (m_HasShaders)
@@ -400,12 +400,13 @@ namespace Takochu.rnd
 
                     if (shader.Program > 0)
                         GL.DeleteProgram(shader.Program);
+                    
                 }
             }
 
             foreach (int tex in m_Textures)
                 GL.DeleteTexture(tex);
-
+            
             m_Model.Close();
         }
 
