@@ -106,6 +106,7 @@ namespace Takochu.io
                     }
                 }
             }
+            file.Close();
         }
 
         private string PathToKey(string path)
