@@ -76,7 +76,7 @@
             this.bcsvEditorBtn.Name = "bcsvEditorBtn";
             this.bcsvEditorBtn.Size = new System.Drawing.Size(73, 22);
             this.bcsvEditorBtn.Text = "BCSV Editor";
-            this.bcsvEditorBtn.Click += new System.EventHandler(this.bcsvEditorBtn_Click);
+            this.bcsvEditorBtn.Click += new System.EventHandler(this.BcsvEditorBtn_Click);
             // 
             // rarcExplorer_Btn
             // 

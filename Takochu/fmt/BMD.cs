@@ -82,7 +82,16 @@ namespace Takochu.fmt
             byte a = m_File.ReadByte();
             return new Vector4(r / 255f, g / 255f, b / 255f, a / 255f);
         }
-
+        private Vector4 ReadColorValue_RGB8()
+        {
+            //OpenTK.Graphics.OpenGL.PixelFormat.
+            byte r = m_File.ReadByte();
+            byte g = m_File.ReadByte();
+            byte b = m_File.ReadByte();
+            
+            //byte a = m_File.ReadByte();
+            return new Vector4(r / 255f, g / 255f, b / 255f , 1f);
+        }
 
         // support functions for reading sections
         private void ReadINF1()
@@ -191,7 +200,11 @@ namespace Takochu.fmt
 
                     switch (datatype)
                     {
-                        case 5: readcolor = ReadColorValue_RGBA8; arraysize /= 4; break;
+                        case 1:
+                            readcolor = ReadColorValue_RGB8; arraysize /= 4;
+                            break;
+                        case 5: 
+                            readcolor = ReadColorValue_RGBA8; arraysize /= 4; break;
                         default: throw new NotImplementedException("Bmd: unsupported color DataType " + datatype.ToString());
                     }
                 }
@@ -1322,6 +1335,7 @@ namespace Takochu.fmt
         public uint ArrayMask;
         public Vector3[] PositionArray;
         public Vector3[] NormalArray;
+        public Vector3[][] ColorArrayV3;
         public Vector4[][] ColorArray;
         public Vector2[][] TexcoordArray;
 

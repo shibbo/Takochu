@@ -129,7 +129,7 @@ namespace Takochu.smg
         /// </summary>
         /// <param name="zoneName">ZoneName</param>
         /// <returns></returns>
-        public Vector3 GetZoneGlobalOffset(string zoneName)
+        public Vector3 Get_Pos_GlobalOffset(string zoneName)
         {
             List<StageObj> SearchFile;
             var ZoneGlobalOffset = new Vector3(0f,0f,0f);
@@ -146,6 +146,24 @@ namespace Takochu.smg
             
             return SearchFile.ElementAt(FindIndex).mPosition;
 
+        }
+
+        public Vector3 Get_Rot_GlobalOffset(string zoneName) 
+        {
+            List<StageObj> SearchFile;
+            var ZoneGlobalOffset = new Vector3(0f, 0f, 0f);
+
+            if (GameUtil.IsSMG2())
+                SearchFile = GetGalaxyZone().mZones["Common"];
+            else
+                SearchFile = GetGalaxyZone().mZones["common"];
+
+            var FindIndex = SearchFile.FindIndex(x => x.mName == zoneName);
+            if (FindIndex < 0)
+                return ZoneGlobalOffset;
+
+
+            return SearchFile.ElementAt(FindIndex).mRotation;
         }
 
         public Zone GetZone(string name)

@@ -36,7 +36,7 @@ namespace Takochu.util
 
         public static void UpdateTranslation(TreeView tv)
         {
-            Program.sTranslator = new Translator(Convert.ToString(SettingsUtil.GetSetting("Translation")));
+            Program.sTranslator = new Translator(/*Convert.ToString(SettingsUtil.GetSetting("Translation"))*/);
             PopulateGalaxyTreeView(tv);
         }
 

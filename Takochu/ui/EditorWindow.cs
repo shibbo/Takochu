@@ -812,7 +812,7 @@ namespace Takochu.ui
                     LevelObj obj = abstractObj as LevelObj;
                     var ZoneName = e.Node.Parent.Parent.Text;
                     m_CamDistance = 0.200f;
-                    m_CamTarget = (mGalaxy.GetZoneGlobalOffset(ZoneName) + obj.mTruePosition) / 10000f;
+                    m_CamTarget = (mGalaxy.Get_Pos_GlobalOffset(ZoneName) + obj.mTruePosition) / 10000f;
                     m_CamPosition = obj.mTruePosition / 10000f;
                     m_CamRotation.Y = (float)Math.PI / 8f;
                     m_CamRotation.X = (-obj.mRotation.Y) * (float)Math.PI / 180f;
@@ -829,7 +829,7 @@ namespace Takochu.ui
                     AreaObj area = abstractObj as AreaObj;
                     ZoneName = e.Node.Parent.Parent.Text;
                     m_CamDistance = 0.200f;
-                    m_CamTarget = (mGalaxy.GetZoneGlobalOffset(ZoneName) + area.mTruePosition) / 10000f;
+                    m_CamTarget = (mGalaxy.Get_Pos_GlobalOffset(ZoneName) + area.mTruePosition) / 10000f;
                     m_CamPosition = area.mTruePosition / 10000f;
                     m_CamRotation.Y = (float)Math.PI / 8f;
                     m_CamRotation.X = (-area.mRotation.Y) * (float)Math.PI / 180f;
@@ -840,7 +840,7 @@ namespace Takochu.ui
                     MapPartsObj mapparts = abstractObj as MapPartsObj;
                     ZoneName = e.Node.Parent.Parent.Text;
                     m_CamDistance = 0.200f;
-                    m_CamTarget = (mGalaxy.GetZoneGlobalOffset(ZoneName) + mapparts.mTruePosition) / 10000f;
+                    m_CamTarget = (mGalaxy.Get_Pos_GlobalOffset(ZoneName) + mapparts.mTruePosition) / 10000f;
                     m_CamPosition = mapparts.mTruePosition / 10000f;
                     m_CamRotation.Y = (float)Math.PI / 8f;
                     m_CamRotation.X = (-mapparts.mRotation.Y) * (float)Math.PI / 180f;

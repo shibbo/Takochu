@@ -30,7 +30,7 @@ namespace Takochu
                 Properties.Settings.Default.BCSVPaths = new List<string>();
             }
 
-            Program.sTranslator = new Translator(Properties.Settings.Default.Translation);
+            Program.sTranslator = new Translator();
 
             string gamePath = Properties.Settings.Default.GamePath;
 
@@ -94,7 +94,7 @@ namespace Takochu
                 Setup();
         }
 
-        private void bcsvEditorBtn_Click(object sender, EventArgs e)
+        private void BcsvEditorBtn_Click(object sender, EventArgs e)
         {
             BCSVEditorForm bcsvEditor = new BCSVEditorForm();
             bcsvEditor.Show();
@@ -106,9 +106,11 @@ namespace Takochu
             if (!Directory.Exists(SetPath))
                 SetPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
 
-            CommonOpenFileDialog cofd = new CommonOpenFileDialog();
-            cofd.InitialDirectory = SetPath;
-            cofd.IsFolderPicker = true;
+            CommonOpenFileDialog cofd = new CommonOpenFileDialog
+            {
+                InitialDirectory = SetPath,
+                IsFolderPicker = true
+            };
             if (cofd.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 string path = cofd.FileName;
@@ -118,14 +120,18 @@ namespace Takochu
                     Properties.Settings.Default.GamePath = path;
                     Properties.Settings.Default.Save();
 
-                    Program.sGame = new smg.Game(new ExternalFilesystem(path));
+                    Program.sGame = new Game(new ExternalFilesystem(path));
 
+                    //Do I need to bring up a pop-up window even though the file is loading successfully?
+                    //I think it is very inconvenient for users.
                     MessageBox.Show("Path set successfully! You may now use Takochu.");
                     return true;
                 }
                 else
                 {
-                    MessageBox.Show("Invalid folder. If you have already selected a correct folder, that will continue to be your base folder.");
+                    var MessBoxTranslator = new MessageBoxTranslator();
+                    MessageBox.Show(MessBoxTranslator.GetMessage(MessageBoxTranslator.MessageBoxName.InvalidFolder));
+                    //MessageBox.Show("Invalid folder. If you have already selected a correct folder, that will continue to be your base folder.");
                     return false;
                 }
             }
