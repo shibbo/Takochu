@@ -111,9 +111,6 @@ namespace Takochu.smg.obj
             GL.PushMatrix();
 
             GL.Translate(mTruePosition);
-            GL.Rotate(mTrueRotation.X, 0f, 0f, 1f);
-            GL.Rotate(mTrueRotation.Y, 0f, 1f, 0f);
-            GL.Rotate(mTrueRotation.Z, 1f, 0f, 0f);
             GL.Scale(mScale.X, mScale.Y, mScale.Z);
 
             mRenderer.Render(inf);
