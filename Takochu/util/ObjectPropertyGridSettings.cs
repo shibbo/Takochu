@@ -20,9 +20,10 @@ namespace Takochu.util
         private  string _resourceKey;
         
 
-        public LocalizedDescriptionAttribute(string resourceKey, Type resourceType)
+        public LocalizedDescriptionAttribute(string resourceKey)
         {
-            _resourceManager = new ResourceManager(resourceType);
+            var trans = Settings.Default.Translation;
+            _resourceManager = new ResourceManager(Translate.t[trans]);
             _resourceKey = resourceKey;
         }
 
@@ -51,7 +52,7 @@ namespace Takochu.util
         /// </summary>
         /// <param name="resourceKey">リソースファイルの変数名</param>
         /// <param name="resourceType">必要なしリソースファイルから自動取得</param>
-        public LocalizedDisplayNameAttribute(string resourceKey, Type resourceType = null)
+        public LocalizedDisplayNameAttribute(string resourceKey)
         {
             var trans = Settings.Default.Translation;
             _resourceManager = new ResourceManager(Translate.t[trans]);
@@ -73,10 +74,10 @@ namespace Takochu.util
         private readonly ResourceManager _resourceManager;
         private readonly string _resourceKey;
 
-        public LocalizedCategoryAttribute(string resourceKey, Type resourceType)
+        public LocalizedCategoryAttribute(string resourceKey)
         {
-            
-            _resourceManager = new ResourceManager(resourceType);
+            var trans = Settings.Default.Translation;
+            _resourceManager = new ResourceManager(Translate.t[trans]);
             _resourceKey = resourceKey;
         }
 
@@ -99,7 +100,7 @@ namespace Takochu.util
         [ReadOnly(true)]
         [Category("\t\tName")]
         [LocalizedDisplayName("ObjectName")]
-        [LocalizedDescription("ObjectNameDes", typeof(PropertyGrid_JP))]
+        [LocalizedDescription("ObjectNameDes")]
         public string ObjectName
         {
             get
@@ -115,7 +116,7 @@ namespace Takochu.util
 
         [Category("\t\tPositions")]
         [LocalizedDisplayName("pos_x")]
-        [LocalizedDescription("pos_xDes", typeof(PropertyGrid_JP))]
+        [LocalizedDescription("pos_xDes")]
         public float PositionX
         {
             get
@@ -132,7 +133,7 @@ namespace Takochu.util
 
         [Category("\t\tPositions")]
         [LocalizedDisplayName("pos_y")]
-        [LocalizedDescription("pos_yDes", typeof(PropertyGrid_JP))]
+        [LocalizedDescription("pos_yDes")]
         public float PositionY
         {
             get
@@ -147,7 +148,7 @@ namespace Takochu.util
         }
         [Category("\t\tPositions")]
         [LocalizedDisplayName("pos_z")]
-        [LocalizedDescription("pos_zDes", typeof(PropertyGrid_JP))]
+        [LocalizedDescription("pos_zDes")]
         public float PositionZ
         {
             get
