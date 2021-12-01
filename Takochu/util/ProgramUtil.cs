@@ -36,7 +36,7 @@ namespace Takochu.util
 
         public static void UpdateTranslation(TreeView tv)
         {
-            Program.sTranslator = new Translator(/*Convert.ToString(SettingsUtil.GetSetting("Translation"))*/);
+            //Program.sTranslator = new Translator();
             PopulateGalaxyTreeView(tv);
         }
 
@@ -46,7 +46,7 @@ namespace Takochu.util
             TView.Nodes.Clear();
 
             List<string> galaxies = Program.sGame.GetGalaxies();
-            Dictionary<string, string> simpleNames = Program.sTranslator.GetGalaxyNames();
+            Dictionary<string, string> simpleNames = /*Program.sTranslator.GetGalaxyNames()*/Translate.GetGalaxyNames();
 
             foreach (string galaxy in galaxies)
             {
@@ -84,12 +84,14 @@ namespace Takochu.util
 
                         Program.sGame = new smg.Game(new ExternalFilesystem(dialog.FileName));
 
-                        MessageBox.Show("Path set successfully! You may now use Takochu.");
+                        //MessageBox.Show("Path set successfully! You may now use Takochu.");
+                        Translate.GetMessageBox.Show(MessageBoxText.FolderPathCorrectly, MessageBoxCaption.Info);
                         return true;
                     }
                     else
                     {
-                        MessageBox.Show("Invalid folder. If you have already selected a correct folder, that will continue to be your base folder.");
+                        Translate.GetMessageBox.Show(MessageBoxText.InvalidFolder,MessageBoxCaption.Error);
+                        //MessageBox.Show("Invalid folder. If you have already selected a correct folder, that will continue to be your base folder.");
                         return false;
                     }
                 }
