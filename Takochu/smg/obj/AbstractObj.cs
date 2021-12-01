@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Takochu.fmt;
 using Takochu.rnd;
+using OpenTK.Graphics;
 
 namespace Takochu.smg.obj
 {
@@ -52,6 +53,8 @@ namespace Takochu.smg.obj
         {
 
         }
+
+        
 
         public override string ToString()
         {

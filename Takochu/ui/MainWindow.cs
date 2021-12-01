@@ -30,7 +30,7 @@ namespace Takochu
                 Properties.Settings.Default.BCSVPaths = new List<string>();
             }
 
-            Program.sTranslator = new Translator();
+            //Program.sTranslator = new Translator();
 
             string gamePath = Properties.Settings.Default.GamePath;
 
@@ -50,22 +50,29 @@ namespace Takochu
             }
         }
 
-        private void Setup()
+        private void Setup(bool reSetup = false)
         {
-            Program.sGame = new Game(new ExternalFilesystem(Properties.Settings.Default.GamePath));
+            var a = new ExternalFilesystem(Properties.Settings.Default.GamePath);
+            Program.sGame = new Game(a);
+
+            if (reSetup) LightData.Close();
             LightData.Initialize();
 
-            if (GameUtil.IsSMG2())
+            if (GameUtil.IsSMG2()) 
+            {
+                if (reSetup) BGMInfo.Close();
                 BGMInfo.Initialize();
+            }
 
+            if (reSetup) NameHolder.Close();
             NameHolder.Initialize();
             ImageHolder.Initialize();
 
             bcsvEditorBtn.Enabled = true;
             galaxyTreeView.Nodes.Clear();
-
+            
             List<string> galaxies = Program.sGame.GetGalaxies();
-            Dictionary<string, string> simpleNames = Program.sTranslator.GetGalaxyNames();
+            Dictionary<string, string> simpleNames = Translate.GetGalaxyNames();
 
             foreach(string galaxy in galaxies)
             {
@@ -88,10 +95,10 @@ namespace Takochu
 
         private void selectGameFolderBtn_Click(object sender, EventArgs e)
         {
-            bool res = SetGamePath();
+            bool res =
+            SetGamePath();
 
-            if (res)
-                Setup();
+            if (res) Setup(true);
         }
 
         private void BcsvEditorBtn_Click(object sender, EventArgs e)
@@ -103,6 +110,7 @@ namespace Takochu
         private bool SetGamePath()
         {
             var SetPath = Properties.Settings.Default.GamePath;
+
             if (!Directory.Exists(SetPath))
                 SetPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
 
@@ -116,22 +124,17 @@ namespace Takochu
                 string path = cofd.FileName;
                 if (Directory.Exists($"{path}/StageData") && Directory.Exists($"{path}/ObjectData"))
                 {
-                    
                     Properties.Settings.Default.GamePath = path;
                     Properties.Settings.Default.Save();
 
                     Program.sGame = new Game(new ExternalFilesystem(path));
 
-                    //Do I need to bring up a pop-up window even though the file is loading successfully?
-                    //I think it is very inconvenient for users.
-                    MessageBox.Show("Path set successfully! You may now use Takochu.");
+                    Translate.GetMessageBox.Show(MessageBoxText.FolderPathCorrectly, MessageBoxCaption.Info);
                     return true;
                 }
                 else
                 {
-                    var MessBoxTranslator = new MessageBoxTranslator();
-                    MessageBox.Show(MessBoxTranslator.GetMessage(MessageBoxTranslator.MessageBoxName.InvalidFolder));
-                    //MessageBox.Show("Invalid folder. If you have already selected a correct folder, that will continue to be your base folder.");
+                    Translate.GetMessageBox.Show(MessageBoxText.InvalidFolder,MessageBoxCaption.Error);
                     return false;
                 }
             }

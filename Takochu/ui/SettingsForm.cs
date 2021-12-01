@@ -30,7 +30,7 @@ namespace Takochu.ui
             LanguageComboBox.Text = Convert.ToString(SettingsUtil.GetSetting("Translation"));
             useDevCheckBox.Checked = Convert.ToBoolean(SettingsUtil.GetSetting("Dev"));
 
-            foreach (string langs in Translator.sStringToLang.Keys)
+            foreach (string langs in typeof(Language).GetEnumNames())
             {
                 LanguageComboBox.Items.Add(langs);
             }

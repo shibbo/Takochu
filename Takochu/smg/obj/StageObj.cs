@@ -22,6 +22,11 @@ namespace Takochu.smg.obj
             mRotation = new Vector3(mEntry.Get<float>("dir_x"), mEntry.Get<float>("dir_y"), mEntry.Get<float>("dir_z"));
         }
 
+        //public Vector3 GetTruePosition() 
+        //{
+            
+        //}
+
         public void Save()
         {
             mEntry.Set("name", mName);

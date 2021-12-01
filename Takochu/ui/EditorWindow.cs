@@ -18,6 +18,7 @@ using Takochu.smg.msg;
 using Takochu.rnd;
 using OpenTK.Graphics.OpenGL;
 
+
 namespace Takochu.ui
 {
     public partial class EditorWindow : Form
@@ -33,7 +34,7 @@ namespace Takochu.ui
 
         protected override void OnLoad(EventArgs e)
         {
-            base.OnLoad(e);
+            //base.OnLoad(e);
 
             mGalaxy = Program.sGame.OpenGalaxy(mGalaxyName);
             galaxyNameTxtBox.Text = mGalaxy.mGalaxyName;
@@ -65,7 +66,8 @@ namespace Takochu.ui
         Dictionary<string, int> mZoneMasks = new Dictionary<string, int>();
 
         Dictionary<int, Dictionary<int, int>> mDispLists = new Dictionary<int, Dictionary<int, int>>();
-
+        
+        
         public void LoadScenario(int scenarioNo)
         {
             mStages.Clear();
@@ -105,7 +107,7 @@ namespace Takochu.ui
 
             // get our main galaxy's zone
             Zone mainZone = mGalaxy.GetZone(mGalaxyName);
-            Console.WriteLine(mGalaxyName);
+            //Console.WriteLine(mGalaxyName);
 
             // now we get the zones used on these layers
             // add our galaxy name itself so we can properly add it to a scene list with the other zones
@@ -119,7 +121,8 @@ namespace Takochu.ui
 
             Zone galaxyZone = mGalaxy.GetGalaxyZone();
             mObjects.AddRange(galaxyZone.GetAllObjectsFromLayers(layers));
-
+            //Console.WriteLine(mZonesUsed.Count);
+            //Console.WriteLine("\n\r\n\r");
             foreach (string zone in mZonesUsed)
             {
                 mZoneMasks.Add(zone, mGalaxy.GetMaskUsedInZoneOnCurrentScenario(zone));
@@ -131,13 +134,12 @@ namespace Takochu.ui
                     Name = zone
                 };
 
+
                 AssignNodesToZoneNode(ref zoneNode);
 
                 objectsListTreeView.Nodes.Add(zoneNode);
-                Console.WriteLine("zone node  "+zoneNode.Text);
 
                 Zone z = mGalaxy.GetZone(zone);
-                Console.WriteLine("zone " + zone);
 
                 currentLayers.AddRange(GameUtil.GetGalaxyLayers(mZoneMasks[zone]));
 
@@ -157,25 +159,31 @@ namespace Takochu.ui
 
                 // the main galaxy is always loaded before we get into this block
                 // so we can do all of our offsetting here
+                var TestLayers = z.GetLayersUsedOnZoneForCurrentScenario();
                 if (!z.mIsMainGalaxy)
                 {
                     if (GameUtil.IsSMG1())
                         currentLayers = currentLayers.ConvertAll(l => l.ToLower());
-
-                    mObjects.AddRange(z.GetAllObjectsFromLayers(currentLayers));
+                    //Console.WriteLine("____________________addrange");
+                    mObjects.AddRange(z.GetAllObjectsFromLayers(TestLayers));
+                    //mObjects.AddRange(z.GetAllObjectsFromLayers(currentLayers));
+                    //mGalaxy
+                    //var layername = z.GetLayersUsedOnZoneForCurrentScenario()[z.mGalaxy.mScenarioNo];
+                    //mObjects.AddRange(z.GetObjectsFromLayer("Map",layername)) ;
+                    //Console.WriteLine(layername);
                 }
                 else
                 {
-                    foreach (string layer in currentLayers)
+                    foreach (string layer in /*currentLayers*/TestLayers)
                     {
-                        
+
                         List<StageObj> stgs = galaxyZone.mZones[layer];
 
                         mStages.Add(layer, stgs);
                     }
                 }
             }
-
+            //Console.WriteLine("_________________________________________?");
             List<Camera> cubeCameras = new List<Camera>();
             List<Camera> groupCameras = new List<Camera>();
             List<Camera> eventCameras = new List<Camera>();
@@ -228,6 +236,12 @@ namespace Takochu.ui
                 obj.Render(RenderMode.Opaque);
         }
 
+        private void RenderZone2(AbstractObj objs)
+        {
+            
+                objs.Render(RenderMode.Opaque);
+        }
+
         private void scenarioTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             
@@ -247,7 +261,7 @@ namespace Takochu.ui
                     introCameraEditorBtn.Enabled = false;
             }
 
-            //mGalaxy.GetGalaxyZone().LoadCameras();
+            mGalaxy.GetGalaxyZone().LoadCameras();
             UpdateCamera();
             glLevelView.Refresh();
         }
@@ -275,6 +289,11 @@ namespace Takochu.ui
 
         private void saveGalaxyBtn_Click(object sender, EventArgs e)
         {
+            if (GameUtil.IsSMG1()) 
+            {
+                Translate.GetMessageBox.Show(MessageBoxText.UnimplementedFeatures,MessageBoxCaption.Info);
+                return;
+            }
             mGalaxy.Save();
         }
 
@@ -315,6 +334,24 @@ namespace Takochu.ui
         {
             IntroEditor intro = new IntroEditor(ref mGalaxy);
             intro.Show();
+        }
+
+        private void Scenario_ReLoad() 
+        {
+            if (scenarioTreeView.SelectedNode != null)
+            {
+                mCurrentScenario = Convert.ToInt32(scenarioTreeView.SelectedNode.Tag);
+                applyGalaxyNameBtn.Enabled = true;
+                LoadScenario(mCurrentScenario);
+
+                if (mGalaxy.GetGalaxyZone().mIntroCameras.ContainsKey($"StartScenario{mCurrentScenario}.canm"))
+                    introCameraEditorBtn.Enabled = true;
+                else
+                    introCameraEditorBtn.Enabled = false;
+            }
+            mGalaxy.GetGalaxyZone().LoadCameras();
+            UpdateCamera();
+            glLevelView.Refresh();
         }
 
         private int GetIndexOfZoneNode(string name)
@@ -367,10 +404,11 @@ namespace Takochu.ui
         {
             foreach(AbstractObj o in mObjects)
             {
+                
                 string zone = o.mParentZone.mZoneName;
                 int idx = GetIndexOfZoneNode(zone);
                 TreeNode zoneNode = objectsListTreeView.Nodes[idx];
-
+                
                 TreeNode objNode = new TreeNode()
                 {
                     Text = o.ToString(),
@@ -389,8 +427,9 @@ namespace Takochu.ui
                  * 8 = Map Parts
                  * 9 = Paths
                  */
-
+                
                 int nodeIdx = GetNodeIndexOfObject(o.mType);
+                //Console.WriteLine("zone  " + zone + "_______" + idx+"______"+nodeIdx);
                 zoneNode.Nodes[nodeIdx].Nodes.Add(objNode);
             }
 
@@ -508,7 +547,7 @@ namespace Takochu.ui
             else
             {
                 List<StageObj> stage_layers = mGalaxy.GetGalaxyZone().GetAllStageDataFromLayers(mGalaxy.GetGalaxyZone().GetLayersUsedOnZoneForCurrentScenario());
-
+                
                 foreach(StageObj stage in stage_layers)
                 {
                     List<AbstractObj> objsInStage = mObjects.FindAll(o => o.mParentZone.mZoneName == stage.mName);
@@ -527,19 +566,18 @@ namespace Takochu.ui
                         GL.NewList(mDispLists[t][o.mUnique], ListMode.Compile);
 
                         GL.PushMatrix();
-
-                        GL.Translate(stage.mPosition);
-                        GL.Rotate(stage.mRotation.X, 1f, 0f, 0f);
-                        GL.Rotate(stage.mRotation.Y, 0f, 1f, 0f);
-                        GL.Rotate(stage.mRotation.Z, 0f, 0f, 1f);
-                       
+                        {
+                            GL.Translate(stage.mPosition);
+                            GL.Rotate(stage.mRotation.Z, 0f, 0f, 1f);
+                            GL.Rotate(stage.mRotation.Y, 0f, 1f, 0f);
+                            GL.Rotate(stage.mRotation.X, 1f, 0f, 0f);
+                        }
                         o.Render(mode);
-
-                        Console.WriteLine(o.mName);
-
                         GL.PopMatrix();
 
                         GL.EndList();
+                        //mGalaxy.Get_Pos_GlobalOffset(stage.mName)
+                        //Console.WriteLine("                     "+stage.mName);
                     }
 
                     foreach (PathObj p in pathsInStage)
@@ -557,23 +595,26 @@ namespace Takochu.ui
                         GL.PushMatrix();
 
                         GL.Translate(stage.mPosition);
-                        GL.Rotate(stage.mRotation.X, 1f, 0f, 0f);
-                        GL.Rotate(stage.mRotation.Y, 0f, 1f, 0f);
                         GL.Rotate(stage.mRotation.Z, 0f, 0f, 1f);
+                        GL.Rotate(stage.mRotation.Y, 0f, 1f, 0f);
+                        GL.Rotate(stage.mRotation.X, 1f, 0f, 0f);
                         p.Render(mode);
-                        Console.WriteLine(p);
+                        //Console.WriteLine(p);
                         GL.PopMatrix();
 
                         GL.EndList();
+                        //Console.WriteLine(stage.mName);
                     }                    
                 }
-
+                //return;
                 // and now we just do the regular stage
                 List<AbstractObj> regularObjs = mObjects.FindAll(o => o.mParentZone.mZoneName == mGalaxyName);
                 List<PathObj> regularPaths = mPaths.FindAll(p => p.mParentZone.mZoneName == mGalaxyName);
 
                 foreach (AbstractObj o in regularObjs)
                 {
+                    //LevelObj level = o as LevelObj;
+                    //Console.WriteLine("test "+ o.mName);
                     Dictionary<int, int> keyValuePairs = new Dictionary<int, int>();
 
                     if (mDispLists[t].ContainsKey(o.mUnique))
@@ -585,11 +626,11 @@ namespace Takochu.ui
                     GL.NewList(mDispLists[t][o.mUnique], ListMode.Compile);
 
                     GL.PushMatrix();
-
+                    //GL.Translate(o.mTruePosition);
+                    //GL.Rotate(o.mRotation.Z, 0f, 0f, 1f);
+                    //GL.Rotate(o.mRotation.Y, 0f, 1f, 0f);
+                    //GL.Rotate(o.mRotation.X, 1f, 0f, 0f);
                     o.Render(mode);
-
-                    //Console.WriteLine(o.mName);
-
                     GL.PopMatrix();
 
                     GL.EndList();
@@ -608,7 +649,7 @@ namespace Takochu.ui
                     GL.NewList(mDispLists[t][path.mUnique], ListMode.Compile);
 
                     GL.PushMatrix();
-
+                    
                     path.Render(mode);
 
                     GL.PopMatrix();
@@ -620,7 +661,7 @@ namespace Takochu.ui
 
         private void UpdateViewport()
         {
-            //GL.Viewport(glLevelView.ClientRectangle);
+            GL.Viewport(glLevelView.ClientRectangle);
 
             m_AspectRatio = (float)glLevelView.Width / (float)glLevelView.Height;
             GL.MatrixMode(MatrixMode.Projection);
@@ -662,11 +703,41 @@ namespace Takochu.ui
             m_CamMatrix = Matrix4.Mult(Matrix4.Scale(0.0001f), m_CamMatrix);
         }
 
+        private void UpdateCamera(Vector3 v3)
+        {
+            Vector3 up;
+            m_CamRotation = new Vector2(v3.X,v3.Y);
+            if (Math.Cos(m_CamRotation.Y) < 0)
+            {
+                m_UpsideDown = true;
+                up = new Vector3(0.0f, -1.0f, 0.0f);
+            }
+            else
+            {
+                m_UpsideDown = false;
+                up = new Vector3(0.0f, 1.0f, 0.0f);
+            }
+
+            m_CamPosition.X = m_CamDistance * (float)Math.Cos(m_CamRotation.X) * (float)Math.Cos(m_CamRotation.Y);
+            m_CamPosition.Y = m_CamDistance * (float)Math.Sin(m_CamRotation.Y);
+            m_CamPosition.Z = m_CamDistance * (float)Math.Sin(v3.Z) * (float)Math.Cos(m_CamRotation.Y);
+
+            Vector3 skybox_target = v3;
+            //skybox_target.X = -(float)Math.Cos(m_CamRotation.X) * (float)Math.Cos(m_CamRotation.Y);
+            //skybox_target.Y = -(float)Math.Sin(m_CamRotation.Y);
+            //skybox_target.Z = -(float)Math.Sin(v3.Z) * (float)Math.Cos(m_CamRotation.Y);
+
+            Vector3.Add(ref m_CamPosition, ref m_CamTarget, out m_CamPosition);
+            
+            m_CamMatrix = Matrix4.LookAt(m_CamPosition, m_CamTarget, up);
+            m_SkyboxMatrix = Matrix4.LookAt(Vector3.One, skybox_target, up);
+            m_CamMatrix = Matrix4.Mult(Matrix4.Scale(0.0001f), m_CamMatrix);
+        }
+
         private void glLevelView_Paint(object sender, PaintEventArgs e)
         {
             if (!m_GLLoaded) return;
             glLevelView.MakeCurrent();
-
             //GL.MatrixMode(MatrixMode.Projection);
             //Matrix4 projmtx = (!m_OrthView) ? Matrix4.CreatePerspectiveFieldOfView(m_FOV, m_AspectRatio, k_zNear, m_zFar) :
             //    Matrix4.CreateOrthographic(m_OrthZoom, m_OrthZoom / m_AspectRatio, k_zNear, m_zFar);
@@ -798,56 +869,66 @@ namespace Takochu.ui
             m_LastMouseMove = m_LastMouseClick = e.Location;
         }
 
+        
+
         private void objectsListTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             AbstractObj abstractObj = e.Node.Tag as AbstractObj;
+            
+            
+            if (abstractObj == null) return;
 
-            if (abstractObj == null)
-                return;
+            Console.WriteLine(e.Node.Tag.ToString());
 
-            string type = e.Node.Parent.Text;
-            switch (type)
+            Console.Write("ZoneName::");
+            Console.WriteLine(abstractObj.mParentZone.mZoneName);
+
+            //objects Camera Setting
+            //The following process moves the camera to the object.
+            var ZoneName = abstractObj.mParentZone.mZoneName;
+            var Pos_ZoneOffset = mGalaxy.Get_Pos_GlobalOffset(ZoneName);
+            var Rot_ZoneOffset = mGalaxy.Get_Rot_GlobalOffset(ZoneName);
+
+            var PosObj = abstractObj.mTruePosition;
+            var CorrectPos_Object = calc.RotAfin.Get(PosObj, Rot_ZoneOffset, calc.RotAfin.TargetVector.All);
+
+            m_CamDistance = 0.200f;
+            m_CamTarget = Pos_ZoneOffset / 10000f + CorrectPos_Object / 10000;
+            m_CamPosition = CorrectPos_Object / 10000;
+            m_CamRotation.Y = (float)Math.PI / 8f;
+            m_CamRotation.X = (-(abstractObj.mTrueRotation.Y + Pos_ZoneOffset.Y) / 180f) * (float)Math.PI;
+
+            //objects PropertyGrideSetting
+            //Display the property grid for setting the currently selected object.
+            //Note: These processes are not related to the camera's processing.
+            GeneralObjectPropertyGrid.SelectedObject = null;
+            switch (e.Node.Parent.Text)
             {
                 case "Objects":
                     LevelObj obj = abstractObj as LevelObj;
-                    var ZoneName = e.Node.Parent.Parent.Text;
-                    m_CamDistance = 0.200f;
-                    m_CamTarget = (mGalaxy.Get_Pos_GlobalOffset(ZoneName) + obj.mTruePosition) / 10000f;
-                    m_CamPosition = obj.mTruePosition / 10000f;
-                    m_CamRotation.Y = (float)Math.PI / 8f;
-                    m_CamRotation.X = (-obj.mRotation.Y) * (float)Math.PI / 180f;
-
-                    //ModelCache.GetRenderer(obj.mName).ChengeColor();
-                    //RARCFilesystem rarc = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile($"/ObjectData/{obj.mName}.arc"));
-                    //obj.mRenderer = new BmdRenderer(new BMD(rarc.OpenFile($"/root/{obj.mName}.bdl")));
-                    //obj.ReRender();
-                    //UpdateViewport();
-                    UpdateCamera();
-                    glLevelView.Refresh();
+                    GeneralObjectPropertyGrid.SelectedObject = new ObjectPropertyGridSettings(obj);
                     break;
                 case "Areas":
-                    AreaObj area = abstractObj as AreaObj;
-                    ZoneName = e.Node.Parent.Parent.Text;
-                    m_CamDistance = 0.200f;
-                    m_CamTarget = (mGalaxy.Get_Pos_GlobalOffset(ZoneName) + area.mTruePosition) / 10000f;
-                    m_CamPosition = area.mTruePosition / 10000f;
-                    m_CamRotation.Y = (float)Math.PI / 8f;
-                    m_CamRotation.X = (-area.mRotation.Y) * (float)Math.PI / 180f;
-                    UpdateCamera();
-                    glLevelView.Refresh();
+                    //AreaObj area = abstractObj as AreaObj;
+                    
                     break;
+                case "Map Parts":
                 case "MapPartsObj":
-                    MapPartsObj mapparts = abstractObj as MapPartsObj;
-                    ZoneName = e.Node.Parent.Parent.Text;
-                    m_CamDistance = 0.200f;
-                    m_CamTarget = (mGalaxy.Get_Pos_GlobalOffset(ZoneName) + mapparts.mTruePosition) / 10000f;
-                    m_CamPosition = mapparts.mTruePosition / 10000f;
-                    m_CamRotation.Y = (float)Math.PI / 8f;
-                    m_CamRotation.X = (-mapparts.mRotation.Y) * (float)Math.PI / 180f;
-                    UpdateCamera();
-                    glLevelView.Refresh();
+                    //MapPartsObj mapparts = abstractObj as MapPartsObj;
+                    
                     break;
             }
+
+            //Drawing, camera post-processing
+            UpdateCamera();
+            glLevelView.Refresh();
+
+            //RenderObjectLists(RenderMode.Opaque);
+
+
+
+            //RenderZone(mObjects);
+            //RenderObjectLists
         }
 
         private void objectsListTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -859,7 +940,30 @@ namespace Takochu.ui
             
         }
 
-        
+        private void propertyGrid1_SelectedObjectsChanged(object sender, EventArgs e)
+        {
+            //glLevelView_Paint(sender,pa);
+            //if (!m_GLLoaded) return;
+            //glLevelView.MakeCurrent();
+
+            //UpdateViewport();
+        }
+
+        private void propertyGrid1_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            Scenario_ReLoad();
+        }
+
+        private void toolStripLabel3_Click(object sender, EventArgs e)
+        {
+            //var a = mGalaxy.GetGalaxyZone().GetObjectsFromLayer("Map",mGalaxy.GetGalaxyZone().GetLayersUsedOnZoneForCurrentScenario()[0]);
+            //BCSV.Entry f = new BCSV.Entry();
+            //f.Add();
+            
+            //a.Add(new AbstractObj(BCSV.));
+            //mGalaxy.GetGalaxyZone().mObjects["Map"].Add(new LevelObj(Entry, mGalaxy.GetGalaxyZone(), path));
+            //mObjects[""][""].Add(new LevelObj(Entry, this, path));
+        }
 
         private void glLevelView_Resize(object sender, EventArgs e)
         {

@@ -453,9 +453,13 @@ namespace Takochu.rnd
 
                     BMD.Material mat = m_Model.Materials[node.MaterialID];
 
-                    if ((mat.DrawFlag == 4) ^ (info.Mode == RenderMode.Translucent))
+                    if ((mat.DrawFlag == 4) ^ (info.Mode == RenderMode.Translucent)) 
+                    {
+                        //Console.WriteLine("drawFlag "+((mat.DrawFlag == 4) ^ (info.Mode == RenderMode.Translucent)));
                         continue;
-
+                    }
+                    //Console.WriteLine("false");
+                    //Console.WriteLine("hasShaders"+m_HasShaders);
                     if (m_HasShaders)
                     {
                         // shader: handles multitexturing, color combination, alpha test
@@ -513,7 +517,7 @@ namespace Takochu.rnd
                                 GL.AlphaFunc(alphafunc[mat.AlphaComp.Func0], (float)mat.AlphaComp.Ref0 / 255f);
                         }
                     }
-
+                    //Console.WriteLine(mat.BlendMode.BlendMode);
                     switch (mat.BlendMode.BlendMode)
                     {
                         case 0:

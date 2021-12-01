@@ -14,13 +14,16 @@ namespace Takochu.smg.msg
         private static string[] sPossibleLangs = { "UsEnglish", "EuEnglish", "JpJapanese", "KrKorean" };
         public static void Initialize()
         {
+            //if (mFilesystem != null) mFilesystem.Close();
             if (GameUtil.IsSMG1())
             {
                 foreach (string lang in sPossibleLangs)
                 {
                     if (Program.sGame.mFilesystem.DoesDirectoryExist($"/{lang}"))
                     {
-                        mFilesystem = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile($"/{lang}/MessageData/Message.arc"));
+                        var a = Program.sGame.mFilesystem.OpenFile($"/{lang}/MessageData/Message.arc");
+                        mFilesystem = new RARCFilesystem(a);
+                        //a.Close();
                         Program.sLanguage = lang;
                     }
                 }
@@ -44,7 +47,9 @@ namespace Takochu.smg.msg
                 {
                     if (Program.sGame.mFilesystem.DoesDirectoryExist($"/LocalizeData/{lang}"))
                     {
-                        mFilesystem = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile($"/LocalizeData/{lang}/MessageData/SystemMessage.arc"));
+                        var a = Program.sGame.mFilesystem.OpenFile($"/LocalizeData/{lang}/MessageData/SystemMessage.arc");
+                        mFilesystem = new RARCFilesystem(a);
+                        //a.Close();
                         Program.sLanguage = lang;
                     }
                 }
@@ -52,6 +57,7 @@ namespace Takochu.smg.msg
                 mGalaxyNames = new MSBT(mFilesystem.OpenFile("/boop/GalaxyName.msbt"));
                 mScenarioNames = new MSBT(mFilesystem.OpenFile("/boop/ScenarioName.msbt"));
             }
+            //Close();
         }
 
         public static bool DoesMsgTblContain(string zone)
@@ -153,10 +159,13 @@ namespace Takochu.smg.msg
         {
             if (GameUtil.IsSMG2())
             {
-                mGalaxyNames.Close();
-                mScenarioNames.Close();
+                if(mGalaxyNames != null)
+                    mGalaxyNames.Close();
+                if (mScenarioNames != null)
+                    mScenarioNames.Close();
                 mFilesystem.Close();
             }
+            else { mFilesystem.Close(); }
         }
 
         public static void Save()

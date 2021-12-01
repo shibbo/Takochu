@@ -51,8 +51,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>Takochu.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Fasterflect, Version=3.0.0.0, Culture=neutral, PublicKeyToken=38d18473284c1ca7, processorArchitecture=MSIL">
@@ -89,7 +88,15 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -101,6 +108,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="calc\RotAfin.cs" />
     <Compile Include="fmt\BCSV.cs" />
     <Compile Include="fmt\BMD.cs" />
     <Compile Include="fmt\BMG.cs" />
@@ -117,8 +125,14 @@
     <Compile Include="io\ExternalFilesystem.cs" />
     <Compile Include="io\FileBase.cs" />
     <Compile Include="io\MemoryFile.cs" />
+    <Compile Include="Properties\PropertyGrid_JP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PropertyGrid_JP.resx</DependentUpon>
+    </Compile>
     <Compile Include="rnd\BmdRenderer.cs" />
     <Compile Include="rnd\ColorCubeRenderer.cs" />
+    <Compile Include="rnd\ColorWireCube.cs" />
     <Compile Include="rnd\ModelCache.cs" />
     <Compile Include="rnd\ModelSubstitutor.cs" />
     <Compile Include="rnd\MultiBmdRenderer.cs" />
@@ -227,11 +241,16 @@
       <DependentUpon>MessageEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="util\ImageUtil.cs" />
+    <Compile Include="util\ObjectPropertyGridSettings.cs" />
     <Compile Include="util\ProgramUtil.cs" />
     <Compile Include="util\RenderUtil.cs" />
     <Compile Include="util\SettingsUtil.cs" />
     <Compile Include="util\Translator.cs" />
     <Compile Include="util\Updater.cs" />
+    <EmbeddedResource Include="Properties\PropertyGrid_JP.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PropertyGrid_JP.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="ui\IntroEditor.resx">
       <DependentUpon>IntroEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -286,6 +305,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Takochu.ico" />
     <None Include="res\camera.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

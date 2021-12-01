@@ -28,7 +28,7 @@ namespace Takochu
             Application.Run(new MainWindow());
         }
 
-        public static Translator sTranslator;
+        //public static Translator sTranslator;
         public static string sLanguage;
         public static Game sGame;
         public static int sUniqueID;

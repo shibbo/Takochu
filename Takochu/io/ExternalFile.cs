@@ -13,7 +13,20 @@ namespace Takochu.io
     {
         public ExternalFile(string path)
         {
-            mFile = new FileStream(path, FileMode.Open);
+            //if (mFile != null) mFile.Close();
+
+
+            try
+            {
+                
+                mFile = new FileStream(path, FileMode.Open);
+            }
+            catch 
+            {
+                System.Windows.Forms.MessageBox.Show("別のプログラムでこのフォルダが開かれています。\n\rまたは、このプログラムによって一度開かれているフォルダです","Error",System.Windows.Forms.MessageBoxButtons.OK);
+                throw new Exception("エラーです");
+            }
+            
             mFile.Position = 0;
             mEncoding = Encoding.GetEncoding("shift-jis");
         }

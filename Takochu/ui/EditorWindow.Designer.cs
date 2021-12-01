@@ -34,6 +34,7 @@
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.GeneralObjectPropertyGrid = new System.Windows.Forms.PropertyGrid();
             this.toolStrip3 = new System.Windows.Forms.ToolStrip();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
@@ -56,6 +57,7 @@
             this.saveGalaxyBtn = new System.Windows.Forms.ToolStripButton();
             this.closeEditorBtn = new System.Windows.Forms.ToolStripButton();
             this.glLevelView = new OpenTK.GLControl();
+            this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -110,6 +112,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.GeneralObjectPropertyGrid);
             this.tabPage1.Controls.Add(this.toolStrip3);
             this.tabPage1.Controls.Add(this.objectsListTreeView);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
@@ -120,12 +123,22 @@
             this.tabPage1.Text = "Objects";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // GeneralObjectPropertyGrid
+            // 
+            this.GeneralObjectPropertyGrid.Location = new System.Drawing.Point(6, 240);
+            this.GeneralObjectPropertyGrid.Name = "GeneralObjectPropertyGrid";
+            this.GeneralObjectPropertyGrid.Size = new System.Drawing.Size(330, 466);
+            this.GeneralObjectPropertyGrid.TabIndex = 10;
+            this.GeneralObjectPropertyGrid.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid1_PropertyValueChanged);
+            this.GeneralObjectPropertyGrid.SelectedObjectsChanged += new System.EventHandler(this.propertyGrid1_SelectedObjectsChanged);
+            // 
             // toolStrip3
             // 
             this.toolStrip3.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripDropDownButton1,
-            this.toolStripButton1});
+            this.toolStripButton1,
+            this.toolStripLabel3});
             this.toolStrip3.Location = new System.Drawing.Point(3, 3);
             this.toolStrip3.Name = "toolStrip3";
             this.toolStrip3.Size = new System.Drawing.Size(336, 25);
@@ -154,7 +167,7 @@
             // 
             this.objectsListTreeView.Location = new System.Drawing.Point(6, 29);
             this.objectsListTreeView.Name = "objectsListTreeView";
-            this.objectsListTreeView.Size = new System.Drawing.Size(330, 424);
+            this.objectsListTreeView.Size = new System.Drawing.Size(330, 205);
             this.objectsListTreeView.TabIndex = 8;
             this.objectsListTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.objectsListTreeView_NodeMouseClick);
             this.objectsListTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.objectsListTreeView_NodeMouseDoubleClick);
@@ -334,12 +347,20 @@
             this.glLevelView.TabIndex = 9;
             this.glLevelView.VSync = false;
             this.glLevelView.Load += new System.EventHandler(this.glLevelView_Load);
+            this.glLevelView.SizeChanged += new System.EventHandler(this.glLevelView_Resize);
             this.glLevelView.Paint += new System.Windows.Forms.PaintEventHandler(this.glLevelView_Paint);
             this.glLevelView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.glLevelView_MouseDown);
             this.glLevelView.MouseMove += new System.Windows.Forms.MouseEventHandler(this.glLevelView_MouseMove);
             this.glLevelView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.glLevelView_MouseUp);
             this.glLevelView.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.glLevelView_MouseWheel);
             this.glLevelView.Resize += new System.EventHandler(this.glLevelView_Resize);
+            // 
+            // toolStripLabel3
+            // 
+            this.toolStripLabel3.Name = "toolStripLabel3";
+            this.toolStripLabel3.Size = new System.Drawing.Size(42, 22);
+            this.toolStripLabel3.Text = "Debug";
+            this.toolStripLabel3.Click += new System.EventHandler(this.toolStripLabel3_Click);
             // 
             // EditorWindow
             // 
@@ -350,10 +371,12 @@
             this.Controls.Add(this.toolStrip2);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.tabControl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "EditorWindow";
             this.Text = "EditorWindow";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditorWindow_FormClosing);
             this.Load += new System.EventHandler(this.EditorWindow_Load);
+            this.Resize += new System.EventHandler(this.glLevelView_Resize);
             this.tabControl1.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -397,5 +420,7 @@
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private OpenTK.GLControl glLevelView;
+        private System.Windows.Forms.PropertyGrid GeneralObjectPropertyGrid;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel3;
     }
 }

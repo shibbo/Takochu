@@ -23,7 +23,7 @@ namespace Takochu.smg
             mGame = galaxy.mGame;
             mFilesystem = mGame.mFilesystem;
             mZoneName = name;
-            mIsMainGalaxy = mGalaxy.mName == name;
+            mIsMainGalaxy = (mGalaxy.mName == name);
 
             mMapFiles = new Dictionary<string, FilesystemBase>();
             mObjects = new Dictionary<string, Dictionary<string, List<AbstractObj>>>();
@@ -116,6 +116,10 @@ namespace Takochu.smg
             layers.ForEach(l => AssignsObjectsToList(archive, $"{directory}/{l}/{file}"));
             //Console.WriteLine($"{directory}/{l}/{file}");
         }
+        //public void LoadObjects(List<string> layers) 
+        //{
+        //    layers.ForEach(l => AssignsObjectsToList(archive, $"{directory}/{l}/{file}"));
+        //}
 
         public void LoadCameras()
         {
@@ -200,9 +204,10 @@ namespace Takochu.smg
             }
         }
 
+        
         public void AssignsObjectsToList(string archive, string path)
         {
-            Console.WriteLine(path);
+            //Console.WriteLine(path);
             string[] data = path.Split('/');
             string layer = data[1];
             string dir = data[2];
@@ -222,51 +227,53 @@ namespace Takochu.smg
             {
                 mZones.Add(layer, new List<StageObj>());
             }
-            Console.WriteLine($"/stage/jmp/{path}");
-            BCSV bcsv = new BCSV(mMapFiles[archive].OpenFile($"/stage/jmp/{path}"));
+            //Console.WriteLine($"/stage/jmp/{path}");
 
+            BCSV bcsv = new BCSV(mMapFiles[archive].OpenFile($"/stage/jmp/{path}"));
+            //mZones.ElementAt(0).Value.ElementAt(0).mEntry;
+            //mZones[layer][].mEntry
             
             //        System.Globalization.TextInfo ti =
             //System.Globalization.CultureInfo.CurrentCulture.TextInfo;
             //        Console.WriteLine(ti.ToTitleCase(path));
             //        path = ti.ToTitleCase(path);
-            foreach (BCSV.Entry e in bcsv.mEntries)
+            foreach (BCSV.Entry Entry in bcsv.mEntries)
             {
                 dir = dir.ToLower();
 
                 switch (dir)
                 {
                     case "areaobjinfo":
-                        mObjects[archive][layer].Add(new AreaObj(e, this, path));
+                        mObjects[archive][layer].Add(new AreaObj(Entry, this, path));
                         break;
                     case "cameracubeinfo":
-                        mObjects[archive][layer].Add(new CameraObj(e, this, path));
+                        mObjects[archive][layer].Add(new CameraObj(Entry, this, path));
                         break;
                     case "stageobjinfo":
                         //case "StageObjInfo":
-                        mZones[layer].Add(new StageObj(e));
+                        mZones[layer].Add(new StageObj(Entry));
                         break;
                     case "objinfo":
                         //case "ObjInfo":
-                        mObjects[archive][layer].Add(new LevelObj(e, this, path));
+                        mObjects[archive][layer].Add(new LevelObj(Entry, this, path));
                         break;
                     case "demoobjinfo":
-                        mObjects[archive][layer].Add(new DemoObj(e, this, path));
+                        mObjects[archive][layer].Add(new DemoObj(Entry, this, path));
                         break;
                     case "generalposinfo":
-                        mObjects[archive][layer].Add(new GeneralPos(e, this, path));
+                        mObjects[archive][layer].Add(new GeneralPos(Entry, this, path));
                         break;
                     case "debugmoveinfo":
-                        mObjects[archive][layer].Add(new DebugMoveObj(e, this, path));
+                        mObjects[archive][layer].Add(new DebugMoveObj(Entry, this, path));
                         break;
                     case "planetobjinfo":
-                        mObjects[archive][layer].Add(new PlanetObj(e, this, path));
+                        mObjects[archive][layer].Add(new PlanetObj(Entry, this, path));
                         break;
                     case "startinfo":
-                        mObjects[archive][layer].Add(new StartObj(e, this, path));
+                        mObjects[archive][layer].Add(new StartObj(Entry, this, path));
                         break;
                     case "mappartsinfo":
-                        mObjects[archive][layer].Add(new MapPartsObj(e, this, path));
+                        mObjects[archive][layer].Add(new MapPartsObj(Entry, this, path));
                         break;
                 }
             }
@@ -509,10 +516,11 @@ namespace Takochu.smg
 
         private void SaveObjects(string archive, string dir, string file)
         {
-            if (archive == "Light")
-                return;
-
+            //if (archive == "Light") return;
+            //if (archive == "Ghost") return;
+            Console.WriteLine(archive+"  "+dir);
             List<string> layers = mMapFiles[archive].GetDirectories($"/stage/jmp/{dir}");
+            if (layers == null) return;
 
             foreach (string layer in layers)
             {
