@@ -125,6 +125,11 @@
     <Compile Include="io\ExternalFilesystem.cs" />
     <Compile Include="io\FileBase.cs" />
     <Compile Include="io\MemoryFile.cs" />
+    <Compile Include="Properties\PropertyGrid_EN.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PropertyGrid_EN.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\PropertyGrid_JP.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -247,6 +252,10 @@
     <Compile Include="util\SettingsUtil.cs" />
     <Compile Include="util\Translator.cs" />
     <Compile Include="util\Updater.cs" />
+    <EmbeddedResource Include="Properties\PropertyGrid_EN.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PropertyGrid_EN.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\PropertyGrid_JP.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>PropertyGrid_JP.Designer.cs</LastGenOutput>

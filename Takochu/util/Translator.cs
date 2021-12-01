@@ -69,7 +69,12 @@ namespace Takochu.util
 
         public static readonly Dictionary<string, Type> t = new Dictionary<string, Type>()
         {
-            {"Japanese",typeof(Properties.PropertyGrid_JP)}
+            {"English",typeof(Properties.PropertyGrid_EN)},
+            {"German",typeof(Properties.PropertyGrid_EN)},
+            {"French",typeof(Properties.PropertyGrid_EN)},
+            {"Japanese",typeof(Properties.PropertyGrid_JP)},
+            {"Korean",typeof(Properties.PropertyGrid_EN)},
+            {"Spanish",typeof(Properties.PropertyGrid_EN)}
         };
 
         private static Dictionary<Language, IMessageBoxLanguage> testinterface = new Dictionary<Language, IMessageBoxLanguage>()
