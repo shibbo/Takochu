@@ -34,17 +34,30 @@ namespace Takochu
 
             string gamePath = Properties.Settings.Default.GamePath;
 
-            if (gamePath == "")
+            if (gamePath == "\"\"" || Directory.Exists(gamePath))
             {
                 MessageBox.Show("Please select a path that contains the dump of your SMG1 / SMG2 copy.");
                 bool res = SetGamePath();
 
-                if (!res)
+                if (res==false)
+                {
+                    Application.Exit();
                     return;
+                }
+                else
+                {
+                    gamePath = Properties.Settings.Default.GamePath;
+                    if (Directory.Exists(gamePath))
+                    {
+                        Setup();
+                        return;
+                    }
+
+                }
             }
 
             // is it valid AND does it still exist?
-            if (gamePath != "" && Directory.Exists(gamePath))
+            if (gamePath != "\"\"" && Directory.Exists(gamePath))
             {
                 Setup();
             }
@@ -52,21 +65,39 @@ namespace Takochu
 
         private void Setup(bool reSetup = false)
         {
+            var isNull = Program.sGame == null;
             var a = new ExternalFilesystem(Properties.Settings.Default.GamePath);
             Program.sGame = new Game(a);
 
-            if (reSetup) LightData.Close();
-            LightData.Initialize();
+                if(reSetup)
+                LightData.Close();
+            
+                LightData.Initialize();
+            
+            
 
             if (GameUtil.IsSMG2()) 
             {
-                if (reSetup) BGMInfo.Close();
-                BGMInfo.Initialize();
+
+                if (reSetup)
+                    BGMInfo.Close();
+                
+                    BGMInfo.Initialize();
+                
+                
             }
 
-            if (reSetup) NameHolder.Close();
-            NameHolder.Initialize();
-            ImageHolder.Initialize();
+            if (reSetup)
+                NameHolder.Close();
+             
+            
+                NameHolder.Initialize();
+            
+            
+            
+                ImageHolder.Initialize();
+            
+            
 
             bcsvEditorBtn.Enabled = true;
             galaxyTreeView.Nodes.Clear();

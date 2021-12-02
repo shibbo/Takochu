@@ -42,7 +42,7 @@ namespace Takochu.smg
 
         public static void Close() 
         {
-            mBCSV.Close();
+            /*if (mBCSV != null)*/ mBCSV.Close();
             mFilesystem.Close();
         }
 

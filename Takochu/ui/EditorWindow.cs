@@ -890,7 +890,7 @@ namespace Takochu.ui
             var Rot_ZoneOffset = mGalaxy.Get_Rot_GlobalOffset(ZoneName);
 
             var PosObj = abstractObj.mTruePosition;
-            var CorrectPos_Object = calc.RotAfin.Get(PosObj, Rot_ZoneOffset, calc.RotAfin.TargetVector.All);
+            var CorrectPos_Object = calc.RotAfin.GetPositionAfterRotation(PosObj, Rot_ZoneOffset, calc.RotAfin.TargetVector.All);
 
             m_CamDistance = 0.200f;
             m_CamTarget = Pos_ZoneOffset / 10000f + CorrectPos_Object / 10000;
