@@ -6,14 +6,42 @@ namespace Takochu.calc
 {
     public class RotAfin
     {
+        /// <summary>
+        /// Specify the axis to be targeted.<br/>
+        /// 対象となる軸を指定します。
+        /// </summary>
         public enum TargetVector
         {
+            /// <summary>
+            /// Specify the axis of rotation as the "X" axis.<br/>
+            /// 回転軸を "X"軸に指定します。
+            /// </summary>
             X,
+            /// <summary>
+            /// Specify the axis of rotation as the "Y" axis.<br/>
+            /// 回転軸を "Y"軸に指定します。
+            /// </summary>
             Y,
+            /// <summary>
+            /// Specify the axis of rotation as the "Z" axis.<br/>
+            /// 回転軸を "Z"軸に指定します。
+            /// </summary>
             Z,
+            /// <summary>
+            /// Apply rotation to all X, Y, and Z axes.<br/>
+            /// X軸、Y軸、Z軸のすべてに回転を適用します。
+            /// </summary>
             All
         }
-        public static Vector3 Get(Vector3 objectTruePosition, Vector3 zoneRot_Degree, TargetVector Axis)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objectTruePosition"></param>
+        /// <param name="zoneRot_Degree"></param>
+        /// <param name="Axis"></param>
+        /// <returns></returns>
+        public static Vector3 GetPositionAfterRotation(Vector3 objectTruePosition, Vector3 zoneRot_Degree, TargetVector Axis)
         {
             Vector3 v3Afin = Vector3.Zero;
             switch (Axis)
@@ -62,9 +90,9 @@ namespace Takochu.calc
 
         private static Vector3 AfinAll(Vector3 grobalTruePosition, Vector3 objRot)
         {
-            var AX = Get(grobalTruePosition ,objRot ,TargetVector.X);
-            var AY = Get(AX ,objRot , TargetVector.Y);
-            var AZ = Get(AY ,objRot , TargetVector.Z);
+            var AX = GetPositionAfterRotation(grobalTruePosition ,objRot ,TargetVector.X);
+            var AY = GetPositionAfterRotation(AX ,objRot , TargetVector.Y);
+            var AZ = GetPositionAfterRotation(AY ,objRot , TargetVector.Z);
             return AZ;
         }
 
