@@ -14,7 +14,9 @@ namespace Takochu.smg
         public static void Initialize()
         {
             mLights = new List<LightEntry>();
-            mFilesystem = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile(GameUtil.IsSMG1() ? "/ObjectData/LightData.arc" : "/LightData/LightData.arc"));
+            var a = Program.sGame.mFilesystem.OpenFile(GameUtil.IsSMG1() ? "/ObjectData/LightData.arc" : "/LightData/LightData.arc");
+            mFilesystem = new RARCFilesystem(a);
+            //a.Close();
             mBCSV = new BCSV(mFilesystem.OpenFile("/LightData/LightData.bcsv"));
 
             mBCSV.mEntries.ForEach(e => mLights.Add(new LightEntry(e)));
@@ -36,6 +38,12 @@ namespace Takochu.smg
         {
             mBCSV.Save();   
             mFilesystem.Save();
+        }
+
+        public static void Close() 
+        {
+            /*if (mBCSV != null)*/ mBCSV.Close();
+            mFilesystem.Close();
         }
 
         static List<LightEntry> mLights;

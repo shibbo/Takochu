@@ -54,6 +54,7 @@
             this.mainToolStrip.Location = new System.Drawing.Point(0, 0);
             this.mainToolStrip.Name = "mainToolStrip";
             this.mainToolStrip.Size = new System.Drawing.Size(800, 25);
+            this.mainToolStrip.Stretch = true;
             this.mainToolStrip.TabIndex = 0;
             this.mainToolStrip.Text = "toolStrip1";
             // 
@@ -63,7 +64,7 @@
             this.selectGameFolderBtn.Image = ((System.Drawing.Image)(resources.GetObject("selectGameFolderBtn.Image")));
             this.selectGameFolderBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.selectGameFolderBtn.Name = "selectGameFolderBtn";
-            this.selectGameFolderBtn.Size = new System.Drawing.Size(112, 22);
+            this.selectGameFolderBtn.Size = new System.Drawing.Size(111, 22);
             this.selectGameFolderBtn.Text = "Select Game Folder";
             this.selectGameFolderBtn.Click += new System.EventHandler(this.selectGameFolderBtn_Click);
             // 
@@ -74,9 +75,9 @@
             this.bcsvEditorBtn.Image = ((System.Drawing.Image)(resources.GetObject("bcsvEditorBtn.Image")));
             this.bcsvEditorBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.bcsvEditorBtn.Name = "bcsvEditorBtn";
-            this.bcsvEditorBtn.Size = new System.Drawing.Size(73, 22);
+            this.bcsvEditorBtn.Size = new System.Drawing.Size(72, 22);
             this.bcsvEditorBtn.Text = "BCSV Editor";
-            this.bcsvEditorBtn.Click += new System.EventHandler(this.bcsvEditorBtn_Click);
+            this.bcsvEditorBtn.Click += new System.EventHandler(this.BcsvEditorBtn_Click);
             // 
             // rarcExplorer_Btn
             // 
@@ -84,7 +85,7 @@
             this.rarcExplorer_Btn.Image = ((System.Drawing.Image)(resources.GetObject("rarcExplorer_Btn.Image")));
             this.rarcExplorer_Btn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.rarcExplorer_Btn.Name = "rarcExplorer_Btn";
-            this.rarcExplorer_Btn.Size = new System.Drawing.Size(87, 22);
+            this.rarcExplorer_Btn.Size = new System.Drawing.Size(86, 22);
             this.rarcExplorer_Btn.Text = "RARC Explorer";
             this.rarcExplorer_Btn.Click += new System.EventHandler(this.rarcExplorer_Btn_Click);
             // 
@@ -123,7 +124,7 @@
             this.galaxyTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.galaxyTreeView.Location = new System.Drawing.Point(0, 25);
             this.galaxyTreeView.Name = "galaxyTreeView";
-            this.galaxyTreeView.Size = new System.Drawing.Size(800, 425);
+            this.galaxyTreeView.Size = new System.Drawing.Size(800, 390);
             this.galaxyTreeView.TabIndex = 1;
             this.galaxyTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.galaxyTreeView_NodeMouseDoubleClick);
             // 
@@ -138,12 +139,13 @@
             // 
             // MainWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 415);
             this.Controls.Add(this.glControl1);
             this.Controls.Add(this.galaxyTreeView);
             this.Controls.Add(this.mainToolStrip);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainWindow";
             this.Text = "Takochu";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);

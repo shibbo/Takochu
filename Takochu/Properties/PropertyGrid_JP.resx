@@ -117,4 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ObjectName" xml:space="preserve">
+    <value>オブジェクト名</value>
+  </data>
+  <data name="ObjectNameDes" xml:space="preserve">
+    <value>オブジェクトの名前を変更します</value>
+  </data>
+  <data name="pos_x" xml:space="preserve">
+    <value>Xの位置</value>
+  </data>
+  <data name="pos_xDes" xml:space="preserve">
+    <value>X座標の位置を設定します。
+ゾーンの回転と位置の影響を受けます。</value>
+  </data>
+  <data name="pos_y" xml:space="preserve">
+    <value>Yの位置</value>
+  </data>
+  <data name="pos_yDes" xml:space="preserve">
+    <value>Y座標の位置を設定します。
+ゾーンの回転と位置の影響を受けます。</value>
+  </data>
+  <data name="pos_z" xml:space="preserve">
+    <value>Zの位置</value>
+  </data>
+  <data name="pos_zDes" xml:space="preserve">
+    <value>Z座標の位置を設定します。
+ゾーンの回転と位置の影響を受けます。</value>
+  </data>
 </root>

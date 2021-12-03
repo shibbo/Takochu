@@ -15,6 +15,7 @@ using Takochu.smg.img;
 using Takochu.smg.msg;
 using Takochu.ui;
 using Takochu.util;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace Takochu
 {
@@ -29,42 +30,80 @@ namespace Takochu
                 Properties.Settings.Default.BCSVPaths = new List<string>();
             }
 
-            Program.sTranslator = new Translator("English");
+            //Program.sTranslator = new Translator();
 
             string gamePath = Properties.Settings.Default.GamePath;
 
-            if (gamePath == "")
+            if (gamePath == "\"\"" || Directory.Exists(gamePath))
             {
                 MessageBox.Show("Please select a path that contains the dump of your SMG1 / SMG2 copy.");
                 bool res = SetGamePath();
 
-                if (!res)
+                if (res==false)
+                {
+                    Application.Exit();
                     return;
+                }
+                else
+                {
+                    gamePath = Properties.Settings.Default.GamePath;
+                    if (Directory.Exists(gamePath))
+                    {
+                        Setup();
+                        return;
+                    }
+
+                }
             }
 
             // is it valid AND does it still exist?
-            if (gamePath != "" && Directory.Exists(gamePath))
+            if (gamePath != "\"\"" && Directory.Exists(gamePath))
             {
                 Setup();
             }
         }
 
-        private void Setup()
+        private void Setup(bool reSetup = false)
         {
-            Program.sGame = new smg.Game(new ExternalFilesystem(Properties.Settings.Default.GamePath));
-            LightData.Initialize();
+            var isNull = Program.sGame == null;
+            var a = new ExternalFilesystem(Properties.Settings.Default.GamePath);
+            Program.sGame = new Game(a);
 
-            if (GameUtil.IsSMG2())
-                BGMInfo.Initialize();
+                if(reSetup)
+                LightData.Close();
+            
+                LightData.Initialize();
+            
+            
 
-            NameHolder.Initialize();
-            ImageHolder.Initialize();
+            if (GameUtil.IsSMG2()) 
+            {
+
+                if (reSetup)
+                    BGMInfo.Close();
+                
+                    BGMInfo.Initialize();
+                
+                
+            }
+
+            if (reSetup)
+                NameHolder.Close();
+             
+            
+                NameHolder.Initialize();
+            
+            
+            
+                ImageHolder.Initialize();
+            
+            
 
             bcsvEditorBtn.Enabled = true;
             galaxyTreeView.Nodes.Clear();
-
+            
             List<string> galaxies = Program.sGame.GetGalaxies();
-            Dictionary<string, string> simpleNames = Program.sTranslator.GetGalaxyNames();
+            Dictionary<string, string> simpleNames = Translate.GetGalaxyNames();
 
             foreach(string galaxy in galaxies)
             {
@@ -87,13 +126,13 @@ namespace Takochu
 
         private void selectGameFolderBtn_Click(object sender, EventArgs e)
         {
-            bool res = SetGamePath();
+            bool res =
+            SetGamePath();
 
-            if (res)
-                Setup();
+            if (res) Setup(true);
         }
 
-        private void bcsvEditorBtn_Click(object sender, EventArgs e)
+        private void BcsvEditorBtn_Click(object sender, EventArgs e)
         {
             BCSVEditorForm bcsvEditor = new BCSVEditorForm();
             bcsvEditor.Show();
@@ -101,29 +140,35 @@ namespace Takochu
 
         private bool SetGamePath()
         {
-            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            var SetPath = Properties.Settings.Default.GamePath;
 
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if (!Directory.Exists(SetPath))
+                SetPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+
+            CommonOpenFileDialog cofd = new CommonOpenFileDialog
             {
-                string path = dialog.SelectedPath;
+                InitialDirectory = SetPath,
+                IsFolderPicker = true
+            };
+            if (cofd.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                string path = cofd.FileName;
                 if (Directory.Exists($"{path}/StageData") && Directory.Exists($"{path}/ObjectData"))
                 {
-
-                    Properties.Settings.Default.GamePath = dialog.SelectedPath;
+                    Properties.Settings.Default.GamePath = path;
                     Properties.Settings.Default.Save();
 
-                    Program.sGame = new smg.Game(new ExternalFilesystem(dialog.SelectedPath));
+                    Program.sGame = new Game(new ExternalFilesystem(path));
 
-                    MessageBox.Show("Path set successfully! You may now use Takochu.");
+                    Translate.GetMessageBox.Show(MessageBoxText.FolderPathCorrectly, MessageBoxCaption.Info);
                     return true;
                 }
                 else
                 {
-                    MessageBox.Show("Invalid folder. If you have already selected a correct folder, that will continue to be your base folder.");
+                    Translate.GetMessageBox.Show(MessageBoxText.InvalidFolder,MessageBoxCaption.Error);
                     return false;
                 }
             }
-
             return false;
         }
 
@@ -133,6 +178,7 @@ namespace Takochu
             {
                 EditorWindow win = new EditorWindow(Convert.ToString(galaxyTreeView.SelectedNode.Tag));
                 win.Show();
+                
             }
         }
 
@@ -171,7 +217,7 @@ namespace Takochu
 
         private void settingsBtn_Click(object sender, EventArgs e)
         {
-            SettingsForm settings = new SettingsForm();
+            SettingsForm settings = new SettingsForm(galaxyTreeView);
             settings.Show();
         }
     }

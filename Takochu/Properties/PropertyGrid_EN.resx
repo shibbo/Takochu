@@ -117,4 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ObjectName" xml:space="preserve">
+    <value>ObjectName</value>
+  </data>
+  <data name="ObjectNameDes" xml:space="preserve">
+    <value>Renaming an object</value>
+  </data>
+  <data name="pos_x" xml:space="preserve">
+    <value>X Position</value>
+  </data>
+  <data name="pos_xDes" xml:space="preserve">
+    <value>Sets the position of the X coordinate.
+It is affected by the rotation and position of the zone.</value>
+  </data>
+  <data name="pos_y" xml:space="preserve">
+    <value>Y Position</value>
+  </data>
+  <data name="pos_yDes" xml:space="preserve">
+    <value>Sets the position of the Y coordinate.
+It is affected by the rotation and position of the zone.</value>
+  </data>
+  <data name="pos_z" xml:space="preserve">
+    <value>Z Position</value>
+  </data>
+  <data name="pos_zDes" xml:space="preserve">
+    <value>Sets the position of the Z coordinate.
+It is affected by the rotation and position of the zone.</value>
+  </data>
 </root>

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Takochu.fmt;
 using Takochu.rnd;
+using OpenTK.Graphics;
 
 namespace Takochu.smg.obj
 {
@@ -53,6 +54,8 @@ namespace Takochu.smg.obj
 
         }
 
+        
+
         public override string ToString()
         {
             return "AbstractObj";
@@ -63,8 +66,11 @@ namespace Takochu.smg.obj
             return mEntry.Get<T>(key);
         }
 
+        
+
         public BCSV.Entry mEntry;
         public Zone mParentZone;
+        
 
         public Vector3 mTruePosition;
         public Vector3 mTrueRotation;

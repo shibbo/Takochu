@@ -80,6 +80,7 @@ namespace Takochu.smg.obj
 
             foreach (PathPointObj pp in mPathPointObjs)
             {
+                
                 pp.Render(1, mPathColor, mode);
                 pp.Render(2, mPathColor, mode);
                 pp.Render(0, mPathColor, mode);

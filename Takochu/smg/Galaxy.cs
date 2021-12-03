@@ -22,9 +22,13 @@ namespace Takochu.smg
             mName = name;
 
             mZones = new Dictionary<string, Zone>();
+            //var a = mFilesystem.OpenFile($"/StageData/{name}/{name}Scenario.arc");
             mScenarioFile = new RARCFilesystem(mFilesystem.OpenFile($"/StageData/{name}/{name}Scenario.arc"));
-            
-            BCSV zonesBCSV = new BCSV(mScenarioFile.OpenFile("/root/ZoneList.bcsv"));
+            //a.Close();
+
+            var text = "/root/ZoneList.bcsv";
+            if (GameUtil.IsSMG1()) text = "/root/zonelist.bcsv";
+            BCSV zonesBCSV = new BCSV(mScenarioFile.OpenFile(text));
 
             foreach(BCSV.Entry e in zonesBCSV.mEntries)
             {
@@ -37,7 +41,8 @@ namespace Takochu.smg
             }
 
             zonesBCSV.Close();
-
+            var text2 = "/root/ScenarioData.bcsv";
+            if (GameUtil.IsSMG1()) text2 = "/root/scenariodata.bcsv";
             BCSV scenarioBCSV = new BCSV(mScenarioFile.OpenFile("/root/ScenarioData.bcsv"));
 
             mScenarios = new Dictionary<int, Scenario>();
@@ -63,7 +68,6 @@ namespace Takochu.smg
             {
                 zone.Close();
             }
-
             mScenarioFile.Close();
         }
 
@@ -119,6 +123,86 @@ namespace Takochu.smg
         public Zone GetGalaxyZone()
         {
             return mZones[mName];
+        }
+
+        /// <summary>
+        /// Gets the origin of the zone.<br/>
+        /// ゾーンの原点を取得
+        /// </summary>
+        /// <param name="zoneName">ZoneName</param>
+        /// <returns></returns>
+        public Vector3 Get_Pos_GlobalOffset(string zoneName)
+        {
+            List<StageObj> SearchFile = new List<StageObj>();
+            
+            var ZoneGlobalOffset = new Vector3(0f,0f,0f);
+            var ZoneCurrentLayers = GetGalaxyZone().GetLayersUsedOnZoneForCurrentScenario();
+
+            Vector3 Result_v3 = Vector3.Zero;
+
+            foreach (var Layer in ZoneCurrentLayers)
+            {
+                if (GameUtil.IsSMG2())
+                {
+                    SearchFile = 
+                        (GetGalaxyZone().mZones[Layer]);
+                }
+                else
+                {
+                    SearchFile = 
+                        GetGalaxyZone().mZones[Layer.ToLower()];
+                }
+
+                var FindIndex = 
+                    SearchFile.FindIndex(x => x.mName == zoneName);
+
+                if (FindIndex < 0) continue;
+                
+
+                Result_v3 = SearchFile.ElementAt(FindIndex).mPosition;
+                //Console.WriteLine("//////////Pos_GlobalOffset//////////");
+                //Console.Write("X_" + SearchFile.ElementAt(FindIndex).mPosition.X);
+                //Console.Write("  Y_" + SearchFile.ElementAt(FindIndex).mPosition.Y);
+                //Console.WriteLine("  Z_" + SearchFile.ElementAt(FindIndex).mPosition.Z + "\n\r");
+                break;
+            }
+            return Result_v3/*SearchFile.ElementAt(FindIndex).mPosition*/;
+
+        }
+
+        public Vector3 Get_Rot_GlobalOffset(string zoneName) 
+        {
+            List<StageObj> SearchFile = new List<StageObj>();
+
+            var ZoneGlobalOffset = new Vector3(0f, 0f, 0f);
+            var ZoneCurrentLayers = GetGalaxyZone().GetLayersUsedOnZoneForCurrentScenario();
+
+            Vector3 Result_v3 = Vector3.Zero;
+
+            foreach (var Layer in ZoneCurrentLayers)
+            {
+                if (GameUtil.IsSMG2())
+                {
+                    SearchFile = 
+                        (GetGalaxyZone().mZones[Layer]);
+                }
+                else
+                {
+                    SearchFile = 
+                        GetGalaxyZone().mZones[Layer.ToLower()];
+                }
+
+                var FindIndex = SearchFile.FindIndex(x => x.mName == zoneName);
+                SearchFile.ForEach(x => Console.WriteLine(x.mName));
+                if (FindIndex < 0) continue;
+                //Console.WriteLine("//////////Ros_GlobalOffset_Rot//////////" + "  " + zoneName);
+                //Console.Write("X_" + Math.Truncate(SearchFile.ElementAt(FindIndex).mRotation.X));
+                //Console.Write("  Y_" + SearchFile.ElementAt(FindIndex).mRotation.Y);
+                //Console.WriteLine("  Z_" + SearchFile.ElementAt(FindIndex).mRotation.Z + "\n\r");
+                Result_v3 = SearchFile.ElementAt(FindIndex).mRotation;
+                break;
+            }
+            return Result_v3/*SearchFile.ElementAt(FindIndex).mRotation*/;
         }
 
         public Zone GetZone(string name)

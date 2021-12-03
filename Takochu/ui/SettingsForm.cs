@@ -17,19 +17,20 @@ namespace Takochu.ui
     public partial class SettingsForm : Form
     {
         internal static string User = "shibbo";
+        private static TreeView GalaxyNameTreeView;
 
-        public SettingsForm()
+        public SettingsForm(TreeView tb)
         {
             InitializeComponent();
             CenterToScreen();
-
+            GalaxyNameTreeView = tb;
             GamePathTextBox.Text = Convert.ToString(SettingsUtil.GetSetting("GameFolder"));
             DbInfoLbl.Text = "ObjectDatabase last generated on: " + File.GetLastWriteTime("res/objectdb.xml").ToString();
             ShowArgs.Checked = Convert.ToBoolean(SettingsUtil.GetSetting("ShowArgs"));
             LanguageComboBox.Text = Convert.ToString(SettingsUtil.GetSetting("Translation"));
             useDevCheckBox.Checked = Convert.ToBoolean(SettingsUtil.GetSetting("Dev"));
 
-            foreach (string langs in Translator.sStringToLang.Keys)
+            foreach (string langs in typeof(Language).GetEnumNames())
             {
                 LanguageComboBox.Items.Add(langs);
             }
@@ -43,7 +44,7 @@ namespace Takochu.ui
 
             if (res)
             {
-                ProgramUtil.Setup(null);
+                ProgramUtil.Setup(GalaxyNameTreeView);
             }
 
             GamePathTextBox.Text = Convert.ToString(SettingsUtil.GetSetting("GameFolder"));
@@ -63,13 +64,13 @@ namespace Takochu.ui
 
         private void LanguageComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (LanguageComboBox.SelectedItem.ToString().Equals(SettingsUtil.GetSetting("Translation")))
-            {
-                return;
-            }
+            //if (LanguageComboBox.SelectedItem.ToString().Equals(SettingsUtil.GetSetting("Translation")))
+            //{
+            //    return;
+            //}
 
             SettingsUtil.SetSetting("Translation", LanguageComboBox.SelectedItem);
-            ProgramUtil.UpdateTranslation();
+            ProgramUtil.UpdateTranslation(GalaxyNameTreeView);
         }
 
         private void tryUpdateBtn_Click(object sender, EventArgs e)

@@ -14,14 +14,32 @@ using Takochu.util;
 using Takochu.io;
 using OpenTK.Graphics.OpenGL;
 using Takochu.rnd;
+using System.Drawing;
 
 namespace Takochu.smg.obj
 {
     public class LevelObj : AbstractObj
     {
+        //This dictionary type will be used temporarily until
+        //the implementation of the object database is completed.
+        private static readonly Dictionary<string, string> SP_ObjectName = new Dictionary<string, string>() 
+        {
+            { "BenefitItemOneUp" , "KinokoOneUp" },
+            { "PlantA" , "PlantA00" },
+            { "PlantB" , "PlantB00" },
+            { "PlantC" , "PlantC00" },
+            { "PlantD" , "PlantD01" },
+            { "SplashPieceBlock" , "CoinBlock" },
+            { "GreenStar" , "PowerStar" },
+            { "PatakuriBig" , "KuriboChief" }
+        };
+         
         public LevelObj(BCSV.Entry entry, Zone parentZone, string path) : base(entry)
         {
+            
             mParentZone = parentZone;
+            //var test = parentZone.mZones.Values;
+
             string[] content = path.Split('/');
             mDirectory = content[0];
             mLayer = content[1];
@@ -29,13 +47,13 @@ namespace Takochu.smg.obj
 
             mType = "Obj";
 
+            
             mTruePosition = new Vector3(Get<float>("pos_x"), Get<float>("pos_y"), Get<float>("pos_z"));
             mTrueRotation = new Vector3(Get<float>("dir_x"), Get<float>("dir_y"), Get<float>("dir_z"));
 
             mPosition = new Vector3(Get<float>("pos_x") / 100, Get<float>("pos_y") / 100, Get<float>("pos_z") / 100);
             mRotation = new Vector3(Get<float>("dir_x"), Get<float>("dir_y"), Get<float>("dir_z"));
             mScale = new Vector3(Get<float>("scale_x"), Get<float>("scale_y"), Get<float>("scale_z"));
-
             mID = Get<int>("l_id");
             mObjArgs = new int[8];
 
@@ -68,8 +86,14 @@ namespace Takochu.smg.obj
             mDemoGroupID = Get<short>("DemoGroupId");
             mMapPartsID = Get<short>("MapParts_ID");
 
+            
+
             if (ModelCache.HasRenderer(mName))
+            {
                 mRenderer = ModelCache.GetRenderer(mName);
+            }
+
+
 
             // initalize the renderer
             if (Program.sGame.DoesFileExist($"/ObjectData/{mName}.arc"))
@@ -88,8 +112,26 @@ namespace Takochu.smg.obj
 
                 rarc.Close();
             }
+            else if (SP_ObjectName.ContainsKey(mName)) 
+            {
+                var tmpname = SP_ObjectName[mName];
+                RARCFilesystem rarc = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile($"/ObjectData/{tmpname}.arc"));
+
+                if (rarc.DoesFileExist($"/root/{tmpname}.bdl"))
+                {
+                    mRenderer = new BmdRenderer(new BMD(rarc.OpenFile($"/root/{tmpname}.bdl")));
+                    ModelCache.AddRenderer(tmpname, (BmdRenderer)mRenderer);
+                }
+                else
+                {
+                    mRenderer = new ColorCubeRenderer(200f, new Vector4(1f, 1f, 1f, 1f), new Vector4(1f, 0f, 1f, 1f), true);
+                }
+
+                rarc.Close();
+            }
             else
             {
+
                 mRenderer = new ColorCubeRenderer(200f, new Vector4(1f, 1f, 1f, 1f), new Vector4(1f, 0f, 1f, 1f), true);
             }
         }
@@ -103,16 +145,52 @@ namespace Takochu.smg.obj
                 return;
 
             GL.PushMatrix();
+            {
+                GL.Translate(mTruePosition);
+                //"RotateZYX"の順番を変えない事
+                //Do not change the order of "RotateZYX"
+                GL.Rotate(mTrueRotation.Z, 0f, 0f, 1f);
+                GL.Rotate(mTrueRotation.Y, 0f, 1f, 0f);
+                GL.Rotate(mTrueRotation.X, 1f, 0f, 0f);
+                GL.Scale(mScale.X, mScale.Y, mScale.Z);
+            }
+            mRenderer.Render(inf);
+            GL.PopMatrix();
+            
 
-            GL.Translate(mTruePosition);
-            GL.Rotate(mTrueRotation.X, 0f, 0f, 1f);
-            GL.Rotate(mTrueRotation.Y, 0f, 1f, 0f);
-            GL.Rotate(mTrueRotation.Z, 1f, 0f, 0f);
-            GL.Scale(mScale.X, mScale.Y, mScale.Z);
+        }
 
+        public  void ReRender(RenderMode mode/*,GLControl glc*/) 
+        {
+            
+            RenderInfo inf = new RenderInfo();
+            inf.Mode = mode;
+            
+            if (!mRenderer.GottaRender(inf))
+                return;
+            //GL.Clear(ClearBufferMask.ColorBufferBit);
+            //GL.LoadIdentity();
+            
+            //mRenderer.Render(inf);
+            GL.PushMatrix();
+            {
+                
+                //GL.Clear(ClearBufferMask.ColorBufferBit);
+                //GL.Color3(0,0,0);
+                GL.Translate(/*Get<float>("pos_x")*/mTruePosition.X, mTruePosition.Y,mTruePosition.Z);
+                //"RotateZYX"の順番を変えない事
+                //Do not change the order of "RotateZYX"
+                GL.Rotate(mTrueRotation.Z, 0f, 0f, 1f);
+                GL.Rotate(mTrueRotation.Y, 0f, 1f, 0f);
+                GL.Rotate(mTrueRotation.X, 1f, 0f, 0f);
+                GL.Scale(mScale.X, mScale.Y, mScale.Z);
+            }
             mRenderer.Render(inf);
 
             GL.PopMatrix();
+            
+            //GL.Flush();
+            
         }
 
         public override void Save()
@@ -128,10 +206,16 @@ namespace Takochu.smg.obj
             mEntry.Set("SW_DEAD", mSwitchDead);
             mEntry.Set("SW_A", mSwitchActivate);
             mEntry.Set("SW_B", mSwitchDeactivate);
-            mEntry.Set("SW_AWAKE", mSwitchAwake);
-            mEntry.Set("SW_PARAM", mSwitchParameter);
+            if (GameUtil.IsSMG2())
+            {
+                mEntry.Set("SW_AWAKE", mSwitchAwake);
+                mEntry.Set("SW_PARAM", mSwitchParameter);
+                mEntry.Set("ParamScale", mParamScale);
+                mEntry.Set("Obj_ID", mObjID);
+                mEntry.Set("GeneratorID", mGeneratorID);
+            }
             mEntry.Set("MessageId", mMessageID);
-            mEntry.Set("ParamScale", mParamScale);
+            
 
             mEntry.Set("pos_x", mTruePosition.X);
             mEntry.Set("pos_y", mTruePosition.Y);
@@ -153,8 +237,8 @@ namespace Takochu.smg.obj
             mEntry.Set("GroupId", mGroupID);
             mEntry.Set("DemoGroupId", mDemoGroupID);
             mEntry.Set("MapParts_ID", mMapPartsID);
-            mEntry.Set("Obj_ID", mObjID);
-            mEntry.Set("GeneratorID", mGeneratorID);
+            
+            
         }
 
         int mID;

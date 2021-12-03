@@ -12,6 +12,7 @@ namespace Takochu.io
     {
         public RARCFilesystem(FileBase file)
         {
+
             mFile = new Yaz0File(file);
 
             if (mFile.ReadString(4) != "RARC")
@@ -82,24 +83,28 @@ namespace Takochu.io
 
                     if (entryType == 0x0200)
                     {
-                        DirectoryEntry d = new DirectoryEntry();
-                        d.mParent = parent;
-                        d.mName = name;
-                        d.mFullName = fullName;
-                        d.mTempID = dataOffs;
+                        DirectoryEntry d = new DirectoryEntry
+                        {
+                            mParent = parent,
+                            mName = name,
+                            mFullName = fullName,
+                            mTempID = dataOffs
+                        };
 
                         mDirectoryEntries.Add(PathToKey(fullName), d);
                         parent.mChildren.Add(d);
                     }
                     else
                     {
-                        FileEntry f = new FileEntry();
-                        f.mParent = parent;
-                        f.mDataOffset = fileDataOffset + dataOffs;
-                        f.mDataSize = dataSize;
-                        f.mName = name;
-                        f.mFullName = fullName;
-                        f.mData = null;
+                        FileEntry f = new FileEntry
+                        {
+                            mParent = parent,
+                            mDataOffset = fileDataOffset + dataOffs,
+                            mDataSize = dataSize,
+                            mName = name,
+                            mFullName = fullName,
+                            mData = null
+                        };
 
                         mFileEntries.Add(PathToKey(fullName), f);
                         parent.mChildrenFiles.Add(f);

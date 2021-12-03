@@ -26,17 +26,55 @@ namespace Takochu.util
             "LayerP"
         };
 
+        public static string[] GalaxyLayers1 = new string[]
+        {
+            "layera",
+            "layerb",
+            "layerc",
+            "layerd",
+            "layere",
+            "layerf",
+            "layerg",
+            "layerh",
+            "layeri",
+            "layerj",
+            "layerk",
+            "layerl",
+            "layerm",
+            "layern",
+            "layero",
+            "layerp"
+        };
+
         public static List<string> GetGalaxyLayers(int mask)
         {
-            List<string> layers = new List<string>
-            {
-                "Common",
-            };
+            List<string> layers = new List<string>();
+            if (GameUtil.IsSMG1())
+
+                layers = new List<string>
+                {
+                    "common",
+                };
+
+
+            if (GameUtil.IsSMG2())
+                layers = new List<string>
+                {
+                    "Common",
+                };
 
             for (int i = 0; i < 16; i++)
             {
                 if (((mask >> i) & 0x1) != 0x0)
+                {
+                    if (GameUtil.IsSMG1())
+                    {
+                        layers.Add(GameUtil.GalaxyLayers[i].ToLower());
+                        continue;
+                    }
                     layers.Add(GameUtil.GalaxyLayers[i]);
+                }
+
             }
 
             return layers;
@@ -44,7 +82,11 @@ namespace Takochu.util
 
         public static int SetLayerOnMask(string layer, int mask, bool setBit)
         {
-            int idx = GalaxyLayers.ToList().IndexOf(layer);
+            int idx;
+            if (GameUtil.IsSMG1())
+                idx = GalaxyLayers.Select(x => x.ToLower()).ToList().IndexOf(layer);
+            else
+                idx = GalaxyLayers.ToList().IndexOf(layer);
 
             if (setBit)
                 mask |= 1 << idx;
