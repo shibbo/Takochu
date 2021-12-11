@@ -22,9 +22,10 @@ namespace Takochu.util
 
     public enum MessageBoxText
     {
-        InvalidFolder,
+        InvalidGameFolder,
         FolderPathCorrectly,
-        UnimplementedFeatures
+        UnimplementedFeatures,
+        InitialPathSettings
     }
 
     public enum MessageBoxCaption
@@ -179,7 +180,8 @@ namespace Takochu.util
             {
                 "Invalid folder. If you have already selected a correct folder, that will continue to be your base folder.",
                 "Path set successfully! You may now use Takochu.",
-                "Some or all of these features have not been implemented."
+                "Some or all of these features have not been implemented.",
+                "Please select a path that contains the dump of your SMG1 / SMG2 copy."
             };
         }
 
@@ -208,7 +210,8 @@ namespace Takochu.util
             {
                 "スーパーマリオギャラクシー1,2以外のフォルダです。\n\r「StageData」と「ObjectData」が入っているフォルダを指定してください。",
                 "新しくゲームフォルダをセットしました。\n\rこれでTacochuを使用できます。",
-                "この機能の一部、または全ての機能が実装されていません。"
+                "この機能の一部、または全ての機能が実装されていません。",
+                "SMG1 / SMG2のディスクからコピーされたデータが\n\r入っているパスを選択してください"
             };
         }
 
