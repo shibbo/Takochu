@@ -165,7 +165,11 @@ namespace Takochu.smg.msg
                     mScenarioNames.Close();
                 mFilesystem.Close();
             }
-            else { mFilesystem.Close(); }
+            else 
+            {
+                if(mFilesystem != null)
+                mFilesystem.Close(); 
+            }
         }
 
         public static void Save()
