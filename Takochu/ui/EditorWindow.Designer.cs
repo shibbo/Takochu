@@ -38,6 +38,7 @@
             this.toolStrip3 = new System.Windows.Forms.ToolStrip();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.objectsListTreeView = new System.Windows.Forms.TreeView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -57,13 +58,14 @@
             this.saveGalaxyBtn = new System.Windows.Forms.ToolStripButton();
             this.closeEditorBtn = new System.Windows.Forms.ToolStripButton();
             this.glLevelView = new OpenTK.GLControl();
-            this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.toolStrip3.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.toolStrip2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // scenarioTreeView
@@ -112,6 +114,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.dataGridView1);
             this.tabPage1.Controls.Add(this.GeneralObjectPropertyGrid);
             this.tabPage1.Controls.Add(this.toolStrip3);
             this.tabPage1.Controls.Add(this.objectsListTreeView);
@@ -127,7 +130,7 @@
             // 
             this.GeneralObjectPropertyGrid.Location = new System.Drawing.Point(6, 240);
             this.GeneralObjectPropertyGrid.Name = "GeneralObjectPropertyGrid";
-            this.GeneralObjectPropertyGrid.Size = new System.Drawing.Size(330, 466);
+            this.GeneralObjectPropertyGrid.Size = new System.Drawing.Size(330, 65);
             this.GeneralObjectPropertyGrid.TabIndex = 10;
             this.GeneralObjectPropertyGrid.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid1_PropertyValueChanged);
             this.GeneralObjectPropertyGrid.SelectedObjectsChanged += new System.EventHandler(this.propertyGrid1_SelectedObjectsChanged);
@@ -162,6 +165,13 @@
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(82, 22);
             this.toolStripButton1.Text = "Delete Object";
+            // 
+            // toolStripLabel3
+            // 
+            this.toolStripLabel3.Name = "toolStripLabel3";
+            this.toolStripLabel3.Size = new System.Drawing.Size(42, 22);
+            this.toolStripLabel3.Text = "Debug";
+            this.toolStripLabel3.Click += new System.EventHandler(this.toolStripLabel3_Click);
             // 
             // objectsListTreeView
             // 
@@ -355,12 +365,17 @@
             this.glLevelView.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.glLevelView_MouseWheel);
             this.glLevelView.Resize += new System.EventHandler(this.glLevelView_Resize);
             // 
-            // toolStripLabel3
+            // dataGridView1
             // 
-            this.toolStripLabel3.Name = "toolStripLabel3";
-            this.toolStripLabel3.Size = new System.Drawing.Size(42, 22);
-            this.toolStripLabel3.Text = "Debug";
-            this.toolStripLabel3.Click += new System.EventHandler(this.toolStripLabel3_Click);
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(6, 311);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.RowTemplate.Height = 21;
+            this.dataGridView1.Size = new System.Drawing.Size(330, 400);
+            this.dataGridView1.TabIndex = 11;
+            this.dataGridView1.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dataGridView1_CellPainting);
             // 
             // EditorWindow
             // 
@@ -387,6 +402,7 @@
             this.toolStrip1.PerformLayout();
             this.toolStrip2.ResumeLayout(false);
             this.toolStrip2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -422,5 +438,6 @@
         private OpenTK.GLControl glLevelView;
         private System.Windows.Forms.PropertyGrid GeneralObjectPropertyGrid;
         private System.Windows.Forms.ToolStripLabel toolStripLabel3;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

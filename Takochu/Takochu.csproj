@@ -145,6 +145,7 @@
     <Compile Include="smg\img\ImageHolder.cs" />
     <Compile Include="smg\msg\MessageBase.cs" />
     <Compile Include="smg\ZoneAttributes.cs" />
+    <Compile Include="ui\EditorWindowSys\DataGridViewEdit.cs" />
     <Compile Include="ui\HashGenForm.cs">
       <SubType>Form</SubType>
     </Compile>
