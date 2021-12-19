@@ -906,7 +906,14 @@ namespace Takochu.ui
             {
                 case "Objects":
                     LevelObj obj = abstractObj as LevelObj;
-                    GeneralObjectPropertyGrid.SelectedObject = new ObjectPropertyGridSettings(obj);
+                    //GeneralObjectPropertyGrid.SelectedObject = new ObjectPropertyGridSettings(obj);
+
+                    //DataTable dt = new DataTable("test");
+                    //DataView dv = new DataView(dt);
+                    EditorWindowSys.DataGridViewEdit dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1);
+
+                    
+                    //dataGridView1.DataSource = dataGridViewEdit.GetDataTable;
                     break;
                 case "Areas":
                     //AreaObj area = abstractObj as AreaObj;
@@ -963,6 +970,50 @@ namespace Takochu.ui
             //a.Add(new AbstractObj(BCSV.));
             //mGalaxy.GetGalaxyZone().mObjects["Map"].Add(new LevelObj(Entry, mGalaxy.GetGalaxyZone(), path));
             //mObjects[""][""].Add(new LevelObj(Entry, this, path));
+        }
+
+        private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.RowIndex == -1 && e.ColumnIndex == 0)
+            {
+                var rec = e.CellBounds;
+                rec.Width += dataGridView1.Columns[1].Width;
+                //rec.Height = dataGridView1.Rows[0].Height;
+                var brush = new SolidBrush(dataGridView1.ColumnHeadersDefaultCellStyle.BackColor);
+                var pen = new Pen(dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor);
+                e.Graphics.FillRectangle(brush, rec);
+                e.Graphics.DrawRectangle(pen,rec);
+                e.Graphics.DrawLine(pen,new Point(0,rec.Y),new Point(rec.X,0));
+                //e.Graphics.DrawString("Obj",dataGridView1.Font,new SolidBrush(Color.Black),rec);
+
+                //(TextFormatFlags)5 で水平、垂直方向のセンタリングを指定。
+                TextRenderer.DrawText(e.Graphics, "OBJ", e.CellStyle.Font, rec, e.CellStyle.ForeColor, e.CellStyle.BackColor, (TextFormatFlags)5);
+                e.Handled = true;
+            }
+            else if (e.RowIndex == 0 && (e.ColumnIndex == 0 || e.ColumnIndex == 1))
+            {
+                if (e.ColumnIndex == 1) 
+                {
+                    
+                    e.Handled = true;
+                    return;
+                } 
+                var rec = e.CellBounds;
+                rec.Width += dataGridView1.Columns[1].Width;
+                var brush = new SolidBrush(dataGridView1.ColumnHeadersDefaultCellStyle.BackColor);
+                var pen = new Pen(dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor);
+                e.Graphics.FillRectangle(brush, rec);
+                e.Graphics.DrawRectangle(pen, rec);
+                e.Graphics.DrawLine(pen, new Point(0, rec.Y), new Point(rec.X, 0));
+
+                TextRenderer.DrawText(e.Graphics, "data", e.CellStyle.Font, rec, e.CellStyle.ForeColor, e.CellStyle.BackColor, (TextFormatFlags)5);
+                e.Handled = true;
+
+            }
+            else if (e.RowIndex == -1 && e.ColumnIndex == 1)
+            {
+                e.Handled = true;
+            }
         }
 
         private void glLevelView_Resize(object sender, EventArgs e)
