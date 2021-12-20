@@ -902,6 +902,7 @@ namespace Takochu.ui
             //Display the property grid for setting the currently selected object.
             //Note: These processes are not related to the camera's processing.
             GeneralObjectPropertyGrid.SelectedObject = null;
+            
             switch (e.Node.Parent.Text)
             {
                 case "Objects":
@@ -910,7 +911,9 @@ namespace Takochu.ui
 
                     //DataTable dt = new DataTable("test");
                     //DataView dv = new DataView(dt);
-                    EditorWindowSys.DataGridViewEdit dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1);
+                    
+                    EditorWindowSys.DataGridViewEdit dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1,obj);
+                    dataGridView1.DataSource = dataGridViewEdit.GetDataTable();
 
                     
                     //dataGridView1.DataSource = dataGridViewEdit.GetDataTable;
@@ -974,46 +977,51 @@ namespace Takochu.ui
 
         private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            if (e.RowIndex == -1 && e.ColumnIndex == 0)
-            {
-                var rec = e.CellBounds;
-                rec.Width += dataGridView1.Columns[1].Width;
-                //rec.Height = dataGridView1.Rows[0].Height;
-                var brush = new SolidBrush(dataGridView1.ColumnHeadersDefaultCellStyle.BackColor);
-                var pen = new Pen(dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor);
-                e.Graphics.FillRectangle(brush, rec);
-                e.Graphics.DrawRectangle(pen,rec);
-                e.Graphics.DrawLine(pen,new Point(0,rec.Y),new Point(rec.X,0));
-                //e.Graphics.DrawString("Obj",dataGridView1.Font,new SolidBrush(Color.Black),rec);
+            //if (e.RowIndex == -1 && e.ColumnIndex == 0)
+            //{
+            //    var rec = e.CellBounds;
+            //    rec.Width += dataGridView1.Columns[1].Width;
+            //    //rec.Height = dataGridView1.Rows[0].Height;
+            //    var brush = new SolidBrush(dataGridView1.ColumnHeadersDefaultCellStyle.BackColor);
+            //    var pen = new Pen(dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor);
+            //    e.Graphics.FillRectangle(brush, rec);
+            //    e.Graphics.DrawRectangle(pen,rec);
+            //    e.Graphics.DrawLine(pen,new Point(0,rec.Y),new Point(rec.X,0));
+            //    //e.Graphics.DrawString("Obj",dataGridView1.Font,new SolidBrush(Color.Black),rec);
 
-                //(TextFormatFlags)5 で水平、垂直方向のセンタリングを指定。
-                TextRenderer.DrawText(e.Graphics, "OBJ", e.CellStyle.Font, rec, e.CellStyle.ForeColor, e.CellStyle.BackColor, (TextFormatFlags)5);
-                e.Handled = true;
-            }
-            else if (e.RowIndex == 0 && (e.ColumnIndex == 0 || e.ColumnIndex == 1))
-            {
-                if (e.ColumnIndex == 1) 
-                {
+            //    //(TextFormatFlags)5 で水平、垂直方向のセンタリングを指定。
+            //    TextRenderer.DrawText(e.Graphics, "OBJ", e.CellStyle.Font, rec, e.CellStyle.ForeColor, e.CellStyle.BackColor, (TextFormatFlags)5);
+            //    e.Handled = true;
+            //}
+            //else if (e.RowIndex == 0 && (e.ColumnIndex == 0 || e.ColumnIndex == 1))
+            //{
+            //    if (e.ColumnIndex == 1) 
+            //    {
                     
-                    e.Handled = true;
-                    return;
-                } 
-                var rec = e.CellBounds;
-                rec.Width += dataGridView1.Columns[1].Width;
-                var brush = new SolidBrush(dataGridView1.ColumnHeadersDefaultCellStyle.BackColor);
-                var pen = new Pen(dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor);
-                e.Graphics.FillRectangle(brush, rec);
-                e.Graphics.DrawRectangle(pen, rec);
-                e.Graphics.DrawLine(pen, new Point(0, rec.Y), new Point(rec.X, 0));
+            //        e.Handled = true;
+            //        return;
+            //    } 
+            //    var rec = e.CellBounds;
+            //    rec.Width += dataGridView1.Columns[1].Width;
+            //    var brush = new SolidBrush(dataGridView1.ColumnHeadersDefaultCellStyle.BackColor);
+            //    var pen = new Pen(dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor);
+            //    e.Graphics.FillRectangle(brush, rec);
+            //    e.Graphics.DrawRectangle(pen, rec);
+            //    e.Graphics.DrawLine(pen, new Point(0, rec.Y), new Point(rec.X, 0));
 
-                TextRenderer.DrawText(e.Graphics, "data", e.CellStyle.Font, rec, e.CellStyle.ForeColor, e.CellStyle.BackColor, (TextFormatFlags)5);
-                e.Handled = true;
+            //    TextRenderer.DrawText(e.Graphics, "data", e.CellStyle.Font, rec, e.CellStyle.ForeColor, e.CellStyle.BackColor, (TextFormatFlags)5);
+            //    e.Handled = true;
 
-            }
-            else if (e.RowIndex == -1 && e.ColumnIndex == 1)
-            {
-                e.Handled = true;
-            }
+            //}
+            //else if (e.RowIndex == -1 && e.ColumnIndex == 1)
+            //{
+            //    e.Handled = true;
+            //}
+        }
+
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            
         }
 
         private void glLevelView_Resize(object sender, EventArgs e)
