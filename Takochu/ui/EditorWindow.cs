@@ -494,7 +494,7 @@ namespace Takochu.ui
         private bool m_OrthView = false;
         private float m_OrthZoom = 20f;
 
-
+        private static EditorWindowSys.DataGridViewEdit dataGridViewEdit;
         /*
          * 0 = Opaque
          * 1 = Translucent
@@ -901,7 +901,7 @@ namespace Takochu.ui
             //objects PropertyGrideSetting
             //Display the property grid for setting the currently selected object.
             //Note: These processes are not related to the camera's processing.
-            GeneralObjectPropertyGrid.SelectedObject = null;
+            //GeneralObjectPropertyGrid.SelectedObject = null;
             
             switch (e.Node.Parent.Text)
             {
@@ -911,8 +911,8 @@ namespace Takochu.ui
 
                     //DataTable dt = new DataTable("test");
                     //DataView dv = new DataView(dt);
-                    
-                    EditorWindowSys.DataGridViewEdit dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1,obj);
+
+                    dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1,obj);
                     dataGridView1.DataSource = dataGridViewEdit.GetDataTable();
 
                     
@@ -1021,8 +1021,15 @@ namespace Takochu.ui
 
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
+            var dgv = (DataGridView)sender;
             
+            var cell_value = dgv[e.ColumnIndex, e.RowIndex].Value;
+            dataGridViewEdit.ChangeValue(e.RowIndex,cell_value);
+            Scenario_ReLoad();
+
         }
+
+        
 
         private void glLevelView_Resize(object sender, EventArgs e)
         {
