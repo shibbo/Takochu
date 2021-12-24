@@ -11,14 +11,14 @@ namespace Takochu.smg
 {
     class ObjectDB
     {
-
+        public const string Xml_PathString = "res/objectdb.xml";
         public static void GenDB()
         {
             using (var c = new WebClient())
             {
                 try
                 {
-                    c.DownloadFile("http://shibboleet.us.to/new_db/generate.php", "res/objectdb.xml");
+                    c.DownloadFile("http://shibboleet.us.to/new_db/generate.php", Xml_PathString);
                 }
                 catch
                 {
@@ -27,18 +27,23 @@ namespace Takochu.smg
             }
         }
 
+        public static void Generate_WhenNotfound() 
+        {
+            var AppCurrentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            if (File.Exists(AppCurrentDirectory + Xml_PathString) == false)
+                GenDB();
+        }
+
         public static void Load()
         {
-            var a = AppDomain.CurrentDomain.BaseDirectory;
-            Console.WriteLine(a + "\\res\\objectdb.xml");
-            if (File.Exists(a+"res\\objectdb.xml") == false)
-                GenDB();
+            Generate_WhenNotfound();
+            
 
             Actors = new Dictionary<string, Actor>();
             Objects = new Dictionary<string, Object>();
 
             XmlDocument db = new XmlDocument();
-            db.Load("res/objectdb.xml");
+            db.Load(Xml_PathString);
 
             XmlNode actors = db.DocumentElement.ChildNodes[0];
 

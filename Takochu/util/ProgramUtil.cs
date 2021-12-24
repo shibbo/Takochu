@@ -90,7 +90,7 @@ namespace Takochu.util
                     }
                     else
                     {
-                        Translate.GetMessageBox.Show(MessageBoxText.InvalidFolder,MessageBoxCaption.Error);
+                        Translate.GetMessageBox.Show(MessageBoxText.InvalidGameFolder,MessageBoxCaption.Error);
                         //MessageBox.Show("Invalid folder. If you have already selected a correct folder, that will continue to be your base folder.");
                         return false;
                     }

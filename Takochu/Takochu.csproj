@@ -314,6 +314,18 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="res\translations\jp\GalaxyNames_SMG1.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\translations\jp\GalaxyNames_SMG2.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\translations\jp\SimpleGalaxyNames_SMG1.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="res\translations\jp\SimpleGalaxyNames_SMG2.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Takochu.ico" />
     <None Include="res\camera.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

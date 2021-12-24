@@ -25,7 +25,7 @@ namespace Takochu.ui
             CenterToScreen();
             GalaxyNameTreeView = tb;
             GamePathTextBox.Text = Convert.ToString(SettingsUtil.GetSetting("GameFolder"));
-            DbInfoLbl.Text = "ObjectDatabase last generated on: " + File.GetLastWriteTime("res/objectdb.xml").ToString();
+            DbInfoLbl.Text = "ObjectDatabase last generated on: " + File.GetLastWriteTime(ObjectDB.Xml_PathString).ToString();
             ShowArgs.Checked = Convert.ToBoolean(SettingsUtil.GetSetting("ShowArgs"));
             LanguageComboBox.Text = Convert.ToString(SettingsUtil.GetSetting("Translation"));
             useDevCheckBox.Checked = Convert.ToBoolean(SettingsUtil.GetSetting("Dev"));
@@ -54,7 +54,7 @@ namespace Takochu.ui
         {
             ObjectDB.GenDB();
             ObjectDB.Load();
-            DbInfoLbl.Text = "ObjectDatabase last generated on: " + File.GetLastWriteTime("res/objectdb.xml").ToString();
+            DbInfoLbl.Text = "ObjectDatabase last generated on: " + File.GetLastWriteTime(ObjectDB.Xml_PathString).ToString();
         }
 
         private void ShowArgs_CheckedChanged(object sender, EventArgs e)

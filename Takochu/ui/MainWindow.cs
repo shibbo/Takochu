@@ -32,22 +32,21 @@ namespace Takochu
 
             //Program.sTranslator = new Translator();
 
-            string gamePath = Properties.Settings.Default.GamePath;
+            string GamePath = Properties.Settings.Default.GamePath;
 
-            if (gamePath == "\"\"" || Directory.Exists(gamePath))
+            if (GamePath == "\"\"" || (!Directory.Exists(GamePath)))
             {
-                MessageBox.Show("Please select a path that contains the dump of your SMG1 / SMG2 copy.");
+                Translate.GetMessageBox.Show(MessageBoxText.InitialPathSettings, MessageBoxCaption.Info);
                 bool res = SetGamePath();
 
-                if (res==false)
+                if (res == false)
                 {
-                    Application.Exit();
                     return;
                 }
                 else
                 {
-                    gamePath = Properties.Settings.Default.GamePath;
-                    if (Directory.Exists(gamePath))
+                    GamePath = Properties.Settings.Default.GamePath;
+                    if (Directory.Exists(GamePath))
                     {
                         Setup();
                         return;
@@ -57,7 +56,7 @@ namespace Takochu
             }
 
             // is it valid AND does it still exist?
-            if (gamePath != "\"\"" && Directory.Exists(gamePath))
+            if (GamePath != "\"\"" && Directory.Exists(GamePath))
             {
                 Setup();
             }
@@ -65,47 +64,46 @@ namespace Takochu
 
         private void Setup(bool reSetup = false)
         {
-            var isNull = Program.sGame == null;
-            var a = new ExternalFilesystem(Properties.Settings.Default.GamePath);
-            Program.sGame = new Game(a);
+            var extFileSys = new ExternalFilesystem(Properties.Settings.Default.GamePath);
+            Program.sGame = new Game(extFileSys);
 
-                if(reSetup)
+            if (reSetup)
                 LightData.Close();
-            
-                LightData.Initialize();
-            
-            
 
-            if (GameUtil.IsSMG2()) 
+            LightData.Initialize();
+
+
+
+            if (GameUtil.IsSMG2())
             {
 
                 if (reSetup)
                     BGMInfo.Close();
-                
-                    BGMInfo.Initialize();
-                
-                
+
+                BGMInfo.Initialize();
+
+
             }
 
             if (reSetup)
                 NameHolder.Close();
-             
-            
-                NameHolder.Initialize();
-            
-            
-            
-                ImageHolder.Initialize();
-            
-            
+
+
+            NameHolder.Initialize();
+
+
+
+            ImageHolder.Initialize();
+
+
 
             bcsvEditorBtn.Enabled = true;
             galaxyTreeView.Nodes.Clear();
-            
+
             List<string> galaxies = Program.sGame.GetGalaxies();
             Dictionary<string, string> simpleNames = Translate.GetGalaxyNames();
 
-            foreach(string galaxy in galaxies)
+            foreach (string galaxy in galaxies)
             {
                 if (simpleNames.ContainsKey(galaxy))
                 {
@@ -165,7 +163,7 @@ namespace Takochu
                 }
                 else
                 {
-                    Translate.GetMessageBox.Show(MessageBoxText.InvalidFolder,MessageBoxCaption.Error);
+                    Translate.GetMessageBox.Show(MessageBoxText.InvalidGameFolder, MessageBoxCaption.Error);
                     return false;
                 }
             }
@@ -174,11 +172,11 @@ namespace Takochu
 
         private void galaxyTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if (galaxyTreeView.SelectedNode != null) 
+            if (galaxyTreeView.SelectedNode != null)
             {
                 EditorWindow win = new EditorWindow(Convert.ToString(galaxyTreeView.SelectedNode.Tag));
                 win.Show();
-                
+
             }
         }
 
@@ -191,9 +189,9 @@ namespace Takochu
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             // this is our main program getting closed, so we can update our name table if needed
-            List<string> fields = new List<string>(); 
+            List<string> fields = new List<string>();
 
-            foreach(KeyValuePair<int, string> kvp in BCSV.sHashTable)
+            foreach (KeyValuePair<int, string> kvp in BCSV.sHashTable)
             {
                 fields.Add(kvp.Value);
             }
