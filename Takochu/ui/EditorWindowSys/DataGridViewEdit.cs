@@ -30,6 +30,9 @@ namespace Takochu.ui.EditorWindowSys
 
     public class DataGridViewEdit
     {
+        private static bool _isChanged = false;
+        public static bool IsChanged { get => _isChanged;  }
+        
         private DataColumn cLeft, cRight;
         private AbstractObj _abstObj;
         private readonly DataGridView _dataGridView;
@@ -44,6 +47,12 @@ namespace Takochu.ui.EditorWindowSys
         {
             _dataGridView = dataGridView;
             _abstObj = abstObj;
+            
+        }
+
+        public static void IsChangedClear() 
+        {
+            _isChanged = false;
         }
 
         /// <summary>
@@ -121,11 +130,21 @@ namespace Takochu.ui.EditorWindowSys
         {
             var a = _abstObj.mEntry.Keys;
             var name = BCSV.HashToFieldName(a.ElementAt(rowIndex));
+            //foreach (var t in a) 
+            //{
+            //    var str = BCSV.HashToFieldName(t);
+            //    Console.WriteLine(str);
+            //    Console.WriteLine(_abstObj.mEntry.Get(str));
+            //} 
 
             //Do not allow the object name to be changed.
-            if (name == "name") return;
-
-
+            if (name == "name") 
+            {
+                
+                return;
+            }
+            //_abstObj.mEntry.Set(name, value);
+            //_abstObj.Reload_mValue();
             Change_mValues(name, value);
         }
 
@@ -139,43 +158,64 @@ namespace Takochu.ui.EditorWindowSys
          */
         private void Change_mValues(string name, object value)
         {
-            float ftmp = GetFloat_And_Limiter(value);
+            //float ftmp = GetFloat_And_Limiter(value);
+            //Console.WriteLine("mDirectory: "+ _abstObj.mDirectory);
+            //Console.WriteLine("mFile: " + _abstObj.mFile);
+            //Console.WriteLine("mFile: " + _abstObj.mName);
 
-            switch (name)
-            {
-                case "pos_x":
-                    _abstObj.mTruePosition.X = ftmp;
-                    break;
-                case "pos_y":
-                    _abstObj.mTruePosition.Y = ftmp;
-                    break;
-                case "pos_z":
-                    _abstObj.mTruePosition.Z = ftmp;
-                    break;
-                case "dir_x":
-                    _abstObj.mTrueRotation.X = ftmp;
-                    break;
-                case "dir_y":
-                    _abstObj.mTrueRotation.Y = ftmp;
-                    break;
-                case "dir_z":
-                    _abstObj.mTrueRotation.Z = ftmp;
-                    break;
-                case "scale_x":
-                    _abstObj.mScale.X = ftmp;
-                    break;
-                case "scale_y":
-                    _abstObj.mScale.Y = ftmp;
-                    break;
-                case "scale_z":
-                    _abstObj.mScale.Z = ftmp;
-                    break;
-                default:
-                    //処理設定されている物以外は値の変更を行わない。
-                    //You cannot change any value other than the one that is set.
-                    return;
-            }
+            //foreach (var t in _abstObj.mEntry) Console.WriteLine(t.Key);
+
             _abstObj.mEntry.Set(name, value);
+            _abstObj.Reload_mValues();
+            _isChanged = true;
+            //_abstObj.mTruePosition = new OpenTK.Vector3(GetFloat_And_Limiter(_abstObj.mEntry.Get("pos_x")), GetFloat_And_Limiter(_abstObj.mEntry.Get("pos_y")), GetFloat_And_Limiter(_abstObj.mEntry.Get("pos_z")));
+            //switch (name)
+            //{
+            //    case "pos_x":
+            //        _abstObj.mTruePosition.X = ftmp;
+            //        break;
+            //    case "pos_y":
+            //        _abstObj.mTruePosition.Y = ftmp;
+            //        break;
+            //    case "pos_z":
+            //        _abstObj.mTruePosition.Z = ftmp;
+            //        break;
+            //    case "dir_x":
+            //        _abstObj.mTrueRotation.X = ftmp;
+            //        break;
+            //    case "dir_y":
+            //        _abstObj.mTrueRotation.Y = ftmp;
+            //        break;
+            //    case "dir_z":
+            //        _abstObj.mTrueRotation.Z = ftmp;
+            //        break;
+            //    case "scale_x":
+            //        _abstObj.mScale.X = ftmp;
+            //        break;
+            //    case "scale_y":
+            //        _abstObj.mScale.Y = ftmp;
+            //        break;
+            //    case "scale_z":
+            //        _abstObj.mScale.Z = ftmp;
+            //        break;
+            //    default:
+            //        //処理設定されている物以外は値の変更を行わない。
+            //        //You cannot change any value other than the one that is set.
+            //        return;
+            //}
+            
+            //_abstObj.Save();
+        }
+
+        private bool IsStringParam(string name) 
+        {
+            switch (name) 
+            {
+                case "name":
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         private float GetFloat_And_Limiter(object value)

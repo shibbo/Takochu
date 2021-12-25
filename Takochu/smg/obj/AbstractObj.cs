@@ -19,12 +19,7 @@ namespace Takochu.smg.obj
             mUnique = Program.sUniqueID++;
             
         }
-        public void ApplyZoneOffset(Vector3 pos, Vector3 rot)
-        {
-            mPosition += pos;
-            //Rotation = rot + Rotation;
-        }
-
+        
         public virtual void Save() { }
 
         public List<AbstractObj> GetObjsWithSameField(string type, int value)
@@ -54,7 +49,10 @@ namespace Takochu.smg.obj
 
         }
 
-        
+        public virtual void Reload_mValues()
+        {
+            
+        }
 
         public override string ToString()
         {
@@ -88,7 +86,10 @@ namespace Takochu.smg.obj
 
         public int mUnique;
         public RendererBase mRenderer;
+        public RendererBase mRenderer2;
 
         public int[] mObjArgs;
+
+        
     }
 }

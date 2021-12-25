@@ -6,6 +6,7 @@ using System.Globalization;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using Takochu.fmt;
+using Takochu.rnd.BmdRendererArrays;
 
 // BMD renderer TODO list
 // * finish TEV/material emulation
@@ -20,14 +21,6 @@ namespace Takochu.rnd
     {
         private void UploadTexture(int id)
         {
-            TextureWrapMode[] wrapmodes = { TextureWrapMode.ClampToEdge, TextureWrapMode.Repeat, TextureWrapMode.MirroredRepeat };
-            TextureMinFilter[] minfilters = { TextureMinFilter.Nearest, TextureMinFilter.Linear,
-                                                TextureMinFilter.NearestMipmapNearest, TextureMinFilter.LinearMipmapNearest,
-                                                TextureMinFilter.NearestMipmapLinear, TextureMinFilter.LinearMipmapLinear };
-            TextureMagFilter[] magfilters = { TextureMagFilter.Nearest, TextureMagFilter.Linear,
-                                                TextureMagFilter.Nearest, TextureMagFilter.Linear,
-                                                TextureMagFilter.Nearest, TextureMagFilter.Linear };
-
             BMD.Texture tex = m_Model.Textures[id];
             int texid = GL.GenTexture();
             m_Textures[id] = texid;
@@ -35,23 +28,12 @@ namespace Takochu.rnd
             GL.BindTexture(TextureTarget.Texture2D, texid);
 
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMaxLevel, tex.MipmapCount - 1);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)minfilters[tex.MinFilter]);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)magfilters[tex.MagFilter]);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)wrapmodes[tex.WrapS]);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)wrapmodes[tex.WrapT]);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)Texture.MinFilters[tex.MinFilter]);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)Texture.MagFilters[tex.MagFilter]);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)Texture.WrapModes[tex.WrapS]);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)Texture.WrapModes[tex.WrapT]);
 
-            PixelInternalFormat ifmt;
-            PixelFormat fmt;
-            switch (tex.Format)
-            {
-                case 0:
-                case 1: ifmt = PixelInternalFormat.Intensity; fmt = PixelFormat.Luminance; break;
-
-                case 2:
-                case 3: ifmt = PixelInternalFormat.Luminance8Alpha8; fmt = PixelFormat.LuminanceAlpha; break;
-
-                default: ifmt = PixelInternalFormat.Four; fmt = PixelFormat.Bgra; break;
-            }
+            SetPixelFormat(tex.Format, out PixelInternalFormat ifmt, out PixelFormat fmt);
 
             int width = tex.Width, height = tex.Height;
             for (int mip = 0; mip < tex.MipmapCount; mip++)
@@ -61,32 +43,26 @@ namespace Takochu.rnd
             }
         }
 
+        private void SetPixelFormat(byte texfmt, out PixelInternalFormat ifmt, out PixelFormat fmt)
+        {
+            switch (texfmt)
+            {
+                case 0:
+                case 1: ifmt = PixelInternalFormat.Intensity; fmt = PixelFormat.Luminance; break;
+
+                case 2:
+                case 3: ifmt = PixelInternalFormat.Luminance8Alpha8; fmt = PixelFormat.LuminanceAlpha; break;
+
+                default: ifmt = PixelInternalFormat.Four; fmt = PixelFormat.Bgra; break;
+            }
+        }
+
         public string debugshaders;
 
         private void GenerateShaders(int matid)
         {
             CultureInfo forceusa = new CultureInfo("en-US");
-
-            string[] texgensrc = { "normalize(gl_Vertex)", "vec4(gl_Normal,1.0)", "argh", "argh",
-                                     "gl_MultiTexCoord0", "gl_MultiTexCoord1", "gl_MultiTexCoord2", "gl_MultiTexCoord3",
-                                     "gl_MultiTexCoord4", "gl_MultiTexCoord5", "gl_MultiTexCoord6", "gl_MultiTexCoord7" };
-
-            string[] outputregs = { "rprev", "r0", "r1", "r2" };
-
-            string[] c_inputregs = { "truncc3(rprev.rgb)", "truncc3(rprev.aaa)", "truncc3(r0.rgb)", "truncc3(r0.aaa)",
-                                        "truncc3(r1.rgb)", "truncc3(r1.aaa)", "truncc3(r2.rgb)", "truncc3(r2.aaa)",
-                                       "texcolor.rgb", "texcolor.aaa", "rascolor.rgb", "rascolor.aaa",
-                                       "vec3(1.0,1.0,1.0)", "vec3(0.5,0.5,0.5)", "konst.rgb", "vec3(0.0,0.0,0.0)" };
-            string[] c_inputregsD = { "rprev.rgb", "rprev.aaa", "r0.rgb", "r0.aaa",
-                                        "r1.rgb", "r1.aaa", "r2.rgb", "r2.aaa",
-                                       "texcolor.rgb", "texcolor.aaa", "rascolor.rgb", "rascolor.aaa",
-                                       "vec3(1.0,1.0,1.0)", "vec3(0.5,0.5,0.5)", "konst.rgb", "vec3(0.0,0.0,0.0)" };
-            string[] c_konstsel = { "vec3(1.0,1.0,1.0)", "vec3(0.875,0.875,0.875)", "vec3(0.75,0.75,0.75)", "vec3(0.625,0.625,0.625)",
-                                      "vec3(0.5,0.5,0.5)", "vec3(0.375,0.375,0.375)", "vec3(0.25,0.25,0.25)", "vec3(0.125,0.125,0.125)",
-                                      "", "", "", "", "k0.rgb", "k1.rgb", "k2.rgb", "k3.rgb",
-                                      "k0.rrr", "k1.rrr", "k2.rrr", "k3.rrr", "k0.ggg", "k1.ggg", "k2.ggg", "k3.ggg",
-                                      "k0.bbb", "k1.bbb", "k2.bbb", "k3.bbb", "k0.aaa", "k1.aaa", "k2.aaa", "k3.aaa" };
-
+            
             string[] a_inputregs = { "truncc1(rprev.a)", "truncc1(r0.a)", "truncc1(r1.a)", "truncc1(r2.a)",
                                        "texcolor.a", "rascolor.a", "konst.a", "0.0" };
             string[] a_inputregsD = { "rprev.a", "r0.a", "r1.a", "r2.a",
@@ -127,7 +103,7 @@ namespace Takochu.rnd
                 else
                 vert.AppendFormat("    gl_TexCoord[{0}] = gl_MultiTexCoord{0};\n", i);*/
                 // TODO matrices
-                vert.AppendFormat("    gl_TexCoord[{0}] = {1};\n", i, texgensrc[mat.TexGen[i].Src]);
+                vert.AppendFormat("    gl_TexCoord[{0}] = {1};\n", i, ShaderTxt.GenSrc[mat.TexGen[i].Src]);
             }
             vert.AppendLine("}");
 
@@ -172,7 +148,7 @@ namespace Takochu.rnd
             {
                 int _i = (i == 0) ? 3 : i - 1; // ???
                 frag.AppendFormat(forceusa, "    vec4 {0} = vec4({1}, {2}, {3}, {4});\n",
-                    outputregs[i],
+                    ShaderTxt.outputregs[i],
                     (float)mat.ColorS10[_i].R / 255f, (float)mat.ColorS10[_i].G / 255f,
                     (float)mat.ColorS10[_i].B / 255f, (float)mat.ColorS10[_i].A / 255f);
             }
@@ -196,7 +172,7 @@ namespace Takochu.rnd
                 // if they're selected into a, b or c
                 string rout, a, b, c, d, operation = "";
 
-                frag.AppendLine("    konst.rgb = " + c_konstsel[mat.ConstColorSel[i]] + ";");
+                frag.AppendLine("    konst.rgb = " + ShaderTxt.c_konstsel[mat.ConstColorSel[i]] + ";");
                 frag.AppendLine("    konst.a = " + a_konstsel[mat.ConstAlphaSel[i]] + ";");
                 if (mat.TevOrder[i].TexMap != 0xFF && mat.TevOrder[i].TexcoordId != 0xFF)
                     frag.AppendFormat("    texcolor = texture2D(texture{0}, gl_TexCoord[{1}].st);\n",
@@ -209,11 +185,11 @@ namespace Takochu.rnd
                 if (mat.TevOrder[i].ChanID != 4)
                     throw new Exception("!UNSUPPORTED CHANID " + mat.TevOrder[i].ChanID.ToString());
 
-                rout = outputregs[mat.TevStage[i].ColorRegID] + ".rgb";
-                a = c_inputregs[mat.TevStage[i].ColorIn[0]];
-                b = c_inputregs[mat.TevStage[i].ColorIn[1]];
-                c = c_inputregs[mat.TevStage[i].ColorIn[2]];
-                d = c_inputregsD[mat.TevStage[i].ColorIn[3]];
+                rout = ShaderTxt.outputregs[mat.TevStage[i].ColorRegID] + ".rgb";
+                a = ShaderTxt.c_inputregs[mat.TevStage[i].ColorIn[0]];
+                b = ShaderTxt.c_inputregs[mat.TevStage[i].ColorIn[1]];
+                c = ShaderTxt.c_inputregs[mat.TevStage[i].ColorIn[2]];
+                d = ShaderTxt.c_inputregsD[mat.TevStage[i].ColorIn[3]];
 
                 switch (mat.TevStage[i].ColorOp)
                 {
@@ -241,7 +217,7 @@ namespace Takochu.rnd
                     tevscale[mat.TevStage[i].ColorScale]);
                 frag.AppendLine(operation);
 
-                rout = outputregs[mat.TevStage[i].AlphaRegID] + ".a";
+                rout = ShaderTxt.outputregs[mat.TevStage[i].AlphaRegID] + ".a";
                 a = a_inputregs[mat.TevStage[i].AlphaIn[0]];
                 b = a_inputregs[mat.TevStage[i].AlphaIn[1]];
                 c = a_inputregs[mat.TevStage[i].AlphaIn[2]];
@@ -379,7 +355,7 @@ namespace Takochu.rnd
                 }
             }
         }
-        
+
         public override void Close()
         {
             if (m_HasShaders)
@@ -400,13 +376,13 @@ namespace Takochu.rnd
 
                     if (shader.Program > 0)
                         GL.DeleteProgram(shader.Program);
-                    
+
                 }
             }
 
             foreach (int tex in m_Textures)
                 GL.DeleteTexture(tex);
-            
+
             m_Model.Close();
         }
 
@@ -453,7 +429,7 @@ namespace Takochu.rnd
 
                     BMD.Material mat = m_Model.Materials[node.MaterialID];
 
-                    if ((mat.DrawFlag == 4) ^ (info.Mode == RenderMode.Translucent)) 
+                    if ((mat.DrawFlag == 4) ^ (info.Mode == RenderMode.Translucent))
                     {
                         //Console.WriteLine("drawFlag "+((mat.DrawFlag == 4) ^ (info.Mode == RenderMode.Translucent)));
                         continue;
