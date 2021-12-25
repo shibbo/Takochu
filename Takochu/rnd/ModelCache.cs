@@ -16,6 +16,14 @@ namespace Takochu.rnd
             sRenderingCache.Add(name, render);
         }
 
+        public static void AddRenderer(string name, BmdRenderer renderer,string name1 ,BmdRenderer renderer1) 
+        {
+            if (sRenderingCache.ContainsKey(name)|| sRenderingCache.ContainsKey(name1))
+                return;
+            sRenderingCache.Add(name,renderer);
+            sRenderingCache.Add(name1,renderer1);
+        }
+
         public static bool HasRenderer(string name)
         {
             return sRenderingCache.ContainsKey(name);
