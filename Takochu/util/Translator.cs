@@ -2,6 +2,7 @@
 using System.Drawing.Drawing2D;
 using System.IO;
 using System;
+using System.Windows.Forms;
 
 namespace Takochu.util
 {
@@ -15,7 +16,8 @@ namespace Takochu.util
         /// <returns>翻訳された文字列</returns>
         //string Text(MessageBoxText messageBoxName);
         //string CaptionText(MessageBoxCaption messageBoxCaption);
-        void Show(MessageBoxText messageBoxName, MessageBoxCaption messageBoxCaption);
+        DialogResult Show(MessageBoxText messageBoxName, MessageBoxCaption messageBoxCaption);
+        DialogResult Show(MessageBoxText messageBoxName, MessageBoxCaption messageBoxCaption, MessageBoxButtons messageButton);
         string[] MessageArray { get; }
         string[] MessageCaption { get; }
     }
@@ -25,7 +27,8 @@ namespace Takochu.util
         InvalidGameFolder,
         FolderPathCorrectly,
         UnimplementedFeatures,
-        InitialPathSettings
+        InitialPathSettings,
+        ChangesNotSaved
     }
 
     public enum MessageBoxCaption
@@ -181,7 +184,8 @@ namespace Takochu.util
                 "Invalid folder. If you have already selected a correct folder, that will continue to be your base folder.",
                 "Path set successfully! You may now use Takochu.",
                 "Some or all of these features have not been implemented.",
-                "Please select a path that contains the dump of your SMG1 / SMG2 copy."
+                "Please select a path that contains the dump of your SMG1 / SMG2 copy.",
+                "Changes are not saved.\n\rDo you want to close the window?"
             };
         }
 
@@ -194,11 +198,18 @@ namespace Takochu.util
             };
         }
 
-        public void Show(MessageBoxText messageBoxName, MessageBoxCaption messageBoxCaption)
+        public DialogResult Show(MessageBoxText messageBoxName, MessageBoxCaption messageBoxCaption)
         {
             var s1 = MessageArray[((int)messageBoxName)];
             var s2 = MessageCaption[((int)messageBoxCaption)];
-            System.Windows.Forms.MessageBox.Show(s1, s2);
+            return MessageBox.Show(s1, s2);
+        }
+
+        public DialogResult Show(MessageBoxText messageBoxName, MessageBoxCaption messageBoxCaption, MessageBoxButtons messageButton)
+        {
+            var s1 = MessageArray[((int)messageBoxName)];
+            var s2 = MessageCaption[((int)messageBoxCaption)];
+            return MessageBox.Show(s1, s2, messageButton);
         }
     }
 
@@ -211,7 +222,8 @@ namespace Takochu.util
                 "スーパーマリオギャラクシー1,2以外のフォルダです。\n\r「StageData」と「ObjectData」が入っているフォルダを指定してください。",
                 "新しくゲームフォルダをセットしました。\n\rこれでTacochuを使用できます。",
                 "この機能の一部、または全ての機能が実装されていません。",
-                "SMG1 / SMG2のディスクからコピーされたデータが\n\r入っているパスを選択してください"
+                "SMG1 / SMG2のディスクからコピーされたデータが\n\r入っているパスを選択してください",
+                "変更は保存されていません\n\rウィンドウを閉じますか？"
             };
         }
 
@@ -224,11 +236,18 @@ namespace Takochu.util
             };
         }
 
-        public void Show(MessageBoxText messageBoxName, MessageBoxCaption messageBoxCaption) 
+        public DialogResult Show(MessageBoxText messageBoxName, MessageBoxCaption messageBoxCaption) 
         {
             var s1 = MessageArray[((int)messageBoxName)];
             var s2 = MessageCaption[((int)messageBoxCaption)];
-            System.Windows.Forms.MessageBox.Show(s1,s2);
+            return MessageBox.Show(s1,s2);
+        }
+
+        public DialogResult Show(MessageBoxText messageBoxName, MessageBoxCaption messageBoxCaption, MessageBoxButtons messageButton)
+        {
+            var s1 = MessageArray[((int)messageBoxName)];
+            var s2 = MessageCaption[((int)messageBoxCaption)];
+            return MessageBox.Show(s1, s2,messageButton);
         }
     }
 
