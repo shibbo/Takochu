@@ -108,6 +108,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="calc\ObjectTypeChange.cs" />
     <Compile Include="calc\RotAfin.cs" />
     <Compile Include="fmt\BCSV.cs" />
     <Compile Include="fmt\BMD.cs" />
@@ -136,6 +137,8 @@
       <DependentUpon>PropertyGrid_JP.resx</DependentUpon>
     </Compile>
     <Compile Include="rnd\BmdRenderer.cs" />
+    <Compile Include="rnd\BmdRendererArrays\ShaderTxt.cs" />
+    <Compile Include="rnd\BmdRendererArrays\Texture.cs" />
     <Compile Include="rnd\ColorCubeRenderer.cs" />
     <Compile Include="rnd\ColorWireCube.cs" />
     <Compile Include="rnd\ModelCache.cs" />
@@ -145,6 +148,7 @@
     <Compile Include="smg\img\ImageHolder.cs" />
     <Compile Include="smg\msg\MessageBase.cs" />
     <Compile Include="smg\ZoneAttributes.cs" />
+    <Compile Include="ui\EditorWindowSys\DataGridViewEdit.cs" />
     <Compile Include="ui\HashGenForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -360,6 +364,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="smg\obj\parameters\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

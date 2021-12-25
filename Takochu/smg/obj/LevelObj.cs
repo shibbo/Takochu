@@ -15,31 +15,47 @@ using Takochu.io;
 using OpenTK.Graphics.OpenGL;
 using Takochu.rnd;
 using System.Drawing;
+using Takochu.calc;
 
 namespace Takochu.smg.obj
 {
+    
+   
     public class LevelObj : AbstractObj
     {
+        //Note:
+        //I am considering whether to use this process to handle type specification by "ObjectDB" in "objarg".
+        //Please do not use it as is, as I plan to set up a separate class for its actual use.
+        //public dynamic dytest
+        //{
+        //    get
+        //    {
+        //        //Type t = Type.GetType("System.Int32");
+        //        //t.GetField("MaxValue");
+        //        return Convert.ChangeType(1, TypeCode.Int32);
+        //    }
+        //}
+
+
+        //private ISMG2_SwitchID _smg2_SwitchID;
         //This dictionary type will be used temporarily until
         //the implementation of the object database is completed.
-        private static readonly Dictionary<string, string> SP_ObjectName = new Dictionary<string, string>() 
+        private static readonly Dictionary<string, (string,string)> SP_ObjectName = new Dictionary<string, (string,string)>() 
         {
-            { "BenefitItemOneUp" , "KinokoOneUp" },
-            { "PlantA" , "PlantA00" },
-            { "PlantB" , "PlantB00" },
-            { "PlantC" , "PlantC00" },
-            { "PlantD" , "PlantD01" },
-            { "SplashPieceBlock" , "CoinBlock" },
-            { "GreenStar" , "PowerStar" },
-            { "PatakuriBig" , "KuriboChief" }
+            { "BenefitItemOneUp" , ("KinokoOneUp","None") },
+            { "PlantA" , ("PlantA00","None") },
+            { "PlantB" , ("PlantB00","None") },
+            { "PlantC" , ("PlantC00","None") },
+            { "PlantD" , ("PlantD01","None") },
+            { "SplashPieceBlock" , ("CoinBlock","None") },
+            { "GreenStar" , ("PowerStar","None") },
+            { "PatakuriBig" , ("KuriboChief","PatakuriWingBig") }
         };
          
         public LevelObj(BCSV.Entry entry, Zone parentZone, string path) : base(entry)
         {
             
             mParentZone = parentZone;
-            //var test = parentZone.mZones.Values;
-
             string[] content = path.Split('/');
             mDirectory = content[0];
             mLayer = content[1];
@@ -115,12 +131,12 @@ namespace Takochu.smg.obj
             else if (SP_ObjectName.ContainsKey(mName)) 
             {
                 var tmpname = SP_ObjectName[mName];
-                RARCFilesystem rarc = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile($"/ObjectData/{tmpname}.arc"));
+                RARCFilesystem rarc = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile($"/ObjectData/{tmpname.Item1}.arc"));
 
-                if (rarc.DoesFileExist($"/root/{tmpname}.bdl"))
+                if (rarc.DoesFileExist($"/root/{tmpname.Item1}.bdl"))
                 {
-                    mRenderer = new BmdRenderer(new BMD(rarc.OpenFile($"/root/{tmpname}.bdl")));
-                    ModelCache.AddRenderer(tmpname, (BmdRenderer)mRenderer);
+                    mRenderer = new BmdRenderer(new BMD(rarc.OpenFile($"/root/{tmpname.Item1}.bdl")));
+                    ModelCache.AddRenderer(tmpname.Item1, (BmdRenderer)mRenderer);
                 }
                 else
                 {
@@ -128,12 +144,110 @@ namespace Takochu.smg.obj
                 }
 
                 rarc.Close();
+
+                if (tmpname.Item2 == "None") return;
+
+                RARCFilesystem rarc1 = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile($"/ObjectData/{tmpname.Item2}.arc"));
+
+                if (rarc1.DoesFileExist($"/root/{tmpname.Item2}.bdl"))
+                {
+                    mRenderer2 = new BmdRenderer(new BMD(rarc1.OpenFile($"/root/{tmpname.Item2}.bdl")));
+                    ModelCache.AddRenderer(tmpname.Item2, (BmdRenderer)mRenderer2);
+                }
+                else
+                {
+                    mRenderer2 = new ColorCubeRenderer(200f, new Vector4(1f, 1f, 1f, 1f), new Vector4(1f, 0f, 1f, 1f), true);
+                }
+
+                rarc1.Close();
             }
             else
             {
 
                 mRenderer = new ColorCubeRenderer(200f, new Vector4(1f, 1f, 1f, 1f), new Vector4(1f, 0f, 1f, 1f), true);
             }
+        }
+
+        public override void Reload_mValues()
+        {
+            //string values
+            //Currently, it is not linked to ObjectDB, so it cannot be changed temporarily.
+            {
+                mName = mEntry.Get("name").ToString();
+            }
+            
+
+            //Int32 ID
+            {
+                mID = ObjectTypeChange.ToInt32(mEntry.Get("l_id"));
+                mCameraSetID = ObjectTypeChange.ToInt32(mEntry.Get("CameraSetId"));
+                mMessageID = ObjectTypeChange.ToInt32(mEntry.Get("MessageId"));
+                mCastID = ObjectTypeChange.ToInt32(mEntry.Get("CastId"));
+                mViewGroupID = ObjectTypeChange.ToInt32(mEntry.Get("ViewGroupId"));
+            }
+
+            //Int16 param
+            {
+                mShapeModelNo = ObjectTypeChange.ToInt16(mEntry.Get("ShapeModelNo"));
+                mPathID = ObjectTypeChange.ToInt16(mEntry.Get("CommonPath_ID"));
+                mClippingGroupID = ObjectTypeChange.ToInt16(mEntry.Get("ClippingGroupId"));
+                mGroupID = ObjectTypeChange.ToInt16(mEntry.Get("GroupId"));
+                mDemoGroupID = ObjectTypeChange.ToInt16(mEntry.Get("DemoGroupId"));
+                mMapPartsID = ObjectTypeChange.ToInt16(mEntry.Get("MapParts_ID"));
+                if (GameUtil.IsSMG2()) 
+                {
+                    mObjID = ObjectTypeChange.ToInt16(mEntry.Get("Obj_ID"));
+                    mGeneratorID = ObjectTypeChange.ToInt16(mEntry.Get("GeneratorID"));
+                }
+            }
+
+            //Int32 Switch
+            { 
+                mSwitchAppear = ObjectTypeChange.ToInt32(mEntry.Get("SW_APPEAR"));
+                mSwitchDead = ObjectTypeChange.ToInt32(mEntry.Get("SW_DEAD"));
+                mSwitchActivate = ObjectTypeChange.ToInt32(mEntry.Get("SW_A"));
+                mSwitchDeactivate = ObjectTypeChange.ToInt32(mEntry.Get("SW_B"));
+                if (GameUtil.IsSMG2()) 
+                {
+                    mSwitchAwake = ObjectTypeChange.ToInt32(mEntry.Get("SW_AWAKE"));
+                    mSwitchParameter = ObjectTypeChange.ToInt32(mEntry.Get("SW_PARAM"));
+                }
+                
+            }
+
+            //float
+            if (GameUtil.IsSMG2())
+                mParamScale = ObjectTypeChange.ToFloat(mEntry.Get("ParamScale"));
+
+            //Obj_args
+            for (int i = 0; i < mObjArgs.Length; i++) 
+                mObjArgs[i] = ObjectTypeChange.ToInt32(mEntry.Get($"Obj_arg{i}")) ;
+
+            //Vector3Values
+            {
+                mTruePosition =
+                    new Vector3(
+                        ObjectTypeChange.ToFloat(mEntry.Get("pos_x")),
+                        ObjectTypeChange.ToFloat(mEntry.Get("pos_y")),
+                        ObjectTypeChange.ToFloat(mEntry.Get("pos_z"))
+                    );
+                mTrueRotation =
+                    new Vector3(
+                        ObjectTypeChange.ToFloat(mEntry.Get("dir_x")),
+                        ObjectTypeChange.ToFloat(mEntry.Get("dir_y")),
+                        ObjectTypeChange.ToFloat(mEntry.Get("dir_z"))
+                    );
+                mScale =
+                    new Vector3(
+                        ObjectTypeChange.ToFloat(mEntry.Get("scale_x")),
+                        ObjectTypeChange.ToFloat(mEntry.Get("scale_y")),
+                        ObjectTypeChange.ToFloat(mEntry.Get("scale_z"))
+                    );
+                mPosition = new Vector3(mTruePosition) / 100;
+                mRotation = new Vector3(mTrueRotation) / 100;
+            }
+            
+            //Console.WriteLine(dytest);
         }
 
         public override void Render(RenderMode mode)
@@ -143,6 +257,10 @@ namespace Takochu.smg.obj
 
             if (!mRenderer.GottaRender(inf))
                 return;
+            if (mRenderer2 != null)
+            {
+                mRenderer2.GottaRender(inf);
+            }
 
             GL.PushMatrix();
             {
@@ -155,44 +273,21 @@ namespace Takochu.smg.obj
                 GL.Scale(mScale.X, mScale.Y, mScale.Z);
             }
             mRenderer.Render(inf);
-            GL.PopMatrix();
-            
 
-        }
-
-        public  void ReRender(RenderMode mode/*,GLControl glc*/) 
-        {
-            
-            RenderInfo inf = new RenderInfo();
-            inf.Mode = mode;
-            
-            if (!mRenderer.GottaRender(inf))
-                return;
-            //GL.Clear(ClearBufferMask.ColorBufferBit);
-            //GL.LoadIdentity();
-            
-            //mRenderer.Render(inf);
-            GL.PushMatrix();
+            if (mRenderer2 != null) 
             {
-                
-                //GL.Clear(ClearBufferMask.ColorBufferBit);
-                //GL.Color3(0,0,0);
-                GL.Translate(/*Get<float>("pos_x")*/mTruePosition.X, mTruePosition.Y,mTruePosition.Z);
-                //"RotateZYX"の順番を変えない事
-                //Do not change the order of "RotateZYX"
-                GL.Rotate(mTrueRotation.Z, 0f, 0f, 1f);
-                GL.Rotate(mTrueRotation.Y, 0f, 1f, 0f);
-                GL.Rotate(mTrueRotation.X, 1f, 0f, 0f);
-                GL.Scale(mScale.X, mScale.Y, mScale.Z);
+                //if (mRenderer2.GottaRender(inf))
+                    mRenderer2.Render(inf);
             }
-            mRenderer.Render(inf);
-
+            
+            
+            
             GL.PopMatrix();
             
-            //GL.Flush();
-            
-        }
 
+        }
+        
+        
         public override void Save()
         {
             mEntry.Set("name", mName);
@@ -241,26 +336,26 @@ namespace Takochu.smg.obj
             
         }
 
-        int mID;
-        int mCameraSetID;
-        int mSwitchAppear;
-        int mSwitchDead;
-        int mSwitchActivate;
-        int mSwitchDeactivate;
-        int mSwitchAwake;
-        int mSwitchParameter;
-        int mMessageID;
-        float mParamScale;
-        int mCastID;
-        int mViewGroupID;
-        short mShapeModelNo;
-        short mPathID;
-        short mClippingGroupID;
-        short mGroupID;
-        short mDemoGroupID;
-        short mMapPartsID;
-        short mObjID;
-        short mGeneratorID;
+        private int mID;
+        private int mCameraSetID;
+        private int mSwitchAppear;
+        private int mSwitchDead;
+        private int mSwitchActivate;
+        private int mSwitchDeactivate;
+        private int mSwitchAwake;
+        private int mSwitchParameter;
+        private int mMessageID;
+        private float mParamScale;
+        private int mCastID;
+        private int mViewGroupID;
+        private short mShapeModelNo;
+        private short mPathID;
+        private short mClippingGroupID;
+        private short mGroupID;
+        private short mDemoGroupID;
+        private short mMapPartsID;
+        private short mObjID;
+        private short mGeneratorID;
 
         public override string ToString()
         {

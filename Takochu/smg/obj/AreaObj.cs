@@ -12,6 +12,14 @@ using static Takochu.smg.ObjectDB;
 
 namespace Takochu.smg.obj
 {
+    /*
+     [ToDo]
+        1.  We need to fix the problem where the location of the area is not displayed correctly.
+            It is very likely that the location of the origin is different in each area.
+        2.  The shape should be able to be changed by the shape number.
+            The fourth shape of the "water area" is a bowl shape.
+        
+     */
     class AreaObj : AbstractObj
     {
         public AreaObj(BCSV.Entry entry, Zone parentZone, string path) : base(entry)
@@ -60,32 +68,32 @@ namespace Takochu.smg.obj
             mMapPartsID = Get<short>("MapParts_ID");
             mObjID = Get<short>("Obj_ID");
 
-            //mRenderer = new ColorWireCube(new Vector3(200,200,200), new Vector4(1f, 1f, 1f, 1f), new Vector4(1f, 0f, 1f, 1f), true);
+            //mRenderer = new ColorWireCube(new Vector3(500,500,500), new Vector4(1f, 1f, 1f, 1f), new Vector4(1f, 0f, 1f, 1f), true);
         }
 
-        //public override void Render(RenderMode mode)
-        //{
-        //    RenderInfo inf = new RenderInfo();
-        //    inf.Mode = mode;
+        public override void Render(RenderMode mode)
+        {
+            //RenderInfo inf = new RenderInfo();
+            //inf.Mode = mode;
 
-        //    if (!mRenderer.GottaRender(inf))
-        //        return;
+            //if (!mRenderer.GottaRender(inf))
+            //    return;
 
-        //    GL.PushMatrix();
-        //    {
-        //        GL.Translate(mTruePosition);
-        //        //"RotateZYX"の順番を変えない事
-        //        //Do not change the order of "RotateZYX"
-        //        GL.Rotate(mTrueRotation.Z, 0f, 0f, 1f);
-        //        GL.Rotate(mTrueRotation.Y, 0f, 1f, 0f);
-        //        GL.Rotate(mTrueRotation.X, 1f, 0f, 0f);
-        //        GL.Scale(mScale.X, mScale.Y, mScale.Z);
-        //    }
-        //    mRenderer.Render(inf);
-        //    GL.PopMatrix();
+            //GL.PushMatrix();
+            //{
+            //    GL.Translate(mTruePosition);
+            //    //"RotateZYX"の順番を変えない事
+            //    //Do not change the order of "RotateZYX"
+            //    GL.Rotate(mTrueRotation.Z, 0f, 0f, 1f);
+            //    GL.Rotate(mTrueRotation.Y, 0f, 1f, 0f);
+            //    GL.Rotate(mTrueRotation.X, 1f, 0f, 0f);
+            //    GL.Scale(mScale.X, mScale.Y, mScale.Z);
+            //}
+            //mRenderer.Render(inf);
+            //GL.PopMatrix();
 
 
-        //}
+        }
 
         public override void Save()
         {
