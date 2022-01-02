@@ -165,6 +165,8 @@ namespace Takochu.fmt
             List<uint> arrayoffsets = new List<uint>();
 
             uint arraydefoffset = m_File.ReadUInt32();
+
+            //オフセットデータを取得
             for (int i = 0; i < 13; i++)
             {
                 m_File.Seek((int)(sectionstart + 0xC + (i * 0x4)));

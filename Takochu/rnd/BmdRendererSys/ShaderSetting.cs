@@ -198,6 +198,10 @@ namespace Takochu.rnd.BmdRendererSys
         // up with removing texture coordinates. That's just plain
         // retarded.
 
+        //訳:
+        // 私はバージョン 130 以上を使用しますが、新しいデザインには同意できないものがあります。
+        // すなわち、テクスチャ座標を削除するのはどうしたことか。それはまさに無謀なことです。
+
         private int _materialID;
         private int _success;
         private CultureInfo _forceusa;
@@ -213,7 +217,7 @@ namespace Takochu.rnd.BmdRendererSys
                 return (_success == (int)All.True);
             }
         }
-
+        //シェーダーの基本設定
         public ShaderSetting(BMD bmdmodel , int materialID) 
         {
             _materialID  = materialID;
@@ -223,6 +227,7 @@ namespace Takochu.rnd.BmdRendererSys
             _fragment    = new StringBuilder();
         }
 
+        //シェーダー作成
         public void GenerateShader(ref BmdRenderer.Shader[] shaders) 
         {
             _shaders = shaders;
@@ -245,6 +250,7 @@ namespace Takochu.rnd.BmdRendererSys
             GenerateAndCompile_Shader(out _shader.FragmentShader, ShaderType.FragmentShader);
         }
 
+        //Shader Program作成してリンク。
         private void GenerateShaderProgram() 
         {
             _shader.Program = GL.CreateProgram();
@@ -264,6 +270,7 @@ namespace Takochu.rnd.BmdRendererSys
             //debugshaders += "-----------------------------------------------------------\n" + frag.ToString();
         }
 
+        //Vertex Shader作成
         private void VertexStringJoint() 
         {
             _vertex.AppendLine("#version 120");
@@ -271,6 +278,7 @@ namespace Takochu.rnd.BmdRendererSys
             _vertex.AppendLine("void main()");
             _vertex.AppendLine("{");
             _vertex.AppendLine("    gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;");
+            
             _vertex.AppendLine("    gl_FrontColor = gl_Color;");
             _vertex.AppendLine("    gl_FrontSecondaryColor = gl_SecondaryColor;");
             for (int i = 0; i < _material.NumTexgens; i++)
@@ -285,6 +293,7 @@ namespace Takochu.rnd.BmdRendererSys
             _vertex.AppendLine("}");
         }
 
+        //Fragment Shader作成
         private void FragmentStringJoint() 
         {
             _fragment.AppendLine("#version 120");
@@ -297,21 +306,28 @@ namespace Takochu.rnd.BmdRendererSys
             }
 
             _fragment.AppendLine("");
+            //trucc1関数 float c が0なら0、0以外なら小数部分が0かどうか調べて0(つまり整数)なら1.0に、それ以外小数部分を返す
             _fragment.AppendLine("float truncc1(float c)");
             _fragment.AppendLine("{");
+
             _fragment.AppendLine("    return (c == 0.0) ? 0.0 : ((fract(c) == 0.0) ? 1.0 : fract(c));");
             _fragment.AppendLine("}");
+            
+            //truncc3関数 
             _fragment.AppendLine("");
             _fragment.AppendLine("vec3 truncc3(vec3 c)");
             _fragment.AppendLine("{");
             _fragment.AppendLine("    return vec3(truncc1(c.r), truncc1(c.g), truncc1(c.b));");
             _fragment.AppendLine("}");
+
             _fragment.AppendLine("");
             _fragment.AppendLine("void main()");
             _fragment.AppendLine("{");
 
+            //マテリアルカラー
             for (int i = 0; i < 4; i++)
             {
+                //一回目のループは3に、2回目以降は012
                 int _i = (i == 0) ? 3 : i - 1; // ???
                 _fragment.AppendFormat(_forceusa, "    vec4 {0} = vec4({1}, {2}, {3}, {4});\n",
                     outputregs[i],
@@ -319,16 +335,22 @@ namespace Takochu.rnd.BmdRendererSys
                     (float)_material.ColorS10[_i].B / 255f, (float)_material.ColorS10[_i].A / 255f);
             }
 
+            //コンスタントカラー 
             for (int i = 0; i < 4; i++)
             {
+               
                 _fragment.AppendFormat(_forceusa, "    vec4 k{0} = vec4({1}, {2}, {3}, {4});\n",
                     i,
                     (float)_material.ConstColors[i].R / 255f, (float)_material.ConstColors[i].G / 255f,
                     (float)_material.ConstColors[i].B / 255f, (float)_material.ConstColors[i].A / 255f);
             }
 
+            //テクスチャカラー、 頂点カラー、コンスタントカラー初期化
             _fragment.AppendLine("    vec4 texcolor, rascolor, konst;");
 
+
+
+            //TEV Stage処理
             for (int i = 0; i < _material.NumTevStages; i++)
             {
                 _fragment.AppendLine("\n    // TEV stage " + i.ToString());
@@ -338,11 +360,16 @@ namespace Takochu.rnd.BmdRendererSys
                 // if they're selected into a, b or c
                 string rout, a, b, c, d, operation = "";
 
+                //コンストカラーをセット
                 _fragment.AppendLine("    konst.rgb = " + c_konstsel[_material.ConstColorSel[i]] + ";");
                 _fragment.AppendLine("    konst.a = " + a_konstsel[_material.ConstAlphaSel[i]] + ";");
+
+                //テクスチャカラーをセット
                 if (_material.TevOrder[i].TexMap != 0xFF && _material.TevOrder[i].TexcoordId != 0xFF)
                     _fragment.AppendFormat("    texcolor = texture2D(texture{0}, gl_TexCoord[{1}].st);\n",
                         _material.TevOrder[i].TexMap, _material.TevOrder[i].TexcoordId);
+
+                //頂点カラーをセット
                 _fragment.AppendLine("    rascolor = gl_Color;");
                 // TODO: take mat.TevOrder[i].ChanId into account
                 // TODO: tex/ras swizzle? (important or not?)
@@ -351,6 +378,12 @@ namespace Takochu.rnd.BmdRendererSys
                 if (_material.TevOrder[i].ChanID != 4)
                     throw new Exception("!UNSUPPORTED CHANID " + _material.TevOrder[i].ChanID.ToString());
 
+
+
+
+
+                //カラー計算
+                //routに結果代入
                 rout = outputregs[_material.TevStage[i].ColorRegID] + ".rgb";
                 a = c_inputregs[_material.TevStage[i].ColorIn[0]];
                 b = c_inputregs[_material.TevStage[i].ColorIn[1]];
@@ -383,6 +416,12 @@ namespace Takochu.rnd.BmdRendererSys
                     tevscale[_material.TevStage[i].ColorScale]);
                 _fragment.AppendLine(operation);
 
+
+
+
+
+
+                //アルファ計算
                 rout = outputregs[_material.TevStage[i].AlphaRegID] + ".a";
                 a = a_inputregs[_material.TevStage[i].AlphaIn[0]];
                 b = a_inputregs[_material.TevStage[i].AlphaIn[1]];
@@ -417,6 +456,7 @@ namespace Takochu.rnd.BmdRendererSys
             _fragment.AppendLine("   gl_FragColor.a = truncc1(rprev.a);");
             _fragment.AppendLine("");
 
+            //アルファテスト
             _fragment.AppendLine("    // Alpha test");
             if (_material.AlphaComp.MergeFunc == 1 && (_material.AlphaComp.Func0 == 7 || _material.AlphaComp.Func1 == 7))
             {
@@ -452,6 +492,8 @@ namespace Takochu.rnd.BmdRendererSys
 
             _fragment.AppendLine("}");
         }
+
+
 
         /// <summary>
         /// This method is created for "Vertex" and "Fragment".<br/>

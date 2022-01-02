@@ -43,6 +43,7 @@ namespace Takochu.rnd.BmdRendererSys
             textureID = texid;
         }
 
+        //フィルター方法、ラップ方法
         public void UploadTexture()
         {
             GL.BindTexture(TextureTarget.Texture2D, textureID);
@@ -58,6 +59,7 @@ namespace Takochu.rnd.BmdRendererSys
             SetMipMap(bmdTexture.Width, bmdTexture.Height);
         }
 
+        
         private void SetMipMap(int width, int height)
         {
             for (int MipMap = 0; MipMap < bmdTexture.MipmapCount; MipMap++)
