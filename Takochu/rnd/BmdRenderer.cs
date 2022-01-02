@@ -76,6 +76,7 @@ namespace Takochu.rnd
             }
         }
 
+        //後処理
         public override void Close()
         {
             if (m_HasShaders)

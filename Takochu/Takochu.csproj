@@ -74,14 +74,14 @@
     </Reference>
     <Reference Include="OpenTK, Version=3.0.1.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\WhiteholeCS-master\bin\Debug\OpenTK.dll</HintPath>
+      <HintPath>D:\CGDevelop\OpenGL\opentk-2010-10-06\opentk\Binaries\OpenTK\Release\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK.Compatibility">
-      <HintPath>..\..\WhiteholeCS-master\bin\Debug\OpenTK.Compatibility.dll</HintPath>
+      <HintPath>D:\CGDevelop\OpenGL\opentk-2010-10-06\opentk\Binaries\OpenTK\Release\OpenTK.Compatibility.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK.GLControl, Version=3.0.1.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\WhiteholeCS-master\bin\Debug\OpenTK.GLControl.dll</HintPath>
+      <HintPath>D:\CGDevelop\OpenGL\opentk-2010-10-06\opentk\Binaries\OpenTK\Release\OpenTK.GLControl.dll</HintPath>
     </Reference>
     <Reference Include="SuperBMDLib">
       <HintPath>..\..\..\SuperBMDLib.dll</HintPath>
@@ -366,6 +366,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="fmt\SectionData\" />
     <Folder Include="smg\obj\parameters\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
