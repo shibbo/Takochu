@@ -11,6 +11,9 @@ namespace Takochu.rnd.BmdRendererSys
 {
     public class ShaderSetting
     {
+        /// <summary>
+        /// 頂点シェーダからフラグメントシェーダに送る情報(頂点位置やUV座標など)
+        /// </summary>
         private static readonly string[] GenSrc = {
             "normalize(gl_Vertex)",
             "vec4(gl_Normal,1.0)",
@@ -25,12 +28,24 @@ namespace Takochu.rnd.BmdRendererSys
             "gl_MultiTexCoord6",
             "gl_MultiTexCoord7"
         };
+
+        /// <summary>
+        /// TEVレジスタの結果が代入される変数
+        /// </summary>
         private static readonly string[] outputregs = {
             "rprev",
             "r0",
             "r1",
             "r2"
         };
+
+
+
+        //カラー
+
+        /// <summary>
+        /// オペランドA,B,Cに代入する変数(カラー)
+        /// </summary>
         private static readonly string[] c_inputregs = {
             "truncc3(rprev.rgb)",
             "truncc3(rprev.aaa)",
@@ -49,6 +64,10 @@ namespace Takochu.rnd.BmdRendererSys
             "konst.rgb",
             "vec3(0.0,0.0,0.0)"
         };
+
+        /// <summary>
+        /// オペランドDに代入する変数(カラー)
+        /// </summary>
         private static readonly string[] c_inputregsD = {
             "rprev.rgb",
             "rprev.aaa",
@@ -67,6 +86,10 @@ namespace Takochu.rnd.BmdRendererSys
             "konst.rgb",
             "vec3(0.0,0.0,0.0)"
         };
+
+        /// <summary>
+        /// コンスタントカラー
+        /// </summary>
         private static readonly string[] c_konstsel = {
             "vec3(1.0,1.0,1.0)",
             "vec3(0.875,0.875,0.875)",
@@ -102,6 +125,13 @@ namespace Takochu.rnd.BmdRendererSys
             "k3.aaa"
         };
 
+
+
+        ///アルファ
+
+        /// <summary>
+        /// オペランドに代入できる変数(アルファ)
+        /// </summary>
         private static readonly string[] a_inputregs = { 
             "truncc1(rprev.a)", 
             "truncc1(r0.a)", 
@@ -113,6 +143,9 @@ namespace Takochu.rnd.BmdRendererSys
             "0.0" 
         };
 
+        /// <summary>
+        /// オペランドDに代入する変数(アルファ)
+        /// </summary>
         private static readonly string[] a_inputregsD = {
             "rprev.a", 
             "r0.a", 
@@ -124,6 +157,9 @@ namespace Takochu.rnd.BmdRendererSys
             "0.0" 
         };
 
+        /// <summary>
+        /// コンスタントアルファ
+        /// </summary>
         private static readonly string[] a_konstsel = {
             "1.0", 
             "0.875", 
@@ -159,12 +195,18 @@ namespace Takochu.rnd.BmdRendererSys
             "k3.a" 
         };
 
+        /// <summary>
+        /// 計算結果にかけるバイアス
+        /// </summary>
         private static readonly string[] tevbias = { 
             "0.0", 
             "0.5", 
             "-0.5" 
         };
 
+        /// <summary>
+        /// TEV Stageの計算結果に乗算する倍率(明るさ)
+        /// </summary>
         private static readonly string[] tevscale = { 
             "1.0", 
             "2.0", 
@@ -172,6 +214,9 @@ namespace Takochu.rnd.BmdRendererSys
             "0.5" 
         };
 
+        /// <summary>
+        /// アルファ比較の演算一覧
+        /// </summary>
         private static readonly string[] alphacompare = { 
             "{0} != {0}", 
             "{0} < {1}", 
@@ -217,6 +262,7 @@ namespace Takochu.rnd.BmdRendererSys
                 return (_success == (int)All.True);
             }
         }
+
         //シェーダーの基本設定
         public ShaderSetting(BMD bmdmodel , int materialID) 
         {
@@ -270,17 +316,22 @@ namespace Takochu.rnd.BmdRendererSys
             //debugshaders += "-----------------------------------------------------------\n" + frag.ToString();
         }
 
-        //Vertex Shader作成
+        //Vertex Shader
         private void VertexStringJoint() 
         {
             _vertex.AppendLine("#version 120");
+            _vertex.AppendLine("varying vec3 pos;");
             _vertex.AppendLine("");
             _vertex.AppendLine("void main()");
             _vertex.AppendLine("{");
             _vertex.AppendLine("    gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;");
-            
+            _vertex.AppendLine("    pos = normalize(gl_Vertex.xyz);");
+
             _vertex.AppendLine("    gl_FrontColor = gl_Color;");
             _vertex.AppendLine("    gl_FrontSecondaryColor = gl_SecondaryColor;");
+
+
+            //UV座標をフラグメントシェーダに送る
             for (int i = 0; i < _material.NumTexgens; i++)
             {
                 /*if (mat.TexGen[i].Src == 1) vert.AppendFormat("    gl_TexCoord[{0}].st = gl_Normal.xy;\n", i);
@@ -289,11 +340,20 @@ namespace Takochu.rnd.BmdRendererSys
                 vert.AppendFormat("    gl_TexCoord[{0}] = gl_MultiTexCoord{0};\n", i);*/
                 // TODO matrices
                 _vertex.AppendFormat("    gl_TexCoord[{0}] = {1};\n", i, GenSrc[_material.TexGen[i].Src]);
+
             }
             _vertex.AppendLine("}");
         }
 
-        //Fragment Shader作成
+
+
+
+
+
+
+
+
+        //Fragment Shader
         private void FragmentStringJoint() 
         {
             _fragment.AppendLine("#version 120");
@@ -305,15 +365,19 @@ namespace Takochu.rnd.BmdRendererSys
                 _fragment.AppendLine("uniform sampler2D texture" + i.ToString() + ";");
             }
 
+            _fragment.AppendLine("varying vec3 pos;");
+
+
             _fragment.AppendLine("");
             //trucc1関数 float c が0なら0、0以外なら小数部分が0かどうか調べて0(つまり整数)なら1.0に、それ以外小数部分を返す
+            //切り捨ての計算。0より大きい整数は1.0に、それ以外は整数部分を切り捨てて小数部分のみにする。
             _fragment.AppendLine("float truncc1(float c)");
             _fragment.AppendLine("{");
 
             _fragment.AppendLine("    return (c == 0.0) ? 0.0 : ((fract(c) == 0.0) ? 1.0 : fract(c));");
             _fragment.AppendLine("}");
             
-            //truncc3関数 
+            //truncc3関数 vec3
             _fragment.AppendLine("");
             _fragment.AppendLine("vec3 truncc3(vec3 c)");
             _fragment.AppendLine("{");
@@ -324,18 +388,22 @@ namespace Takochu.rnd.BmdRendererSys
             _fragment.AppendLine("void main()");
             _fragment.AppendLine("{");
 
-            //マテリアルカラー
+            //TEVカラーの初期色の設定
             for (int i = 0; i < 4; i++)
             {
                 //一回目のループは3に、2回目以降は012
-                int _i = (i == 0) ? 3 : i - 1; // ???
+                //つまり、rprevには3番目のマテリアルカラーを代入し、それ以降は数字に対応した色が代入される(r0, r1, r2)
+                //ゲーム内では基本的にrprevしか使わない
+                int _i = (i == 0) ? 3 : i - 1;
+                
                 _fragment.AppendFormat(_forceusa, "    vec4 {0} = vec4({1}, {2}, {3}, {4});\n",
                     outputregs[i],
                     (float)_material.ColorS10[_i].R / 255f, (float)_material.ColorS10[_i].G / 255f,
                     (float)_material.ColorS10[_i].B / 255f, (float)_material.ColorS10[_i].A / 255f);
             }
 
-            //コンスタントカラー 
+
+            //コンスタントカラー初期化
             for (int i = 0; i < 4; i++)
             {
                
@@ -360,7 +428,7 @@ namespace Takochu.rnd.BmdRendererSys
                 // if they're selected into a, b or c
                 string rout, a, b, c, d, operation = "";
 
-                //コンストカラーをセット
+                //コンスタントカラーをセット
                 _fragment.AppendLine("    konst.rgb = " + c_konstsel[_material.ConstColorSel[i]] + ";");
                 _fragment.AppendLine("    konst.a = " + a_konstsel[_material.ConstAlphaSel[i]] + ";");
 
@@ -383,6 +451,7 @@ namespace Takochu.rnd.BmdRendererSys
 
 
                 //カラー計算
+
                 //routに結果代入
                 rout = outputregs[_material.TevStage[i].ColorRegID] + ".rgb";
                 a = c_inputregs[_material.TevStage[i].ColorIn[0]];
@@ -392,25 +461,30 @@ namespace Takochu.rnd.BmdRendererSys
 
                 switch (_material.TevStage[i].ColorOp)
                 {
+                    // D + 通常の線形補間の結果
                     case 0:
                         operation = "    {0} = ({4} + mix({1},{2},{3}) + vec3({5},{5},{5})) * vec3({6},{6},{6});";
                         if (_material.TevStage[i].ColorClamp != 0) operation += "\n    {0} = clamp({0}, vec3(0.0,0.0,0.0), vec3(1.0,1.0,1.0));";
                         break;
 
+                    // D - 線形補間の結果
                     case 1:
                         operation = "    {0} = ({4} - mix({1},{2},{3}) + vec3({5},{5},{5})) * vec3({6},{6},{6});";
                         if (_material.TevStage[i].ColorClamp != 0) operation += "\n    {0} = clamp({0}, vec3(0.0,0.0,0.0), vec3(1.0,1.0,1.0));";
                         break;
 
+                    //AとBのRedチャンネルの値を比較
+                    //Aの方が値が大きい場合、Cを返す。Bの方が大きい場合は0を返す
                     case 8:
                         operation = "    {0} = {4} + ((({1}).r > ({2}).r) ? {3} : vec(0.0,0.0,0.0));";
                         break;
 
+                    //計算方が見つからない場合は紫色を返す
                     default:
                         operation = "    {0} = vec3(1.0,0.0,1.0);";
                         throw new Exception("!colorop " + _material.TevStage[i].ColorOp.ToString());
                 }
-
+                //代入する値
                 operation = string.Format(operation,
                     rout, a, b, c, d, tevbias[_material.TevStage[i].ColorBias],
                     tevscale[_material.TevStage[i].ColorScale]);
@@ -450,11 +524,17 @@ namespace Takochu.rnd.BmdRendererSys
                     tevscale[_material.TevStage[i].AlphaScale]);
                 _fragment.AppendLine(operation);
             }
+            //↑TEV Stage 処理
 
+
+
+
+            //最終的な出力。 rpevに入っている値を代入する。
             _fragment.AppendLine("");
             _fragment.AppendLine("   gl_FragColor.rgb = truncc3(rprev.rgb);");
             _fragment.AppendLine("   gl_FragColor.a = truncc1(rprev.a);");
             _fragment.AppendLine("");
+
 
             //アルファテスト
             _fragment.AppendLine("    // Alpha test");
@@ -496,8 +576,8 @@ namespace Takochu.rnd.BmdRendererSys
 
 
         /// <summary>
-        /// This method is created for "Vertex" and "Fragment".<br/>
-        /// このメソッドは、"Vertex "と "Fragment "を対象に作成されています。
+        /// Compile vertex shaders and fragment shaders. This is done just before drawing.<br/>
+        /// 頂点シェーダとフラグメントシェーダのコンパイルをする。描画する直前に行います。
         /// </summary>
         /// <param name="materialShader"></param>
         /// <param name="shaderType">Only "Vertex" or "Fragment"</param>
