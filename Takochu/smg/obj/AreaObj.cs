@@ -9,6 +9,7 @@ using Takochu.util;
 using Takochu.rnd;
 using OpenTK.Graphics.OpenGL;
 using static Takochu.smg.ObjectDB;
+using Takochu.calc;
 
 namespace Takochu.smg.obj
 {
@@ -16,6 +17,10 @@ namespace Takochu.smg.obj
      [ToDo]
         1.  We need to fix the problem where the location of the area is not displayed correctly.
             It is very likely that the location of the origin is different in each area.
+
+            //2022/01/03
+            Enabled area display in a cubic wire model.
+            It seems that the origin is probably well adjusted.
         2.  The shape should be able to be changed by the shape number.
             The fourth shape of the "water area" is a bowl shape.
         
@@ -68,31 +73,118 @@ namespace Takochu.smg.obj
             mMapPartsID = Get<short>("MapParts_ID");
             mObjID = Get<short>("Obj_ID");
 
-            //mRenderer = new ColorWireCube(new Vector3(500,500,500), new Vector4(1f, 1f, 1f, 1f), new Vector4(1f, 0f, 1f, 1f), true);
+            colorWireRenderer = new ColorWireRenderer(AreaType.Normal, mAreaShapeNo);
+            mRenderer = colorWireRenderer;
+            mTruePosition = AdjustmentPosition;
         }
 
         public override void Render(RenderMode mode)
         {
-            //RenderInfo inf = new RenderInfo();
-            //inf.Mode = mode;
+            RenderInfo inf = new RenderInfo();
+            inf.Mode = mode;
 
-            //if (!mRenderer.GottaRender(inf))
-            //    return;
+            if (!mRenderer.GottaRender(inf))
+                return;
 
-            //GL.PushMatrix();
-            //{
-            //    GL.Translate(mTruePosition);
-            //    //"RotateZYX"の順番を変えない事
-            //    //Do not change the order of "RotateZYX"
-            //    GL.Rotate(mTrueRotation.Z, 0f, 0f, 1f);
-            //    GL.Rotate(mTrueRotation.Y, 0f, 1f, 0f);
-            //    GL.Rotate(mTrueRotation.X, 1f, 0f, 0f);
-            //    GL.Scale(mScale.X, mScale.Y, mScale.Z);
-            //}
-            //mRenderer.Render(inf);
-            //GL.PopMatrix();
+            GL.PushMatrix();
+            {
+                GL.Translate(mTruePosition);
+                //"RotateZYX"の順番を変えない事
+                //Do not change the order of "RotateZYX"
+                GL.Rotate(mTrueRotation.Z, 0f, 0f, 1f);
+                GL.Rotate(mTrueRotation.Y, 0f, 1f, 0f);
+                GL.Rotate(mTrueRotation.X, 1f, 0f, 0f);
+                GL.Scale(mScale.X, mScale.Y, mScale.Z);
+            }
+            mRenderer.Render(inf);
+            GL.PopMatrix();
 
 
+        }
+
+        public override void Reload_mValues()
+        {
+            //string values
+            //Currently, it is not linked to ObjectDB, so it cannot be changed temporarily.
+            {
+                mName = mEntry.Get("name").ToString();
+            }
+
+
+            //Int32 ID
+            {
+                mID = ObjectTypeChange.ToInt32(mEntry.Get("l_id"));
+                mPriority = ObjectTypeChange.ToInt32(mEntry.Get("Priority"));
+                
+            }
+
+            //Int16 param
+            {
+                mPathID = ObjectTypeChange.ToInt16(mEntry.Get("CommonPath_ID"));
+                mClippingGroupID = ObjectTypeChange.ToInt16(mEntry.Get("ClippingGroupId"));
+                mGroupID = ObjectTypeChange.ToInt16(mEntry.Get("GroupId"));
+                mDemoGroupID = ObjectTypeChange.ToInt16(mEntry.Get("DemoGroupId"));
+                mMapPartsID = ObjectTypeChange.ToInt16(mEntry.Get("MapParts_ID"));
+                mAreaShapeNo = ObjectTypeChange.ToInt16(mEntry.Get("AreaShapeNo"));
+                mObjID = ObjectTypeChange.ToInt16(mEntry.Get("Obj_ID"));
+                if (GameUtil.IsSMG1())
+                {
+                    mChildObjID = ObjectTypeChange.ToInt16(mEntry.Get("ChildObjId"));
+                }
+                
+                   
+                
+            }
+
+            //Int32 Switch
+            {
+                mSwitchAppear = ObjectTypeChange.ToInt32(mEntry.Get("SW_APPEAR"));
+                mSwitchActivate = ObjectTypeChange.ToInt32(mEntry.Get("SW_A"));
+                mSwitchDeactivate = ObjectTypeChange.ToInt32(mEntry.Get("SW_B"));
+                if (GameUtil.IsSMG1())
+                {
+                    mSwitchSleep = ObjectTypeChange.ToInt32(mEntry.Get("SW_SLEEP"));
+                }
+                if (GameUtil.IsSMG2())
+                {
+                    mSwitchAwake = ObjectTypeChange.ToInt32(mEntry.Get("SW_AWAKE"));
+                }
+
+            }
+
+            //Obj_args
+            for (int i = 0; i < mObjArgs.Length; i++)
+                mObjArgs[i] = ObjectTypeChange.ToInt32(mEntry.Get($"Obj_arg{i}"));
+
+            //Vector3Values
+            {
+                mTruePosition =
+                    new Vector3(
+                        ObjectTypeChange.ToFloat(mEntry.Get("pos_x")),
+                        ObjectTypeChange.ToFloat(mEntry.Get("pos_y")),
+                        ObjectTypeChange.ToFloat(mEntry.Get("pos_z"))
+                    );
+
+                //原点調整
+                mTruePosition = AdjustmentPosition;
+
+                mTrueRotation =
+                    new Vector3(
+                        ObjectTypeChange.ToFloat(mEntry.Get("dir_x")),
+                        ObjectTypeChange.ToFloat(mEntry.Get("dir_y")),
+                        ObjectTypeChange.ToFloat(mEntry.Get("dir_z"))
+                    );
+                mScale =
+                    new Vector3(
+                        ObjectTypeChange.ToFloat(mEntry.Get("scale_x")),
+                        ObjectTypeChange.ToFloat(mEntry.Get("scale_y")),
+                        ObjectTypeChange.ToFloat(mEntry.Get("scale_z"))
+                    );
+                mPosition = new Vector3(mTruePosition) / 100;
+                mRotation = new Vector3(mTrueRotation) / 100;
+            }
+
+            //Console.WriteLine(dytest);
         }
 
         public override void Save()
@@ -107,7 +199,11 @@ namespace Takochu.smg.obj
             mEntry.Set("SW_APPEAR", mSwitchAppear);
             mEntry.Set("SW_A", mSwitchActivate);
             mEntry.Set("SW_B", mSwitchDeactivate);
-            mEntry.Set("SW_AWAKE", mSwitchAwake);
+            if (GameUtil.IsSMG1())
+                mEntry.Set("SW_SLEEP", mSwitchSleep);
+            
+            if (GameUtil.IsSMG2())
+                mEntry.Set("SW_AWAKE", mSwitchAwake);
 
             mEntry.Set("pos_x", mTruePosition.X);
             mEntry.Set("pos_y", mTruePosition.Y);
@@ -128,24 +224,43 @@ namespace Takochu.smg.obj
             mEntry.Set("DemoGroupId", mDemoGroupID);
             mEntry.Set("MapParts_ID", mMapPartsID);
             mEntry.Set("Obj_ID", mObjID);
+            if (GameUtil.IsSMG1())
+                mEntry.Set("ChildObjId", mChildObjID);
         }
 
-        int mID;
-        int mPriority;
-        int mSwitchAppear;
-        int mSwitchActivate;
-        int mSwitchDeactivate;
-        int mSwitchAwake;
-        short mAreaShapeNo;
-        short mPathID;
-        short mClippingGroupID;
-        short mGroupID;
-        short mDemoGroupID;
-        short mMapPartsID;
-        short mObjID;
+        private int mID;
+        private int mPriority;
+        private int mSwitchAppear;
+        private int mSwitchActivate;
+        private int mSwitchDeactivate;
+        private int mSwitchAwake;
+        private short mAreaShapeNo;
+        private short mPathID;
+        private short mClippingGroupID;
+        private short mGroupID;
+        private short mDemoGroupID;
+        private short mMapPartsID;
+        private short mObjID;
 
-        int mSwitchSleep;
-        short mChildObjID;
+        private int mSwitchSleep;
+        private short mChildObjID;
+
+        private readonly ColorWireRenderer  colorWireRenderer;
+
+        public Vector3 AdjustmentPosition 
+        {
+            get 
+            {
+
+                //全てのエリアに適用する場合はこのifは不要です
+                if (mAreaShapeNo == 0 || mAreaShapeNo == 1)
+                {
+                    float swapPositionY = mTruePosition.Y + ((colorWireRenderer.m_Size.Y) * mScale.Y);
+                    mTruePosition = new Vector3(mTruePosition.X, swapPositionY, mTruePosition.Z);
+                }
+                return mTruePosition;
+            }
+        }
 
         public override string ToString()
         {
