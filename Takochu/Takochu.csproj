@@ -140,7 +140,9 @@
     <Compile Include="rnd\BmdRendererSys\ShaderSetting.cs" />
     <Compile Include="rnd\BmdRendererSys\TextureSetting.cs" />
     <Compile Include="rnd\ColorCubeRenderer.cs" />
-    <Compile Include="rnd\ColorWireCube.cs" />
+    <Compile Include="rnd\ColorWireRenderer.cs" />
+    <Compile Include="rnd\ColorWireShapeData\ColorWireCube.cs" />
+    <Compile Include="rnd\ColorWireShapeData\IColorWireShape.cs" />
     <Compile Include="rnd\ModelCache.cs" />
     <Compile Include="rnd\ModelSubstitutor.cs" />
     <Compile Include="rnd\MultiBmdRenderer.cs" />
