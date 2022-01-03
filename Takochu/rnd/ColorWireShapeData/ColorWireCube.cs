@@ -3,34 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using OpenTK;
+using System.Drawing;
 using OpenTK.Graphics.OpenGL;
+using OpenTK;
 
-namespace Takochu.rnd
+namespace Takochu.rnd.ColorWireShapeData
 {
-    public class ColorWireCube : RendererBase
+    public class ColorWireCube: IColorWireShape
     {
-        public ColorWireCube(Vector3 size, Vector4 border, Vector4 fill, bool axes)
+        private Vector3 _size;
+        private Vector4 _fillColor;
+        private Color _color;
+
+        public ColorWireCube() 
         {
-            m_Size = size;
-            m_BorderColor = border;
-            m_FillColor = fill;
-            m_ShowAxes = axes;
+            _size = Vector3.One;
+            _fillColor = Vector4.One;
+            _color = Color.Black;
         }
 
-        public override bool GottaRender(RenderInfo info)
-        {
-            return info.Mode != RenderMode.Translucent;
-        }
-
-        public override void Render(RenderInfo info)
+        public void Render(RenderInfo info) 
         {
             if (info.Mode == RenderMode.Translucent) return;
 
-            var sx = m_Size.X;
-            var sy = m_Size.Y;
-            var sz = m_Size.Z;
-            var s = m_Size;
+            var sx = _size.X;
+            var sy = _size.Y;
+            var sz = _size.Z;
+            var s = _size;
             if (info.Mode != RenderMode.Picking)
             {
                 for (int i = 0; i < 8; i++)
@@ -41,7 +40,7 @@ namespace Takochu.rnd
 
                 GL.DepthFunc(DepthFunction.Lequal);
                 GL.DepthMask(true);
-                GL.Color4(m_FillColor);
+                GL.Color4(_fillColor);
                 GL.Disable(EnableCap.Lighting);
                 GL.Disable(EnableCap.Blend);
                 GL.Disable(EnableCap.ColorLogicOp);
@@ -80,13 +79,13 @@ namespace Takochu.rnd
             if (info.Mode != RenderMode.Picking)
             {
                 GL.LineWidth(2.5f);
-                GL.Color4(/*m_BorderColor*/System.Drawing.Color.Red);
+                GL.Color4(_color);
 
-                
+
 
                 GL.Begin(BeginMode.LineStrip);
                 GL.Vertex3(s);
-                GL.Vertex3(-sx,sy,sz);
+                GL.Vertex3(-sx, sy, sz);
                 GL.Vertex3(-sx, sy, -sz);
                 GL.Vertex3(sx, sy, -sz);
                 GL.Vertex3(sx, sy, sz);
@@ -126,11 +125,36 @@ namespace Takochu.rnd
             }
         }
 
+        public void SetColor(AreaType areaType)
+        {
+            Color color = _color;
+            switch (areaType) 
+            {
+                case AreaType.Normal:
+                    color = Color.Aqua;
+                    break;
+                case AreaType.Camera:
+                    color = Color.Red;
+                    break;
+                case AreaType.Gravity:
+                    color = Color.DarkOliveGreen;
+                    break;
+                default:
 
-        private Vector3 m_Size;
-        private Vector4 m_BorderColor, m_FillColor;
-        private bool m_ShowAxes;
+                    break;
+            }
+
+            _color = color;
+        }
+
+        public void SetFillColor(Vector4 fillColor)
+        {
+            _fillColor = fillColor;
+        }
+
+        public void SetSize(Vector3 size)
+        {
+            _size = size;
+        }
     }
-    
-    
 }
