@@ -249,25 +249,53 @@ namespace Takochu.ui
 
         private void scenarioTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            var sw = new System.Diagnostics.Stopwatch();
+            sw.Start();
             if (scenarioTreeView.SelectedNode != null)
             {
                 mCurrentScenario = Convert.ToInt32(scenarioTreeView.SelectedNode.Tag);
+                
                 applyGalaxyNameBtn.Enabled = true;
                 LoadScenario(mCurrentScenario);
+
+                sw.Stop();
+                Console.WriteLine($"LoadScenario: {sw.Elapsed}");
+                sw.Reset();
+                sw.Start();
 
                 if (mGalaxy.GetGalaxyZone().mIntroCameras.ContainsKey($"StartScenario{mCurrentScenario}.canm"))
                     introCameraEditorBtn.Enabled = true;
                 else
                     introCameraEditorBtn.Enabled = false;
-            }
 
+                sw.Stop();
+                Console.WriteLine($"GetGalaxyZone: {sw.Elapsed}");
+                sw.Reset();
+                sw.Start();
+            }
+            sw.Stop();
             mGalaxy.GetGalaxyZone().LoadCameras();
+            Console.WriteLine($"LoadCameras: {sw.Elapsed}");
+            sw.Reset();
+            sw.Start();
             UpdateCamera();
             glLevelView.Refresh();
+            sw.Stop();
+            Console.WriteLine($"ScenarioTreeViewFinish: {sw.Elapsed}");
         }
 
         private void EditorWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
+
+            //オブジェクトのプロパティに変更がある場合警告を表示します
+            //Display a warning when there are changes to the object's properties
+            DialogResult dr;
+            if (EditorWindowSys.DataGridViewEdit.IsChanged) 
+            {
+                dr = Translate.GetMessageBox.Show(MessageBoxText.ChangesNotSaved,MessageBoxCaption.Error,MessageBoxButtons.YesNo);
+                if ((dr == DialogResult.No) || (dr == DialogResult.Cancel)) { e.Cancel = true; return; }
+            }
+
             mGalaxy.Close();
             
         }
@@ -295,11 +323,15 @@ namespace Takochu.ui
                 return;
             }
             mGalaxy.Save();
+            EditorWindowSys.DataGridViewEdit.IsChangedClear();
         }
 
+        
         private void closeEditorBtn_Click(object sender, EventArgs e)
         {
-            
+            //Do I need this feature?
+            //Erase the return if you need to.
+            return;
             mStages.Clear();
             mZonesUsed.Clear();
             mZoneMasks.Clear();
@@ -338,6 +370,8 @@ namespace Takochu.ui
 
         private void Scenario_ReLoad() 
         {
+            var sw = new System.Diagnostics.Stopwatch();
+            sw.Start();
             if (scenarioTreeView.SelectedNode != null)
             {
                 mCurrentScenario = Convert.ToInt32(scenarioTreeView.SelectedNode.Tag);
@@ -352,6 +386,8 @@ namespace Takochu.ui
             mGalaxy.GetGalaxyZone().LoadCameras();
             UpdateCamera();
             glLevelView.Refresh();
+            sw.Stop();
+            Console.WriteLine("ScenarioReLoad: "+ $"{sw.Elapsed}");
         }
 
         private int GetIndexOfZoneNode(string name)
@@ -494,7 +530,7 @@ namespace Takochu.ui
         private bool m_OrthView = false;
         private float m_OrthZoom = 20f;
 
-
+        private static EditorWindowSys.DataGridViewEdit dataGridViewEdit;
         /*
          * 0 = Opaque
          * 1 = Translucent
@@ -878,11 +914,6 @@ namespace Takochu.ui
             
             if (abstractObj == null) return;
 
-            Console.WriteLine(e.Node.Tag.ToString());
-
-            Console.Write("ZoneName::");
-            Console.WriteLine(abstractObj.mParentZone.mZoneName);
-
             //objects Camera Setting
             //The following process moves the camera to the object.
             var ZoneName = abstractObj.mParentZone.mZoneName;
@@ -901,21 +932,32 @@ namespace Takochu.ui
             //objects PropertyGrideSetting
             //Display the property grid for setting the currently selected object.
             //Note: These processes are not related to the camera's processing.
-            GeneralObjectPropertyGrid.SelectedObject = null;
+
+            dataGridView1.DataSource = null;
+            dataGridViewEdit = null;
             switch (e.Node.Parent.Text)
             {
                 case "Objects":
+                    if (!(abstractObj is LevelObj))
+                        throw new Exception($"This 「{ typeof(AbstractObj) }」 is not a 「{ typeof(LevelObj) }」 .");
                     LevelObj obj = abstractObj as LevelObj;
-                    GeneralObjectPropertyGrid.SelectedObject = new ObjectPropertyGridSettings(obj);
+                    dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, obj);
+                    dataGridView1.DataSource = dataGridViewEdit.GetDataTable();
                     break;
                 case "Areas":
                     //AreaObj area = abstractObj as AreaObj;
-                    
+                    //dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, area);
+                    //dataGridView1.DataSource = dataGridViewEdit.GetDataTable();
+
                     break;
                 case "Map Parts":
                 case "MapPartsObj":
                     //MapPartsObj mapparts = abstractObj as MapPartsObj;
                     
+                    break;
+                default:
+                    //dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, abstractObj);
+                    //dataGridView1.DataSource = dataGridViewEdit.GetDataTable();
                     break;
             }
 
@@ -964,6 +1006,62 @@ namespace Takochu.ui
             //mGalaxy.GetGalaxyZone().mObjects["Map"].Add(new LevelObj(Entry, mGalaxy.GetGalaxyZone(), path));
             //mObjects[""][""].Add(new LevelObj(Entry, this, path));
         }
+
+        private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            //if (e.RowIndex == -1 && e.ColumnIndex == 0)
+            //{
+            //    var rec = e.CellBounds;
+            //    rec.Width += dataGridView1.Columns[1].Width;
+            //    //rec.Height = dataGridView1.Rows[0].Height;
+            //    var brush = new SolidBrush(dataGridView1.ColumnHeadersDefaultCellStyle.BackColor);
+            //    var pen = new Pen(dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor);
+            //    e.Graphics.FillRectangle(brush, rec);
+            //    e.Graphics.DrawRectangle(pen,rec);
+            //    e.Graphics.DrawLine(pen,new Point(0,rec.Y),new Point(rec.X,0));
+            //    //e.Graphics.DrawString("Obj",dataGridView1.Font,new SolidBrush(Color.Black),rec);
+
+            //    //(TextFormatFlags)5 で水平、垂直方向のセンタリングを指定。
+            //    TextRenderer.DrawText(e.Graphics, "OBJ", e.CellStyle.Font, rec, e.CellStyle.ForeColor, e.CellStyle.BackColor, (TextFormatFlags)5);
+            //    e.Handled = true;
+            //}
+            //else if (e.RowIndex == 0 && (e.ColumnIndex == 0 || e.ColumnIndex == 1))
+            //{
+            //    if (e.ColumnIndex == 1) 
+            //    {
+                    
+            //        e.Handled = true;
+            //        return;
+            //    } 
+            //    var rec = e.CellBounds;
+            //    rec.Width += dataGridView1.Columns[1].Width;
+            //    var brush = new SolidBrush(dataGridView1.ColumnHeadersDefaultCellStyle.BackColor);
+            //    var pen = new Pen(dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor);
+            //    e.Graphics.FillRectangle(brush, rec);
+            //    e.Graphics.DrawRectangle(pen, rec);
+            //    e.Graphics.DrawLine(pen, new Point(0, rec.Y), new Point(rec.X, 0));
+
+            //    TextRenderer.DrawText(e.Graphics, "data", e.CellStyle.Font, rec, e.CellStyle.ForeColor, e.CellStyle.BackColor, (TextFormatFlags)5);
+            //    e.Handled = true;
+
+            //}
+            //else if (e.RowIndex == -1 && e.ColumnIndex == 1)
+            //{
+            //    e.Handled = true;
+            //}
+        }
+
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            var dgv = (DataGridView)sender;
+            
+            var cell_value = dgv[e.ColumnIndex, e.RowIndex].Value;
+            dataGridViewEdit.ChangeValue(e.RowIndex,cell_value);
+            Scenario_ReLoad();
+
+        }
+
+        
 
         private void glLevelView_Resize(object sender, EventArgs e)
         {

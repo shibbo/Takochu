@@ -6,6 +6,7 @@ using System.Globalization;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using Takochu.fmt;
+using Takochu.rnd.BmdRendererSys;
 
 // BMD renderer TODO list
 // * finish TEV/material emulation
@@ -18,351 +19,33 @@ namespace Takochu.rnd
 {
     public class BmdRenderer : RendererBase
     {
-        private void UploadTexture(int id)
-        {
-            TextureWrapMode[] wrapmodes = { TextureWrapMode.ClampToEdge, TextureWrapMode.Repeat, TextureWrapMode.MirroredRepeat };
-            TextureMinFilter[] minfilters = { TextureMinFilter.Nearest, TextureMinFilter.Linear,
-                                                TextureMinFilter.NearestMipmapNearest, TextureMinFilter.LinearMipmapNearest,
-                                                TextureMinFilter.NearestMipmapLinear, TextureMinFilter.LinearMipmapLinear };
-            TextureMagFilter[] magfilters = { TextureMagFilter.Nearest, TextureMagFilter.Linear,
-                                                TextureMagFilter.Nearest, TextureMagFilter.Linear,
-                                                TextureMagFilter.Nearest, TextureMagFilter.Linear };
-
-            BMD.Texture tex = m_Model.Textures[id];
-            int texid = GL.GenTexture();
-            m_Textures[id] = texid;
-
-            GL.BindTexture(TextureTarget.Texture2D, texid);
-
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMaxLevel, tex.MipmapCount - 1);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)minfilters[tex.MinFilter]);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)magfilters[tex.MagFilter]);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)wrapmodes[tex.WrapS]);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)wrapmodes[tex.WrapT]);
-
-            PixelInternalFormat ifmt;
-            PixelFormat fmt;
-            switch (tex.Format)
-            {
-                case 0:
-                case 1: ifmt = PixelInternalFormat.Intensity; fmt = PixelFormat.Luminance; break;
-
-                case 2:
-                case 3: ifmt = PixelInternalFormat.Luminance8Alpha8; fmt = PixelFormat.LuminanceAlpha; break;
-
-                default: ifmt = PixelInternalFormat.Four; fmt = PixelFormat.Bgra; break;
-            }
-
-            int width = tex.Width, height = tex.Height;
-            for (int mip = 0; mip < tex.MipmapCount; mip++)
-            {
-                GL.TexImage2D(TextureTarget.Texture2D, mip, ifmt, width, height, 0, fmt, PixelType.UnsignedByte, tex.Image[mip]);
-                width /= 2; height /= 2;
-            }
-        }
-
         public string debugshaders;
-
-        private void GenerateShaders(int matid)
-        {
-            CultureInfo forceusa = new CultureInfo("en-US");
-
-            string[] texgensrc = { "normalize(gl_Vertex)", "vec4(gl_Normal,1.0)", "argh", "argh",
-                                     "gl_MultiTexCoord0", "gl_MultiTexCoord1", "gl_MultiTexCoord2", "gl_MultiTexCoord3",
-                                     "gl_MultiTexCoord4", "gl_MultiTexCoord5", "gl_MultiTexCoord6", "gl_MultiTexCoord7" };
-
-            string[] outputregs = { "rprev", "r0", "r1", "r2" };
-
-            string[] c_inputregs = { "truncc3(rprev.rgb)", "truncc3(rprev.aaa)", "truncc3(r0.rgb)", "truncc3(r0.aaa)",
-                                        "truncc3(r1.rgb)", "truncc3(r1.aaa)", "truncc3(r2.rgb)", "truncc3(r2.aaa)",
-                                       "texcolor.rgb", "texcolor.aaa", "rascolor.rgb", "rascolor.aaa",
-                                       "vec3(1.0,1.0,1.0)", "vec3(0.5,0.5,0.5)", "konst.rgb", "vec3(0.0,0.0,0.0)" };
-            string[] c_inputregsD = { "rprev.rgb", "rprev.aaa", "r0.rgb", "r0.aaa",
-                                        "r1.rgb", "r1.aaa", "r2.rgb", "r2.aaa",
-                                       "texcolor.rgb", "texcolor.aaa", "rascolor.rgb", "rascolor.aaa",
-                                       "vec3(1.0,1.0,1.0)", "vec3(0.5,0.5,0.5)", "konst.rgb", "vec3(0.0,0.0,0.0)" };
-            string[] c_konstsel = { "vec3(1.0,1.0,1.0)", "vec3(0.875,0.875,0.875)", "vec3(0.75,0.75,0.75)", "vec3(0.625,0.625,0.625)",
-                                      "vec3(0.5,0.5,0.5)", "vec3(0.375,0.375,0.375)", "vec3(0.25,0.25,0.25)", "vec3(0.125,0.125,0.125)",
-                                      "", "", "", "", "k0.rgb", "k1.rgb", "k2.rgb", "k3.rgb",
-                                      "k0.rrr", "k1.rrr", "k2.rrr", "k3.rrr", "k0.ggg", "k1.ggg", "k2.ggg", "k3.ggg",
-                                      "k0.bbb", "k1.bbb", "k2.bbb", "k3.bbb", "k0.aaa", "k1.aaa", "k2.aaa", "k3.aaa" };
-
-            string[] a_inputregs = { "truncc1(rprev.a)", "truncc1(r0.a)", "truncc1(r1.a)", "truncc1(r2.a)",
-                                       "texcolor.a", "rascolor.a", "konst.a", "0.0" };
-            string[] a_inputregsD = { "rprev.a", "r0.a", "r1.a", "r2.a",
-                                       "texcolor.a", "rascolor.a", "konst.a", "0.0" };
-            string[] a_konstsel = { "1.0", "0.875", "0.75", "0.625", "0.5", "0.375", "0.25", "0.125",
-                                      "", "", "", "", "", "", "", "",
-                                      "k0.r", "k1.r", "k2.r", "k3.r", "k0.g", "k1.g", "k2.g", "k3.g",
-                                      "k0.b", "k1.b", "k2.b", "k3.b", "k0.a", "k1.a", "k2.a", "k3.a" };
-
-            string[] tevbias = { "0.0", "0.5", "-0.5" };
-            string[] tevscale = { "1.0", "2.0", "4.0", "0.5" };
-
-            string[] alphacompare = { "{0} != {0}", "{0} < {1}", "{0} == {1}", "{0} <= {1}", "{0} > {1}", "{0} != {1}", "{0} >= {1}", "{0} == {0}" };
-            // string[] alphacombine = { "all(bvec2({0},{1}))", "any(bvec2({0},{1}))", "any(bvec2(all(bvec2({0},!{1})),all(bvec2(!{0},{1}))))", "any(bvec2(all(bvec2({0},{1})),all(bvec2(!{0},!{1}))))" };
-            string[] alphacombine = { "({0}) && ({1})", "({0}) || ({1})", "(({0}) && (!({1}))) || ((!({0})) && ({1}))", "(({0}) && ({1})) || ((!({0})) && (!({1})))" };
-
-            // yes, oldstyle shaders
-            // I would use version 130 or above but there are certain
-            // of their new designs I don't agree with. Namely, what's
-            // up with removing texture coordinates. That's just plain
-            // retarded.
-
-            int success = 0;
-            BMD.Material mat = m_Model.Materials[matid];
-
-            StringBuilder vert = new StringBuilder();
-            vert.AppendLine("#version 120");
-            vert.AppendLine("");
-            vert.AppendLine("void main()");
-            vert.AppendLine("{");
-            vert.AppendLine("    gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;");
-            vert.AppendLine("    gl_FrontColor = gl_Color;");
-            vert.AppendLine("    gl_FrontSecondaryColor = gl_SecondaryColor;");
-            for (int i = 0; i < mat.NumTexgens; i++)
-            {
-                /*if (mat.TexGen[i].Src == 1) vert.AppendFormat("    gl_TexCoord[{0}].st = gl_Normal.xy;\n", i);
-                else if (mat.TexGen[i].Src != 4 + i) throw new Exception("!texgen " + mat.TexGen[i].Src.ToString());
-                else
-                vert.AppendFormat("    gl_TexCoord[{0}] = gl_MultiTexCoord{0};\n", i);*/
-                // TODO matrices
-                vert.AppendFormat("    gl_TexCoord[{0}] = {1};\n", i, texgensrc[mat.TexGen[i].Src]);
-            }
-            vert.AppendLine("}");
-
-            int vertid = GL.CreateShader(ShaderType.VertexShader);
-            m_Shaders[matid].VertexShader = vertid;
-            GL.ShaderSource(vertid, vert.ToString());
-            GL.CompileShader(vertid);
-
-            GL.GetShader(vertid, ShaderParameter.CompileStatus, out success);
-            if (success == 0)
-            {
-                string log = GL.GetShaderInfoLog(vertid);
-                throw new Exception("!Failed to compile vertex shader: " + log);
-                // TODO: better error reporting/logging?
-            }
-
-            StringBuilder frag = new StringBuilder();
-            frag.AppendLine("#version 120");
-            frag.AppendLine("");
-
-            for (int i = 0; i < 8; i++)
-            {
-                if (mat.TexStages[i] == 0xFFFF) continue;
-                frag.AppendLine("uniform sampler2D texture" + i.ToString() + ";");
-            }
-
-            frag.AppendLine("");
-            frag.AppendLine("float truncc1(float c)");
-            frag.AppendLine("{");
-            frag.AppendLine("    return (c == 0.0) ? 0.0 : ((fract(c) == 0.0) ? 1.0 : fract(c));");
-            frag.AppendLine("}");
-            frag.AppendLine("");
-            frag.AppendLine("vec3 truncc3(vec3 c)");
-            frag.AppendLine("{");
-            frag.AppendLine("    return vec3(truncc1(c.r), truncc1(c.g), truncc1(c.b));");
-            frag.AppendLine("}");
-            frag.AppendLine("");
-            frag.AppendLine("void main()");
-            frag.AppendLine("{");
-
-            for (int i = 0; i < 4; i++)
-            {
-                int _i = (i == 0) ? 3 : i - 1; // ???
-                frag.AppendFormat(forceusa, "    vec4 {0} = vec4({1}, {2}, {3}, {4});\n",
-                    outputregs[i],
-                    (float)mat.ColorS10[_i].R / 255f, (float)mat.ColorS10[_i].G / 255f,
-                    (float)mat.ColorS10[_i].B / 255f, (float)mat.ColorS10[_i].A / 255f);
-            }
-
-            for (int i = 0; i < 4; i++)
-            {
-                frag.AppendFormat(forceusa, "    vec4 k{0} = vec4({1}, {2}, {3}, {4});\n",
-                    i,
-                    (float)mat.ConstColors[i].R / 255f, (float)mat.ConstColors[i].G / 255f,
-                    (float)mat.ConstColors[i].B / 255f, (float)mat.ConstColors[i].A / 255f);
-            }
-
-            frag.AppendLine("    vec4 texcolor, rascolor, konst;");
-
-            for (int i = 0; i < mat.NumTevStages; i++)
-            {
-                frag.AppendLine("\n    // TEV stage " + i.ToString());
-
-                // TEV inputs
-                // for registers prev/0/1/2: use fract() to emulate truncation
-                // if they're selected into a, b or c
-                string rout, a, b, c, d, operation = "";
-
-                frag.AppendLine("    konst.rgb = " + c_konstsel[mat.ConstColorSel[i]] + ";");
-                frag.AppendLine("    konst.a = " + a_konstsel[mat.ConstAlphaSel[i]] + ";");
-                if (mat.TevOrder[i].TexMap != 0xFF && mat.TevOrder[i].TexcoordId != 0xFF)
-                    frag.AppendFormat("    texcolor = texture2D(texture{0}, gl_TexCoord[{1}].st);\n",
-                        mat.TevOrder[i].TexMap, mat.TevOrder[i].TexcoordId);
-                frag.AppendLine("    rascolor = gl_Color;");
-                // TODO: take mat.TevOrder[i].ChanId into account
-                // TODO: tex/ras swizzle? (important or not?)
-                //mat.TevSwapMode[0].
-
-                if (mat.TevOrder[i].ChanID != 4)
-                    throw new Exception("!UNSUPPORTED CHANID " + mat.TevOrder[i].ChanID.ToString());
-
-                rout = outputregs[mat.TevStage[i].ColorRegID] + ".rgb";
-                a = c_inputregs[mat.TevStage[i].ColorIn[0]];
-                b = c_inputregs[mat.TevStage[i].ColorIn[1]];
-                c = c_inputregs[mat.TevStage[i].ColorIn[2]];
-                d = c_inputregsD[mat.TevStage[i].ColorIn[3]];
-
-                switch (mat.TevStage[i].ColorOp)
-                {
-                    case 0:
-                        operation = "    {0} = ({4} + mix({1},{2},{3}) + vec3({5},{5},{5})) * vec3({6},{6},{6});";
-                        if (mat.TevStage[i].ColorClamp != 0) operation += "\n    {0} = clamp({0}, vec3(0.0,0.0,0.0), vec3(1.0,1.0,1.0));";
-                        break;
-
-                    case 1:
-                        operation = "    {0} = ({4} - mix({1},{2},{3}) + vec3({5},{5},{5})) * vec3({6},{6},{6});";
-                        if (mat.TevStage[i].ColorClamp != 0) operation += "\n    {0} = clamp({0}, vec3(0.0,0.0,0.0), vec3(1.0,1.0,1.0));";
-                        break;
-
-                    case 8:
-                        operation = "    {0} = {4} + ((({1}).r > ({2}).r) ? {3} : vec(0.0,0.0,0.0));";
-                        break;
-
-                    default:
-                        operation = "    {0} = vec3(1.0,0.0,1.0);";
-                        throw new Exception("!colorop " + mat.TevStage[i].ColorOp.ToString());
-                }
-
-                operation = string.Format(operation,
-                    rout, a, b, c, d, tevbias[mat.TevStage[i].ColorBias],
-                    tevscale[mat.TevStage[i].ColorScale]);
-                frag.AppendLine(operation);
-
-                rout = outputregs[mat.TevStage[i].AlphaRegID] + ".a";
-                a = a_inputregs[mat.TevStage[i].AlphaIn[0]];
-                b = a_inputregs[mat.TevStage[i].AlphaIn[1]];
-                c = a_inputregs[mat.TevStage[i].AlphaIn[2]];
-                d = a_inputregsD[mat.TevStage[i].AlphaIn[3]];
-
-                switch (mat.TevStage[i].AlphaOp)
-                {
-                    case 0:
-                        operation = "    {0} = ({4} + mix({1},{2},{3}) + {5}) * {6};";
-                        if (mat.TevStage[i].AlphaClamp != 0) operation += "\n   {0} = clamp({0}, 0.0, 1.0);";
-                        break;
-
-                    case 1:
-                        operation = "    {0} = ({4} - mix({1},{2},{3}) + {5}) * {6};";
-                        if (mat.TevStage[i].AlphaClamp != 0) operation += "\n   {0} = clamp({0}, 0.0, 1.0);";
-                        break;
-
-                    default:
-                        operation = "    {0} = 1.0;";
-                        throw new Exception("!alphaop " + mat.TevStage[i].AlphaOp.ToString());
-                }
-
-                operation = string.Format(operation,
-                    rout, a, b, c, d, tevbias[mat.TevStage[i].AlphaBias],
-                    tevscale[mat.TevStage[i].AlphaScale]);
-                frag.AppendLine(operation);
-            }
-
-            frag.AppendLine("");
-            frag.AppendLine("   gl_FragColor.rgb = truncc3(rprev.rgb);");
-            frag.AppendLine("   gl_FragColor.a = truncc1(rprev.a);");
-            frag.AppendLine("");
-
-            frag.AppendLine("    // Alpha test");
-            if (mat.AlphaComp.MergeFunc == 1 && (mat.AlphaComp.Func0 == 7 || mat.AlphaComp.Func1 == 7))
-            {
-                // always pass -- do nothing :)
-            }
-            else if (mat.AlphaComp.MergeFunc == 0 && (mat.AlphaComp.Func0 == 0 || mat.AlphaComp.Func1 == 0))
-            {
-                // never pass
-                // (we did all those color/alpha calculations for uh, nothing ;_; )
-                frag.AppendLine("    discard;");
-            }
-            else
-            {
-                string compare0 = string.Format(forceusa, alphacompare[mat.AlphaComp.Func0], "gl_FragColor.a", (float)mat.AlphaComp.Ref0 / 255f);
-                string compare1 = string.Format(forceusa, alphacompare[mat.AlphaComp.Func1], "gl_FragColor.a", (float)mat.AlphaComp.Ref1 / 255f);
-                string fullcompare = "";
-
-                if (mat.AlphaComp.MergeFunc == 1)
-                {
-                    if (mat.AlphaComp.Func0 == 0) fullcompare = compare1;
-                    else if (mat.AlphaComp.Func1 == 0) fullcompare = compare0;
-                }
-                else if (mat.AlphaComp.MergeFunc == 0)
-                {
-                    if (mat.AlphaComp.Func0 == 7) fullcompare = compare1;
-                    else if (mat.AlphaComp.Func1 == 7) fullcompare = compare0;
-                }
-
-                if (fullcompare == "") fullcompare = string.Format(alphacombine[mat.AlphaComp.MergeFunc], compare0, compare1);
-
-                frag.AppendLine("    if (!(" + fullcompare + ")) discard;");
-            }
-
-            frag.AppendLine("}");
-
-            int fragid = GL.CreateShader(ShaderType.FragmentShader);
-            m_Shaders[matid].FragmentShader = fragid;
-            GL.ShaderSource(fragid, frag.ToString());
-            GL.CompileShader(fragid);
-
-            GL.GetShader(fragid, ShaderParameter.CompileStatus, out success);
-            if (success == 0)
-            {
-                string log = GL.GetShaderInfoLog(fragid);
-                throw new Exception("!Failed to compile fragment shader: " + log);
-                // TODO: better error reporting/logging?
-            }
-
-            int sid = GL.CreateProgram();
-            m_Shaders[matid].Program = sid;
-
-            GL.AttachShader(sid, vertid);
-            GL.AttachShader(sid, fragid);
-
-            GL.LinkProgram(sid);
-            GL.GetProgram(sid, ProgramParameter.LinkStatus, out success);
-            if (success == 0)
-            {
-                string log = GL.GetProgramInfoLog(sid);
-                throw new Exception("!Failed to link shader program: " + log);
-                // TODO: better error reporting/logging?
-            }
-
-            //debugshaders += "-----------------------------------------------------------\n" + frag.ToString();
-        }
-
 
         public BmdRenderer(BMD model)
         {
             m_Model = model;
 
             string[] extensions = GL.GetString(StringName.Extensions).Split(' ');
-            m_HasShaders = extensions.Contains("GL_ARB_shading_language_100") &&
+            m_HasShaders = 
+                extensions.Contains("GL_ARB_shading_language_100") &&
                 extensions.Contains("GL_ARB_shader_objects") &&
                 extensions.Contains("GL_ARB_vertex_shader") &&
                 extensions.Contains("GL_ARB_fragment_shader");
             // TODO: setting for turning shaders on/off
 
-            m_Textures = new int[model.Textures.Length];
-            for (int i = 0; i < model.Textures.Length; i++)
-                UploadTexture(i);
+            UploadTextures();
 
             if (m_HasShaders)
             {
                 m_Shaders = new Shader[model.Materials.Length];
                 for (int i = 0; i < model.Materials.Length; i++)
                 {
-                    try { GenerateShaders(i); }
+                    try 
+                    {
+                        ShaderSetting shaderSetting = new ShaderSetting(model, i);
+                        shaderSetting.GenerateShader(ref m_Shaders);
+                        //GenerateShaders(i);
+                    }
                     catch (Exception ex)
                     {
                         // really ugly hack
@@ -379,7 +62,21 @@ namespace Takochu.rnd
                 }
             }
         }
-        
+
+        private void UploadTextures()
+        {
+            m_Textures = new int[m_Model.Textures.Length];
+
+            for (int id = 0; id < m_Model.Textures.Length; id++)
+            {
+                int TexID = GL.GenTexture();
+                m_Textures[id] = TexID;
+                TextureSetting TexSetting = new TextureSetting(m_Model.Textures, id, TexID);
+                TexSetting.UploadTexture();
+            }
+        }
+
+        //後処理
         public override void Close()
         {
             if (m_HasShaders)
@@ -400,13 +97,13 @@ namespace Takochu.rnd
 
                     if (shader.Program > 0)
                         GL.DeleteProgram(shader.Program);
-                    
+
                 }
             }
 
             foreach (int tex in m_Textures)
                 GL.DeleteTexture(tex);
-            
+
             m_Model.Close();
         }
 
@@ -453,7 +150,7 @@ namespace Takochu.rnd
 
                     BMD.Material mat = m_Model.Materials[node.MaterialID];
 
-                    if ((mat.DrawFlag == 4) ^ (info.Mode == RenderMode.Translucent)) 
+                    if ((mat.DrawFlag == 4) ^ (info.Mode == RenderMode.Translucent))
                     {
                         //Console.WriteLine("drawFlag "+((mat.DrawFlag == 4) ^ (info.Mode == RenderMode.Translucent)));
                         continue;
@@ -698,7 +395,7 @@ namespace Takochu.rnd
         }
 
 
-        private struct Shader
+        public struct Shader
         {
             public int Program, VertexShader, FragmentShader;
         }
