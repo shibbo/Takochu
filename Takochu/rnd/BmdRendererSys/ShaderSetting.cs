@@ -30,7 +30,7 @@ namespace Takochu.rnd.BmdRendererSys
         };
 
         /// <summary>
-        /// TEVレジスタの結果が代入される変数
+        /// TEV Stageでの計算結果が代入される変数
         /// </summary>
         private static readonly string[] outputregs = {
             "rprev",
@@ -196,7 +196,7 @@ namespace Takochu.rnd.BmdRendererSys
         };
 
         /// <summary>
-        /// 計算結果にかけるバイアス
+        /// 計算結果に足す値(バイアス)
         /// </summary>
         private static readonly string[] tevbias = { 
             "0.0", 
@@ -244,8 +244,10 @@ namespace Takochu.rnd.BmdRendererSys
         // retarded.
 
         //訳:
-        // 私はバージョン 130 以上を使用しますが、新しいデザインには同意できないものがあります。
-        // すなわち、テクスチャ座標を削除するのはどうしたことか。それはまさに無謀なことです。
+        // 私はバージョン 130 以上を使用したいですが、新しいデザインには同意できないものがあります。
+        // gl_TexCoordを削除するなんてありえない。辛いだけです
+
+        //ここで言ってることは同意できます。SMGは古典的なテクニックしか使用していないのでversion120でも問題ないでしょう。
 
         private int _materialID;
         private int _success;
@@ -272,8 +274,11 @@ namespace Takochu.rnd.BmdRendererSys
             _vertex      = new StringBuilder();
             _fragment    = new StringBuilder();
         }
-
-        //シェーダー作成
+        
+        /// <summary>
+        /// シェーダー作成
+        /// </summary>
+        /// <param name="shaders"></param>
         public void GenerateShader(ref BmdRenderer.Shader[] shaders) 
         {
             _shaders = shaders;
@@ -359,6 +364,7 @@ namespace Takochu.rnd.BmdRendererSys
             _fragment.AppendLine("#version 120");
             _fragment.AppendLine("");
 
+            //uniformの初期化。(今はテクスチャのみ)
             for (int i = 0; i < 8; i++)
             {
                 if (_material.TexStages[i] == 0xFFFF) continue;

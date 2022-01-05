@@ -72,11 +72,13 @@ namespace Takochu.rnd.ColorWireShapeData
                 //頂点位置計算
                 for (var i = 0; i <= row; i++)
                 {
+                        //経度
                         var r = Math.PI / row * i;
                         var ry = Math.Cos(r);
                         var rr = Math.Sin(r);
                         for (int ii = 0; ii <= column; ii++)
                         {
+                            //緯度
                             var tr = Math.PI * 2 / column * ii;
                             float tx = (float)rr * rad * (float)Math.Cos(tr);
                             float ty = (float)ry * rad;
