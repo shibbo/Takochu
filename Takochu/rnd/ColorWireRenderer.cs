@@ -36,7 +36,7 @@ namespace Takochu.rnd
                 {ShapeID.Cube1 , new ColorWireCube() },
                 {ShapeID.Cube2 , new ColorWireCube() },
                 {ShapeID.Sphere , new ColorWireSphere() },
-                {ShapeID.Cylinder , new ColorWireCube() },
+                {ShapeID.Cylinder , new ColorWireCylinder() },
                 {ShapeID.Bowl , new ColorWireCube() }
             };
         public ColorWireRenderer(AreaType areaType ,short areaShapeNo ,bool showAxes = false)
