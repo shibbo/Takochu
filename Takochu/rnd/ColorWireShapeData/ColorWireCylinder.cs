@@ -16,9 +16,7 @@ namespace Takochu.rnd.ColorWireShapeData
         private Color _color;
 
 
-        private List<Vector3> _pos;
-        private float[] pos = new float[3];
-        private int[] idx = new int[6];
+
 
         private int row = 20;
         private int column = 20;
@@ -116,16 +114,6 @@ namespace Takochu.rnd.ColorWireShapeData
                 
                 GL.End();
 
-                ////バインドされているVBOの情報をattributeとしてシェーダーに送る(GPUに送る)
-                ////Attribute Pointers
-                //GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 8 * sizeof(float), 0);
-                //GL.EnableVertexAttribArray(0);
-
-                //GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 8 * sizeof(float), 3 * sizeof(float));
-                //GL.EnableVertexAttribArray(1);
-
-                //GL.VertexAttribPointer(2, 2, VertexAttribPointerType.Float, false, 8 * sizeof(float), 6 * sizeof(float));
-                //GL.EnableVertexAttribArray(2);
 
                 //if (m_ShowAxes)
                 //{

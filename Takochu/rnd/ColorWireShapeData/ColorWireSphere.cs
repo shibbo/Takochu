@@ -17,11 +17,8 @@ namespace Takochu.rnd.ColorWireShapeData
 
 
 
-        private float[] pos = new float[3];
-        private int[] idx = new int[6];
-
         private int row = 20;
-        private int column = 20;
+        private int column = 40;
         private float rad = 500;
 
         public ColorWireSphere()
@@ -65,65 +62,76 @@ namespace Takochu.rnd.ColorWireShapeData
                 GL.LineWidth(2.5f);
                 GL.Color4(_color);
 
-                GL.Begin(BeginMode.LineStrip);
+                GL.Begin(BeginMode.Lines);
 
                 rad = _size.X;
 
                 //頂点位置計算
                 for (var i = 0; i <= row; i++)
                 {
-                        //経度
-                        var r = Math.PI / row * i;
-                        var ry = Math.Cos(r);
-                        var rr = Math.Sin(r);
-                        for (int ii = 0; ii <= column; ii++)
-                        {
-                            //緯度
-                            var tr = Math.PI * 2 / column * ii;
-                            float tx = (float)rr * rad * (float)Math.Cos(tr);
-                            float ty = (float)ry * rad;
-                            float tz = (float)rr * rad * (float)Math.Sin(tr);
+                    //経度
+                    var r = Math.PI / row * i;
+                    var rx = Math.Cos(r);
+                    var rz = Math.Sin(r);
 
-                            pos[0] = tx;
-                            pos[1] = ty;
-                            pos[2] = tz;
-                            GL.Vertex3(pos);
+                    var nr = Math.PI / row * (i + 1);
+                    var nrx = Math.Cos(nr);
+                    var nrz = Math.Sin(nr);
 
-                        }
-                    
-                }
 
-                //頂点インデックス
-                var r2 = 0;
-                for (int i = 0; i < row; i++)
-                {
-                    for (int ii = 0; ii < column; ii++)
+
+                    for (int ii = 0; ii <= column; ii++)
                     {
-                        r2 = (column + 1) * i + ii;
-                        idx[0] = r2;
-                        idx[1] = r2 + 1;
-                        idx[2] = r2 + column + 2;
-                        idx[3] = r2;
-                        idx[4] = r2 + column + 2;
-                        idx[5] = r2 + column + 1;
-                        //idx.push(r2, r2 + column + 2, r2 + column + 1);
+                        //緯度
+                        var vr = Math.PI * 2 / column * ii;
+                        var vrx = Math.Cos(vr);
+                        var vry = Math.Sin(vr);
+
+
+                        var nvr = Math.PI * 2 / column * (ii + 1);
+                        var nvrx = Math.Cos(nvr);
+                        var nvry = Math.Sin(nvr);
+
+
+                        double tx = rx * rad * vrx;
+                        double ty = vry * rad ;
+                        double tz = rz * rad * vrx;
+
+
+                        double ntx = nrx * rad * vrx;
+                        double nty = vry * rad;
+                        double ntz = nrz * rad * vrx;
+
+
+                        double hntx = nrx * rad * nvrx;
+                        double hnty = nvry * rad;
+                        double hntz = nrz * rad * nvrx;
+
+                        double htx = rx * rad * nvrx;
+                        double hty = nvry * rad;
+                        double htz = rz * rad * nvrx;
+
+                        Vector3 pos = new Vector3((float)tx, (float)ty, (float)tz);
+                        Vector3 npos = new Vector3((float)ntx, (float)nty, (float)ntz);
+                        Vector3 hnpos = new Vector3((float)hntx, (float)hnty, (float)hntz);
+                        Vector3 hpos = new Vector3((float)htx, (float)hty, (float)htz);
+                        GL.Vertex3(pos);
+                        GL.Vertex3(npos);
+
+                        GL.Vertex3(npos);
+                        GL.Vertex3(hnpos);
+
+                        GL.Vertex3(hnpos);
+                        GL.Vertex3(hpos);
                     }
+                    
                 }
 
                 
                 
                 GL.End();
 
-                ////バインドされているVBOの情報をattributeとしてシェーダーに送る(GPUに送る)
-                ////Attribute Pointers
-                //GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 8 * sizeof(float), 0);
-                //GL.EnableVertexAttribArray(0);
-
-                //GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 8 * sizeof(float), 3 * sizeof(float));
-                //GL.EnableVertexAttribArray(1);
-
-                //GL.VertexAttribPointer(2, 2, VertexAttribPointerType.Float, false, 8 * sizeof(float), 6 * sizeof(float));
-                //GL.EnableVertexAttribArray(2);
+                
 
                 //if (m_ShowAxes)
                 //{
