@@ -35,7 +35,7 @@ namespace Takochu.rnd
             {
                 {ShapeID.Cube1 , new ColorWireCube() },
                 {ShapeID.Cube2 , new ColorWireCube() },
-                {ShapeID.Sphere , new ColorWireBowl() },
+                {ShapeID.Sphere , new ColorWireSphere() },
                 {ShapeID.Cylinder , new ColorWireCylinder() },
                 {ShapeID.Bowl , new ColorWireBowl() }
             };
