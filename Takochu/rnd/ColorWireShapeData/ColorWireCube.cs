@@ -84,11 +84,14 @@ namespace Takochu.rnd.ColorWireShapeData
 
 
                 GL.Begin(BeginMode.LineStrip);
-                GL.Vertex3(s);
+                //上面
+                GL.Vertex3(sx, sy, sz);
                 GL.Vertex3(-sx, sy, sz);
                 GL.Vertex3(-sx, sy, -sz);
                 GL.Vertex3(sx, sy, -sz);
                 GL.Vertex3(sx, sy, sz);
+
+                //下面
                 GL.Vertex3(sx, -sy, sz);
                 GL.Vertex3(-sx, -sy, sz);
                 GL.Vertex3(-sx, -sy, -sz);
@@ -96,6 +99,7 @@ namespace Takochu.rnd.ColorWireShapeData
                 GL.Vertex3(sx, -sy, sz);
                 GL.End();
 
+                //縦の線
                 GL.Begin(BeginMode.Lines);
                 GL.Vertex3(-sx, sy, sz);
                 GL.Vertex3(-sx, -sy, sz);
