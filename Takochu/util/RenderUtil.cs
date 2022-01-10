@@ -12,6 +12,9 @@ using OpenTK.Graphics;
 
 namespace Takochu.util
 {
+    /// <summary>
+    /// レンダリング時に使える便利関数
+    /// </summary>
     public static class RenderUtil
     {
         public static Matrix4 SRTToMatrix(Vector3 scale, Vector3 rot, Vector3 trans)

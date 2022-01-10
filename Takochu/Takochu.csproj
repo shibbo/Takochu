@@ -44,7 +44,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\TakochuDev\</OutputPath>
+    <OutputPath>bin\Release\TakochuDev2\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -74,14 +74,14 @@
     </Reference>
     <Reference Include="OpenTK, Version=3.0.1.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\WhiteholeCS-master\bin\Debug\OpenTK.dll</HintPath>
+      <HintPath>D:\CGDevelop\OpenGL\opentk-2010-10-06\opentk\Binaries\OpenTK\Release\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK.Compatibility">
-      <HintPath>..\..\WhiteholeCS-master\bin\Debug\OpenTK.Compatibility.dll</HintPath>
+      <HintPath>D:\CGDevelop\OpenGL\opentk-2010-10-06\opentk\Binaries\OpenTK\Release\OpenTK.Compatibility.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK.GLControl, Version=3.0.1.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\WhiteholeCS-master\bin\Debug\OpenTK.GLControl.dll</HintPath>
+      <HintPath>D:\CGDevelop\OpenGL\opentk-2010-10-06\opentk\Binaries\OpenTK\Release\OpenTK.GLControl.dll</HintPath>
     </Reference>
     <Reference Include="SuperBMDLib">
       <HintPath>..\..\..\SuperBMDLib.dll</HintPath>
@@ -137,10 +137,12 @@
       <DependentUpon>PropertyGrid_JP.resx</DependentUpon>
     </Compile>
     <Compile Include="rnd\BmdRenderer.cs" />
-    <Compile Include="rnd\BmdRendererArrays\ShaderTxt.cs" />
-    <Compile Include="rnd\BmdRendererArrays\Texture.cs" />
+    <Compile Include="rnd\BmdRendererSys\ShaderSetting.cs" />
+    <Compile Include="rnd\BmdRendererSys\TextureSetting.cs" />
     <Compile Include="rnd\ColorCubeRenderer.cs" />
-    <Compile Include="rnd\ColorWireCube.cs" />
+    <Compile Include="rnd\ColorWireRenderer.cs" />
+    <Compile Include="rnd\ColorWireShapeData\ColorWireCube.cs" />
+    <Compile Include="rnd\ColorWireShapeData\IColorWireShape.cs" />
     <Compile Include="rnd\ModelCache.cs" />
     <Compile Include="rnd\ModelSubstitutor.cs" />
     <Compile Include="rnd\MultiBmdRenderer.cs" />
@@ -366,6 +368,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="fmt\SectionData\" />
     <Folder Include="smg\obj\parameters\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
