@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Takochu.fmt;
 using Takochu.smg.obj;
+using Takochu.smg;
+using ObjDB = Takochu.smg.ObjectDB;
 
 
 namespace Takochu.ui.EditorWindowSys
@@ -114,9 +116,32 @@ namespace Takochu.ui.EditorWindowSys
 
         private void SetRow(ref DataTable dt)
         {
+            //Console.WriteLine(ObjDB.GetActorFromObjectName(_abstObj.mName).ActorName);
+            
             foreach (var ObjEntry in _abstObj.mEntry)
             {
                 var DisplayName = BCSV.HashToFieldName(ObjEntry.Key);
+                if (DisplayName.Length > "Obj_arg".Length) 
+                {
+                    if (DisplayName.Length == "Obj_arg".Length + 1) 
+                    {
+                        var argIndexTest = DisplayName.IndexOf("Obj_arg");
+                        if (argIndexTest != -1) 
+                        {
+                            var test = DisplayName.Skip("Obj_arg".Length).ToArray();
+                            Console.WriteLine(test[0]);
+                            var argIndex = Int32.Parse(test[0].ToString());
+                            if (ObjDB.UsesObjArg(_abstObj.mName, argIndex))
+                            {
+                                var actorfield = ObjDB.GetFieldFromActor(ObjDB.GetActorFromObjectName(_abstObj.mName), argIndex);
+                                DisplayName = actorfield.Name;
+                            }
+                        }
+                        
+                        
+                    }
+                        
+                }
 
                 var row = dt.NewRow();
                 {
@@ -158,6 +183,7 @@ namespace Takochu.ui.EditorWindowSys
          */
         private void Change_mValues(string name, object value)
         {
+            Console.WriteLine($"Change_mValues: {name}");
             //float ftmp = GetFloat_And_Limiter(value);
             //Console.WriteLine("mDirectory: "+ _abstObj.mDirectory);
             //Console.WriteLine("mFile: " + _abstObj.mFile);
