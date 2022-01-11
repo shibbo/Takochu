@@ -959,6 +959,11 @@ namespace Takochu.ui
                     //MapPartsObj mapparts = abstractObj as MapPartsObj;
                     
                     break;
+                case "Starting Points":
+                    StartObj start = abstractObj as StartObj;
+                    dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, start);
+                    dataGridView1.DataSource = dataGridViewEdit.GetDataTable();
+                    break;
                 default:
                     //dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, abstractObj);
                     //dataGridView1.DataSource = dataGridViewEdit.GetDataTable();

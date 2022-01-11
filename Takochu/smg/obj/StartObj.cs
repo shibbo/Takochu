@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Takochu.calc;
 using Takochu.fmt;
 
 namespace Takochu.smg.obj
@@ -51,6 +52,38 @@ namespace Takochu.smg.obj
             mEntry.Set("scale_x", mScale.X);
             mEntry.Set("scale_y", mScale.Y);
             mEntry.Set("scale_z", mScale.Z);
+        }
+
+        public override void Reload_mValues()
+        {
+            {
+                mMarioNo = ObjectTypeChange.ToInt32(mEntry.Get("MarioNo"));
+                mCameraID = ObjectTypeChange.ToInt32(mEntry.Get("Camera_id"));
+                mObjArgs[0] = ObjectTypeChange.ToInt32(mEntry.Get($"Obj_arg0"));
+            }
+
+            {
+                mTruePosition =
+                    new Vector3(
+                        ObjectTypeChange.ToFloat(mEntry.Get("pos_x")),
+                        ObjectTypeChange.ToFloat(mEntry.Get("pos_y")),
+                        ObjectTypeChange.ToFloat(mEntry.Get("pos_z"))
+                    );
+                mTrueRotation =
+                    new Vector3(
+                        ObjectTypeChange.ToFloat(mEntry.Get("dir_x")),
+                        ObjectTypeChange.ToFloat(mEntry.Get("dir_y")),
+                        ObjectTypeChange.ToFloat(mEntry.Get("dir_z"))
+                    );
+                mScale =
+                    new Vector3(
+                        ObjectTypeChange.ToFloat(mEntry.Get("scale_x")),
+                        ObjectTypeChange.ToFloat(mEntry.Get("scale_y")),
+                        ObjectTypeChange.ToFloat(mEntry.Get("scale_z"))
+                    );
+                mPosition = new Vector3(mTruePosition) / 100;
+                mRotation = new Vector3(mTrueRotation) / 100;
+            }
         }
 
         int mMarioNo;
