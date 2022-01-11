@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Takochu.calc;
 using Takochu.fmt;
 using Takochu.util;
 
@@ -39,6 +40,47 @@ namespace Takochu.smg.obj
             
             if (GameUtil.IsSMG2())
                 mDemoSkip = Get<int>("DemoSkip");
+        }
+
+        public override void Reload_mValues()
+        {
+            {
+                mName = mEntry.Get("name").ToString();
+                mID = ObjectTypeChange.ToInt32(mEntry.Get("l_id"));
+                mDemoName = mEntry.Get("DemoName").ToString();
+                mTimeSheetName = mEntry.Get("TimeSheetName").ToString();
+            }
+
+            {
+                mSwitchAppear = ObjectTypeChange.ToInt32(mEntry.Get("SW_APPEAR"));
+                mSwitchDead = ObjectTypeChange.ToInt32(mEntry.Get("SW_DEAD"));
+                mSwitchActivate = ObjectTypeChange.ToInt32(mEntry.Get("SW_A"));
+                mSwitchDeactivate = ObjectTypeChange.ToInt32(mEntry.Get("SW_B"));
+                mDemoSkip = ObjectTypeChange.ToInt32(mEntry.Get("DemoSkip"));
+            }
+
+            {
+                mTruePosition =
+                    new Vector3(
+                        ObjectTypeChange.ToFloat(mEntry.Get("pos_x")),
+                        ObjectTypeChange.ToFloat(mEntry.Get("pos_y")),
+                        ObjectTypeChange.ToFloat(mEntry.Get("pos_z"))
+                    );
+                mTrueRotation =
+                    new Vector3(
+                        ObjectTypeChange.ToFloat(mEntry.Get("dir_x")),
+                        ObjectTypeChange.ToFloat(mEntry.Get("dir_y")),
+                        ObjectTypeChange.ToFloat(mEntry.Get("dir_z"))
+                    );
+                mScale =
+                    new Vector3(
+                        ObjectTypeChange.ToFloat(mEntry.Get("scale_x")),
+                        ObjectTypeChange.ToFloat(mEntry.Get("scale_y")),
+                        ObjectTypeChange.ToFloat(mEntry.Get("scale_z"))
+                    );
+                mPosition = new Vector3(mTruePosition) / 100;
+                mRotation = new Vector3(mTrueRotation) / 100;
+            }
         }
 
         public override void Save()

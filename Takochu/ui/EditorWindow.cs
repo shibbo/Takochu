@@ -911,7 +911,6 @@ namespace Takochu.ui
         {
             AbstractObj abstractObj = e.Node.Tag as AbstractObj;
             
-            
             if (abstractObj == null) return;
 
             //objects Camera Setting
@@ -958,6 +957,11 @@ namespace Takochu.ui
                 case "MapPartsObj":
                     //MapPartsObj mapparts = abstractObj as MapPartsObj;
                     
+                    break;
+                case "Demos":
+                    DemoObj demo = abstractObj as DemoObj;
+                    dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, demo);
+                    dataGridView1.DataSource = dataGridViewEdit.GetDataTable();
                     break;
                 case "Starting Points":
                     StartObj start = abstractObj as StartObj;
