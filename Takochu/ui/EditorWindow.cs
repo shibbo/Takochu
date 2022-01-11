@@ -953,6 +953,11 @@ namespace Takochu.ui
                     dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, areaobj);
                     dataGridView1.DataSource = dataGridViewEdit.GetDataTable();
                     break;
+                case "Debug Movement":
+                    DebugMoveObj debug = abstractObj as DebugMoveObj;
+                    dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, debug);
+                    dataGridView1.DataSource = dataGridViewEdit.GetDataTable();
+                    break;
                 case "Map Parts":
                 case "MapPartsObj":
                     //MapPartsObj mapparts = abstractObj as MapPartsObj;
