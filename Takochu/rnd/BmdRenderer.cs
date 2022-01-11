@@ -21,11 +21,15 @@ namespace Takochu.rnd
     {
         public string debugshaders;
 
+
+
         public BmdRenderer(BMD model)
         {
             m_Model = model;
 
             string[] extensions = GL.GetString(StringName.Extensions).Split(' ');
+
+            //シェーダー持ってるかのチェック
             m_HasShaders = 
                 extensions.Contains("GL_ARB_shading_language_100") &&
                 extensions.Contains("GL_ARB_shader_objects") &&
@@ -35,14 +39,21 @@ namespace Takochu.rnd
 
             UploadTextures();
 
+
             if (m_HasShaders)
             {
+                //シェーダーの情報を格納
                 m_Shaders = new Shader[model.Materials.Length];
+
+                //シェーダー初期化
                 for (int i = 0; i < model.Materials.Length; i++)
                 {
                     try 
                     {
+                        //shaderSettingの初期化
                         ShaderSetting shaderSetting = new ShaderSetting(model, i);
+
+                        //シェーダー生成
                         shaderSetting.GenerateShader(ref m_Shaders);
                         //GenerateShaders(i);
                     }
@@ -57,6 +68,7 @@ namespace Takochu.rnd
                             //throw ex;
                         }
 
+                        //全ての構造体の配列のプログラムを0にする。(後処理？)
                         m_Shaders[i].Program = 0;
                     }
                 }
@@ -107,8 +119,15 @@ namespace Takochu.rnd
             m_Model.Close();
         }
 
+ 
+        /// <summary>
+        /// マテリアル内の描画方法が透明の場合trueを返す関数
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
         public override bool GottaRender(RenderInfo info)
         {
+            
             foreach (BMD.Material mat in m_Model.Materials)
             {
                 if (!((mat.DrawFlag == 4) ^ (info.Mode == RenderMode.Translucent)))
@@ -118,18 +137,26 @@ namespace Takochu.rnd
             return false;
         }
 
+        /// <summary>
+        /// レンダリングの核
+        /// </summary>
+        /// <param name="info"></param>
+        /// <exception cref="Exception"></exception>
         public override void Render(RenderInfo info)
         {
+            //Blend Factor方法を配列に入れ初期化
             BlendingFactorSrc[] blendsrc = { BlendingFactorSrc.Zero, BlendingFactorSrc.One,
                                                BlendingFactorSrc.One, BlendingFactorSrc.Zero, // um...
                                                BlendingFactorSrc.SrcAlpha, BlendingFactorSrc.OneMinusSrcAlpha,
                                                BlendingFactorSrc.DstAlpha, BlendingFactorSrc.OneMinusDstAlpha,
                                                BlendingFactorSrc.DstColor, BlendingFactorSrc.OneMinusDstColor };
+            //Blend Factor Dest方法を配列に入れ初期化
             BlendingFactorDest[] blenddst = { BlendingFactorDest.Zero, BlendingFactorDest.One,
                                                 BlendingFactorDest.SrcColor, BlendingFactorDest.OneMinusSrcColor,
                                                 BlendingFactorDest.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha,
                                                 BlendingFactorDest.DstAlpha, BlendingFactorDest.OneMinusDstAlpha,
                                                 BlendingFactorDest.DstColor, BlendingFactorDest.OneMinusDstColor };
+            //計算方法を配列に入れ初期化
             LogicOp[] logicop = { LogicOp.Clear, LogicOp.And, LogicOp.AndReverse, LogicOp.Copy,
                                     LogicOp.AndInverted, LogicOp.Noop, LogicOp.Xor, LogicOp.Or,
                                     LogicOp.Nor, LogicOp.Equiv, LogicOp.Invert, LogicOp.OrReverse,
@@ -139,15 +166,20 @@ namespace Takochu.rnd
 
             foreach (BMD.SceneGraphNode node in m_Model.SceneGraph)
             {
+                //Nodeタイプが0でない場合(ジョイントの場合)shapeにNodeIDを入れない
                 if (node.NodeType != 0) continue;
                 int shape = node.NodeID;
 
+                //MaterialIDがあるかどうか
                 if (node.MaterialID != 0xFFFF)
                 {
+                    //カリング方法配列に入れ初期化
                     CullFaceMode[] cullmodes = { CullFaceMode.Front, CullFaceMode.Back, CullFaceMode.FrontAndBack };
+                    //深度方法配列に入れ初期化
                     DepthFunction[] depthfuncs = { DepthFunction.Never, DepthFunction.Less, DepthFunction.Equal, DepthFunction.Lequal,
                                                      DepthFunction.Greater, DepthFunction.Notequal, DepthFunction.Gequal, DepthFunction.Always };
 
+                    //マテリアルIDそれぞれのマテリアルをmatに格納
                     BMD.Material mat = m_Model.Materials[node.MaterialID];
 
                     if ((mat.DrawFlag == 4) ^ (info.Mode == RenderMode.Translucent))
@@ -157,6 +189,8 @@ namespace Takochu.rnd
                     }
                     //Console.WriteLine("false");
                     //Console.WriteLine("hasShaders"+m_HasShaders);
+
+                    //シェーダーを持っている場合
                     if (m_HasShaders)
                     {
                         // shader: handles multitexturing, color combination, alpha test
@@ -173,9 +207,11 @@ namespace Takochu.rnd
                                 continue;
                             }
 
+                            //シェーダ内のuniform位置を取得しセット
                             int loc = GL.GetUniformLocation(m_Shaders[node.MaterialID].Program, "texture" + i.ToString());
                             GL.Uniform1(loc, i);
 
+                            //テクスチャのID
                             int texid = m_Textures[mat.TexStages[i]];
                             GL.Enable(EnableCap.Texture2D);
                             GL.BindTexture(TextureTarget.Texture2D, texid);
@@ -215,6 +251,7 @@ namespace Takochu.rnd
                         }
                     }
                     //Console.WriteLine(mat.BlendMode.BlendMode);
+                    //Blend方法によって処理分岐
                     switch (mat.BlendMode.BlendMode)
                     {
                         case 0:
@@ -242,7 +279,7 @@ namespace Takochu.rnd
                             break;
                     }
 
-
+                    //カリング方法決定
                     if (mat.CullMode == 0)
                         GL.Disable(EnableCap.CullFace);
                     else
@@ -251,6 +288,7 @@ namespace Takochu.rnd
                         GL.CullFace(cullmodes[mat.CullMode - 1]);
                     }
 
+                    //深度決定
                     if (mat.ZMode.EnableZTest)
                     {
                         GL.Enable(EnableCap.DepthTest);
@@ -282,6 +320,7 @@ namespace Takochu.rnd
                     GL.CallList(info.YBillboardDL);
                 }*/
 
+                //モデル個数分処理それぞれ行う
                 foreach (BMD.Batch.Packet packet in batch.Packets)
                 {
                     Matrix4[] mtxtable = new Matrix4[packet.MatrixTable.Length];
@@ -341,13 +380,18 @@ namespace Takochu.rnd
 
                     lastmatrixtable = mtxtable;
 
+                    //BMDファイルのレンダリングの核
                     foreach (BMD.Batch.Packet.Primitive prim in packet.Primitives)
                     {
+                        //描画タイプの配列初期化
                         BeginMode[] primtypes = { BeginMode.Quads, BeginMode.Points, BeginMode.Triangles, BeginMode.TriangleStrip,
                                                     BeginMode.TriangleFan, BeginMode.Lines, BeginMode.LineStrip, BeginMode.Points };
+
+                        //描画タイプ決定
                         GL.Begin(primtypes[(prim.PrimitiveType - 0x80) / 8]);
                         //GL.Begin(BeginMode.Points);
 
+                        //頂点それぞれに行う
                         for (int i = 0; i < prim.NumIndices; i++)
                         {
 
@@ -379,7 +423,9 @@ namespace Takochu.rnd
 
                             if ((prim.ArrayMask & (1 << 10)) != 0) GL.Normal3(m_Model.NormalArray[prim.NormalIndices[i]]);
 
+                            //頂点インデックスにあった頂点番号の頂点を順番にセット
                             Vector3 pos = m_Model.PositionArray[prim.PositionIndices[i]];
+                            //モデルの拡大縮小、回転、移動を頂点ごとに適用(モデルビュープロジェクション行列でやるのは適さないから しかし、CPUで計算するので負荷高い)
                             if ((prim.ArrayMask & (1 << 0)) != 0) Vector3.Transform(ref pos, ref mtxtable[prim.PosMatrixIndices[i]], out pos);
                             else Vector3.Transform(ref pos, ref mtxtable[0], out pos);
                             GL.Vertex3(pos);
@@ -401,8 +447,20 @@ namespace Takochu.rnd
         }
 
         private BMD m_Model;
+
+        /// <summary>
+        /// テクスチャの数
+        /// </summary>
         private int[] m_Textures;
+
+        /// <summary>
+        /// シェーダを持ってるかどうか
+        /// </summary>
         private bool m_HasShaders;
+
+        /// <summary>
+        /// シェーダー構造体(プログラム、頂点シェーダ、フラグメントシェーダ)
+        /// </summary>
         private Shader[] m_Shaders;
     }
 }

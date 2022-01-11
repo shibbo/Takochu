@@ -948,7 +948,11 @@ namespace Takochu.ui
                     //AreaObj area = abstractObj as AreaObj;
                     //dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, area);
                     //dataGridView1.DataSource = dataGridViewEdit.GetDataTable();
-
+                    if (!(abstractObj is AreaObj))
+                        throw new Exception($"This 「{ typeof(AbstractObj) }」 is not a 「{ typeof(AreaObj) }」 .");
+                    AreaObj areaobj = abstractObj as AreaObj;
+                    dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, areaobj);
+                    dataGridView1.DataSource = dataGridViewEdit.GetDataTable();
                     break;
                 case "Map Parts":
                 case "MapPartsObj":

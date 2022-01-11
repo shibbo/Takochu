@@ -72,8 +72,13 @@ namespace Takochu.io
 
         public override FileBase OpenFile(string file)
         {
-            if (!DoesFileExist(file))
+            if (!DoesFileExist(file)) 
+            {
+                Properties.Settings.Default.GamePath = "\"\"";
+                Properties.Settings.Default.Save();
                 throw new Exception($"ExternalFilesystem::OpenFile() - File {file} not found.");
+            }
+                
 
             return new ExternalFile(mInfo.FullName + file);
         }
