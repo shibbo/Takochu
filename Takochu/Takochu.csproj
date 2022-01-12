@@ -259,6 +259,9 @@
     <Compile Include="util\ProgramUtil.cs" />
     <Compile Include="util\RenderUtil.cs" />
     <Compile Include="util\SettingsUtil.cs" />
+    <Compile Include="util\TranslateSys\IMessageBoxLanguage.cs" />
+    <Compile Include="util\TranslateSys\MessageBoxLanguage\MessageBoxEnglish.cs" />
+    <Compile Include="util\TranslateSys\MessageBoxLanguage\MessageBoxJapanese.cs" />
     <Compile Include="util\Translator.cs" />
     <Compile Include="util\Updater.cs" />
     <EmbeddedResource Include="Properties\PropertyGrid_EN.resx">

@@ -26,10 +26,11 @@ namespace Takochu.ui
         public EditorWindow(string galaxyName)
         {
             InitializeComponent();
+            AreaToolStripMenuItem.Checked = Properties.Settings.Default.EditorWindowDisplayArea;
             mGalaxyName = galaxyName;
 
             if (GameUtil.IsSMG1())
-                saveGalaxyBtn.Enabled = false;
+                SaveToolStripMenuItem.Enabled = false;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -317,32 +318,13 @@ namespace Takochu.ui
 
         private void saveGalaxyBtn_Click(object sender, EventArgs e)
         {
-            if (GameUtil.IsSMG1()) 
-            {
-                Translate.GetMessageBox.Show(MessageBoxText.UnimplementedFeatures,MessageBoxCaption.Info);
-                return;
-            }
-            mGalaxy.Save();
-            EditorWindowSys.DataGridViewEdit.IsChangedClear();
+            
         }
 
         
         private void closeEditorBtn_Click(object sender, EventArgs e)
         {
-            //Do I need this feature?
-            //Erase the return if you need to.
-            return;
-            mStages.Clear();
-            mZonesUsed.Clear();
-            mZoneMasks.Clear();
-            layerViewerDropDown.DropDownItems.Clear();
-            objectsListTreeView.Nodes.Clear();
-            mPaths.Clear();
-
-            mObjects.Clear();
-            mDispLists.Clear();
-            glLevelView.Dispose();
-            mGalaxy.Close();
+            
 
 
         }
@@ -941,7 +923,7 @@ namespace Takochu.ui
                         throw new Exception($"This 「{ typeof(AbstractObj) }」 is not a 「{ typeof(LevelObj) }」 .");
                     LevelObj obj = abstractObj as LevelObj;
                     dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, obj);
-                    dataGridView1.DataSource = dataGridViewEdit.GetDataTable();
+                    dataGridView1 = dataGridViewEdit.GetDataTable();
                     break;
                 case "Areas":
                     //AreaObj area = abstractObj as AreaObj;
@@ -951,12 +933,12 @@ namespace Takochu.ui
                         throw new Exception($"This 「{ typeof(AbstractObj) }」 is not a 「{ typeof(AreaObj) }」 .");
                     AreaObj areaobj = abstractObj as AreaObj;
                     dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, areaobj);
-                    dataGridView1.DataSource = dataGridViewEdit.GetDataTable();
+                    dataGridView1 = dataGridViewEdit.GetDataTable();
                     break;
                 case "Debug Movement":
                     DebugMoveObj debug = abstractObj as DebugMoveObj;
                     dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, debug);
-                    dataGridView1.DataSource = dataGridViewEdit.GetDataTable();
+                    dataGridView1 = dataGridViewEdit.GetDataTable();
                     break;
                 case "Map Parts":
                 case "MapPartsObj":
@@ -966,12 +948,12 @@ namespace Takochu.ui
                 case "Demos":
                     DemoObj demo = abstractObj as DemoObj;
                     dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, demo);
-                    dataGridView1.DataSource = dataGridViewEdit.GetDataTable();
+                    dataGridView1 = dataGridViewEdit.GetDataTable();
                     break;
                 case "Starting Points":
                     StartObj start = abstractObj as StartObj;
                     dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, start);
-                    dataGridView1.DataSource = dataGridViewEdit.GetDataTable();
+                    dataGridView1 = dataGridViewEdit.GetDataTable();
                     break;
                 default:
                     //dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, abstractObj);
@@ -1079,7 +1061,82 @@ namespace Takochu.ui
 
         }
 
-        
+        private void AreaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            if (mCurrentScenario > 0)
+            {
+                ToolStripMenuItem item = (ToolStripMenuItem)sender;
+                item.Checked = !item.Checked;
+                if (item.Checked)
+                {
+                    AreaObj.IsDisplay_Renderer = true;
+                    Properties.Settings.Default.EditorWindowDisplayArea = true;
+                }
+                else 
+                {
+                    AreaObj.IsDisplay_Renderer = false;
+                    Properties.Settings.Default.EditorWindowDisplayArea = false;
+                }
+                Properties.Settings.Default.Save();
+                Scenario_ReLoad();
+            }
+            else 
+            {
+                MessageBox.Show("シナリオが選択されていません","");
+            }
+            
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (GameUtil.IsSMG1())
+            {
+                Translate.GetMessageBox.Show(MessageBoxText.UnimplementedFeatures, MessageBoxCaption.Info);
+                return;
+            }
+            mGalaxy.Save();
+            EditorWindowSys.DataGridViewEdit.IsChangedClear();
+            OpenSaveStatusLabel.Text = "Changes Saved : SaveTime : " + DateTime.Now;
+        }
+
+        private void CloseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //Do I need this feature?
+            //Erase the return if you need to.
+            return;
+            mStages.Clear();
+            mZonesUsed.Clear();
+            mZoneMasks.Clear();
+            layerViewerDropDown.DropDownItems.Clear();
+            objectsListTreeView.Nodes.Clear();
+            mPaths.Clear();
+
+            mObjects.Clear();
+            mDispLists.Clear();
+            glLevelView.Dispose();
+            mGalaxy.Close();
+        }
+
+        /// <summary>
+        /// データグリッドビューセルに紐づけされたコントロールの変更を検知します。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dataGridView1_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            if (dataGridView1.CurrentCellAddress.X == 0 && dataGridView1.IsCurrentCellDirty)
+            {
+                dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            }
+            //dataGridView1.EndEdit();
+            dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
+        }
 
         private void glLevelView_Resize(object sender, EventArgs e)
         {

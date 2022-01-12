@@ -81,5 +81,41 @@ namespace Takochu.Properties {
                 this["IsBleedingEdge"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EditorWindowDisplayArea {
+            get {
+                return ((bool)(this["EditorWindowDisplayArea"]));
+            }
+            set {
+                this["EditorWindowDisplayArea"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EditorWindowDisplayCamearaArea {
+            get {
+                return ((bool)(this["EditorWindowDisplayCamearaArea"]));
+            }
+            set {
+                this["EditorWindowDisplayCamearaArea"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EditorWindowDisplayGravity {
+            get {
+                return ((bool)(this["EditorWindowDisplayGravity"]));
+            }
+            set {
+                this["EditorWindowDisplayGravity"] = value;
+            }
+        }
     }
 }

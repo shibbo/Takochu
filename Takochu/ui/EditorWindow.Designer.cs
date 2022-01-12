@@ -54,17 +54,26 @@
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.scenarioNameTxtBox = new System.Windows.Forms.ToolStripTextBox();
             this.applyGalaxyNameBtn = new System.Windows.Forms.ToolStripButton();
-            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-            this.saveGalaxyBtn = new System.Windows.Forms.ToolStripButton();
-            this.closeEditorBtn = new System.Windows.Forms.ToolStripButton();
             this.glLevelView = new OpenTK.GLControl();
+            this.MainMenuStrip = new System.Windows.Forms.MenuStrip();
+            this.FileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.EditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.DisplayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AreaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.EditorWindowStatusStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.OpenSaveStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.toolStrip3.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            this.toolStrip2.SuspendLayout();
+            this.MainMenuStrip.SuspendLayout();
+            this.EditorWindowStatusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // scenarioTreeView
@@ -89,7 +98,7 @@
             this.tabControl1.Location = new System.Drawing.Point(2, 27);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(350, 740);
+            this.tabControl1.Size = new System.Drawing.Size(350, 715);
             this.tabControl1.TabIndex = 6;
             // 
             // tabPage4
@@ -119,23 +128,26 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(342, 714);
+            this.tabPage1.Size = new System.Drawing.Size(342, 689);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Objects";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // dataGridView1
             // 
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 240);
+            this.dataGridView1.Location = new System.Drawing.Point(6, 211);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 21;
-            this.dataGridView1.Size = new System.Drawing.Size(330, 471);
+            this.dataGridView1.Size = new System.Drawing.Size(330, 472);
             this.dataGridView1.TabIndex = 11;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dataGridView1_CellPainting);
             this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
+            this.dataGridView1.CurrentCellDirtyStateChanged += new System.EventHandler(this.dataGridView1_CurrentCellDirtyStateChanged);
             // 
             // toolStrip3
             // 
@@ -179,7 +191,7 @@
             // 
             this.objectsListTreeView.Location = new System.Drawing.Point(6, 29);
             this.objectsListTreeView.Name = "objectsListTreeView";
-            this.objectsListTreeView.Size = new System.Drawing.Size(330, 205);
+            this.objectsListTreeView.Size = new System.Drawing.Size(330, 176);
             this.objectsListTreeView.TabIndex = 8;
             this.objectsListTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.objectsListTreeView_NodeMouseClick);
             this.objectsListTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.objectsListTreeView_NodeMouseDoubleClick);
@@ -314,39 +326,6 @@
             this.applyGalaxyNameBtn.Text = "Apply";
             this.applyGalaxyNameBtn.Click += new System.EventHandler(this.applyGalaxyNameBtn_Click);
             // 
-            // toolStrip2
-            // 
-            this.toolStrip2.Dock = System.Windows.Forms.DockStyle.None;
-            this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveGalaxyBtn,
-            this.closeEditorBtn});
-            this.toolStrip2.Location = new System.Drawing.Point(6, 1);
-            this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(77, 25);
-            this.toolStrip2.TabIndex = 8;
-            this.toolStrip2.Text = "toolStrip2";
-            // 
-            // saveGalaxyBtn
-            // 
-            this.saveGalaxyBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.saveGalaxyBtn.Image = ((System.Drawing.Image)(resources.GetObject("saveGalaxyBtn.Image")));
-            this.saveGalaxyBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.saveGalaxyBtn.Name = "saveGalaxyBtn";
-            this.saveGalaxyBtn.Size = new System.Drawing.Size(35, 22);
-            this.saveGalaxyBtn.Text = "Save";
-            this.saveGalaxyBtn.Click += new System.EventHandler(this.saveGalaxyBtn_Click);
-            // 
-            // closeEditorBtn
-            // 
-            this.closeEditorBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.closeEditorBtn.Image = ((System.Drawing.Image)(resources.GetObject("closeEditorBtn.Image")));
-            this.closeEditorBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.closeEditorBtn.Name = "closeEditorBtn";
-            this.closeEditorBtn.Size = new System.Drawing.Size(39, 22);
-            this.closeEditorBtn.Text = "Close";
-            this.closeEditorBtn.Click += new System.EventHandler(this.closeEditorBtn_Click);
-            // 
             // glLevelView
             // 
             this.glLevelView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -355,7 +334,7 @@
             this.glLevelView.BackColor = System.Drawing.Color.Black;
             this.glLevelView.Location = new System.Drawing.Point(358, 27);
             this.glLevelView.Name = "glLevelView";
-            this.glLevelView.Size = new System.Drawing.Size(1472, 737);
+            this.glLevelView.Size = new System.Drawing.Size(1472, 715);
             this.glLevelView.TabIndex = 9;
             this.glLevelView.VSync = false;
             this.glLevelView.Load += new System.EventHandler(this.glLevelView_Load);
@@ -367,14 +346,104 @@
             this.glLevelView.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.glLevelView_MouseWheel);
             this.glLevelView.Resize += new System.EventHandler(this.glLevelView_Resize);
             // 
+            // MainMenuStrip
+            // 
+            this.MainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.FileToolStripMenuItem,
+            this.EditToolStripMenuItem,
+            this.DisplayToolStripMenuItem});
+            this.MainMenuStrip.Location = new System.Drawing.Point(0, 0);
+            this.MainMenuStrip.Name = "MainMenuStrip";
+            this.MainMenuStrip.Size = new System.Drawing.Size(1842, 24);
+            this.MainMenuStrip.TabIndex = 11;
+            this.MainMenuStrip.Text = "menuStrip1";
+            // 
+            // FileToolStripMenuItem
+            // 
+            this.FileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.SaveToolStripMenuItem,
+            this.closeToolStripMenuItem});
+            this.FileToolStripMenuItem.Name = "FileToolStripMenuItem";
+            this.FileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.FileToolStripMenuItem.Text = "File";
+            // 
+            // SaveToolStripMenuItem
+            // 
+            this.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem";
+            this.SaveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.SaveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.SaveToolStripMenuItem.Text = "Save";
+            this.SaveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
+            // 
+            // closeToolStripMenuItem
+            // 
+            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.closeToolStripMenuItem.Text = "Close";
+            this.closeToolStripMenuItem.Click += new System.EventHandler(this.CloseToolStripMenuItem_Click);
+            // 
+            // EditToolStripMenuItem
+            // 
+            this.EditToolStripMenuItem.Name = "EditToolStripMenuItem";
+            this.EditToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.EditToolStripMenuItem.Text = "Edit";
+            // 
+            // DisplayToolStripMenuItem
+            // 
+            this.DisplayToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AreaToolStripMenuItem});
+            this.DisplayToolStripMenuItem.Name = "DisplayToolStripMenuItem";
+            this.DisplayToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.DisplayToolStripMenuItem.Text = "Display";
+            // 
+            // AreaToolStripMenuItem
+            // 
+            this.AreaToolStripMenuItem.Name = "AreaToolStripMenuItem";
+            this.AreaToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.A)));
+            this.AreaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.AreaToolStripMenuItem.Text = "Area";
+            this.AreaToolStripMenuItem.Click += new System.EventHandler(this.AreaToolStripMenuItem_Click);
+            // 
+            // EditorWindowStatusStrip
+            // 
+            this.EditorWindowStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1,
+            this.OpenSaveStatusLabel,
+            this.toolStripStatusLabel3});
+            this.EditorWindowStatusStrip.Location = new System.Drawing.Point(0, 745);
+            this.EditorWindowStatusStrip.Name = "EditorWindowStatusStrip";
+            this.EditorWindowStatusStrip.Size = new System.Drawing.Size(1842, 22);
+            this.EditorWindowStatusStrip.TabIndex = 12;
+            this.EditorWindowStatusStrip.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(45, 17);
+            this.toolStripStatusLabel1.Text = "State：";
+            // 
+            // OpenSaveStatusLabel
+            // 
+            this.OpenSaveStatusLabel.Name = "OpenSaveStatusLabel";
+            this.OpenSaveStatusLabel.Size = new System.Drawing.Size(71, 17);
+            this.OpenSaveStatusLabel.Text = "OpenGalaxy";
+            // 
+            // toolStripStatusLabel3
+            // 
+            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(26, 17);
+            this.toolStripStatusLabel3.Text = "test";
+            // 
             // EditorWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1842, 767);
+            this.Controls.Add(this.EditorWindowStatusStrip);
             this.Controls.Add(this.glLevelView);
-            this.Controls.Add(this.toolStrip2);
             this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.MainMenuStrip);
             this.Controls.Add(this.tabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "EditorWindow";
@@ -391,8 +460,10 @@
             this.toolStrip3.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.toolStrip2.ResumeLayout(false);
-            this.toolStrip2.PerformLayout();
+            this.MainMenuStrip.ResumeLayout(false);
+            this.MainMenuStrip.PerformLayout();
+            this.EditorWindowStatusStrip.ResumeLayout(false);
+            this.EditorWindowStatusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -414,9 +485,6 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripTextBox scenarioNameTxtBox;
         private System.Windows.Forms.ToolStripButton applyGalaxyNameBtn;
-        private System.Windows.Forms.ToolStrip toolStrip2;
-        private System.Windows.Forms.ToolStripButton saveGalaxyBtn;
-        private System.Windows.Forms.ToolStripButton closeEditorBtn;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.ToolStripButton stageInformationBtn;
         private System.Windows.Forms.TabPage tabPage5;
@@ -428,5 +496,16 @@
         private OpenTK.GLControl glLevelView;
         private System.Windows.Forms.ToolStripLabel toolStripLabel3;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.MenuStrip MainMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem FileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem SaveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem EditToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem DisplayToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem AreaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
+        private System.Windows.Forms.StatusStrip EditorWindowStatusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel OpenSaveStatusLabel;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
     }
 }
