@@ -518,7 +518,7 @@ namespace Takochu.smg
         {
             //if (archive == "Light") return;
             //if (archive == "Ghost") return;
-            Console.WriteLine(archive+"  "+dir);
+            //Console.WriteLine(archive+"  "+dir);
             List<string> layers = mMapFiles[archive].GetDirectories($"/stage/jmp/{dir}");
             if (layers == null) return;
 

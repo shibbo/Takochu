@@ -27,6 +27,7 @@ namespace Takochu.smg.obj
      */
     class AreaObj : AbstractObj
     {
+        public static bool IsDisplay_Renderer = true;
         public AreaObj(BCSV.Entry entry, Zone parentZone, string path) : base(entry)
         {
             mParentZone = parentZone;
@@ -73,19 +74,22 @@ namespace Takochu.smg.obj
             mMapPartsID = Get<short>("MapParts_ID");
             mObjID = Get<short>("Obj_ID");
 
+            
             colorWireRenderer = new ColorWireRenderer(AreaType.Normal, mAreaShapeNo);
             mRenderer = colorWireRenderer;
             mTruePosition = AdjustmentPosition;
+
         }
 
         public override void Render(RenderMode mode)
         {
+            if (!IsDisplay_Renderer) return;
             RenderInfo inf = new RenderInfo();
             inf.Mode = mode;
 
             if (!mRenderer.GottaRender(inf))
                 return;
-
+            
             GL.PushMatrix();
             {
                 GL.Translate(mTruePosition);
