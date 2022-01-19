@@ -11,7 +11,7 @@ using Takochu.util;
 
 namespace Takochu.smg.obj
 {
-    public class Camera
+    public class Camera : AbstractObj
     {
         public enum CameraType
         {
@@ -31,7 +31,7 @@ namespace Takochu.smg.obj
             { "o", CameraType.Other }
         };
 
-        public Camera(BCSV.Entry entry, Zone parent)
+        public Camera(BCSV.Entry entry, Zone parent) : base(entry)
         {
             mEntry = entry;
 
@@ -94,7 +94,7 @@ namespace Takochu.smg.obj
             }
         }
 
-        public void Save()
+        public override void Save()
         {
             // load camera specific fields
             List<string> fields = CameraUtil.GetStrings(mType).ToList();
@@ -125,6 +125,11 @@ namespace Takochu.smg.obj
             mEntry.Set("camtype", mType);
         }
 
+        public override void Reload_mValues()
+        {
+
+        }
+
         public CameraType GetCameraType()
         {
             if (mName == "")
@@ -134,11 +139,6 @@ namespace Takochu.smg.obj
             return cameraDict.ContainsKey(type) ? cameraDict[type] : CameraType.Cube;
         }
 
-        public BCSV.Entry mEntry;
-        public string mName;
-        public Zone mParentZone;
-
-        public string mType;
         /*public uint mVersion;
         public Vector3 mWorldOffset;
         public float mLookOffset;

@@ -76,6 +76,12 @@ namespace Takochu.ui
             mZoneMasks.Clear();
             layerViewerDropDown.DropDownItems.Clear();
             objectsListTreeView.Nodes.Clear();
+            cameraListTreeView.Nodes.Clear();
+            cameraListTreeView.Nodes.Add("Cube Cameras");
+            cameraListTreeView.Nodes.Add("Group Cameras");
+            cameraListTreeView.Nodes.Add("Event Cameras");
+            cameraListTreeView.Nodes.Add("Start Cameras");
+            cameraListTreeView.Nodes.Add("Other Cameras");
             mPaths.Clear();
 
             mObjects.Clear();
@@ -196,31 +202,59 @@ namespace Takochu.ui
                 cameras[zone].ForEach(c =>
                 {
                     if (c.GetCameraType() == Camera.CameraType.Cube)
+                    {
                         cubeCameras.Add(c);
+                        TreeNode nd = new TreeNode(c.mName);
+                        nd.Tag = c;
+                        cameraListTreeView.Nodes[0].Nodes.Add(nd);
+                    }
+                        
                 });
 
                 cameras[zone].ForEach(c =>
                 {
                     if (c.GetCameraType() == Camera.CameraType.Group)
+                    {
                         groupCameras.Add(c);
+                        TreeNode nd = new TreeNode(c.mName);
+                        nd.Tag = c;
+                        cameraListTreeView.Nodes[1].Nodes.Add(nd);
+                    }
+                        
                 });
 
                 cameras[zone].ForEach(c =>
                 {
-                    if (c.GetCameraType() == Camera.CameraType.Event)
+                    if (c.GetCameraType() == Camera.CameraType.Event) 
+                    {
                         eventCameras.Add(c);
+                        TreeNode nd = new TreeNode(c.mName);
+                        nd.Tag = c;
+                        cameraListTreeView.Nodes[2].Nodes.Add(nd);
+                    }
                 });
 
                 cameras[zone].ForEach(c =>
                 {
                     if (c.GetCameraType() == Camera.CameraType.Start)
+                    {
                         startCameras.Add(c);
+                        TreeNode nd = new TreeNode(c.mName);
+                        nd.Tag = c;
+                        cameraListTreeView.Nodes[3].Nodes.Add(nd);
+                    }
                 });
 
                 cameras[zone].ForEach(c =>
                 {
                     if (c.GetCameraType() == Camera.CameraType.Other)
+                    {
                         otherCameras.Add(c);
+                        TreeNode nd = new TreeNode(c.mName);
+                        nd.Tag = c;
+                        cameraListTreeView.Nodes[4].Nodes.Add(nd);
+                    }
+                        
                 });
             }
 
@@ -513,6 +547,7 @@ namespace Takochu.ui
         private float m_OrthZoom = 20f;
 
         private static EditorWindowSys.DataGridViewEdit dataGridViewEdit;
+        private static EditorWindowSys.DataGridViewEdit dataGridViewEdit_Cameras;
         /*
          * 0 = Opaque
          * 1 = Translucent
@@ -975,6 +1010,7 @@ namespace Takochu.ui
 
         private void objectsListTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
+
         }
         
         private void MoveCameraTo(Vector3 target)
@@ -1136,6 +1172,17 @@ namespace Takochu.ui
             }
             //dataGridView1.EndEdit();
             dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
+        }
+
+        private void cameraListTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            Camera camera = e.Node.Tag as Camera;
+
+            if (camera == null) return;
+
+            camerasDataGridView.DataSource = null;
+            dataGridViewEdit_Cameras = new EditorWindowSys.DataGridViewEdit(camerasDataGridView, camera);
+            camerasDataGridView = dataGridViewEdit_Cameras.GetDataTable(camera);
         }
 
         private void glLevelView_Resize(object sender, EventArgs e)

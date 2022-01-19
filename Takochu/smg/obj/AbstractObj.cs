@@ -15,7 +15,8 @@ namespace Takochu.smg.obj
         public AbstractObj(BCSV.Entry entry)
         {
             mEntry = entry;
-            mName = Get<string>("name");
+            if (entry.ContainsKey("name"))
+                mName = Get<string>("name");
             mUnique = Program.sUniqueID++;
             
         }
@@ -63,7 +64,6 @@ namespace Takochu.smg.obj
         {
             return mEntry.Get<T>(key);
         }
-
         
 
         public BCSV.Entry mEntry;

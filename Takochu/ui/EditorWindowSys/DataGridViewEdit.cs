@@ -9,7 +9,7 @@ using Takochu.fmt;
 using Takochu.smg.obj;
 using Takochu.smg;
 using ObjDB = Takochu.smg.ObjectDB;
-
+using Takochu.util;
 
 namespace Takochu.ui.EditorWindowSys
 {
@@ -64,6 +64,39 @@ namespace Takochu.ui.EditorWindowSys
             SetColumn();
             SetRow();
             return _dataGridView;
+        }
+
+        public DataGridView GetDataTable(Camera camera)
+        {
+            Initialize();
+            NullCheck();
+            SetColumn();
+            SetRow();
+
+            // here comes the tricky part
+            List<string> unusedTypes = CameraUtil.GetUnusedEntriesByCameraType(camera.mType);
+
+            foreach(string type in unusedTypes)
+            {
+                FindAndRemove(type);
+            }
+
+            return _dataGridView;
+        }
+
+        public void FindAndRemove(string type)
+        {
+            for (int i = 0; i < _dataGridView.Rows.Count; i++)
+            {
+                DataGridViewRow row = _dataGridView.Rows[i];
+
+                if (row.Cells[0].Value.ToString() == type)
+                {
+                    Console.WriteLine($"found unused {row.Cells[0].Value}");
+                    _dataGridView.Rows.RemoveAt(i);
+                    return;
+                }
+            }
         }
 
         /// <summary>

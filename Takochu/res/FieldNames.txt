@@ -7377,6 +7377,8 @@ dup-non-group
 e:%s
 eflag.enableEndErpFrame
 eflag.enableErpFrame
+evpriority
+evfrm
 electricshock
 en_name
 end_frame
@@ -7405,6 +7407,7 @@ gflag.thru
 gndint
 group%02d
 head
+id
 initNameObjOnMainThread
 interpole
 jp_name
@@ -7550,6 +7553,9 @@ tungue
 type
 types.h
 udown
+up.X
+up.Y
+up.Z
 uplay
 upper
 upper_jaw
@@ -8213,3 +8219,16 @@ BtpIsKeepAnim
 BvaName
 BvaStartFrame
 BvaIsKeepAnim
+axis.X
+axis.Y
+axis.Z
+wpoint.X
+wpoint.Y
+wpoint.Z
+woffset.X
+woffset.Y
+woffset.Z
+vpanuse
+vpanaxis.X
+vpanaxis.Y
+vpanaxis.Z

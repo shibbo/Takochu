@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Takochu.smg;
+using Takochu.smg.obj;
 
 namespace Takochu.util
 {
@@ -59,7 +61,15 @@ namespace Takochu.util
             return mFieldsToType;
         }
 
+        public static List<string> GetUnusedEntriesByCameraType(string type)
+        {
+            List<string> usedValues = mCameraEntries[type].ToList();
+            return sOptionalParams.Where(p => usedValues.All(p2 => p2 != p)).ToList();
+        }
+
         static Dictionary<string, string[]> mCameraEntries;
         static Dictionary<string, string> mFieldsToType;
+
+        static List<string> sOptionalParams = new List<string> { "string", "dist", "axis.X", "axis.Y", "axis.Z", "wpoint.X", "wpoint.Y", "wpoint.Z", "up.X", "up.Y", "up.Z", "angleA", "angleB", "num1", "num2" };
     }
 }
