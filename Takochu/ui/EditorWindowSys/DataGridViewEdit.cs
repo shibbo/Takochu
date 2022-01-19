@@ -184,8 +184,10 @@ namespace Takochu.ui.EditorWindowSys
             /*
              * 表示名を編集不可にする。
              * ※変更すると保存の際に影響があるため
+             * 値のソートを不可にする。
              */
             _dataGridView.Columns["PropertyName"].ReadOnly = true;
+            _dataGridView.Columns["PropertyValue"].SortMode  = DataGridViewColumnSortMode.NotSortable;
         }
 
         private void SetRow()
