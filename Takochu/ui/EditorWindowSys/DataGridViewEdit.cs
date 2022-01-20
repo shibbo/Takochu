@@ -32,8 +32,8 @@ namespace Takochu.ui.EditorWindowSys
     /// </summary>
     public class DataGridViewEdit
     {
-        private DataGridView _dataGridView;
-        private AbstractObj _abstObj;
+        private readonly DataGridView _dataGridView;
+        private readonly AbstractObj _abstObj;
         private static bool _isChanged = false;
 
         /// <summary>
@@ -117,6 +117,8 @@ namespace Takochu.ui.EditorWindowSys
         {
             var Keys = _abstObj.mEntry.Keys;
             var Name = BCSV.HashToFieldName(Keys.ElementAt(rowIndex));
+            
+            if (value == null)  return;
 
             //Do not allow the object name to be changed.
             if (Name == "name") return;

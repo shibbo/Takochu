@@ -209,9 +209,9 @@ namespace Takochu.smg.obj
             if (GameUtil.IsSMG2())
                 mEntry.Set("SW_AWAKE", mSwitchAwake);
 
-            mEntry.Set("pos_x", mTruePosition.X);
-            mEntry.Set("pos_y", mTruePosition.Y);
-            mEntry.Set("pos_z", mTruePosition.Z);
+            mEntry.Set("pos_x", ObjectTypeChange.ToFloat(mEntry.Get("pos_x")));
+            mEntry.Set("pos_y", ObjectTypeChange.ToFloat(mEntry.Get("pos_y")));
+            mEntry.Set("pos_z", ObjectTypeChange.ToFloat(mEntry.Get("pos_z")));
 
             mEntry.Set("dir_x", mTrueRotation.X);
             mEntry.Set("dir_y", mTrueRotation.Y);

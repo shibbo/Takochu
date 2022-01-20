@@ -456,9 +456,11 @@
             this.camerasDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.camerasDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.camerasDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.camerasDataGridView.Location = new System.Drawing.Point(6, 378);
             this.camerasDataGridView.Name = "camerasDataGridView";
+            this.camerasDataGridView.RowHeadersVisible = false;
             this.camerasDataGridView.Size = new System.Drawing.Size(330, 377);
             this.camerasDataGridView.TabIndex = 1;
             // 

@@ -64,32 +64,32 @@ namespace Takochu.smg.obj
         {
             return mEntry.Get<T>(key);
         }
-        
-
-        public BCSV.Entry mEntry;
-        public Zone mParentZone;
-        
-
-        public Vector3 mTruePosition;
-        public Vector3 mTrueRotation;
-
-        public Vector3 mPosition;
-        public Vector3 mRotation;
-        public Vector3 mScale;
-
-        public string mDirectory;
-        public string mLayer;
-        public string mFile;
-
-        public string mName;
-        public string mType;
-
-        public int mUnique;
-        public RendererBase mRenderer;
-        public RendererBase mRenderer2;
-
-        public int[] mObjArgs;
 
         
+        public BCSV.Entry mEntry { get; protected set; }
+        public Zone mParentZone { get; protected set; }
+
+
+        public Vector3 mTruePosition { get; protected set; }
+        public Vector3 mTrueRotation { get; protected set; }
+
+        public Vector3 mPosition { get; protected set; }
+        public Vector3 mRotation { get; protected set; }
+        public Vector3 mScale { get; protected set; }
+
+        public string mDirectory { get; protected set; }
+        public string mLayer { get; protected set; }
+        public string mFile { get; protected set; }
+
+        public string mName { get; protected set; }
+        public string mType { get; protected set; }
+
+        public int mUnique { get; protected set; }
+        public RendererBase mRenderer { get; protected set; }
+        public RendererBase mRenderer2 { get; protected set; }
+
+        public int[] mObjArgs { get; protected set; }
+
+
     }
 }
