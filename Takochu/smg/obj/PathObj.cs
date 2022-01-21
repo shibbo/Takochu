@@ -12,9 +12,9 @@ using Takochu.util;
 
 namespace Takochu.smg.obj
 {
-    public class PathObj
+    public class PathObj : AbstractObj
     {
-        public PathObj(BCSV.Entry entry, Zone parentZone, RARCFilesystem filesystem)
+        public PathObj(BCSV.Entry entry, Zone parentZone, RARCFilesystem filesystem) : base(entry)
         {
             mFilesystem = filesystem;
             mEntry = entry;
@@ -47,7 +47,7 @@ namespace Takochu.smg.obj
             mUnique = Program.sUniqueID++;
         }
 
-        public void Save()
+        public override void Save()
         {
             mEntry.Set("name", mName);
             mEntry.Set("no", mNo);
@@ -74,7 +74,7 @@ namespace Takochu.smg.obj
             b.Save();
         }
 
-        public void Render(RenderMode mode)
+        public override void Render(RenderMode mode)
         {
             mPathColor = RenderUtil.GenerateRandomColor();
 
@@ -154,9 +154,6 @@ namespace Takochu.smg.obj
         }
 
         public RARCFilesystem mFilesystem;
-        public BCSV.Entry mEntry;
-        public Zone mParentZone;
-        public string mName;
         public short mNo;
         public string mType;
         public string mClosed;
