@@ -10,12 +10,12 @@ using Takochu.rnd;
 
 namespace Takochu.smg.obj
 {
-    public class PathPointObj
+    public class PathPointObj : AbstractObj
     {
-        public PathPointObj(PathObj parent, BCSV.Entry entry)
+        public PathPointObj(PathObj parent, BCSV.Entry entry) : base(entry)
         {
-            mEntry = entry;
             mParent = parent;
+            mParentZone = parent.mParentZone;
 
             mID = mEntry.Get<short>("id");
 
@@ -48,7 +48,7 @@ namespace Takochu.smg.obj
             }
         }
 
-        public void Save()
+        public override void Save()
         {
             mEntry.Set("id", mID);
 
@@ -100,10 +100,8 @@ namespace Takochu.smg.obj
             return $"[{mParent.mID}] {mParent.mName} (Point {mID}) ({mParent.mZone.mZoneName})";
         }
 
-        public BCSV.Entry mEntry;
         PathObj mParent;
         short mID;
-        public Vector3 mPosition;
         public Vector3 mPoint1;
         public Vector3 mPoint2;
 

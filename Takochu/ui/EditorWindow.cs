@@ -970,15 +970,26 @@ namespace Takochu.ui
                     dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, areaobj);
                     dataGridView1 = dataGridViewEdit.GetDataTable();
                     break;
+                case "Gravity":
+                    PlanetObj planetObj = abstractObj as PlanetObj;
+                    dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, planetObj);
+                    dataGridView1 = dataGridViewEdit.GetDataTable();
+                    break;
+                case "Camera Areas":
+                    CameraObj cameraObj = abstractObj as CameraObj;
+                    dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, cameraObj);
+                    dataGridView1 = dataGridViewEdit.GetDataTable();
+                    break;
                 case "Debug Movement":
                     DebugMoveObj debug = abstractObj as DebugMoveObj;
                     dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, debug);
                     dataGridView1 = dataGridViewEdit.GetDataTable();
                     break;
                 case "Map Parts":
-                case "MapPartsObj":
-                    //MapPartsObj mapparts = abstractObj as MapPartsObj;
-                    
+                    MapPartsObj mapparts = abstractObj as MapPartsObj;
+                    dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, mapparts);
+                    dataGridView1 = dataGridViewEdit.GetDataTable();
+                    dataGridView1 = dataGridViewEdit.GetDataTable();
                     break;
                 case "Demos":
                     DemoObj demo = abstractObj as DemoObj;
@@ -990,10 +1001,23 @@ namespace Takochu.ui
                     dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, start);
                     dataGridView1 = dataGridViewEdit.GetDataTable();
                     break;
+                case "Paths":
+                    PathObj path = abstractObj as PathObj;
+                    dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, path);
+                    dataGridView1 = dataGridViewEdit.GetDataTable();
+                    break;
                 default:
                     //dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, abstractObj);
                     //dataGridView1.DataSource = dataGridViewEdit.GetDataTable();
                     break;
+            }
+
+            // we have a path point
+            if (e.Node.Parent.Parent != null && e.Node.Parent.Parent.Text == "Paths")
+            {
+                PathPointObj pathPoint = abstractObj as PathPointObj;
+                dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, pathPoint);
+                dataGridView1 = dataGridViewEdit.GetDataTable();
             }
 
             //Drawing, camera post-processing
