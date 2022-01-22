@@ -130,7 +130,7 @@ namespace Takochu.ui.EditorWindowSys
 
             if (IsObj_args(name)) 
             {
-                var ChangedInt32 = Convert.ToInt32(value);
+               var ChangedInt32 = Convert.ToInt32(value);
                 if (value.ToString() == "True" || value.ToString() == "False")
                 {
                     if (ChangedInt32 < 1) value = 0;

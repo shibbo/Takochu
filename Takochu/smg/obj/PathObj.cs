@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Takochu.calc;
 using Takochu.fmt;
 using Takochu.io;
 using Takochu.rnd;
@@ -45,6 +46,17 @@ namespace Takochu.smg.obj
             }
 
             mUnique = Program.sUniqueID++;
+        }
+
+        public override void Reload_mValues()
+        {
+            mNo = ObjectTypeChange.ToInt16(mEntry.Get("no"));
+            mNumPoint = ObjectTypeChange.ToInt32(mEntry.Get("num_pnt"));
+
+            for (int i = 0; i < 8; i++)
+            {
+                mPathArgs[i] = ObjectTypeChange.ToInt32(mEntry.Get($"path_arg{i}"));
+            }
         }
 
         public override void Save()

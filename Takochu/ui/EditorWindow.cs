@@ -67,6 +67,8 @@ namespace Takochu.ui
         Dictionary<string, int> mZoneMasks = new Dictionary<string, int>();
 
         Dictionary<int, Dictionary<int, int>> mDispLists = new Dictionary<int, Dictionary<int, int>>();
+
+        AbstractObj mSelectedObject;
         
         
         public void LoadScenario(int scenarioNo)
@@ -951,6 +953,9 @@ namespace Takochu.ui
 
             dataGridView1.DataSource = null;
             dataGridViewEdit = null;
+
+            mSelectedObject = abstractObj;
+
             switch (e.Node.Parent.Text)
             {
                 case "Objects":
@@ -1117,8 +1122,16 @@ namespace Takochu.ui
             
             var cell_value = dgv[e.ColumnIndex, e.RowIndex].Value;
             dataGridViewEdit.ChangeValue(e.RowIndex,cell_value);
-            Scenario_ReLoad();
 
+            GL.DeleteLists(mDispLists[0][mSelectedObject.mUnique], 1);
+
+            GL.NewList(mDispLists[0][mSelectedObject.mUnique], ListMode.Compile);
+            mSelectedObject.Render(RenderMode.Opaque);
+            GL.EndList();
+
+            glLevelView.Refresh();
+
+            //Scenario_ReLoad();
         }
 
         private void AreaToolStripMenuItem_Click(object sender, EventArgs e)
