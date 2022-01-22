@@ -32,8 +32,8 @@ namespace Takochu.ui.EditorWindowSys
     /// </summary>
     public class DataGridViewEdit
     {
-        private DataGridView _dataGridView;
-        private AbstractObj _abstObj;
+        private readonly DataGridView _dataGridView;
+        private readonly AbstractObj _abstObj;
         private static bool _isChanged = false;
 
         /// <summary>
@@ -117,6 +117,8 @@ namespace Takochu.ui.EditorWindowSys
         {
             var Keys = _abstObj.mEntry.Keys;
             var Name = BCSV.HashToFieldName(Keys.ElementAt(rowIndex));
+            
+            if (value == null)  return;
 
             //Do not allow the object name to be changed.
             if (Name == "name") return;
@@ -184,8 +186,10 @@ namespace Takochu.ui.EditorWindowSys
             /*
              * 表示名を編集不可にする。
              * ※変更すると保存の際に影響があるため
+             * 値のソートを不可にする。
              */
             _dataGridView.Columns["PropertyName"].ReadOnly = true;
+            _dataGridView.Columns["PropertyValue"].SortMode  = DataGridViewColumnSortMode.NotSortable;
         }
 
         private void SetRow()
