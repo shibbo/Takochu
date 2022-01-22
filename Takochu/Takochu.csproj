@@ -114,6 +114,7 @@
     <Compile Include="fmt\BCSV.cs" />
     <Compile Include="fmt\BMD.cs" />
     <Compile Include="fmt\BMG.cs" />
+    <Compile Include="fmt\BRK.cs" />
     <Compile Include="fmt\BTI.cs" />
     <Compile Include="fmt\CANM.cs" />
     <Compile Include="fmt\GST.cs" />

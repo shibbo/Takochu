@@ -1132,11 +1132,25 @@ namespace Takochu.ui
             
             dataGridViewEdit.ChangeValue(e.RowIndex,cell_value);
 
-            GL.DeleteLists(mDispLists[0][mSelectedObject.mUnique], 1);
+            
 
-            GL.NewList(mDispLists[0][mSelectedObject.mUnique], ListMode.Compile);
-            mSelectedObject.Render(RenderMode.Opaque);
-            GL.EndList();
+            if (mSelectedObject.GetType() == typeof(PathPointObj))
+            {
+                PathPointObj obj = mSelectedObject as PathPointObj;
+                PathObj path = obj.mParent;
+
+                GL.DeleteLists(mDispLists[0][path.mUnique], 1);
+                GL.NewList(mDispLists[0][path.mUnique], ListMode.Compile);
+                mSelectedObject.Render(RenderMode.Opaque);
+                GL.EndList();
+            }
+            else
+            {
+                GL.DeleteLists(mDispLists[0][mSelectedObject.mUnique], 1);
+                GL.NewList(mDispLists[0][mSelectedObject.mUnique], ListMode.Compile);
+                mSelectedObject.Render(RenderMode.Opaque);
+                GL.EndList();
+            }
 
             glLevelView.Refresh();
 

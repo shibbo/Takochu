@@ -126,6 +126,11 @@ namespace Takochu.smg.obj
                     mRenderer = new ColorCubeRenderer(200f, new Vector4(1f, 1f, 1f, 1f), new Vector4(1f, 0f, 1f, 1f), true);
                 }
 
+                if (rarc.DoesFileExist("/root/ColorChange.brk"))
+                {
+                    //BRK brk = new BRK(rarc.OpenFile("/root/ColorChange.brk"));
+                }
+
                 rarc.Close();
             }
             else if (SP_ObjectName.ContainsKey(mName)) 

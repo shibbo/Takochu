@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Takochu.calc;
 using Takochu.fmt;
 using Takochu.rnd;
 
@@ -63,6 +64,11 @@ namespace Takochu.smg.obj
             mEntry.Set("pnt2_x", mPoint2.X);
             mEntry.Set("pnt2_y", mPoint2.Y);
             mEntry.Set("pnt2_z", mPoint2.Z);
+
+            for (int i = 0; i < 8; i++)
+            {
+                mEntry.Set($"point_arg{i}", mPointArgs[i]);
+            }
         }
 
         public void Render(int pointNo, OpenTK.Graphics.Color4 color, RenderMode mode)
@@ -95,12 +101,41 @@ namespace Takochu.smg.obj
             GL.PopMatrix();
         }
 
+        public override void Reload_mValues()
+        {
+            mPoint0 =
+                    new Vector3(
+                        ObjectTypeChange.ToFloat(mEntry.Get("pnt0_x")),
+                        ObjectTypeChange.ToFloat(mEntry.Get("pnt0_y")),
+                        ObjectTypeChange.ToFloat(mEntry.Get("pnt0_z"))
+                    );
+
+            mPoint1 =
+                        new Vector3(
+                            ObjectTypeChange.ToFloat(mEntry.Get("pnt1_x")),
+                            ObjectTypeChange.ToFloat(mEntry.Get("pnt1_y")),
+                            ObjectTypeChange.ToFloat(mEntry.Get("pnt1_z"))
+                        );
+
+            mPoint2 =
+                    new Vector3(
+                        ObjectTypeChange.ToFloat(mEntry.Get("pnt2_x")),
+                        ObjectTypeChange.ToFloat(mEntry.Get("pnt2_y")),
+                        ObjectTypeChange.ToFloat(mEntry.Get("pnt2_z"))
+                    );
+
+            for (int i = 0; i < 8; i++)
+            {
+                mPointArgs[i] = ObjectTypeChange.ToInt32(mEntry.Get($"point_arg{i}"));
+            }
+        }
+
         public override string ToString()
         {
             return $"[{mParent.mID}] {mParent.mName} (Point {mID}) ({mParent.mZone.mZoneName})";
         }
 
-        PathObj mParent;
+        public PathObj mParent;
         short mID;
         public Vector3 mPoint0;
         public Vector3 mPoint1;
