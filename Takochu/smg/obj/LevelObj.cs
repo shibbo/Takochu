@@ -19,8 +19,6 @@ using Takochu.calc;
 
 namespace Takochu.smg.obj
 {
-    
-   
     public class LevelObj : AbstractObj
     {
         //Note:
@@ -102,17 +100,23 @@ namespace Takochu.smg.obj
             mDemoGroupID = Get<short>("DemoGroupId");
             mMapPartsID = Get<short>("MapParts_ID");
 
-            
-
-            if (ModelCache.HasRenderer(mName))
+            /* 
+             * Rendering the proper BMD files can be a little complicated, so let's break this down
+             * If the object has multiple pieces to render, we create the renderer in the first statement
+             * if the model cache already has our model, we take it from there and store it
+             * if the model cache does not have our model, and the file exists, we load the model and store it into our model cache
+             * if an object has a different archive name than the object name, we load that object name instead
+             * if all else fails, we just load a color cube
+             */
+            if (cMultiRenderObjs.ContainsKey(mName))
+            {
+                mRenderer = new MultiBmdRenderer(cMultiRenderObjs[mName]);
+            }
+            else if (ModelCache.HasRenderer(mName))
             {
                 mRenderer = ModelCache.GetRenderer(mName);
             }
-
-
-
-            // initalize the renderer
-            if (Program.sGame.DoesFileExist($"/ObjectData/{mName}.arc"))
+            else if (mRenderer == null && Program.sGame.DoesFileExist($"/ObjectData/{mName}.arc"))
             {
                 RARCFilesystem rarc = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile($"/ObjectData/{mName}.arc"));
 
@@ -168,7 +172,6 @@ namespace Takochu.smg.obj
             }
             else
             {
-
                 mRenderer = new ColorCubeRenderer(200f, new Vector4(1f, 1f, 1f, 1f), new Vector4(1f, 0f, 1f, 1f), true);
             }
         }
@@ -277,6 +280,7 @@ namespace Takochu.smg.obj
                 GL.Rotate(mTrueRotation.X, 1f, 0f, 0f);
                 GL.Scale(mScale.X, mScale.Y, mScale.Z);
             }
+
             mRenderer.Render(inf);
 
             if (mRenderer2 != null) 
@@ -285,11 +289,7 @@ namespace Takochu.smg.obj
                     mRenderer2.Render(inf);
             }
             
-            
-            
             GL.PopMatrix();
-            
-
         }
         
         

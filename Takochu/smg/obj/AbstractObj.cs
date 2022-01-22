@@ -12,13 +12,16 @@ namespace Takochu.smg.obj
 {
     public class AbstractObj
     {
+        public readonly Dictionary<string, List<string>> cMultiRenderObjs = new Dictionary<string, List<string>>()
+        {
+            { "RedBlueTurnBlock", new List<string>() { "RedBlueTurnBlock", "RedBlueTurnBlockBase" } }
+        };
         public AbstractObj(BCSV.Entry entry)
         {
             mEntry = entry;
             if (entry.ContainsKey("name"))
                 mName = Get<string>("name");
             mUnique = Program.sUniqueID++;
-            
         }
         
         public virtual void Save() { }
