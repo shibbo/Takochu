@@ -10,6 +10,7 @@ using Takochu.rnd;
 using OpenTK.Graphics.OpenGL;
 using static Takochu.smg.ObjectDB;
 using Takochu.calc;
+using System.Windows.Forms;
 
 namespace Takochu.smg.obj
 {
@@ -108,6 +109,11 @@ namespace Takochu.smg.obj
 
         public override void Reload_mValues()
         {
+            if (mAreaShapeNo < 0)
+            {
+                Translate.GetMessageBox.Show(MessageBoxText.ShapeNoNotValid, MessageBoxCaption.Error, MessageBoxButtons.OK);
+            }
+
             //string values
             //Currently, it is not linked to ObjectDB, so it cannot be changed temporarily.
             {
@@ -135,9 +141,6 @@ namespace Takochu.smg.obj
                 {
                     mChildObjID = ObjectTypeChange.ToInt16(mEntry.Get("ChildObjId"));
                 }
-                
-                   
-                
             }
 
             //Int32 Switch

@@ -17,7 +17,7 @@ using OpenTK;
 using Takochu.smg.msg;
 using Takochu.rnd;
 using OpenTK.Graphics.OpenGL;
-
+using static Takochu.util.RenderUtil;
 
 namespace Takochu.ui
 {
@@ -537,7 +537,7 @@ namespace Takochu.ui
         private Vector3 m_CamTarget;
         private float m_CamDistance;
         private bool m_UpsideDown;
-        private Matrix4 m_CamMatrix, m_SkyboxMatrix;
+        private Matrix4 m_CamMatrix, m_SkyboxMatrix, m_ProjMatrix;
         private RenderInfo m_RenderInfo;
 
         private MouseButtons m_MouseDown;
@@ -724,8 +724,8 @@ namespace Takochu.ui
 
             m_AspectRatio = (float)glLevelView.Width / (float)glLevelView.Height;
             GL.MatrixMode(MatrixMode.Projection);
-            Matrix4 projmtx = Matrix4.CreatePerspectiveFieldOfView(k_FOV, m_AspectRatio, k_zNear, k_zFar);
-            GL.LoadMatrix(ref projmtx);
+            m_ProjMatrix = Matrix4.CreatePerspectiveFieldOfView(k_FOV, m_AspectRatio, k_zNear, k_zFar);
+            GL.LoadMatrix(ref m_ProjMatrix);
 
             m_PixelFactorX = ((2f * (float)Math.Tan(k_FOV / 2f) * m_AspectRatio) / (float)(glLevelView.Width));
             m_PixelFactorY = ((2f * (float)Math.Tan(k_FOV / 2f)) / (float)(glLevelView.Height));

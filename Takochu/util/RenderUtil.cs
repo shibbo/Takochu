@@ -5,8 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 using OpenTK;
-//using SuperBMDLib.Materials;
-//using SuperBMDLib.Materials.Enums;
 using Takochu.smg.obj;
 using OpenTK.Graphics;
 
@@ -79,6 +77,17 @@ namespace Takochu.util
                 sCurrentColor = 0;
 
             return sColors[sCurrentColor++];
+        }
+
+        public class Ray
+        {
+            public Vector3 Origin;
+            public Vector3 Direction;
+            public Ray(Vector3 origin, Vector3 dir)
+            {
+                Origin = origin;
+                Direction = dir;
+            }
         }
 
         static int sCurrentColor = 0;

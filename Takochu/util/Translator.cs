@@ -28,7 +28,8 @@ namespace Takochu.util
         FolderPathCorrectly,
         UnimplementedFeatures,
         InitialPathSettings,
-        ChangesNotSaved
+        ChangesNotSaved,
+        ShapeNoNotValid
     }
 
     public enum MessageBoxCaption
@@ -185,7 +186,8 @@ namespace Takochu.util
                 "Path set successfully! You may now use Takochu.",
                 "Some or all of these features have not been implemented.",
                 "Please select a path that contains the dump of your SMG1 / SMG2 copy.",
-                "Changes are not saved.\n\rDo you want to close the window?"
+                "Changes are not saved.\n\rDo you want to close the window?",
+                "Invalid AreaShapeNo value. AreaShapeNo cannot be less than 0."
             };
         }
 
@@ -223,7 +225,8 @@ namespace Takochu.util
                 "新しくゲームフォルダをセットしました。\n\rこれでTacochuを使用できます。",
                 "この機能の一部、または全ての機能が実装されていません。",
                 "SMG1 / SMG2のディスクからコピーされたデータが\n\r入っているパスを選択してください",
-                "変更は保存されていません\n\rウィンドウを閉じますか？"
+                "変更は保存されていません\n\rウィンドウを閉じますか？",
+                ""
             };
         }
 

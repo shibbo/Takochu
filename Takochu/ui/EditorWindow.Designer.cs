@@ -41,6 +41,8 @@
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.objectsListTreeView = new System.Windows.Forms.TreeView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.camerasDataGridView = new System.Windows.Forms.DataGridView();
+            this.cameraListTreeView = new System.Windows.Forms.TreeView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.stageInformationBtn = new System.Windows.Forms.ToolStripButton();
@@ -66,18 +68,16 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.OpenSaveStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.cameraListTreeView = new System.Windows.Forms.TreeView();
-            this.camerasDataGridView = new System.Windows.Forms.DataGridView();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.toolStrip3.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.camerasDataGridView)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.MainMenuStrip.SuspendLayout();
             this.EditorWindowStatusStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.camerasDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // scenarioTreeView
@@ -142,11 +142,11 @@
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 229);
+            this.dataGridView1.Location = new System.Drawing.Point(6, 491);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 21;
-            this.dataGridView1.Size = new System.Drawing.Size(330, 511);
+            this.dataGridView1.Size = new System.Drawing.Size(330, 249);
             this.dataGridView1.TabIndex = 11;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dataGridView1_CellPainting);
@@ -195,7 +195,7 @@
             // 
             this.objectsListTreeView.Location = new System.Drawing.Point(6, 31);
             this.objectsListTreeView.Name = "objectsListTreeView";
-            this.objectsListTreeView.Size = new System.Drawing.Size(330, 190);
+            this.objectsListTreeView.Size = new System.Drawing.Size(330, 454);
             this.objectsListTreeView.TabIndex = 8;
             this.objectsListTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.objectsListTreeView_NodeMouseClick);
             this.objectsListTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.objectsListTreeView_NodeMouseDoubleClick);
@@ -211,6 +211,29 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Cameras";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // camerasDataGridView
+            // 
+            this.camerasDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.camerasDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.camerasDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.camerasDataGridView.Location = new System.Drawing.Point(6, 378);
+            this.camerasDataGridView.Name = "camerasDataGridView";
+            this.camerasDataGridView.RowHeadersVisible = false;
+            this.camerasDataGridView.Size = new System.Drawing.Size(330, 377);
+            this.camerasDataGridView.TabIndex = 1;
+            // 
+            // cameraListTreeView
+            // 
+            this.cameraListTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cameraListTreeView.Location = new System.Drawing.Point(6, 3);
+            this.cameraListTreeView.Name = "cameraListTreeView";
+            this.cameraListTreeView.Size = new System.Drawing.Size(330, 369);
+            this.cameraListTreeView.TabIndex = 0;
+            this.cameraListTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.cameraListTreeView_NodeMouseClick);
             // 
             // tabPage3
             // 
@@ -441,29 +464,6 @@
             this.toolStripStatusLabel3.Size = new System.Drawing.Size(26, 17);
             this.toolStripStatusLabel3.Text = "test";
             // 
-            // cameraListTreeView
-            // 
-            this.cameraListTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cameraListTreeView.Location = new System.Drawing.Point(6, 3);
-            this.cameraListTreeView.Name = "cameraListTreeView";
-            this.cameraListTreeView.Size = new System.Drawing.Size(330, 369);
-            this.cameraListTreeView.TabIndex = 0;
-            this.cameraListTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.cameraListTreeView_NodeMouseClick);
-            // 
-            // camerasDataGridView
-            // 
-            this.camerasDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.camerasDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.camerasDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.camerasDataGridView.Location = new System.Drawing.Point(6, 378);
-            this.camerasDataGridView.Name = "camerasDataGridView";
-            this.camerasDataGridView.RowHeadersVisible = false;
-            this.camerasDataGridView.Size = new System.Drawing.Size(330, 377);
-            this.camerasDataGridView.TabIndex = 1;
-            // 
             // EditorWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -488,13 +488,13 @@
             this.toolStrip3.ResumeLayout(false);
             this.toolStrip3.PerformLayout();
             this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.camerasDataGridView)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.MainMenuStrip.ResumeLayout(false);
             this.MainMenuStrip.PerformLayout();
             this.EditorWindowStatusStrip.ResumeLayout(false);
             this.EditorWindowStatusStrip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.camerasDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
