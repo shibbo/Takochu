@@ -10,6 +10,7 @@ using Takochu.smg.obj;
 using Takochu.smg;
 using ObjDB = Takochu.smg.ObjectDB;
 using Takochu.util;
+using System.Drawing;
 
 namespace Takochu.ui.EditorWindowSys
 {
@@ -51,6 +52,10 @@ namespace Takochu.ui.EditorWindowSys
         {
             _dataGridView = editorWindowDatagridView;
             _abstObj = abstractObj;
+            _dataGridView.RowHeadersVisible = false;
+            _dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            _dataGridView.MinimumSize = new Size(_dataGridView.Width, _dataGridView.RowTemplate.Height);
+            _dataGridView.MaximumSize = _dataGridView.Size;
         }
 
         /// <summary>
@@ -63,6 +68,24 @@ namespace Takochu.ui.EditorWindowSys
             NullCheck();
             SetColumn();
             SetRow();
+
+            
+
+            var min = _dataGridView.MinimumSize.Height;
+            var max = _dataGridView.MaximumSize.Height;
+            var change = (_dataGridView.Rows.Count+1) * _dataGridView.Rows[0].Height;
+
+            if (change < max && change > min)
+            {
+                _dataGridView.Height = change;
+                _dataGridView.ScrollBars = ScrollBars.None;
+            }
+            else 
+            {
+                
+            }
+            
+
             return _dataGridView;
         }
 
