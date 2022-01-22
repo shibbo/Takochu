@@ -93,6 +93,23 @@ namespace Takochu.smg
             }
         }
 
+        public static string GetFriendlyObjNameFromObj(string objName)
+        {
+            if (!Objects.ContainsKey(objName))
+            {
+                return objName;
+            }
+
+            string name = Objects[objName].Name;
+
+            if (name == "")
+            {
+                return objName;
+            }
+
+            return name;
+        }
+
         public static Actor GetActorFromObjectName(string objName)
         {
             if (!Objects.ContainsKey(objName))

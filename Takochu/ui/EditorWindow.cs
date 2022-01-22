@@ -469,6 +469,10 @@ namespace Takochu.ui
                     Tag = o
                 };
 
+                string name = ObjectDB.GetFriendlyObjNameFromObj(o.mName);
+                name = $"{name} [{o.mLayer}]";
+                objNode.Text = name;
+
                 /* indicies of nodes
                  * 0 = Areas
                  * 1 = Camera Areas
@@ -1131,8 +1135,6 @@ namespace Takochu.ui
             } 
             
             dataGridViewEdit.ChangeValue(e.RowIndex,cell_value);
-
-            
 
             if (mSelectedObject.GetType() == typeof(PathPointObj))
             {

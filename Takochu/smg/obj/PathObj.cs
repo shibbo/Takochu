@@ -46,6 +46,7 @@ namespace Takochu.smg.obj
             }
 
             mUnique = Program.sUniqueID++;
+            mPathColor = RenderUtil.GenerateRandomColor();
         }
 
         public override void Reload_mValues()
@@ -88,8 +89,6 @@ namespace Takochu.smg.obj
 
         public override void Render(RenderMode mode)
         {
-            mPathColor = RenderUtil.GenerateRandomColor();
-
             foreach (PathPointObj pp in mPathPointObjs)
             {
                 
