@@ -141,7 +141,7 @@
             this.zonesDataGridView.Location = new System.Drawing.Point(6, 426);
             this.zonesDataGridView.Name = "zonesDataGridView";
             this.zonesDataGridView.RowHeadersVisible = false;
-            this.zonesDataGridView.Size = new System.Drawing.Size(333, 262);
+            this.zonesDataGridView.Size = new System.Drawing.Size(333, 260);
             this.zonesDataGridView.TabIndex = 1;
             // 
             // zonesListTreeView
@@ -167,8 +167,6 @@
             // 
             // dataGridView1
             // 
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(6, 453);
