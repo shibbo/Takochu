@@ -36,8 +36,6 @@ namespace Takochu.smg
         {
             if (GameUtil.IsSMG1())
             {
-                
-                
                     string path = $"/StageData/{mZoneName}.arc";
                     if (mFilesystem.DoesFileExist(path))
                     {

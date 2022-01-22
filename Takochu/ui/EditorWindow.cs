@@ -78,6 +78,8 @@ namespace Takochu.ui
             mZoneMasks.Clear();
             layerViewerDropDown.DropDownItems.Clear();
             objectsListTreeView.Nodes.Clear();
+            zonesListTreeView.Nodes.Clear();
+            lightsTreeView.Nodes.Clear();
             cameraListTreeView.Nodes.Clear();
             cameraListTreeView.Nodes.Add("Cube Cameras");
             cameraListTreeView.Nodes.Add("Group Cameras");
@@ -138,19 +140,72 @@ namespace Takochu.ui
 
                 TreeNode zoneNode = new TreeNode()
                 {
-                    Tag = zone,
                     Text = zone,
                     Name = zone
                 };
 
 
                 AssignNodesToZoneNode(ref zoneNode);
+                currentLayers.AddRange(GameUtil.GetGalaxyLayers(mZoneMasks[zone]));
 
                 objectsListTreeView.Nodes.Add(zoneNode);
 
                 Zone z = mGalaxy.GetZone(zone);
 
-                currentLayers.AddRange(GameUtil.GetGalaxyLayers(mZoneMasks[zone]));
+                if (z.mLights != null)
+                {
+                    TreeNode lightZoneNode = new TreeNode(z.mZoneName);
+
+                    foreach (Light light in z.mLights)
+                    {
+                        TreeNode lightNode = new TreeNode(light.mName);
+                        lightNode.Tag = light;
+                        lightZoneNode.Nodes.Add(lightNode);
+                    }
+
+                    lightsTreeView.Nodes.Add(lightZoneNode);
+                }
+
+
+                ZoneAttributes attrs = mGalaxy.GetZone(zone).mAttributes;
+
+                if (attrs != null)
+                {
+                    //tabControl1.TabPages[1].Enabled = true;
+                    TreeNode zoneInfoNode = new TreeNode(zone);
+                    zonesListTreeView.Nodes.Add(zoneInfoNode);
+                    zoneInfoNode.Nodes.Add("Shadow Parameters");
+                    zoneInfoNode.Nodes.Add("Water Parameters");
+                    zoneInfoNode.Nodes.Add("Flags");
+
+                    foreach (ZoneAttributes.ShadowParam prm in attrs.mShadowParams)
+                    {
+                        TreeNode n = new TreeNode(prm.ToString());
+                        n.Tag = prm;
+                        zoneInfoNode.Nodes[0].Nodes.Add(n);
+                    }
+
+                    foreach (ZoneAttributes.WaterCameraParam prm in attrs.mWaterParams)
+                    {
+                        TreeNode n = new TreeNode(prm.ToString());
+                        n.Tag = prm;
+                        zoneInfoNode.Nodes[1].Nodes.Add(n);
+                    }
+
+                    foreach (ZoneAttributes.FlagNameTable prm in attrs.mFlagTable)
+                    {
+                        TreeNode n = new TreeNode(prm.ToString());
+                        n.Tag = prm;
+                        zoneInfoNode.Nodes[2].Nodes.Add(n);
+                    }
+                    
+                    //zonesListTreeView.Nodes.Add(zoneInfoNode);
+                }
+                else
+                {
+                    //tabControl1.TabPages[1].Enabled = false;
+                }
+
 
                 if (GameUtil.IsSMG1())
                     currentLayers = currentLayers.ConvertAll(l => l.ToLower());
@@ -458,10 +513,15 @@ namespace Takochu.ui
         {
             foreach(AbstractObj o in mObjects)
             {
-                
                 string zone = o.mParentZone.mZoneName;
                 int idx = GetIndexOfZoneNode(zone);
                 TreeNode zoneNode = objectsListTreeView.Nodes[idx];
+
+                if (!o.mParentZone.mZoneName.EndsWith("Galaxy") && zoneNode.Tag == null)
+                {
+                    var layers = mGalaxy.GetGalaxyZone().GetAllStageDataFromLayers(mGalaxy.GetGalaxyZone().GetLayersUsedOnZoneForCurrentScenario());
+                    zoneNode.Tag = layers.Find(stage => stage.mName == zoneNode.Text) as StageObj;
+                }
                 
                 TreeNode objNode = new TreeNode()
                 {
@@ -554,6 +614,8 @@ namespace Takochu.ui
 
         private static EditorWindowSys.DataGridViewEdit dataGridViewEdit;
         private static EditorWindowSys.DataGridViewEdit dataGridViewEdit_Cameras;
+        private static EditorWindowSys.DataGridViewEdit dataGridViewEdit_Zones;
+        private static EditorWindowSys.DataGridViewEdit dataGridViewEdit_Lights;
         /*
          * 0 = Opaque
          * 1 = Translucent
@@ -928,196 +990,131 @@ namespace Takochu.ui
             m_LastMouseMove = m_LastMouseClick = e.Location;
         }
 
-        
-
         private void objectsListTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             AbstractObj abstractObj = e.Node.Tag as AbstractObj;
             
             if (abstractObj == null) return;
 
-            //objects Camera Setting
-            //The following process moves the camera to the object.
-            var ZoneName = abstractObj.mParentZone.mZoneName;
-            var Pos_ZoneOffset = mGalaxy.Get_Pos_GlobalOffset(ZoneName);
-            var Rot_ZoneOffset = mGalaxy.Get_Rot_GlobalOffset(ZoneName);
-
-            var PosObj = abstractObj.mTruePosition;
-            var CorrectPos_Object = calc.RotAfin.GetPositionAfterRotation(PosObj, Rot_ZoneOffset, calc.RotAfin.TargetVector.All);
-
-            m_CamDistance = 0.200f;
-            m_CamTarget = Pos_ZoneOffset / 10000f + CorrectPos_Object / 10000;
-            m_CamPosition = CorrectPos_Object / 10000;
-            m_CamRotation.Y = (float)Math.PI / 8f;
-            m_CamRotation.X = (-(abstractObj.mTrueRotation.Y + Pos_ZoneOffset.Y) / 180f) * (float)Math.PI;
-
-            //objects PropertyGrideSetting
-            //Display the property grid for setting the currently selected object.
-            //Note: These processes are not related to the camera's processing.
-
-            dataGridView1.DataSource = null;
-            dataGridViewEdit = null;
-
-            mSelectedObject = abstractObj;
-
-            switch (e.Node.Parent.Text)
+            if (e.Node.Parent == null && e.Node.Text.EndsWith("Zone"))
             {
-                case "Objects":
-                    if (!(abstractObj is LevelObj))
-                        throw new Exception($"This 「{ typeof(AbstractObj) }」 is not a 「{ typeof(LevelObj) }」 .");
-                    LevelObj obj = abstractObj as LevelObj;
-                    dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, obj);
-                    dataGridView1 = dataGridViewEdit.GetDataTable();
-                    break;
-                case "Areas":
-                    //AreaObj area = abstractObj as AreaObj;
-                    //dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, area);
-                    //dataGridView1.DataSource = dataGridViewEdit.GetDataTable();
-                    if (!(abstractObj is AreaObj))
-                        throw new Exception($"This 「{ typeof(AbstractObj) }」 is not a 「{ typeof(AreaObj) }」 .");
-                    AreaObj areaobj = abstractObj as AreaObj;
-                    dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, areaobj);
-                    dataGridView1 = dataGridViewEdit.GetDataTable();
-                    break;
-                case "Gravity":
-                    PlanetObj planetObj = abstractObj as PlanetObj;
-                    dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, planetObj);
-                    dataGridView1 = dataGridViewEdit.GetDataTable();
-                    break;
-                case "Camera Areas":
-                    CameraObj cameraObj = abstractObj as CameraObj;
-                    dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, cameraObj);
-                    dataGridView1 = dataGridViewEdit.GetDataTable();
-                    break;
-                case "Debug Movement":
-                    DebugMoveObj debug = abstractObj as DebugMoveObj;
-                    dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, debug);
-                    dataGridView1 = dataGridViewEdit.GetDataTable();
-                    break;
-                case "Map Parts":
-                    MapPartsObj mapparts = abstractObj as MapPartsObj;
-                    dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, mapparts);
-                    dataGridView1 = dataGridViewEdit.GetDataTable();
-                    dataGridView1 = dataGridViewEdit.GetDataTable();
-                    break;
-                case "Demos":
-                    DemoObj demo = abstractObj as DemoObj;
-                    dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, demo);
-                    dataGridView1 = dataGridViewEdit.GetDataTable();
-                    break;
-                case "Starting Points":
-                    StartObj start = abstractObj as StartObj;
-                    dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, start);
-                    dataGridView1 = dataGridViewEdit.GetDataTable();
-                    break;
-                case "Paths":
-                    PathObj path = abstractObj as PathObj;
-                    dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, path);
-                    dataGridView1 = dataGridViewEdit.GetDataTable();
-                    break;
-                default:
-                    //dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, abstractObj);
-                    //dataGridView1.DataSource = dataGridViewEdit.GetDataTable();
-                    break;
-            }
-
-            // we have a path point
-            if (e.Node.Parent.Parent != null && e.Node.Parent.Parent.Text == "Paths")
-            {
-                PathPointObj pathPoint = abstractObj as PathPointObj;
-                dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, pathPoint);
+                StageObj stageObj = abstractObj as StageObj;
+                dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, stageObj);
                 dataGridView1 = dataGridViewEdit.GetDataTable();
             }
+            else
+            {
+                //objects Camera Setting
+                //The following process moves the camera to the object.
+                var ZoneName = abstractObj.mParentZone.mZoneName;
+                var Pos_ZoneOffset = mGalaxy.Get_Pos_GlobalOffset(ZoneName);
+                var Rot_ZoneOffset = mGalaxy.Get_Rot_GlobalOffset(ZoneName);
 
-            //Drawing, camera post-processing
+                var PosObj = abstractObj.mTruePosition;
+                var CorrectPos_Object = calc.RotAfin.GetPositionAfterRotation(PosObj, Rot_ZoneOffset, calc.RotAfin.TargetVector.All);
+
+                m_CamDistance = 0.200f;
+                m_CamTarget = Pos_ZoneOffset / 10000f + CorrectPos_Object / 10000;
+                m_CamPosition = CorrectPos_Object / 10000;
+                m_CamRotation.Y = (float)Math.PI / 8f;
+                m_CamRotation.X = (-(abstractObj.mTrueRotation.Y + Pos_ZoneOffset.Y) / 180f) * (float)Math.PI;
+
+                //objects PropertyGrideSetting
+                //Display the property grid for setting the currently selected object.
+                //Note: These processes are not related to the camera's processing.
+
+                dataGridView1.DataSource = null;
+                dataGridViewEdit = null;
+
+                mSelectedObject = abstractObj;
+
+                switch (e.Node.Parent.Text)
+                {
+                    case "Objects":
+                        if (!(abstractObj is LevelObj))
+                            throw new Exception($"This 「{ typeof(AbstractObj) }」 is not a 「{ typeof(LevelObj) }」 .");
+                        LevelObj obj = abstractObj as LevelObj;
+                        dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, obj);
+                        dataGridView1 = dataGridViewEdit.GetDataTable();
+                        break;
+                    case "Areas":
+                        //AreaObj area = abstractObj as AreaObj;
+                        //dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, area);
+                        //dataGridView1.DataSource = dataGridViewEdit.GetDataTable();
+                        if (!(abstractObj is AreaObj))
+                            throw new Exception($"This 「{ typeof(AbstractObj) }」 is not a 「{ typeof(AreaObj) }」 .");
+                        AreaObj areaobj = abstractObj as AreaObj;
+                        dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, areaobj);
+                        dataGridView1 = dataGridViewEdit.GetDataTable();
+                        break;
+                    case "Gravity":
+                        PlanetObj planetObj = abstractObj as PlanetObj;
+                        dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, planetObj);
+                        dataGridView1 = dataGridViewEdit.GetDataTable();
+                        break;
+                    case "Camera Areas":
+                        CameraObj cameraObj = abstractObj as CameraObj;
+                        dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, cameraObj);
+                        dataGridView1 = dataGridViewEdit.GetDataTable();
+                        break;
+                    case "Debug Movement":
+                        DebugMoveObj debug = abstractObj as DebugMoveObj;
+                        dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, debug);
+                        dataGridView1 = dataGridViewEdit.GetDataTable();
+                        break;
+                    case "Map Parts":
+                        MapPartsObj mapparts = abstractObj as MapPartsObj;
+                        dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, mapparts);
+                        dataGridView1 = dataGridViewEdit.GetDataTable();
+                        dataGridView1 = dataGridViewEdit.GetDataTable();
+                        break;
+                    case "Demos":
+                        DemoObj demo = abstractObj as DemoObj;
+                        dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, demo);
+                        dataGridView1 = dataGridViewEdit.GetDataTable();
+                        break;
+                    case "Starting Points":
+                        StartObj start = abstractObj as StartObj;
+                        dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, start);
+                        dataGridView1 = dataGridViewEdit.GetDataTable();
+                        break;
+                    case "Paths":
+                        PathObj path = abstractObj as PathObj;
+                        dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, path);
+                        dataGridView1 = dataGridViewEdit.GetDataTable();
+                        break;
+                    default:
+                        //dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, abstractObj);
+                        //dataGridView1.DataSource = dataGridViewEdit.GetDataTable();
+                        break;
+                }
+
+                // we have a path point
+                if (e.Node.Parent.Parent != null && e.Node.Parent.Parent.Text == "Paths")
+                {
+                    PathPointObj pathPoint = abstractObj as PathPointObj;
+                    dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, pathPoint);
+                    dataGridView1 = dataGridViewEdit.GetDataTable();
+                }
+            }
+
             UpdateCamera();
             glLevelView.Refresh();
-
-            //RenderObjectLists(RenderMode.Opaque);
-
-
-
-            //RenderZone(mObjects);
-            //RenderObjectLists
         }
 
         private void objectsListTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
 
         }
-        
-        private void MoveCameraTo(Vector3 target)
-        {
-            
-        }
-
-        private void propertyGrid1_SelectedObjectsChanged(object sender, EventArgs e)
-        {
-            //glLevelView_Paint(sender,pa);
-            //if (!m_GLLoaded) return;
-            //glLevelView.MakeCurrent();
-
-            //UpdateViewport();
-        }
-
-        private void propertyGrid1_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
-        {
-            Scenario_ReLoad();
-        }
 
         private void toolStripLabel3_Click(object sender, EventArgs e)
         {
-            //var a = mGalaxy.GetGalaxyZone().GetObjectsFromLayer("Map",mGalaxy.GetGalaxyZone().GetLayersUsedOnZoneForCurrentScenario()[0]);
-            //BCSV.Entry f = new BCSV.Entry();
-            //f.Add();
-            
-            //a.Add(new AbstractObj(BCSV.));
-            //mGalaxy.GetGalaxyZone().mObjects["Map"].Add(new LevelObj(Entry, mGalaxy.GetGalaxyZone(), path));
-            //mObjects[""][""].Add(new LevelObj(Entry, this, path));
+
         }
 
         private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            //if (e.RowIndex == -1 && e.ColumnIndex == 0)
-            //{
-            //    var rec = e.CellBounds;
-            //    rec.Width += dataGridView1.Columns[1].Width;
-            //    //rec.Height = dataGridView1.Rows[0].Height;
-            //    var brush = new SolidBrush(dataGridView1.ColumnHeadersDefaultCellStyle.BackColor);
-            //    var pen = new Pen(dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor);
-            //    e.Graphics.FillRectangle(brush, rec);
-            //    e.Graphics.DrawRectangle(pen,rec);
-            //    e.Graphics.DrawLine(pen,new Point(0,rec.Y),new Point(rec.X,0));
-            //    //e.Graphics.DrawString("Obj",dataGridView1.Font,new SolidBrush(Color.Black),rec);
 
-            //    //(TextFormatFlags)5 で水平、垂直方向のセンタリングを指定。
-            //    TextRenderer.DrawText(e.Graphics, "OBJ", e.CellStyle.Font, rec, e.CellStyle.ForeColor, e.CellStyle.BackColor, (TextFormatFlags)5);
-            //    e.Handled = true;
-            //}
-            //else if (e.RowIndex == 0 && (e.ColumnIndex == 0 || e.ColumnIndex == 1))
-            //{
-            //    if (e.ColumnIndex == 1) 
-            //    {
-                    
-            //        e.Handled = true;
-            //        return;
-            //    } 
-            //    var rec = e.CellBounds;
-            //    rec.Width += dataGridView1.Columns[1].Width;
-            //    var brush = new SolidBrush(dataGridView1.ColumnHeadersDefaultCellStyle.BackColor);
-            //    var pen = new Pen(dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor);
-            //    e.Graphics.FillRectangle(brush, rec);
-            //    e.Graphics.DrawRectangle(pen, rec);
-            //    e.Graphics.DrawLine(pen, new Point(0, rec.Y), new Point(rec.X, 0));
-
-            //    TextRenderer.DrawText(e.Graphics, "data", e.CellStyle.Font, rec, e.CellStyle.ForeColor, e.CellStyle.BackColor, (TextFormatFlags)5);
-            //    e.Handled = true;
-
-            //}
-            //else if (e.RowIndex == -1 && e.ColumnIndex == 1)
-            //{
-            //    e.Handled = true;
-            //}
         }
 
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -1155,13 +1152,10 @@ namespace Takochu.ui
             }
 
             glLevelView.Refresh();
-
-            //Scenario_ReLoad();
         }
 
         private void AreaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
             if (mCurrentScenario > 0)
             {
                 ToolStripMenuItem item = (ToolStripMenuItem)sender;
@@ -1205,16 +1199,12 @@ namespace Takochu.ui
 
         private void CloseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //Do I need this feature?
-            //Erase the return if you need to.
-            return;
             mStages.Clear();
             mZonesUsed.Clear();
             mZoneMasks.Clear();
             layerViewerDropDown.DropDownItems.Clear();
             objectsListTreeView.Nodes.Clear();
             mPaths.Clear();
-
             mObjects.Clear();
             mDispLists.Clear();
             glLevelView.Dispose();
@@ -1232,8 +1222,48 @@ namespace Takochu.ui
             {
                 dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
             }
-            //dataGridView1.EndEdit();
+
             dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
+        }
+
+        private void zonesListTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Node.Parent == null)
+                return;
+
+            AbstractObj param;
+            switch(e.Node.Parent.Text)
+            {
+                case "Shadow Parameters":
+                    param = e.Node.Tag as ZoneAttributes.ShadowParam;
+                    zonesDataGridView.DataSource = null;
+                    dataGridViewEdit_Zones = new EditorWindowSys.DataGridViewEdit(zonesDataGridView, param);
+                    zonesDataGridView = dataGridViewEdit_Zones.GetDataTable();
+                    break;
+                case "Water Parameters":
+                    param = e.Node.Tag as ZoneAttributes.WaterCameraParam;
+                    zonesDataGridView.DataSource = null;
+                    dataGridViewEdit_Zones = new EditorWindowSys.DataGridViewEdit(zonesDataGridView, param);
+                    zonesDataGridView = dataGridViewEdit_Zones.GetDataTable();
+                    break;
+                case "Flags":
+                    param = e.Node.Tag as ZoneAttributes.FlagNameTable;
+                    zonesDataGridView.DataSource = null;
+                    dataGridViewEdit_Zones = new EditorWindowSys.DataGridViewEdit(zonesDataGridView, param);
+                    zonesDataGridView = dataGridViewEdit_Zones.GetDataTable();
+                    break;
+            }
+        }
+
+        private void lightsTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            Light lght = e.Node.Tag as Light;
+
+            if (lght == null) return;
+
+            lightsDataGridView.DataSource = null;
+            dataGridViewEdit_Lights = new EditorWindowSys.DataGridViewEdit(lightsDataGridView, lght);
+            lightsDataGridView = dataGridViewEdit_Lights.GetDataTable();
         }
 
         private void cameraListTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -1266,14 +1296,11 @@ namespace Takochu.ui
 
             GL.FrontFace(FrontFaceDirection.Cw);
 
-            //UpdateViewport();
             m_CamRotation = new Vector2(0.0f, 0.0f);
             m_CamTarget = new Vector3(0.0f, 0.0f, 0.0f);
             m_CamDistance = 1f;// 700.0f;
 
             m_RenderInfo = new RenderInfo();
-
-
 
             UpdateViewport();
             Vector3 CameraDefaultVector3 = new Vector3(0f, 0f, 0f);

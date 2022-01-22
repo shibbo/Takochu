@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Takochu.fmt;
 using Takochu.io;
+using Takochu.smg.obj;
 
 namespace Takochu.smg
 {
@@ -23,9 +24,7 @@ namespace Takochu.smg
 
                 foreach(BCSV.Entry entry in b.mEntries)
                 {
-                    FlagNameTable tbl = new FlagNameTable();
-                    tbl.FlagName = entry.Get<string>("FlagName");
-                    mFlagTable.Add(tbl);
+                    mFlagTable.Add(new FlagNameTable(entry));
                 }
             }
 
@@ -37,10 +36,7 @@ namespace Takochu.smg
 
                 foreach(BCSV.Entry entry in b.mEntries)
                 {
-                    ShadowParam p = new ShadowParam();
-                    p.FarClip = entry.Get<int>("FarClip");
-                    p.FarClipDistance = entry.Get<float>("FarClipDistance");
-                    mShadowParams.Add(p);
+                    mShadowParams.Add(new ShadowParam(entry));
                 }
             }
 
@@ -51,19 +47,8 @@ namespace Takochu.smg
                 BCSV b = new BCSV(mFilesystem.OpenFile("/stage/csv/WaterCameraFilterParam.bcsv"));
 
                 foreach (BCSV.Entry entry in b.mEntries)
-                {
-                    WaterCameraParam param = new WaterCameraParam();
-                    param.DepthLow = entry.Get<float>("DepthLow");
-                    param.IndirectScale = entry.Get<float>("IndirectScale");
-                    param.HighR = entry.Get<byte>("HighR");
-                    param.HighG = entry.Get<byte>("HighG");
-                    param.HighB = entry.Get<byte>("HighB");
-                    param.HighA = entry.Get<byte>("HighA");
-                    param.LowR = entry.Get<byte>("LowR");
-                    param.LowG = entry.Get<byte>("LowG");
-                    param.LowB = entry.Get<byte>("LowB");
-                    param.LowA = entry.Get<byte>("LowA");
-                    mWaterParams.Add(param);
+                {   
+                    mWaterParams.Add(new WaterCameraParam(entry));
                 }
             }
         }
@@ -72,9 +57,13 @@ namespace Takochu.smg
         public List<WaterCameraParam> mWaterParams;
         public List<FlagNameTable> mFlagTable;
 
-        public class ShadowParam
+        public class ShadowParam : AbstractObj
         {
-            public ShadowParam() { }
+            public ShadowParam(BCSV.Entry entry) : base(entry) 
+            {
+                FarClip = entry.Get<int>("FarClip");
+                FarClipDistance = entry.Get<float>("FarClipDistance");
+            }
 
             public override string ToString()
             {
@@ -85,9 +74,21 @@ namespace Takochu.smg
             public float FarClipDistance;
         }
 
-        public class WaterCameraParam
+        public class WaterCameraParam : AbstractObj
         {
-            public WaterCameraParam() { }
+            public WaterCameraParam(BCSV.Entry entry) : base(entry)
+            {
+                DepthLow = entry.Get<float>("DepthLow");
+                IndirectScale = entry.Get<float>("IndirectScale");
+                HighR = entry.Get<byte>("HighR");
+                HighG = entry.Get<byte>("HighG");
+                HighB = entry.Get<byte>("HighB");
+                HighA = entry.Get<byte>("HighA");
+                LowR = entry.Get<byte>("LowR");
+                LowG = entry.Get<byte>("LowG");
+                LowB = entry.Get<byte>("LowB");
+                LowA = entry.Get<byte>("LowA");
+            }
 
             public override string ToString()
             {
@@ -108,9 +109,12 @@ namespace Takochu.smg
             public byte LowA;
         }
 
-        public class FlagNameTable
+        public class FlagNameTable : AbstractObj
         {
-            public FlagNameTable() { }
+            public FlagNameTable(BCSV.Entry entry) : base(entry)
+            {
+                FlagName = entry.Get<string>("FlagName");
+            }
 
             public override string ToString()
             {

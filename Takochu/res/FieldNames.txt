@@ -8234,3 +8234,11 @@ vpanaxis.Y
 vpanaxis.Z
 num_pnt
 no
+HighR
+HighG
+HighB
+HighA
+LowR
+LowG
+LowB
+LowA

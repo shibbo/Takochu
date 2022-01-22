@@ -10,31 +10,28 @@ using Takochu.ui;
 
 namespace Takochu.smg.obj
 {
-    public class Light
+    public class Light : AbstractObj
     {
-        public Light(BCSV.Entry e, string parent)
+        public Light(BCSV.Entry e, string parent) : base(e)
         {
-            mEntry = e;
-            mLightName = mEntry.Get<string>("AreaLightName");
+            mName = mEntry.Get<string>("AreaLightName");
             mLightNo = mEntry.Get<int>("LightID");
             mParent = parent;
         }
 
-        public void Save()
+        public override void Save()
         {
-            mEntry.Set("AreaLightName", mLightName);
+            mEntry.Set("AreaLightName", mName);
             mEntry.Set("LightID", mLightNo);
         }
 
         public override string ToString()
         {
-            return $"[{mLightNo}] {mLightName} [{mParent}]";
+            return $"[{mLightNo}] {mName} [{mParent}]";
         }
 
-        public BCSV.Entry mEntry;
         public string mParent;
 
-        public string mLightName;
         public int mLightNo;
 
     }

@@ -10,10 +10,10 @@ using Takochu.fmt;
 
 namespace Takochu.smg.obj
 {
-    public class StageObj
+    public class StageObj : AbstractObj
     {
         
-        public StageObj(BCSV.Entry entry)
+        public StageObj(BCSV.Entry entry) : base(entry)
         {
             mEntry = entry;
             mName = mEntry.Get<string>("name");
@@ -22,12 +22,7 @@ namespace Takochu.smg.obj
             mRotation = new Vector3(mEntry.Get<float>("dir_x"), mEntry.Get<float>("dir_y"), mEntry.Get<float>("dir_z"));
         }
 
-        //public Vector3 GetTruePosition() 
-        //{
-            
-        //}
-
-        public void Save()
+        public override void Save()
         {
             mEntry.Set("name", mName);
             mEntry.Set("l_id", mID);
@@ -57,9 +52,6 @@ namespace Takochu.smg.obj
             }
         }
 
-        public string mName;
         public int mID;
-        public BCSV.Entry mEntry;
-        public Vector3 mPosition, mRotation;
     }
 }

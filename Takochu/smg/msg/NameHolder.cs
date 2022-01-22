@@ -139,7 +139,14 @@ namespace Takochu.smg.msg
             }
             else
             {
-                ret = mScenarioNames.GetStringFromLabelNoTag(name);
+                if (galaxy.Contains("WorldMap"))
+                {
+                    ret = "";
+                }
+                else
+                {
+                    ret = mScenarioNames.GetStringFromLabelNoTag(name);
+                }
             }
 
             return ret;
