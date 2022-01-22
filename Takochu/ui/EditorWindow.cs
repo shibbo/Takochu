@@ -1119,8 +1119,17 @@ namespace Takochu.ui
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             var dgv = (DataGridView)sender;
-            
             var cell_value = dgv[e.ColumnIndex, e.RowIndex].Value;
+
+            //dgv[e.ColumnIndex, e.RowIndex].AccessibilityObject.
+            Console.WriteLine(dgv[e.ColumnIndex, e.RowIndex].FormattedValueType);
+            if (dgv[e.ColumnIndex, e.RowIndex] is DataGridViewComboBoxCell) 
+            {
+                var tes = dgv[e.ColumnIndex, e.RowIndex] as DataGridViewComboBoxCell;
+                cell_value = tes.Items.IndexOf(cell_value)-1;
+                Console.WriteLine("DataGridViewComboBoxCellです");
+            } 
+            
             dataGridViewEdit.ChangeValue(e.RowIndex,cell_value);
 
             GL.DeleteLists(mDispLists[0][mSelectedObject.mUnique], 1);

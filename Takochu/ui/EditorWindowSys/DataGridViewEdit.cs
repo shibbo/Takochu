@@ -129,10 +129,11 @@ namespace Takochu.ui.EditorWindowSys
         private void Change_mValues(string name, object value)
         {
             Console.WriteLine($"Change_mValues: {name}");
-
+            
             if (IsObj_args(name)) 
             {
-               var ChangedInt32 = Convert.ToInt32(value);
+                if (value is string) ;
+                var ChangedInt32 = Convert.ToInt32(value);
                 if (value.ToString() == "True" || value.ToString() == "False")
                 {
                     if (ChangedInt32 < 1) value = 0;
@@ -198,6 +199,7 @@ namespace Takochu.ui.EditorWindowSys
             {
                 var typename = "";
                 var DisplayName = BCSV.HashToFieldName(ObjEntry.Value.Key);
+                var actorValue = string.Empty;
 
                 if (IsObj_args(DisplayName)) 
                 {
@@ -209,6 +211,7 @@ namespace Takochu.ui.EditorWindowSys
                         var actorfield = ObjDB.GetFieldFromActor(ObjDB.GetActorFromObjectName(_abstObj.mName), argIndex);
                         DisplayName = actorfield.Name;
                         typename = actorfield.Type;
+                        actorValue = actorfield.Value;
                     }
                 }
 
@@ -235,6 +238,28 @@ namespace Takochu.ui.EditorWindowSys
                         bool isConversion = Convert.ToBoolean(ObjEntry.Value.Value);
                         cbCell.Value = isConversion;
                         row.Cells.Add(cbCell);
+                        break;
+                    case "list":
+                        row.Cells.Add(tbcCell);
+                        DataGridViewComboBoxCell cmbCell = new DataGridViewComboBoxCell();
+                        Dictionary<int, string> dictionary = new Dictionary<int, string>();
+
+                        //List<string> combolist = new List<string>();
+                        dictionary.Add(-1, "UnuseParam");
+
+                        string str = Convert.ToString(actorValue);
+                        var strarr1 = str.Split(',');
+                        cmbCell.Items.Add("UnuseParam");
+                        for (int i = 0; i< strarr1.Length; i++) 
+                        {
+                            var strarr2 = strarr1[i].Split('=');
+                            dictionary.Add(int.Parse(strarr2[0]), strarr2[1]);
+                            //combolist.Add(strarr2[1]);
+                            cmbCell.Items.Add(strarr2[1]);
+
+                        }
+                        cmbCell.Value = dictionary[((int)ObjEntry.Value.Value)];
+                        row.Cells.Add(cmbCell);
                         break;
                     default:
                         row.Cells.Add(tbcCell);
