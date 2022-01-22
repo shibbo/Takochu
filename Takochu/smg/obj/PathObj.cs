@@ -102,7 +102,7 @@ namespace Takochu.smg.obj
                 GL.Begin(BeginMode.LineStrip);
 
                 GL.Vertex3(pp.mPoint1);
-                GL.Vertex3(pp.mPosition);
+                GL.Vertex3(pp.mPoint0);
                 GL.Vertex3(pp.mPoint2);
                 GL.End();
             }
@@ -123,13 +123,13 @@ namespace Takochu.smg.obj
                 thepoints.MoveNext();
                 PathPointObj curpoint = thepoints.Current;
 
-                Vector3 start = curpoint.mPosition;
+                Vector3 start = curpoint.mPoint0;
 
                 GL.Vertex3(start);
                
                 for (int p = 1; p < end; p++)
                 {
-                    Vector3 p1 = curpoint.mPosition;
+                    Vector3 p1 = curpoint.mPoint0;
                     Vector3 p2 = curpoint.mPoint2;
 
                     if (!thepoints.MoveNext())
@@ -141,7 +141,7 @@ namespace Takochu.smg.obj
                     curpoint = thepoints.Current;
 
                     Vector3 p3 = curpoint.mPoint1;
-                    Vector3 p4 = curpoint.mPosition;
+                    Vector3 p4 = curpoint.mPoint0;
 
                     float step = 0.01f;
 
