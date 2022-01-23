@@ -55,6 +55,8 @@ namespace Takochu.ui.EditorWindowSys
             _dataGridView = editorWindowDatagridView;
             _abstObj = abstractObj;
 
+            
+
             //データグリッドビューの最大値最小値を初回読み込み時のみ設定します。
             if (_dataGridView.MaximumSize == new Size(0, 0)) 
             {

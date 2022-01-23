@@ -1306,6 +1306,47 @@ namespace Takochu.ui
             editor.Show();
         }
 
+        
+
+        private void TabPage_SizeChanged(object sender, EventArgs e)
+        {
+            if (sender == null) 
+            {
+                Console.WriteLine("null");
+                return;
+            }
+
+            var tabpage = (TabPage)sender;
+            foreach (Control con in tabpage.Controls)
+            {
+                if (con is DataGridView)
+                {
+                    var dgv = con as DataGridView;
+                    if (dgv.Columns.Count < 1) return;
+                    //dgv.Anchor = AnchorStyles.Top & AnchorStyles.Left;
+                    var dgvHeight = tabpage.ClientRectangle.Height - dgv.Location.Y;
+
+                    //Console.WriteLine($"{tabpage.Height} : {dgv.Location.Y}");
+
+                    dgv.MaximumSize = new Size(dgv.MaximumSize.Width, dgvHeight);
+                    
+                    var rowTotalHeght = ((dgv.Rows.Count + 1) * dgv.RowTemplate.Height);
+                    if (rowTotalHeght < dgv.MaximumSize.Height)
+                    {
+                        dgv.Height = rowTotalHeght;
+                    }
+                    else 
+                    {
+                        dgv.Height = dgvHeight;
+                    }
+                    
+                    //Console.WriteLine($"{dgv.Name} : {dgvHeight}");
+                }
+            }
+        }
+
+       
+
         private void cameraListTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             Camera camera = e.Node.Tag as Camera;
