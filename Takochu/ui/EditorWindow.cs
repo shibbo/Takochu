@@ -1266,6 +1266,60 @@ namespace Takochu.ui
             lightsDataGridView = dataGridViewEdit_Lights.GetDataTable();
         }
 
+        private void glLevelView_MouseClick(object sender, MouseEventArgs e)
+        {
+            var ray = ScreenToRay(e.Location);
+            Console.WriteLine($"dir: {ray.Direction.Y.ToString("F")}\norigin: {ray.Origin}");
+        }
+
+        private Ray ScreenToRay(Point mousePos)
+        {
+            //Create camera
+            Matrix4 projmtx = m_ProjMatrix;
+            Matrix4 viewmtx = m_CamMatrix;
+
+            //Get Normalized mouse position
+            Vector3 normalizedmouse = new Vector3((2.0f * mousePos.X) / glLevelView.Width - 1.0f, -((2.0f * mousePos.Y) / glLevelView.Height - 1.0f), -1.0f);
+            Vector3 origin;
+            Vector3 dir;
+            if (!m_OrthView)
+            {
+                Vector4 clip = new Vector4(normalizedmouse.X, normalizedmouse.Y, -1.0f, 1.0f);
+                //Vector4.Multiply(,);
+                //Unproject mouse position
+                projmtx.Invert();
+                Vector4 eye = (Vector4.Multiply(clip , new Vector4(projmtx.M11, projmtx.M22,projmtx.M33,projmtx.M44)));
+                eye.Z = -1.0f;
+                eye.W = 0.0f;
+                viewmtx.Invert();
+                //Convert to direction
+                //dir = (eye * viewmtx.Inverted()).Xyz;
+                dir = (Vector4.Multiply(eye, new Vector4(viewmtx.M11, viewmtx.M22, viewmtx.M33, viewmtx.M44))).Xyz;
+                dir.Normalize();
+
+                origin = m_CamPosition;
+
+            }
+            else
+            {
+                Vector3 CameraUnitVector = new Vector3((float)(Math.Cos(m_CamRotation.X) * Math.Cos(m_CamRotation.Y)),
+                                                       (float)Math.Sin(m_CamRotation.Y),
+                                                       (float)(Math.Sin(m_CamRotation.X) * Math.Cos(m_CamRotation.Y)));//Unit vector in camera direction
+
+                Vector3 scaledmouse = Vector3.Multiply(Vector3.Multiply( normalizedmouse ,  new Vector3(glLevelView.Width, glLevelView.Height, 0f)) , m_OrthZoom) / 2f;
+                Vector3 ScreenXBasis = new Vector3((float)(-Math.Sin(m_CamRotation.X))
+                                                       , 0f
+                                                       , (float)(Math.Cos(m_CamRotation.X)));//Basis vector on the viewport plane. This one is flat on the y axis.
+                Vector3 ScreenYBasis = Vector3.Cross(ScreenXBasis, CameraUnitVector);
+                Vector3 ApparentCameraPos = m_CamPosition - 10000f * CameraUnitVector;
+                origin = scaledmouse.X * ScreenXBasis * 1.415f + scaledmouse.Y * ScreenYBasis * 1.415f + ApparentCameraPos;
+                dir = CameraUnitVector;
+
+            }
+            //LastClick = new Ray(origin, dir);//Debug
+            return new Ray(origin, dir);
+        }
+
         private void cameraListTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             Camera camera = e.Node.Tag as Camera;

@@ -414,6 +414,7 @@
             this.glLevelView.Load += new System.EventHandler(this.glLevelView_Load);
             this.glLevelView.SizeChanged += new System.EventHandler(this.glLevelView_Resize);
             this.glLevelView.Paint += new System.Windows.Forms.PaintEventHandler(this.glLevelView_Paint);
+            this.glLevelView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.glLevelView_MouseClick);
             this.glLevelView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.glLevelView_MouseDown);
             this.glLevelView.MouseMove += new System.Windows.Forms.MouseEventHandler(this.glLevelView_MouseMove);
             this.glLevelView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.glLevelView_MouseUp);
