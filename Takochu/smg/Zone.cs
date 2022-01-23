@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Takochu.fmt;
 using Takochu.io;
+using Takochu.rnd;
 using Takochu.smg.msg;
 using Takochu.smg.obj;
 using Takochu.util;
@@ -36,24 +37,24 @@ namespace Takochu.smg
         {
             if (GameUtil.IsSMG1())
             {
-                    string path = $"/StageData/{mZoneName}.arc";
-                    if (mFilesystem.DoesFileExist(path))
-                    {
-                        mMapFiles.Add("Map", new RARCFilesystem(mFilesystem.OpenFile(path)));
-                        Console.WriteLine(path);
-                        if (mIsMainGalaxy)
-                            LoadObjects("Map", "placement", "stageobjinfo");
+                string path = $"/StageData/{mZoneName}.arc";
+                if (mFilesystem.DoesFileExist(path))
+                {
+                    mMapFiles.Add("Map", new RARCFilesystem(mFilesystem.OpenFile(path)));
+                    Console.WriteLine(path);
+                    if (mIsMainGalaxy)
+                        LoadObjects("Map", "placement", "stageobjinfo");
 
-                        LoadObjects("Map", "placement", "areaobjinfo");
-                        LoadObjects("Map", "placement", "cameracubeinfo");
-                        LoadObjects("Map", "placement", "objinfo");
-                        LoadObjects("Map", "placement", "planetobjinfo");
-                        LoadObjects("Map", "generalpos", "generalposinfo");
-                        LoadObjects("Map", "debug", "debugmoveinfo");
-                        LoadObjects("Map", "start", "startinfo");
-                        LoadObjects("Map", "mapparts", "mappartsinfo");
-                        LoadObjects("Map", "placement", "demoobjinfo");
-                    }
+                    LoadObjects("Map", "placement", "areaobjinfo");
+                    LoadObjects("Map", "placement", "cameracubeinfo");
+                    LoadObjects("Map", "placement", "objinfo");
+                    LoadObjects("Map", "placement", "planetobjinfo");
+                    LoadObjects("Map", "generalpos", "generalposinfo");
+                    LoadObjects("Map", "debug", "debugmoveinfo");
+                    LoadObjects("Map", "start", "startinfo");
+                    LoadObjects("Map", "mapparts", "mappartsinfo");
+                    LoadObjects("Map", "placement", "demoobjinfo");
+                }
                 //LoadMessages();
             }
             else
@@ -108,7 +109,7 @@ namespace Takochu.smg
 
         public void LoadObjects(string archive, string directory, string file)
         {
-            
+
             List<string> layers = mMapFiles[archive].GetDirectories("/root/jmp/" + directory);
             //if (GameUtil.IsSMG1()) archive = string.Empty;
             layers.ForEach(l => AssignsObjectsToList(archive, $"{directory}/{l}/{file}"));
@@ -202,7 +203,7 @@ namespace Takochu.smg
             }
         }
 
-        
+
         public void AssignsObjectsToList(string archive, string path)
         {
             //Console.WriteLine(path);
@@ -230,7 +231,7 @@ namespace Takochu.smg
             BCSV bcsv = new BCSV(mMapFiles[archive].OpenFile($"/stage/jmp/{path}"));
             //mZones.ElementAt(0).Value.ElementAt(0).mEntry;
             //mZones[layer][].mEntry
-            
+
             //        System.Globalization.TextInfo ti =
             //System.Globalization.CultureInfo.CurrentCulture.TextInfo;
             //        Console.WriteLine(ti.ToTitleCase(path));
@@ -249,7 +250,7 @@ namespace Takochu.smg
                         break;
                     case "stageobjinfo":
                         //case "StageObjInfo":
-                        mZones[layer].Add(new StageObj(Entry));
+                        mZones[layer].Add(new StageObj(Entry, this));
                         break;
                     case "objinfo":
                         //case "ObjInfo":
@@ -390,6 +391,64 @@ namespace Takochu.smg
             });
 
             return ret;
+        }
+
+        public List<int> GetAllUniqueIDsFromZoneOnCurrentScenario() {
+            List<string> layers = GameUtil.GetGalaxyLayers(mGalaxy.GetMaskUsedInZoneOnCurrentScenario(mZoneName));
+
+            List<int> ids = new List<int>();
+
+            foreach(string str in cPossibleFiles)
+            {
+                if (mObjects.ContainsKey(str))
+                {
+                    foreach(string l in layers)
+                    {
+                        List<AbstractObj> objs = mObjects[str][l];
+                        objs.ForEach(o => ids.Add(o.mUnique));
+                    }
+                    
+                }
+            }
+
+            mPaths.ForEach(p => ids.Add(p.mUnique));
+
+            return ids;
+        }
+
+        public void RenderObjFromUnique(int id, RenderMode mode, bool recalcPosRot = false)
+        {
+            List<string> layers = GameUtil.GetGalaxyLayers(mGalaxy.GetMaskUsedInZoneOnCurrentScenario(mZoneName));
+
+            foreach (string str in cPossibleFiles)
+            {
+                if (mObjects.ContainsKey(str))
+                {
+                    foreach (string l in layers)
+                    {
+                        List<AbstractObj> objs = mObjects[str][l];
+
+                        foreach(AbstractObj o in objs)
+                        {
+                            if (o.mUnique == id)
+                            {
+                                o.Render(mode);
+                                // we found our unique id object, exit
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+
+            foreach(PathObj pobj in mPaths)
+            {
+                if (pobj.mUnique == id)
+                {
+                    pobj.Render(mode);
+                    return;
+                }
+            }
         }
 
         public Camera GetCamera(string cameraName)

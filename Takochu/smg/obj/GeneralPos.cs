@@ -32,7 +32,7 @@ namespace Takochu.smg.obj
 
         public override string ToString()
         {
-            return $"[{mPosName} [{mLayer}]";
+            return $"[{mObjID}] {mPosName} [{mLayer}]";
         }
 
         public override void Save()

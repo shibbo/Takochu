@@ -140,7 +140,7 @@ namespace Takochu.smg.obj
 
         public override string ToString()
         {
-            return $"[{mMarioNo}] {mName} [{mLayer}]";
+            return $"[{mMarioNo}] {ObjectDB.GetFriendlyObjNameFromObj(mName)} [{mLayer}]";
         }
     }
 }

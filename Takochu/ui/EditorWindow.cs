@@ -539,10 +539,6 @@ namespace Takochu.ui
                     Tag = o
                 };
 
-                string name = ObjectDB.GetFriendlyObjNameFromObj(o.mName);
-                name = $"{name} [{o.mLayer}]";
-                objNode.Text = name;
-
                 /* indicies of nodes
                  * 0 = Areas
                  * 1 = Camera Areas
@@ -1011,6 +1007,7 @@ namespace Takochu.ui
                 StageObj stageObj = abstractObj as StageObj;
                 dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, stageObj);
                 dataGridView1 = dataGridViewEdit.GetDataTable();
+                mSelectedObject = stageObj;
             }
             else
             {
@@ -1151,6 +1148,30 @@ namespace Takochu.ui
                 GL.NewList(mDispLists[0][path.mUnique], ListMode.Compile);
                 mSelectedObject.Render(RenderMode.Opaque);
                 GL.EndList();
+            }
+            else if (mSelectedObject.GetType() == typeof(StageObj))
+            {
+                StageObj stageObj = mSelectedObject as StageObj;
+                Zone z = mGalaxy.GetZone(stageObj.mName);
+                List<int> ids = z.GetAllUniqueIDsFromZoneOnCurrentScenario();
+
+                foreach(int id in ids)
+                {
+                    GL.DeleteLists(mDispLists[0][id], 1);
+                    GL.NewList(mDispLists[0][id], ListMode.Compile);
+
+                    GL.PushMatrix();
+                    {
+                        GL.Translate(stageObj.mTruePosition);
+                        GL.Rotate(stageObj.mTrueRotation.Z, 0f, 0f, 1f);
+                        GL.Rotate(stageObj.mTrueRotation.Y, 0f, 1f, 0f);
+                        GL.Rotate(stageObj.mTrueRotation.X, 1f, 0f, 0f);
+                    }
+
+                    z.RenderObjFromUnique(id, RenderMode.Opaque, true);
+                    GL.PopMatrix();
+                    GL.EndList();
+                }
             }
             else
             {

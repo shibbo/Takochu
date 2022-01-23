@@ -81,7 +81,7 @@ namespace Takochu.smg.obj
 
         public override string ToString()
         {
-            return $"[{Get<int>("l_id")}] {mName} [{mLayer}]";
+            return $"[{Get<int>("l_id")}] {ObjectDB.GetFriendlyObjNameFromObj(mName)} [{mLayer}]";
         }
     }
 }

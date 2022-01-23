@@ -16,6 +16,7 @@ namespace Takochu.smg.obj
         {
             { "RedBlueTurnBlock", new List<string>() { "RedBlueTurnBlock", "RedBlueTurnBlockBase" } }
         };
+
         public AbstractObj(BCSV.Entry entry)
         {
             mEntry = entry;
