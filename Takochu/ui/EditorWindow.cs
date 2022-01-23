@@ -81,11 +81,7 @@ namespace Takochu.ui
             zonesListTreeView.Nodes.Clear();
             lightsTreeView.Nodes.Clear();
             cameraListTreeView.Nodes.Clear();
-            cameraListTreeView.Nodes.Add("Cube Cameras");
-            cameraListTreeView.Nodes.Add("Group Cameras");
-            cameraListTreeView.Nodes.Add("Event Cameras");
-            cameraListTreeView.Nodes.Add("Start Cameras");
-            cameraListTreeView.Nodes.Add("Other Cameras");
+
             mPaths.Clear();
 
             mObjects.Clear();
@@ -143,7 +139,6 @@ namespace Takochu.ui
                     Text = zone,
                     Name = zone
                 };
-
 
                 AssignNodesToZoneNode(ref zoneNode);
                 currentLayers.AddRange(GameUtil.GetGalaxyLayers(mZoneMasks[zone]));
@@ -256,6 +251,9 @@ namespace Takochu.ui
 
             foreach (string zone in mZonesUsed)
             {
+                TreeNode cameraZoneNode = new TreeNode(zone);
+                PopulateCameraTreeNode(ref cameraZoneNode);
+
                 cameras[zone].ForEach(c =>
                 {
                     if (c.GetCameraType() == Camera.CameraType.Cube)
@@ -263,7 +261,7 @@ namespace Takochu.ui
                         cubeCameras.Add(c);
                         TreeNode nd = new TreeNode(c.mName);
                         nd.Tag = c;
-                        cameraListTreeView.Nodes[0].Nodes.Add(nd);
+                        cameraZoneNode.Nodes[0].Nodes.Add(nd);
                     }
                         
                 });
@@ -275,7 +273,7 @@ namespace Takochu.ui
                         groupCameras.Add(c);
                         TreeNode nd = new TreeNode(c.mName);
                         nd.Tag = c;
-                        cameraListTreeView.Nodes[1].Nodes.Add(nd);
+                        cameraZoneNode.Nodes[1].Nodes.Add(nd);
                     }
                         
                 });
@@ -287,7 +285,7 @@ namespace Takochu.ui
                         eventCameras.Add(c);
                         TreeNode nd = new TreeNode(c.mName);
                         nd.Tag = c;
-                        cameraListTreeView.Nodes[2].Nodes.Add(nd);
+                        cameraZoneNode.Nodes[2].Nodes.Add(nd);
                     }
                 });
 
@@ -298,7 +296,7 @@ namespace Takochu.ui
                         startCameras.Add(c);
                         TreeNode nd = new TreeNode(c.mName);
                         nd.Tag = c;
-                        cameraListTreeView.Nodes[3].Nodes.Add(nd);
+                        cameraZoneNode.Nodes[3].Nodes.Add(nd);
                     }
                 });
 
@@ -309,10 +307,13 @@ namespace Takochu.ui
                         otherCameras.Add(c);
                         TreeNode nd = new TreeNode(c.mName);
                         nd.Tag = c;
-                        cameraListTreeView.Nodes[4].Nodes.Add(nd);
+                        cameraZoneNode.Nodes[4].Nodes.Add(nd);
                     }
                         
                 });
+
+                cameraListTreeView.Nodes.Add(cameraZoneNode);
+
             }
 
             PopulateTreeView();
@@ -320,6 +321,15 @@ namespace Takochu.ui
             //RenderObjectLists(RenderMode.Picking);
             RenderObjectLists(RenderMode.Opaque);
             //RenderObjectLists(RenderMode.Translucent);
+        }
+
+        private void PopulateCameraTreeNode(ref TreeNode node)
+        {
+            node.Nodes.Add("Cube Cameras");
+            node.Nodes.Add("Group Cameras");
+            node.Nodes.Add("Event Cameras");
+            node.Nodes.Add("Start Cameras");
+            node.Nodes.Add("Other Cameras");
         }
 
         private void RenderZone(List<AbstractObj> objs)
