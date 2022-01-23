@@ -1266,6 +1266,15 @@ namespace Takochu.ui
             lightsDataGridView = dataGridViewEdit_Lights.GetDataTable();
         }
 
+        private void lightsTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Node.Parent == null) return;
+
+            Light en = e.Node.Tag as Light;
+            LightAttribEditor editor = new LightAttribEditor(en.mName);
+            editor.Show();
+        }
+
         private void cameraListTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             Camera camera = e.Node.Tag as Camera;

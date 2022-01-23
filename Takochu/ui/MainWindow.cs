@@ -218,5 +218,11 @@ namespace Takochu
             SettingsForm settings = new SettingsForm(galaxyTreeView);
             settings.Show();
         }
+
+        private void hashCalcBtn_Click(object sender, EventArgs e)
+        {
+            HashGenForm hash = new HashGenForm();
+            hash.Show();
+        }
     }
 }

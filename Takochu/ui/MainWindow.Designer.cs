@@ -34,10 +34,10 @@
             this.bcsvEditorBtn = new System.Windows.Forms.ToolStripButton();
             this.rarcExplorer_Btn = new System.Windows.Forms.ToolStripButton();
             this.showMessageEditorBtn = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.settingsBtn = new System.Windows.Forms.ToolStripButton();
             this.galaxyTreeView = new System.Windows.Forms.TreeView();
             this.glControl1 = new OpenTK.GLControl();
+            this.hashCalcBtn = new System.Windows.Forms.ToolStripButton();
             this.mainToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,8 +48,8 @@
             this.selectGameFolderBtn,
             this.bcsvEditorBtn,
             this.rarcExplorer_Btn,
+            this.hashCalcBtn,
             this.showMessageEditorBtn,
-            this.toolStripButton1,
             this.settingsBtn});
             this.mainToolStrip.Location = new System.Drawing.Point(0, 0);
             this.mainToolStrip.Name = "mainToolStrip";
@@ -64,7 +64,7 @@
             this.selectGameFolderBtn.Image = ((System.Drawing.Image)(resources.GetObject("selectGameFolderBtn.Image")));
             this.selectGameFolderBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.selectGameFolderBtn.Name = "selectGameFolderBtn";
-            this.selectGameFolderBtn.Size = new System.Drawing.Size(111, 22);
+            this.selectGameFolderBtn.Size = new System.Drawing.Size(112, 22);
             this.selectGameFolderBtn.Text = "Select Game Folder";
             this.selectGameFolderBtn.Click += new System.EventHandler(this.selectGameFolderBtn_Click);
             // 
@@ -75,7 +75,7 @@
             this.bcsvEditorBtn.Image = ((System.Drawing.Image)(resources.GetObject("bcsvEditorBtn.Image")));
             this.bcsvEditorBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.bcsvEditorBtn.Name = "bcsvEditorBtn";
-            this.bcsvEditorBtn.Size = new System.Drawing.Size(72, 22);
+            this.bcsvEditorBtn.Size = new System.Drawing.Size(73, 22);
             this.bcsvEditorBtn.Text = "BCSV Editor";
             this.bcsvEditorBtn.Click += new System.EventHandler(this.BcsvEditorBtn_Click);
             // 
@@ -85,7 +85,7 @@
             this.rarcExplorer_Btn.Image = ((System.Drawing.Image)(resources.GetObject("rarcExplorer_Btn.Image")));
             this.rarcExplorer_Btn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.rarcExplorer_Btn.Name = "rarcExplorer_Btn";
-            this.rarcExplorer_Btn.Size = new System.Drawing.Size(86, 22);
+            this.rarcExplorer_Btn.Size = new System.Drawing.Size(87, 22);
             this.rarcExplorer_Btn.Text = "RARC Explorer";
             this.rarcExplorer_Btn.Click += new System.EventHandler(this.rarcExplorer_Btn_Click);
             // 
@@ -98,16 +98,6 @@
             this.showMessageEditorBtn.Size = new System.Drawing.Size(91, 22);
             this.showMessageEditorBtn.Text = "Message Editor";
             this.showMessageEditorBtn.Click += new System.EventHandler(this.showMessageEditorBtn_Click);
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(78, 22);
-            this.toolStripButton1.Text = "Model Thing";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // settingsBtn
             // 
@@ -124,7 +114,7 @@
             this.galaxyTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.galaxyTreeView.Location = new System.Drawing.Point(0, 25);
             this.galaxyTreeView.Name = "galaxyTreeView";
-            this.galaxyTreeView.Size = new System.Drawing.Size(800, 390);
+            this.galaxyTreeView.Size = new System.Drawing.Size(800, 425);
             this.galaxyTreeView.TabIndex = 1;
             this.galaxyTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.galaxyTreeView_NodeMouseDoubleClick);
             // 
@@ -137,11 +127,21 @@
             this.glControl1.TabIndex = 2;
             this.glControl1.VSync = false;
             // 
+            // hashCalcBtn
+            // 
+            this.hashCalcBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.hashCalcBtn.Image = ((System.Drawing.Image)(resources.GetObject("hashCalcBtn.Image")));
+            this.hashCalcBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.hashCalcBtn.Name = "hashCalcBtn";
+            this.hashCalcBtn.Size = new System.Drawing.Size(95, 22);
+            this.hashCalcBtn.Text = "Hash Calculator";
+            this.hashCalcBtn.Click += new System.EventHandler(this.hashCalcBtn_Click);
+            // 
             // MainWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 415);
+            this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.glControl1);
             this.Controls.Add(this.galaxyTreeView);
             this.Controls.Add(this.mainToolStrip);
@@ -165,8 +165,8 @@
         private System.Windows.Forms.ToolStripButton rarcExplorer_Btn;
         private OpenTK.GLControl glControl1;
         private System.Windows.Forms.ToolStripButton showMessageEditorBtn;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton settingsBtn;
+        private System.Windows.Forms.ToolStripButton hashCalcBtn;
     }
 }
 
