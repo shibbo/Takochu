@@ -1025,7 +1025,6 @@ namespace Takochu.ui
 
                 dataGridView1.DataSource = null;
                 dataGridViewEdit = null;
-
                 mSelectedObject = abstractObj;
 
                 switch (e.Node.Parent.Text)
@@ -1114,7 +1113,7 @@ namespace Takochu.ui
 
         private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-
+            
         }
 
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -1152,6 +1151,7 @@ namespace Takochu.ui
             }
 
             glLevelView.Refresh();
+            
         }
 
         private void AreaToolStripMenuItem_Click(object sender, EventArgs e)

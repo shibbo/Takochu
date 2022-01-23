@@ -10,6 +10,7 @@ using Takochu.smg.obj;
 using Takochu.smg;
 using ObjDB = Takochu.smg.ObjectDB;
 using Takochu.util;
+using System.Drawing;
 
 namespace Takochu.ui.EditorWindowSys
 {
@@ -34,6 +35,8 @@ namespace Takochu.ui.EditorWindowSys
     {
         private readonly DataGridView _dataGridView;
         private readonly AbstractObj _abstObj;
+        private readonly int _maxHeight,_minHeight,_defHeight;
+        
         private static bool _isChanged = false;
 
         /// <summary>
@@ -51,6 +54,25 @@ namespace Takochu.ui.EditorWindowSys
         {
             _dataGridView = editorWindowDatagridView;
             _abstObj = abstractObj;
+
+            //データグリッドビューの最大値最小値を初回読み込み時のみ設定します。
+            if (_dataGridView.MaximumSize == new Size(0, 0)) 
+            {
+                _dataGridView.MaximumSize = _dataGridView.Size;
+                _dataGridView.MinimumSize = new Size(_dataGridView.Width, _dataGridView.RowTemplate.Height);
+            }
+            
+
+            if (_defHeight == default || _defHeight == 0) 
+            {
+                _defHeight = _dataGridView.Size.Height;
+                _minHeight = _dataGridView.MinimumSize.Height;
+                _maxHeight = _dataGridView.MaximumSize.Height;
+            }
+            
+            _dataGridView.RowHeadersVisible = false;
+            _dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            
         }
 
         /// <summary>
@@ -63,6 +85,28 @@ namespace Takochu.ui.EditorWindowSys
             NullCheck();
             SetColumn();
             SetRow();
+
+            
+
+            
+            var change = (_dataGridView.Rows.Count+1) * _dataGridView.RowTemplate.Height;
+
+            if (change < _maxHeight && change > _minHeight)
+            {
+                _dataGridView.Height = change;
+                _dataGridView.ScrollBars = ScrollBars.None;
+            }
+            else if (change > _maxHeight)
+            {
+                _dataGridView.Height = _maxHeight;
+                _dataGridView.ScrollBars = ScrollBars.Both;
+            }
+            else if (change < _minHeight) 
+            {
+                _dataGridView.Height = _minHeight;
+            }
+
+            Console.WriteLine($"{_defHeight} : {_maxHeight} : {_minHeight}");
             return _dataGridView;
         }
 
@@ -124,6 +168,7 @@ namespace Takochu.ui.EditorWindowSys
             if (Name == "name") return;
 
             Change_mValues(Name, value);
+            
         }
 
         private void Change_mValues(string name, object value)

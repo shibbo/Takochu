@@ -33,6 +33,8 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.zonesDataGridView = new System.Windows.Forms.DataGridView();
+            this.zonesListTreeView = new System.Windows.Forms.TreeView();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.toolStrip3 = new System.Windows.Forms.ToolStrip();
@@ -44,6 +46,8 @@
             this.camerasDataGridView = new System.Windows.Forms.DataGridView();
             this.cameraListTreeView = new System.Windows.Forms.TreeView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.lightsDataGridView = new System.Windows.Forms.DataGridView();
+            this.lightsTreeView = new System.Windows.Forms.TreeView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.stageInformationBtn = new System.Windows.Forms.ToolStripButton();
             this.introCameraEditorBtn = new System.Windows.Forms.ToolStripButton();
@@ -68,24 +72,20 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.OpenSaveStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.zonesListTreeView = new System.Windows.Forms.TreeView();
-            this.zonesDataGridView = new System.Windows.Forms.DataGridView();
-            this.lightsTreeView = new System.Windows.Forms.TreeView();
-            this.lightsDataGridView = new System.Windows.Forms.DataGridView();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.zonesDataGridView)).BeginInit();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.toolStrip3.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.camerasDataGridView)).BeginInit();
             this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.lightsDataGridView)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.MainMenuStrip.SuspendLayout();
             this.EditorWindowStatusStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.zonesDataGridView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lightsDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // scenarioTreeView
@@ -93,7 +93,7 @@
             this.scenarioTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.scenarioTreeView.Location = new System.Drawing.Point(0, 0);
             this.scenarioTreeView.Name = "scenarioTreeView";
-            this.scenarioTreeView.Size = new System.Drawing.Size(342, 749);
+            this.scenarioTreeView.Size = new System.Drawing.Size(342, 689);
             this.scenarioTreeView.TabIndex = 2;
             this.scenarioTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.scenarioTreeView_AfterSelect);
             this.scenarioTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.scenarioTreeView_NodeMouseClick);
@@ -107,10 +107,10 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Location = new System.Drawing.Point(2, 29);
+            this.tabControl1.Location = new System.Drawing.Point(2, 27);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(350, 775);
+            this.tabControl1.Size = new System.Drawing.Size(350, 715);
             this.tabControl1.TabIndex = 6;
             // 
             // tabPage4
@@ -118,7 +118,7 @@
             this.tabPage4.Controls.Add(this.scenarioTreeView);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(342, 749);
+            this.tabPage4.Size = new System.Drawing.Size(342, 689);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Scenario";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -129,10 +129,28 @@
             this.tabPage5.Controls.Add(this.zonesListTreeView);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(342, 749);
+            this.tabPage5.Size = new System.Drawing.Size(342, 689);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Zone Attributes";
             this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // zonesDataGridView
+            // 
+            this.zonesDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.zonesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.zonesDataGridView.Location = new System.Drawing.Point(6, 426);
+            this.zonesDataGridView.Name = "zonesDataGridView";
+            this.zonesDataGridView.RowHeadersVisible = false;
+            this.zonesDataGridView.Size = new System.Drawing.Size(333, 260);
+            this.zonesDataGridView.TabIndex = 1;
+            // 
+            // zonesListTreeView
+            // 
+            this.zonesListTreeView.Location = new System.Drawing.Point(3, 3);
+            this.zonesListTreeView.Name = "zonesListTreeView";
+            this.zonesListTreeView.Size = new System.Drawing.Size(336, 418);
+            this.zonesListTreeView.TabIndex = 0;
+            this.zonesListTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.zonesListTreeView_NodeMouseClick);
             // 
             // tabPage1
             // 
@@ -142,22 +160,20 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(342, 749);
+            this.tabPage1.Size = new System.Drawing.Size(342, 689);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Objects";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // dataGridView1
             // 
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 491);
+            this.dataGridView1.Location = new System.Drawing.Point(6, 453);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 21;
-            this.dataGridView1.Size = new System.Drawing.Size(330, 249);
+            this.dataGridView1.Size = new System.Drawing.Size(330, 230);
             this.dataGridView1.TabIndex = 11;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dataGridView1_CellPainting);
@@ -204,9 +220,9 @@
             // 
             // objectsListTreeView
             // 
-            this.objectsListTreeView.Location = new System.Drawing.Point(6, 31);
+            this.objectsListTreeView.Location = new System.Drawing.Point(6, 29);
             this.objectsListTreeView.Name = "objectsListTreeView";
-            this.objectsListTreeView.Size = new System.Drawing.Size(330, 454);
+            this.objectsListTreeView.Size = new System.Drawing.Size(330, 419);
             this.objectsListTreeView.TabIndex = 8;
             this.objectsListTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.objectsListTreeView_NodeMouseClick);
             this.objectsListTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.objectsListTreeView_NodeMouseDoubleClick);
@@ -218,7 +234,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(342, 749);
+            this.tabPage2.Size = new System.Drawing.Size(342, 689);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Cameras";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -230,10 +246,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.camerasDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.camerasDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.camerasDataGridView.Location = new System.Drawing.Point(6, 378);
+            this.camerasDataGridView.Location = new System.Drawing.Point(6, 349);
             this.camerasDataGridView.Name = "camerasDataGridView";
             this.camerasDataGridView.RowHeadersVisible = false;
-            this.camerasDataGridView.Size = new System.Drawing.Size(330, 377);
+            this.camerasDataGridView.Size = new System.Drawing.Size(330, 348);
             this.camerasDataGridView.TabIndex = 1;
             // 
             // cameraListTreeView
@@ -242,7 +258,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cameraListTreeView.Location = new System.Drawing.Point(6, 3);
             this.cameraListTreeView.Name = "cameraListTreeView";
-            this.cameraListTreeView.Size = new System.Drawing.Size(330, 369);
+            this.cameraListTreeView.Size = new System.Drawing.Size(330, 341);
             this.cameraListTreeView.TabIndex = 0;
             this.cameraListTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.cameraListTreeView_NodeMouseClick);
             // 
@@ -252,10 +268,26 @@
             this.tabPage3.Controls.Add(this.lightsTreeView);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(342, 749);
+            this.tabPage3.Size = new System.Drawing.Size(342, 689);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Light";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // lightsDataGridView
+            // 
+            this.lightsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.lightsDataGridView.Location = new System.Drawing.Point(6, 320);
+            this.lightsDataGridView.Name = "lightsDataGridView";
+            this.lightsDataGridView.Size = new System.Drawing.Size(333, 368);
+            this.lightsDataGridView.TabIndex = 1;
+            // 
+            // lightsTreeView
+            // 
+            this.lightsTreeView.Location = new System.Drawing.Point(6, 3);
+            this.lightsTreeView.Name = "lightsTreeView";
+            this.lightsTreeView.Size = new System.Drawing.Size(333, 312);
+            this.lightsTreeView.TabIndex = 0;
+            this.lightsTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.lightsTreeView_NodeMouseClick);
             // 
             // toolStrip1
             // 
@@ -275,7 +307,7 @@
             this.applyGalaxyNameBtn});
             this.toolStrip1.Location = new System.Drawing.Point(358, 1);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1276, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1272, 25);
             this.toolStrip1.TabIndex = 7;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -285,7 +317,7 @@
             this.stageInformationBtn.Image = ((System.Drawing.Image)(resources.GetObject("stageInformationBtn.Image")));
             this.stageInformationBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.stageInformationBtn.Name = "stageInformationBtn";
-            this.stageInformationBtn.Size = new System.Drawing.Size(106, 22);
+            this.stageInformationBtn.Size = new System.Drawing.Size(105, 22);
             this.stageInformationBtn.Text = "Stage Information";
             this.stageInformationBtn.Click += new System.EventHandler(this.stageInformationBtn_Click);
             // 
@@ -325,7 +357,7 @@
             this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(112, 22);
+            this.toolStripButton2.Size = new System.Drawing.Size(111, 22);
             this.toolStripButton2.Text = "Import New Object";
             // 
             // toolStripSeparator1
@@ -336,7 +368,7 @@
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(80, 22);
+            this.toolStripLabel1.Size = new System.Drawing.Size(79, 22);
             this.toolStripLabel1.Text = "Galaxy Name:";
             // 
             // galaxyNameTxtBox
@@ -348,7 +380,7 @@
             // toolStripLabel2
             // 
             this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(86, 22);
+            this.toolStripLabel2.Size = new System.Drawing.Size(85, 22);
             this.toolStripLabel2.Text = "Mission Name:";
             // 
             // scenarioNameTxtBox
@@ -374,9 +406,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.glLevelView.BackColor = System.Drawing.Color.Black;
-            this.glLevelView.Location = new System.Drawing.Point(358, 29);
+            this.glLevelView.Location = new System.Drawing.Point(358, 27);
             this.glLevelView.Name = "glLevelView";
-            this.glLevelView.Size = new System.Drawing.Size(1472, 775);
+            this.glLevelView.Size = new System.Drawing.Size(1472, 715);
             this.glLevelView.TabIndex = 9;
             this.glLevelView.VSync = false;
             this.glLevelView.Load += new System.EventHandler(this.glLevelView_Load);
@@ -413,14 +445,14 @@
             // 
             this.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem";
             this.SaveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.SaveToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.SaveToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.SaveToolStripMenuItem.Text = "Save";
             this.SaveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
             // 
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.CloseToolStripMenuItem_Click);
             // 
@@ -443,7 +475,7 @@
             this.AreaToolStripMenuItem.Name = "AreaToolStripMenuItem";
             this.AreaToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.A)));
-            this.AreaToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.AreaToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.AreaToolStripMenuItem.Text = "Area";
             this.AreaToolStripMenuItem.Click += new System.EventHandler(this.AreaToolStripMenuItem_Click);
             // 
@@ -453,7 +485,7 @@
             this.toolStripStatusLabel1,
             this.OpenSaveStatusLabel,
             this.toolStripStatusLabel3});
-            this.EditorWindowStatusStrip.Location = new System.Drawing.Point(0, 809);
+            this.EditorWindowStatusStrip.Location = new System.Drawing.Point(0, 745);
             this.EditorWindowStatusStrip.Name = "EditorWindowStatusStrip";
             this.EditorWindowStatusStrip.Size = new System.Drawing.Size(1842, 22);
             this.EditorWindowStatusStrip.TabIndex = 12;
@@ -462,7 +494,7 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(39, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(45, 17);
             this.toolStripStatusLabel1.Text = "State：";
             // 
             // OpenSaveStatusLabel
@@ -477,45 +509,11 @@
             this.toolStripStatusLabel3.Size = new System.Drawing.Size(26, 17);
             this.toolStripStatusLabel3.Text = "test";
             // 
-            // zonesListTreeView
-            // 
-            this.zonesListTreeView.Location = new System.Drawing.Point(3, 3);
-            this.zonesListTreeView.Name = "zonesListTreeView";
-            this.zonesListTreeView.Size = new System.Drawing.Size(336, 453);
-            this.zonesListTreeView.TabIndex = 0;
-            this.zonesListTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.zonesListTreeView_NodeMouseClick);
-            // 
-            // zonesDataGridView
-            // 
-            this.zonesDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.zonesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.zonesDataGridView.Location = new System.Drawing.Point(6, 462);
-            this.zonesDataGridView.Name = "zonesDataGridView";
-            this.zonesDataGridView.Size = new System.Drawing.Size(333, 284);
-            this.zonesDataGridView.TabIndex = 1;
-            // 
-            // lightsTreeView
-            // 
-            this.lightsTreeView.Location = new System.Drawing.Point(6, 3);
-            this.lightsTreeView.Name = "lightsTreeView";
-            this.lightsTreeView.Size = new System.Drawing.Size(333, 338);
-            this.lightsTreeView.TabIndex = 0;
-            this.lightsTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.lightsTreeView_NodeMouseClick);
-            // 
-            // lightsDataGridView
-            // 
-            this.lightsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.lightsDataGridView.Location = new System.Drawing.Point(6, 347);
-            this.lightsDataGridView.Name = "lightsDataGridView";
-            this.lightsDataGridView.Size = new System.Drawing.Size(333, 399);
-            this.lightsDataGridView.TabIndex = 1;
-            // 
             // EditorWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1842, 831);
+            this.ClientSize = new System.Drawing.Size(1842, 767);
             this.Controls.Add(this.EditorWindowStatusStrip);
             this.Controls.Add(this.glLevelView);
             this.Controls.Add(this.toolStrip1);
@@ -530,6 +528,7 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.zonesDataGridView)).EndInit();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -538,14 +537,13 @@
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.camerasDataGridView)).EndInit();
             this.tabPage3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.lightsDataGridView)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.MainMenuStrip.ResumeLayout(false);
             this.MainMenuStrip.PerformLayout();
             this.EditorWindowStatusStrip.ResumeLayout(false);
             this.EditorWindowStatusStrip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.zonesDataGridView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lightsDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
