@@ -187,7 +187,9 @@ namespace Takochu.ui
             {
                 string zoneName = Convert.ToString(zoneListsBox.SelectedItem);
 
-                int mask = mScenarios[mCurScenario].mEntry.Get<int>(zoneName);
+                BCSV.Entry entry = mScenarios[mCurScenario + 1].mEntry;
+
+                int mask = entry.Get<int>(zoneName);
                 List<string> layers = GameUtil.GetGalaxyLayers(mask);
 
                 foreach (Control c in layerMasksBox.Controls)
@@ -308,8 +310,8 @@ namespace Takochu.ui
         {
             CheckBox c = sender as CheckBox;
             string zone = zoneListsBox.SelectedItem.ToString();
-            int newMask = GameUtil.SetLayerOnMask(c.Tag.ToString(), mScenarios[mCurScenario].mEntry.Get<int>(zone), c.Checked);
-            mScenarios[mCurScenario].mEntry.Set(zone, newMask);
+            int newMask = GameUtil.SetLayerOnMask(c.Tag.ToString(), mScenarios[mCurScenario + 1].mEntry.Get<int>(zone), c.Checked);
+            mScenarios[mCurScenario + 1].mEntry.Set(zone, newMask);
         }
     }
 }
