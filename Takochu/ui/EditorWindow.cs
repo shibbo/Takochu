@@ -996,13 +996,13 @@ namespace Takochu.ui
             m_LastMouseMove = m_LastMouseClick = e.Location;
         }
 
-        private void objectsListTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        private void ChangeToNode(TreeNode node)
         {
-            AbstractObj abstractObj = e.Node.Tag as AbstractObj;
-            
+            AbstractObj abstractObj = node.Tag as AbstractObj;
+
             if (abstractObj == null) return;
 
-            if (e.Node.Parent == null && e.Node.Text.EndsWith("Zone"))
+            if (node.Parent == null && node.Text.EndsWith("Zone"))
             {
                 StageObj stageObj = abstractObj as StageObj;
                 dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, stageObj);
@@ -1034,7 +1034,7 @@ namespace Takochu.ui
                 dataGridViewEdit = null;
                 mSelectedObject = abstractObj;
 
-                switch (e.Node.Parent.Text)
+                switch (node.Parent.Text)
                 {
                     case "Objects":
                         if (!(abstractObj is LevelObj))
@@ -1096,7 +1096,7 @@ namespace Takochu.ui
                 }
 
                 // we have a path point
-                if (e.Node.Parent.Parent != null && e.Node.Parent.Parent.Text == "Paths")
+                if (node.Parent.Parent != null && node.Parent.Parent.Text == "Paths")
                 {
                     PathPointObj pathPoint = abstractObj as PathPointObj;
                     dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, pathPoint);
@@ -1106,6 +1106,11 @@ namespace Takochu.ui
 
             UpdateCamera();
             glLevelView.Refresh();
+        }
+
+        private void objectsListTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            ChangeToNode(e.Node);
         }
 
         private void objectsListTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -1345,7 +1350,15 @@ namespace Takochu.ui
             }
         }
 
-       
+        private void objectsListTreeView_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void objectsListTreeView_KeyUp(object sender, KeyEventArgs e)
+        {
+            ChangeToNode(objectsListTreeView.SelectedNode);
+        }
 
         private void cameraListTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
