@@ -172,7 +172,7 @@ namespace Takochu.smg.obj
             }
             else
             {
-                mRenderer = new ColorCubeRenderer(200f, new Vector4(1f, 1f, 1f, 1f), new Vector4(1f, 0f, 1f, 1f), true);
+                mRenderer = new ColorCubeRenderer(150f, new Vector4(1f, 1f, 1f, 1f), new Vector4(1f, 0f, 1f, 1f), true);
             }
         }
 

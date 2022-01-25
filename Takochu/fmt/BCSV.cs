@@ -214,6 +214,19 @@ namespace Takochu.fmt
             mFile.Close();
         }
 
+        public bool ContainsField(string fieldName)
+        {
+            foreach(Entry e in mEntries)
+            {
+                if (e.ContainsKey(fieldName))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public Field AddField(string fieldName, int type, object defaultVal)
         {
             return AddField(fieldName, -1, type, -1, 0, defaultVal);

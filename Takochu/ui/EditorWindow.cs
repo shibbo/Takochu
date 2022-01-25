@@ -235,8 +235,20 @@ namespace Takochu.ui
                 {
                     foreach (string layer in /*currentLayers*/TestLayers)
                     {
+                        List<StageObj> stgs;
 
-                        List<StageObj> stgs = galaxyZone.mZones[layer];
+                        if (galaxyZone.mZones.ContainsKey(layer))
+                        {
+                            stgs = galaxyZone.mZones[layer];
+                        }
+                        else if (galaxyZone.mZones.ContainsKey(layer.ToLower()))
+                        {
+                            stgs = galaxyZone.mZones[layer.ToLower()];
+                        }
+                        else
+                        {
+                            throw new Exception("EditorWindow::LoadScenario -- Invalid layers");
+                        }
 
                         mStages.Add(layer, stgs);
                     }

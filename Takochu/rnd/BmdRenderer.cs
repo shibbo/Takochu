@@ -403,7 +403,6 @@ namespace Takochu.rnd
                                 {
                                     Vector4 color2 = m_Model.ColorArray[1][prim.ColorIndices[1][i]];
                                     GL.SecondaryColor3(color2.X, color2.Y, color2.Z);
-                                    throw new Exception("color2 detected");
                                 }
 
                                 if ((prim.ArrayMask & (1 << 13)) != 0) GL.MultiTexCoord2(TextureUnit.Texture0, ref m_Model.TexcoordArray[0][prim.TexcoordIndices[0][i]]);

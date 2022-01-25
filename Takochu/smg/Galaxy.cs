@@ -150,8 +150,13 @@ namespace Takochu.smg
             {
                 if (GameUtil.IsSMG2())
                 {
-                    SearchFile = 
-                        (GetGalaxyZone().mZones[Layer]);
+                    if (GetGalaxyZone().mZones.ContainsKey(Layer))
+                    {
+                        SearchFile = (GetGalaxyZone().mZones[Layer]);
+                    }
+                    else if (GetGalaxyZone().mZones.ContainsKey(Layer.ToLower())) {
+                        SearchFile = (GetGalaxyZone().mZones[Layer.ToLower()]);
+                    }
                 }
                 else
                 {
@@ -189,8 +194,14 @@ namespace Takochu.smg
             {
                 if (GameUtil.IsSMG2())
                 {
-                    SearchFile = 
-                        (GetGalaxyZone().mZones[Layer]);
+                    if (GetGalaxyZone().mZones.ContainsKey(Layer))
+                    {
+                        SearchFile = (GetGalaxyZone().mZones[Layer]);
+                    }
+                    else if (GetGalaxyZone().mZones.ContainsKey(Layer.ToLower()))
+                    {
+                        SearchFile = (GetGalaxyZone().mZones[Layer.ToLower()]);
+                    }
                 }
                 else
                 {
