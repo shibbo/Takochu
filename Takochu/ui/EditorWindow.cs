@@ -1189,13 +1189,6 @@ namespace Takochu.ui
                 GL.NewList(mDispLists[0][mSelectedObject.mUnique], ListMode.Compile);
 
                 GL.PushMatrix();
-
-                GL.Translate(Vector3.Zero);
-                GL.Rotate(0.0f, 0f, 0f, 1f);
-                GL.Rotate(0.0f, 0f, 1f, 0f);
-                GL.Rotate(0.0f, 1f, 0f, 0f);
-
-                GL.PushMatrix();
                 {
                     GL.Translate(Pos_ZoneOffset);
                     GL.Rotate(Rot_ZoneOffset.Z, 0f, 0f, 1f);
