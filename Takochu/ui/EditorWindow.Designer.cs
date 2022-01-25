@@ -74,6 +74,7 @@
             this.OpenSaveStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.pathsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
@@ -390,7 +391,6 @@
             // 
             // galaxyNameTxtBox
             // 
-            this.galaxyNameTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.galaxyNameTxtBox.Name = "galaxyNameTxtBox";
             this.galaxyNameTxtBox.Size = new System.Drawing.Size(300, 25);
             // 
@@ -402,7 +402,6 @@
             // 
             // scenarioNameTxtBox
             // 
-            this.scenarioNameTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.scenarioNameTxtBox.Name = "scenarioNameTxtBox";
             this.scenarioNameTxtBox.Size = new System.Drawing.Size(300, 25);
             // 
@@ -482,7 +481,8 @@
             // DisplayToolStripMenuItem
             // 
             this.DisplayToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.AreaToolStripMenuItem});
+            this.AreaToolStripMenuItem,
+            this.pathsToolStripMenuItem});
             this.DisplayToolStripMenuItem.Name = "DisplayToolStripMenuItem";
             this.DisplayToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
             this.DisplayToolStripMenuItem.Text = "Display";
@@ -532,6 +532,15 @@
             // 
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
+            // pathsToolStripMenuItem
+            // 
+            this.pathsToolStripMenuItem.Checked = true;
+            this.pathsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.pathsToolStripMenuItem.Name = "pathsToolStripMenuItem";
+            this.pathsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.pathsToolStripMenuItem.Text = "Paths";
+            this.pathsToolStripMenuItem.Click += new System.EventHandler(this.pathsToolStripMenuItem_Click);
             // 
             // EditorWindow
             // 
@@ -618,5 +627,6 @@
         private System.Windows.Forms.DataGridView lightsDataGridView;
         private System.Windows.Forms.TreeView lightsTreeView;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem pathsToolStripMenuItem;
     }
 }

@@ -1220,7 +1220,7 @@ namespace Takochu.ui
                 }
 
                 mSelectedObject.Render(RenderMode.Opaque);
-                GL.PushMatrix();
+                GL.PopMatrix();
                 GL.EndList();
             }
 
@@ -1396,6 +1396,74 @@ namespace Takochu.ui
         private void objectsListTreeView_KeyUp(object sender, KeyEventArgs e)
         {
             ChangeToNode(objectsListTreeView.SelectedNode);
+        }
+
+        private void pathsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            List<string> zones = mGalaxy.GetZonesUsedOnCurrentScenario();
+            Dictionary<string, List<int>> ids = new Dictionary<string, List<int>>();
+
+            ids.Add(mGalaxy.mName, mGalaxy.GetGalaxyZone().GetAllUniqueIDsFromObjectsOfType("PathObj"));
+
+            //ids.AddRange(mGalaxy.GetGalaxyZone().GetAllUniqueIDsFromObjectsOfType("PathObj"));
+
+            foreach (string z in zones)
+            {
+                Zone zone = mGalaxy.GetZone(z);
+                ids.Add(z, zone.GetAllUniqueIDsFromObjectsOfType("PathObj"));
+            }
+
+            if (pathsToolStripMenuItem.Checked)
+            {
+                // disable paths
+                pathsToolStripMenuItem.Checked = false;
+
+                foreach (KeyValuePair<string, List<int>> kvp in ids)
+                {
+                    List<int> id_list = kvp.Value;
+
+                    foreach(int id in id_list)
+                    {
+                        GL.DeleteLists(mDispLists[0][id], 1);
+                    }
+                }
+            }
+            else
+            {
+                // enable paths
+                pathsToolStripMenuItem.Checked = true;
+
+                foreach (KeyValuePair<string, List<int>> kvp in ids)
+                {
+                    string zoneName = kvp.Key;
+                    List<int> id_list = kvp.Value;
+
+                    foreach (int id in id_list)
+                    {
+                        var Pos_ZoneOffset = mGalaxy.Get_Pos_GlobalOffset(zoneName);
+                        var Rot_ZoneOffset = mGalaxy.Get_Rot_GlobalOffset(zoneName);
+
+                        PathObj path = mGalaxy.GetZone(zoneName).GetObjFromUniqueID(id) as PathObj;
+
+                        GL.DeleteLists(mDispLists[0][path.mUnique], 1);
+                        GL.NewList(mDispLists[0][path.mUnique], ListMode.Compile);
+
+                        GL.PushMatrix();
+                        {
+                            GL.Translate(Pos_ZoneOffset);
+                            GL.Rotate(Rot_ZoneOffset.Z, 0f, 0f, 1f);
+                            GL.Rotate(Rot_ZoneOffset.Y, 0f, 1f, 0f);
+                            GL.Rotate(Rot_ZoneOffset.X, 1f, 0f, 0f);
+                        }
+
+                        path.Render(RenderMode.Opaque);
+                        GL.PopMatrix();
+                        GL.EndList();
+                    }
+                }
+            }
+
+            glLevelView.Refresh();
         }
 
         private void cameraListTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
