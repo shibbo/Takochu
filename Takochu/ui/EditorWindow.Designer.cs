@@ -40,7 +40,7 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.toolStrip3 = new System.Windows.Forms.ToolStrip();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.deleteObjButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.objectsListTreeView = new System.Windows.Forms.TreeView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -196,7 +196,7 @@
             this.toolStrip3.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripDropDownButton1,
-            this.toolStripButton1,
+            this.deleteObjButton,
             this.toolStripLabel3});
             this.toolStrip3.Location = new System.Drawing.Point(3, 3);
             this.toolStrip3.Name = "toolStrip3";
@@ -213,14 +213,15 @@
             this.toolStripDropDownButton1.Size = new System.Drawing.Size(80, 22);
             this.toolStripDropDownButton1.Text = "Add Object";
             // 
-            // toolStripButton1
+            // deleteObjButton
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(82, 22);
-            this.toolStripButton1.Text = "Delete Object";
+            this.deleteObjButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.deleteObjButton.Image = ((System.Drawing.Image)(resources.GetObject("deleteObjButton.Image")));
+            this.deleteObjButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.deleteObjButton.Name = "deleteObjButton";
+            this.deleteObjButton.Size = new System.Drawing.Size(82, 22);
+            this.deleteObjButton.Text = "Delete Object";
+            this.deleteObjButton.Click += new System.EventHandler(this.deleteObjButton_Click);
             // 
             // toolStripLabel3
             // 
@@ -391,6 +392,7 @@
             // 
             // galaxyNameTxtBox
             // 
+            this.galaxyNameTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.galaxyNameTxtBox.Name = "galaxyNameTxtBox";
             this.galaxyNameTxtBox.Size = new System.Drawing.Size(300, 25);
             // 
@@ -402,6 +404,7 @@
             // 
             // scenarioNameTxtBox
             // 
+            this.scenarioNameTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.scenarioNameTxtBox.Name = "scenarioNameTxtBox";
             this.scenarioNameTxtBox.Size = new System.Drawing.Size(300, 25);
             // 
@@ -538,6 +541,8 @@
             this.pathsToolStripMenuItem.Checked = true;
             this.pathsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.pathsToolStripMenuItem.Name = "pathsToolStripMenuItem";
+            this.pathsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.P)));
             this.pathsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.pathsToolStripMenuItem.Text = "Paths";
             this.pathsToolStripMenuItem.Click += new System.EventHandler(this.pathsToolStripMenuItem_Click);
@@ -605,7 +610,7 @@
         private System.Windows.Forms.TreeView objectsListTreeView;
         private System.Windows.Forms.ToolStrip toolStrip3;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton deleteObjButton;
         private OpenTK.GLControl glLevelView;
         private System.Windows.Forms.ToolStripLabel toolStripLabel3;
         private System.Windows.Forms.DataGridView dataGridView1;

@@ -26,7 +26,6 @@ namespace Takochu.ui
         public EditorWindow(string galaxyName)
         {
             InitializeComponent();
-            AreaToolStripMenuItem.Checked = Properties.Settings.Default.EditorWindowDisplayArea;
             mGalaxyName = galaxyName;
 
             if (GameUtil.IsSMG1())
@@ -73,6 +72,7 @@ namespace Takochu.ui
         
         public void LoadScenario(int scenarioNo)
         {
+            m_AreChanges = false;
             mStages.Clear();
             mZonesUsed.Clear();
             mZoneMasks.Clear();
@@ -404,7 +404,7 @@ namespace Takochu.ui
             //オブジェクトのプロパティに変更がある場合警告を表示します
             //Display a warning when there are changes to the object's properties
             DialogResult dr;
-            if (EditorWindowSys.DataGridViewEdit.IsChanged) 
+            if (EditorWindowSys.DataGridViewEdit.IsChanged || m_AreChanges) 
             {
                 dr = Translate.GetMessageBox.Show(MessageBoxText.ChangesNotSaved,MessageBoxCaption.Error,MessageBoxButtons.YesNo);
                 if ((dr == DialogResult.No) || (dr == DialogResult.Cancel)) { e.Cancel = true; return; }
@@ -634,6 +634,8 @@ namespace Takochu.ui
         private static EditorWindowSys.DataGridViewEdit dataGridViewEdit_Cameras;
         private static EditorWindowSys.DataGridViewEdit dataGridViewEdit_Zones;
         private static EditorWindowSys.DataGridViewEdit dataGridViewEdit_Lights;
+
+        private bool m_AreChanges;
         /*
          * 0 = Opaque
          * 1 = Translucent
@@ -1224,6 +1226,7 @@ namespace Takochu.ui
                 GL.EndList();
             }
 
+            m_AreChanges = true;
             glLevelView.Refresh();
             
         }
@@ -1308,6 +1311,7 @@ namespace Takochu.ui
             }
             mGalaxy.Save();
             EditorWindowSys.DataGridViewEdit.IsChangedClear();
+            m_AreChanges = false;
             OpenSaveStatusLabel.Text = "Changes Saved : SaveTime : " + DateTime.Now;
         }
 
@@ -1435,7 +1439,15 @@ namespace Takochu.ui
 
         private void objectsListTreeView_KeyUp(object sender, KeyEventArgs e)
         {
-            ChangeToNode(objectsListTreeView.SelectedNode);
+            if (e.KeyCode == Keys.Delete)
+            {
+                deleteObjNode(objectsListTreeView.SelectedNode);
+            }
+            else
+            {
+                ChangeToNode(objectsListTreeView.SelectedNode);
+            }
+            
         }
 
         private void pathsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1504,6 +1516,35 @@ namespace Takochu.ui
             }
 
             glLevelView.Refresh();
+        }
+
+        private void deleteObjNode(TreeNode node)
+        {
+            AbstractObj obj = node.Tag as AbstractObj;
+
+            // paths and stages require additional logic to delete
+            if (obj.mType != "StageObj" && obj.mType != "PathObj" && obj.mType != "PathPointObj")
+            {
+                int id = obj.mUnique;
+                Zone z = obj.mParentZone;
+                z.DeleteObjectWithUniqueID(id);
+                GL.DeleteLists(mDispLists[0][id], 1);
+                objectsListTreeView.Nodes.Remove(node);
+                m_AreChanges = true;
+                glLevelView.Refresh();
+            }
+            else
+            {
+                Console.WriteLine("we'll implement this later...");
+            }
+        }
+
+        private void deleteObjButton_Click(object sender, EventArgs e)
+        {
+            if (objectsListTreeView.SelectedNode != null)
+            {
+                deleteObjNode(objectsListTreeView.SelectedNode);
+            }
         }
 
         private void cameraListTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)

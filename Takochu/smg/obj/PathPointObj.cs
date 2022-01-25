@@ -17,6 +17,7 @@ namespace Takochu.smg.obj
         {
             mParent = parent;
             mParentZone = parent.mParentZone;
+            mType = "PathPointObj";
 
             mID = mEntry.Get<short>("id");
 

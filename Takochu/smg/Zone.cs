@@ -549,6 +549,40 @@ namespace Takochu.smg
             return null;
         }
 
+        public void DeleteObjectWithUniqueID(int id)
+        {
+            int idx = -1;
+            List<string> layers = GameUtil.GetGalaxyLayers(mGalaxy.GetMaskUsedInZoneOnCurrentScenario(mZoneName));
+
+            foreach (string str in cPossibleFiles)
+            {
+                if (mObjects.ContainsKey(str))
+                {
+                    foreach (string l in layers)
+                    {
+                        List<AbstractObj> objs = mObjects[str][l];
+
+                        foreach (AbstractObj o in objs)
+                        {
+                            if (o.mUnique == id)
+                            {
+                                idx = objs.IndexOf(o);
+                                break;
+                            }
+                        }
+
+                        if (idx != -1)
+                        {
+                            objs.RemoveAt(idx);
+                            mObjects[str][l] = objs;
+                            return;
+                        }
+                    }
+                }
+            }
+
+        }
+
         public Camera GetCamera(string cameraName)
         {
             return mCameras.Find(c => c.mName == cameraName);
