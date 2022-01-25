@@ -1230,28 +1230,68 @@ namespace Takochu.ui
 
         private void AreaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (mCurrentScenario > 0)
+            List<string> zones = mGalaxy.GetZonesUsedOnCurrentScenario();
+            Dictionary<string, List<int>> ids = new Dictionary<string, List<int>>();
+
+            ids.Add(mGalaxy.mName, mGalaxy.GetGalaxyZone().GetAllUniqueIDsFromObjectsOfType("AreaObj"));
+
+            foreach (string z in zones)
             {
-                ToolStripMenuItem item = (ToolStripMenuItem)sender;
-                item.Checked = !item.Checked;
-                if (item.Checked)
-                {
-                    AreaObj.IsDisplay_Renderer = true;
-                    Properties.Settings.Default.EditorWindowDisplayArea = true;
-                }
-                else 
-                {
-                    AreaObj.IsDisplay_Renderer = false;
-                    Properties.Settings.Default.EditorWindowDisplayArea = false;
-                }
-                Properties.Settings.Default.Save();
-                Scenario_ReLoad();
+                Zone zone = mGalaxy.GetZone(z);
+                ids.Add(z, zone.GetAllUniqueIDsFromObjectsOfType("AreaObj"));
             }
-            else 
+
+            if (AreaToolStripMenuItem.Checked)
             {
-                MessageBox.Show("シナリオが選択されていません","");
+                // disable areas
+                AreaToolStripMenuItem.Checked = false;
+
+                foreach (KeyValuePair<string, List<int>> kvp in ids)
+                {
+                    List<int> id_list = kvp.Value;
+
+                    foreach (int id in id_list)
+                    {
+                        GL.DeleteLists(mDispLists[0][id], 1);
+                    }
+                }
             }
-            
+            else
+            {
+                // enable areas
+                AreaToolStripMenuItem.Checked = true;
+
+                foreach (KeyValuePair<string, List<int>> kvp in ids)
+                {
+                    string zoneName = kvp.Key;
+                    List<int> id_list = kvp.Value;
+
+                    foreach (int id in id_list)
+                    {
+                        var Pos_ZoneOffset = mGalaxy.Get_Pos_GlobalOffset(zoneName);
+                        var Rot_ZoneOffset = mGalaxy.Get_Rot_GlobalOffset(zoneName);
+
+                        AreaObj area = mGalaxy.GetZone(zoneName).GetObjFromUniqueID(id) as AreaObj;
+
+                        GL.DeleteLists(mDispLists[0][area.mUnique], 1);
+                        GL.NewList(mDispLists[0][area.mUnique], ListMode.Compile);
+
+                        GL.PushMatrix();
+                        {
+                            GL.Translate(Pos_ZoneOffset);
+                            GL.Rotate(Rot_ZoneOffset.Z, 0f, 0f, 1f);
+                            GL.Rotate(Rot_ZoneOffset.Y, 0f, 1f, 0f);
+                            GL.Rotate(Rot_ZoneOffset.X, 1f, 0f, 0f);
+                        }
+
+                        area.Render(RenderMode.Opaque);
+                        GL.PopMatrix();
+                        GL.EndList();
+                    }
+                }
+            }
+
+            glLevelView.Refresh();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
