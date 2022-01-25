@@ -489,10 +489,12 @@
             // 
             // AreaToolStripMenuItem
             // 
+            this.AreaToolStripMenuItem.Checked = true;
+            this.AreaToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.AreaToolStripMenuItem.Name = "AreaToolStripMenuItem";
             this.AreaToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.A)));
-            this.AreaToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.AreaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.AreaToolStripMenuItem.Text = "Area";
             this.AreaToolStripMenuItem.Click += new System.EventHandler(this.AreaToolStripMenuItem_Click);
             // 

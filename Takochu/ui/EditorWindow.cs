@@ -1151,7 +1151,9 @@ namespace Takochu.ui
 
                 GL.DeleteLists(mDispLists[0][path.mUnique], 1);
                 GL.NewList(mDispLists[0][path.mUnique], ListMode.Compile);
+                
                 mSelectedObject.Render(RenderMode.Opaque);
+                GL.PopMatrix();
                 GL.EndList();
             }
             else if (mSelectedObject.GetType() == typeof(StageObj))
@@ -1180,9 +1182,29 @@ namespace Takochu.ui
             }
             else
             {
+                var Pos_ZoneOffset = mGalaxy.Get_Pos_GlobalOffset(mSelectedObject.mParentZone.mZoneName);
+                var Rot_ZoneOffset = mGalaxy.Get_Rot_GlobalOffset(mSelectedObject.mParentZone.mZoneName);
+
                 GL.DeleteLists(mDispLists[0][mSelectedObject.mUnique], 1);
                 GL.NewList(mDispLists[0][mSelectedObject.mUnique], ListMode.Compile);
+
+                GL.PushMatrix();
+
+                GL.Translate(Vector3.Zero);
+                GL.Rotate(0.0f, 0f, 0f, 1f);
+                GL.Rotate(0.0f, 0f, 1f, 0f);
+                GL.Rotate(0.0f, 1f, 0f, 0f);
+
+                GL.PushMatrix();
+                {
+                    GL.Translate(Pos_ZoneOffset);
+                    GL.Rotate(Rot_ZoneOffset.Z, 0f, 0f, 1f);
+                    GL.Rotate(Rot_ZoneOffset.Y, 0f, 1f, 0f);
+                    GL.Rotate(Rot_ZoneOffset.X, 1f, 0f, 0f);
+                }
+
                 mSelectedObject.Render(RenderMode.Opaque);
+                GL.PushMatrix();
                 GL.EndList();
             }
 

@@ -125,6 +125,12 @@ namespace Takochu.smg
             return mZones[mName];
         }
 
+        public List<string> GetZonesUsedOnCurrentScenario()
+        {
+            Zone galaxyZone = GetGalaxyZone();
+            return galaxyZone.GetZonesUsedOnLayers(galaxyZone.GetLayersUsedOnZoneForCurrentScenario());
+        }
+
         /// <summary>
         /// Gets the origin of the zone.<br/>
         /// ゾーンの原点を取得

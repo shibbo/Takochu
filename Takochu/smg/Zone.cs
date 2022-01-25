@@ -357,6 +357,11 @@ namespace Takochu.smg
             return ret;
         }
 
+        public StageObj GetStageDataFromNameOnCurScenario(string stageName)
+        {
+            return GetAllStageDataForCurrentScenario().Find(o => o.mName == stageName);
+        }
+
         public List<StageObj> GetAllStageDataFromLayers(List<string> layers)
         {
             List<StageObj> ret = new List<StageObj>();
@@ -371,6 +376,12 @@ namespace Takochu.smg
             }
 
             return ret;
+        }
+
+        public List<StageObj> GetAllStageDataForCurrentScenario()
+        {
+            List<string> layers = GameUtil.GetGalaxyLayers(mGalaxy.GetMaskUsedInZoneOnCurrentScenario(mZoneName));
+            return GetAllStageDataFromLayers(layers);
         }
 
         public List<AbstractObj> GetObjectsFromLayers(string archive, string type, List<string> layers)
@@ -416,6 +427,43 @@ namespace Takochu.smg
             return ids;
         }
 
+        public List<int> GetAllUniqueIDsFromObjectsOfType(string obj_type)
+        {
+            List<int> ids = new List<int>();
+
+            if (obj_type == "PathObj")
+            {
+                mPaths.ForEach(p => ids.Add(p.mUnique));
+                return ids;
+            }
+
+            List<string> layers = GameUtil.GetGalaxyLayers(mGalaxy.GetMaskUsedInZoneOnCurrentScenario(mZoneName));
+           
+
+            foreach (string str in cPossibleFiles)
+            {
+                if (mObjects.ContainsKey(str))
+                {
+                    foreach (string l in layers)
+                    {
+                        List<AbstractObj> objs = mObjects[str][l];
+
+                        foreach(AbstractObj o in objs)
+                        {
+                            if (o.mType == obj_type)
+                            {
+                                ids.Add(o.mUnique);
+                            }
+                                
+                        }
+                    }
+
+                }
+            }
+
+            return ids;
+        }
+
         public void RenderObjFromUnique(int id, RenderMode mode, bool recalcPosRot = false)
         {
             List<string> layers = GameUtil.GetGalaxyLayers(mGalaxy.GetMaskUsedInZoneOnCurrentScenario(mZoneName));
@@ -449,6 +497,40 @@ namespace Takochu.smg
                     return;
                 }
             }
+        }
+
+        public AbstractObj GetObjFromUniqueID(int id)
+        {
+            List<string> layers = GameUtil.GetGalaxyLayers(mGalaxy.GetMaskUsedInZoneOnCurrentScenario(mZoneName));
+
+            foreach (string str in cPossibleFiles)
+            {
+                if (mObjects.ContainsKey(str))
+                {
+                    foreach (string l in layers)
+                    {
+                        List<AbstractObj> objs = mObjects[str][l];
+
+                        foreach (AbstractObj o in objs)
+                        {
+                            if (o.mUnique == id)
+                            {
+                                return o;
+                            }
+                        }
+                    }
+                }
+            }
+
+            foreach (PathObj pobj in mPaths)
+            {
+                if (pobj.mUnique == id)
+                {
+                    return pobj;
+                }
+            }
+
+            return null;
         }
 
         public Camera GetCamera(string cameraName)

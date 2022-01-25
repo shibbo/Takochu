@@ -28,6 +28,7 @@ namespace Takochu.smg.obj
             mID = mEntry.Get<int>("l_id");
 
             mPathArgs = new int[8];
+            mType = "PathObj";
 
             for (int i = 0; i < 8; i++)
                 mPathArgs[i] = mEntry.Get<int>($"path_arg{i}");

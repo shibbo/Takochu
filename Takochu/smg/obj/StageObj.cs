@@ -17,6 +17,7 @@ namespace Takochu.smg.obj
         public StageObj(BCSV.Entry entry, Zone parentZone) : base(entry)
         {
             mEntry = entry;
+            mType = "StageObj";
             mParentZone = parentZone;
             mName = mEntry.Get<string>("name");
             mID = mEntry.Get<int>("l_id");
