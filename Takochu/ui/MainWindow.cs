@@ -21,6 +21,8 @@ namespace Takochu
 {
     public partial class MainWindow : Form
     {
+        private const string DefaultPath = "\"\"";
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -30,16 +32,13 @@ namespace Takochu
                 Properties.Settings.Default.BCSVPaths = new List<string>();
             }
 
-            //Program.sTranslator = new Translator();
-
             string GamePath = Properties.Settings.Default.GamePath;
 
-            if (GamePath == "\"\"" || (!Directory.Exists(GamePath)))
+            if (GamePath == DefaultPath || (!Directory.Exists(GamePath)))
             {
                 Translate.GetMessageBox.Show(MessageBoxText.InitialPathSettings, MessageBoxCaption.Info);
-                bool res = SetGamePath();
 
-                if (res == false)
+                if (SetGamePath() == false)
                 {
                     return;
                 }
@@ -56,7 +55,7 @@ namespace Takochu
             }
 
             // is it valid AND does it still exist?
-            if (GamePath != "\"\"" && Directory.Exists(GamePath))
+            if (GamePath != DefaultPath && Directory.Exists(GamePath))
             {
                 Setup();
             }
@@ -64,62 +63,97 @@ namespace Takochu
 
         private void Setup(bool reSetup = false)
         {
-            var extFileSys = new ExternalFilesystem(Properties.Settings.Default.GamePath);
-            Program.sGame = new Game(extFileSys);
-
-            if (reSetup)
-                LightData.Close();
-
-            LightData.Initialize();
-
-
-
-            if (GameUtil.IsSMG2())
+            try
             {
+                var extFileSys = new ExternalFilesystem(Properties.Settings.Default.GamePath);
+                Program.sGame = new Game(extFileSys);
 
                 if (reSetup)
-                    BGMInfo.Close();
+                    LightData.Close();
+                LightData.Initialize();
 
-                BGMInfo.Initialize();
 
 
+
+                if (GameUtil.IsSMG2())
+                {
+
+                    if (reSetup)
+                        BGMInfo.Close();
+
+                    BGMInfo.Initialize();
+
+
+                }
+
+                if (reSetup)
+                    NameHolder.Close();
+
+
+                NameHolder.Initialize();
+
+
+
+                ImageHolder.Initialize();
+
+
+
+                bcsvEditorBtn.Enabled = true;
+                galaxyTreeView.Nodes.Clear();
+
+                List<string> galaxies = Program.sGame.GetGalaxies();
+                Dictionary<string, string> simpleNames = Translate.GetGalaxyNames();
+
+                foreach (string galaxy in galaxies)
+                {
+                    if (simpleNames.ContainsKey(galaxy))
+                    {
+                        TreeNode node = new TreeNode(simpleNames[galaxy]);
+                        node.ToolTipText = galaxy;
+                        node.Tag = galaxy;
+                        galaxyTreeView.Nodes.Add(node);
+                    }
+                    else
+                    {
+                        TreeNode node = new TreeNode(galaxy);
+                        node.ToolTipText = galaxy;
+                        node.Tag = galaxy;
+                        galaxyTreeView.Nodes.Add(node);
+                    }
+                }
             }
-
-            if (reSetup)
-                NameHolder.Close();
-
-
-            NameHolder.Initialize();
-
-
-
-            ImageHolder.Initialize();
-
-
-
-            bcsvEditorBtn.Enabled = true;
-            galaxyTreeView.Nodes.Clear();
-
-            List<string> galaxies = Program.sGame.GetGalaxies();
-            Dictionary<string, string> simpleNames = Translate.GetGalaxyNames();
-
-            foreach (string galaxy in galaxies)
+            catch (Exception ex)
             {
-                if (simpleNames.ContainsKey(galaxy))
-                {
-                    TreeNode node = new TreeNode(simpleNames[galaxy]);
-                    node.ToolTipText = galaxy;
-                    node.Tag = galaxy;
-                    galaxyTreeView.Nodes.Add(node);
-                }
-                else
-                {
-                    TreeNode node = new TreeNode(galaxy);
-                    node.ToolTipText = galaxy;
-                    node.Tag = galaxy;
-                    galaxyTreeView.Nodes.Add(node);
-                }
+                MessageBox.Show(
+                    $"「{ex.Message}」\n\n" +
+                    "An error has occurred in reading the file." +
+                    "After initializing the path of the working directory, this program will be killed.\n" +
+                    "ファイルの読み込みにエラーが発生しました。" +
+                    "作業ディレクトリのパスを初期化した後、このプログラムは終了します。",
+                    "Error"
+                    );
+                SetDefaultPath();
+                KillApplication();
             }
+            
+        }
+
+        /// <summary>
+        /// ゲームディレクトリを初期化します。
+        /// </summary>
+        private void SetDefaultPath() 
+        {
+            Properties.Settings.Default.GamePath = DefaultPath;
+            Properties.Settings.Default.Save();
+        }
+
+        /// <summary>
+        /// アプリケーションを強制終了させます。
+        /// </summary>
+        private void KillApplication() 
+        {
+            Close();
+            Environment.Exit(0);
         }
 
         private void selectGameFolderBtn_Click(object sender, EventArgs e)
