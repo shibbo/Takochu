@@ -234,6 +234,11 @@ namespace Takochu.fmt
 
         public Field AddField(string name, int offs, int type, int mask, int shift, object val)
         {
+            if (mFields.ContainsKey(FieldNameToHash(name)))
+            {
+                return null;
+            }
+
             int[] sizes = { 4, -1, 4, 4, 2, 1, 4 };
             AddHash(name);
 
