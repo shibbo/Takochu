@@ -354,7 +354,7 @@ namespace Takochu.smg.obj
         private int mCastID;
         private int mViewGroupID;
         private short mShapeModelNo;
-        private short mPathID;
+        public short mPathID;
         private short mClippingGroupID;
         private short mGroupID;
         private short mDemoGroupID;

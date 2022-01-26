@@ -46,8 +46,12 @@ namespace Takochu.smg.obj
                 mPathPointObjs.Add(new PathPointObj(this, e));
             }
 
-            mUnique = Program.sUniqueID++;
             mPathColor = RenderUtil.GenerateRandomColor();
+        }
+
+        public void RemovePathPointAtIndex(int idx)
+        {
+            mPathPointObjs.RemoveAt(idx);
         }
 
         public override void Reload_mValues()
@@ -167,7 +171,6 @@ namespace Takochu.smg.obj
 
         public RARCFilesystem mFilesystem;
         public short mNo;
-        public string mType;
         public string mClosed;
         public int mNumPoint;
         public int mID;
@@ -176,8 +179,6 @@ namespace Takochu.smg.obj
 
         public int[] mPathArgs;
         public Zone mZone;
-
-        public int mUnique;
 
         public List<PathPointObj> mPathPointObjs;
         public OpenTK.Graphics.Color4 mPathColor;

@@ -137,7 +137,7 @@ namespace Takochu.smg.obj
         }
 
         public PathObj mParent;
-        short mID;
+        public short mID;
         public Vector3 mPoint0;
         public Vector3 mPoint1;
         public Vector3 mPoint2;
