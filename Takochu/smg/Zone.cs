@@ -627,12 +627,26 @@ namespace Takochu.smg
             {
                 mPaths.RemoveAt(idx);
             }
+
+            UpdatePathIndicies();
         }
 
         public void DeletePathPointFromPath(int id, int idx)
         {
             PathObj path = GetObjFromUniqueID(id) as PathObj;
             path.RemovePathPointAtIndex(idx);
+        }
+
+        public void UpdatePathIndicies()
+        {
+            int idx = 0;
+
+            foreach (PathObj pobj in mPaths)
+            {
+                pobj.mID = idx;
+                pobj.mEntry.Set("no", idx);
+                idx++;
+            }
         }
 
         public Camera GetCamera(string cameraName)
