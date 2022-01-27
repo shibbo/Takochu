@@ -1386,6 +1386,7 @@ namespace Takochu.ui
 
         private void glLevelView_MouseClick(object sender, MouseEventArgs e)
         {
+            if (e.Button == MouseButtons.Right) return;
             var ray = ScreenToRay(e.Location);
             Console.WriteLine($"dir: {ray.Direction.Y.ToString("F")}\norigin: {ray.Origin}");
         }
