@@ -1457,8 +1457,6 @@ namespace Takochu.ui
 
             ids.Add(mGalaxy.mName, mGalaxy.GetGalaxyZone().GetAllUniqueIDsFromObjectsOfType("PathObj"));
 
-            //ids.AddRange(mGalaxy.GetGalaxyZone().GetAllUniqueIDsFromObjectsOfType("PathObj"));
-
             foreach (string z in zones)
             {
                 Zone zone = mGalaxy.GetZone(z);
@@ -1523,19 +1521,76 @@ namespace Takochu.ui
             AbstractObj obj = node.Tag as AbstractObj;
 
             // paths and stages require additional logic to delete
-            if (obj.mType != "StageObj" && obj.mType != "PathObj" && obj.mType != "PathPointObj")
+            if (obj.mType != "StageObj" && obj.mType != "PathPointObj")
             {
                 int id = obj.mUnique;
                 Zone z = obj.mParentZone;
+
+                if (obj.mType == "PathObj")
+                {
+                    PathObj path_obj = obj as PathObj;
+                    AbstractObj out_obj;
+
+                    if (z.DoesAnyObjUsePathID(path_obj.Get<short>("no"), out out_obj))
+                    {
+                        DialogResult res = MessageBox.Show($"You are about to delete a path that an object still uses! Are you sure you want to delete it?\n{out_obj.ToString()}", "Path Deletion", MessageBoxButtons.YesNo);
+
+                        if (res == DialogResult.Yes)
+                        {
+                            z.DeleteObjectWithUniqueID(id);
+                            GL.DeleteLists(mDispLists[0][id], 1);
+                            objectsListTreeView.Nodes.Remove(node);
+                            m_AreChanges = true;
+                            glLevelView.Refresh();
+                            return;
+                        }
+                        else
+                        {
+                            // we do nothing
+                            return;
+                        }
+                    }
+                }
+
                 z.DeleteObjectWithUniqueID(id);
                 GL.DeleteLists(mDispLists[0][id], 1);
                 objectsListTreeView.Nodes.Remove(node);
                 m_AreChanges = true;
                 glLevelView.Refresh();
+
             }
-            else
+            else if (obj.mType == "PathPointObj")
             {
-                Console.WriteLine("we'll implement this later...");
+                PathPointObj pobj = node.Tag as PathPointObj;
+                PathObj parentPath = pobj.mParent;
+                Zone z = pobj.mParentZone;
+                z.DeletePathPointFromPath(parentPath.mUnique, node.Parent.Nodes.IndexOf(node));
+
+                var Pos_ZoneOffset = mGalaxy.Get_Pos_GlobalOffset(z.mZoneName);
+                var Rot_ZoneOffset = mGalaxy.Get_Rot_GlobalOffset(z.mZoneName);
+
+                GL.DeleteLists(mDispLists[0][parentPath.mUnique], 1);
+                GL.NewList(mDispLists[0][parentPath.mUnique], ListMode.Compile);
+
+                GL.PushMatrix();
+                {
+                    GL.Translate(Pos_ZoneOffset);
+                    GL.Rotate(Rot_ZoneOffset.Z, 0f, 0f, 1f);
+                    GL.Rotate(Rot_ZoneOffset.Y, 0f, 1f, 0f);
+                    GL.Rotate(Rot_ZoneOffset.X, 1f, 0f, 0f);
+                }
+
+                parentPath.Render(RenderMode.Opaque);
+                GL.PopMatrix();
+                GL.EndList();
+
+                objectsListTreeView.Nodes.Remove(node);
+                m_AreChanges = true;
+                glLevelView.Refresh();
+            }
+            else if (obj.mType == "StageObj")
+            {
+
             }
         }
 

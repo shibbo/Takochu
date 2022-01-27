@@ -420,6 +420,40 @@ namespace Takochu.smg
             return ret;
         }
 
+        public List<AbstractObj> GetAllObjectsOfTypeFromCurrentScenario(string objType)
+        {
+            List<AbstractObj> ret = new List<AbstractObj>();
+            List<string> layers = GameUtil.GetGalaxyLayers(mGalaxy.GetMaskUsedInZoneOnCurrentScenario(mZoneName));
+
+            foreach(string file in cPossibleFiles)
+            {
+                if (mObjects.ContainsKey(file))
+                {
+                    ret.AddRange(GetObjectsFromLayers(file, objType, layers));
+                }
+            }
+
+            return ret;
+        }
+
+        public bool DoesAnyObjUsePathID(int id, out AbstractObj out_obj)
+        {
+            out_obj = null;
+            List<AbstractObj> objs = GetAllObjectsOfTypeFromCurrentScenario("Obj");
+            objs.AddRange(GetAllObjectsOfTypeFromCurrentScenario("MapPartsObj"));
+
+            foreach(AbstractObj obj in objs)
+            {
+                if (obj.Get<short>("CommonPath_ID") == id)
+                {
+                    out_obj = obj;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public List<int> GetAllUniqueIDsFromZoneOnCurrentScenario() {
             List<string> layers = GameUtil.GetGalaxyLayers(mGalaxy.GetMaskUsedInZoneOnCurrentScenario(mZoneName));
 
@@ -581,6 +615,24 @@ namespace Takochu.smg
                 }
             }
 
+            foreach (PathObj pobj in mPaths)
+            {
+                if (pobj.mUnique == id)
+                {
+                    idx = mPaths.IndexOf(pobj);
+                }
+            }
+
+            if (idx != -1)
+            {
+                mPaths.RemoveAt(idx);
+            }
+        }
+
+        public void DeletePathPointFromPath(int id, int idx)
+        {
+            PathObj path = GetObjFromUniqueID(id) as PathObj;
+            path.RemovePathPointAtIndex(idx);
         }
 
         public Camera GetCamera(string cameraName)
