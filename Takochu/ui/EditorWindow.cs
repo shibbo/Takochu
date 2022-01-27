@@ -1274,6 +1274,31 @@ namespace Takochu.ui
 
         private Ray ScreenToRay(Point mousePos)
         {
+            //Eigen made code.
+            float[] mousePosrayrad_xy = new float[2];
+            float k_FOV_H = k_FOV / 2;
+            //y rad
+            mousePosrayrad_xy[1] = (k_FOV - k_FOV_H) / ((glLevelView.Height / 2) / ((glLevelView.Height / 2) - mousePos.Y));
+            //x rad
+            mousePosrayrad_xy[0] = ((k_FOV * m_AspectRatio) - (k_FOV_H * m_AspectRatio)) / ((glLevelView.Width / 2) / ((glLevelView.Width / 2) - mousePos.X));
+
+            //vector_x,y,z,speed. camera bese.
+            Vector4 ray = new Vector4((float)System.Math.Tan(mousePosrayrad_xy[0]),
+                                      (float)System.Math.Tan(mousePosrayrad_xy[1]), -1f, 1f);
+
+            //rotate
+            Vector3 CamPositionRad = new Vector3((float)System.Math.Cos(m_CamTarget.X),
+                                                 (float)System.Math.Cos(m_CamTarget.Y),
+                                                 (float)System.Math.Cos(m_CamTarget.Z)
+                                                 );
+
+            ray.X *= CamPositionRad.Y * CamPositionRad.Z;
+            ray.Y *= CamPositionRad.X * CamPositionRad.Z;
+            ray.Z *= CamPositionRad.X * CamPositionRad.Y;
+
+
+            //Eigen code end.
+
             //Create camera
             Matrix4 projmtx = m_ProjMatrix;
             Matrix4 viewmtx = m_CamMatrix;
