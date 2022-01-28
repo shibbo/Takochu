@@ -66,6 +66,23 @@ namespace Takochu.smg
         public void RemoveZone(string zoneName)
         {
             mZones[zoneName].Close();
+
+            Zone galaxyZone = GetGalaxyZone();
+
+            foreach(KeyValuePair<string, List<StageObj>> kvp in galaxyZone.mZones)
+            {
+                List<StageObj> objs = new List<StageObj>();
+
+                foreach(StageObj stageObj in kvp.Value)
+                {
+                    if (stageObj.mName == zoneName)
+                    {
+                        galaxyZone.mZones[kvp.Key].RemoveAt(galaxyZone.mZones[kvp.Key].IndexOf(stageObj));
+                        break;
+                    }
+                }
+            }
+
             mZones.Remove(zoneName);
             mZoneEntries.Remove(zoneName);
             
