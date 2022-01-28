@@ -454,6 +454,29 @@ namespace Takochu.smg
             return false;
         }
 
+        public List<int> GetAllUniqueIDS()
+        {
+            List<int> ids = new List<int>();
+
+            foreach (string str in cPossibleFiles)
+            {
+                if (mObjects.ContainsKey(str))
+                {
+                    foreach (string layer in GameUtil.GalaxyLayersCommon)
+                    {
+                        if (mObjects[str].ContainsKey(layer))
+                        {
+                            mObjects[str][layer].ForEach(o => ids.Add(o.mUnique));
+                        }
+                    }
+                }
+            }
+
+            mPaths.ForEach(p => ids.Add(p.mUnique));
+
+            return ids;
+        }
+
         public List<int> GetAllUniqueIDsFromZoneOnCurrentScenario() {
             List<string> layers = GameUtil.GetGalaxyLayers(mGalaxy.GetMaskUsedInZoneOnCurrentScenario(mZoneName));
 

@@ -79,7 +79,6 @@ namespace Takochu.smg.obj
             colorWireRenderer = new ColorWireRenderer(AreaType.Normal, mAreaShapeNo);
             mRenderer = colorWireRenderer;
             mTruePosition = AdjustmentPosition;
-
         }
 
         public override void Render(RenderMode mode)

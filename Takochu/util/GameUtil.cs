@@ -6,6 +6,27 @@ namespace Takochu.util
 {
     public static class GameUtil
     {
+        public static string[] GalaxyLayersCommon = new string[]
+        {
+            "Common",
+            "LayerA",
+            "LayerB",
+            "LayerC",
+            "LayerD",
+            "LayerE",
+            "LayerF",
+            "LayerG",
+            "LayerH",
+            "LayerI",
+            "LayerJ",
+            "LayerK",
+            "LayerL",
+            "LayerM",
+            "LayerN",
+            "LayerO",
+            "LayerP"
+        };
+
         public static string[] GalaxyLayers = new string[]
         {
             "LayerA",

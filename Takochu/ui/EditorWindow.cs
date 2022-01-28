@@ -411,7 +411,6 @@ namespace Takochu.ui
             }
 
             mGalaxy.Close();
-            
         }
 
         private void EditorWindow_Load(object sender, EventArgs e)
@@ -1600,6 +1599,12 @@ namespace Takochu.ui
         {
             AbstractObj obj = node.Tag as AbstractObj;
 
+            if (node.Text == mGalaxy.mName)
+            {
+                MessageBox.Show("You cannot delete the main galaxy!");
+                return;
+            }
+
             // paths and stages require additional logic to delete
             if (obj.mType != "StageObj" && obj.mType != "PathPointObj")
             {
@@ -1670,7 +1675,23 @@ namespace Takochu.ui
             }
             else if (obj.mType == "StageObj")
             {
+                List<int> ids = mGalaxy.GetZone(obj.mName).GetAllUniqueIDS();
+                mGalaxy.RemoveZone(obj.mName);
 
+                foreach(int id in ids)
+                {
+                    // only delete the display lists for the objects that are currently in the scene
+                    // the RemoveZone functions removes the ones not in it
+                    if (mDispLists[0].ContainsKey(id))
+                    {
+                        GL.DeleteLists(mDispLists[0][id], 1);
+                    }
+                }
+
+                objectsListTreeView.Nodes.Remove(node);
+
+                m_AreChanges = true;
+                glLevelView.Refresh();
             }
         }
 
