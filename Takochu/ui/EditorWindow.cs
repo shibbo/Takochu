@@ -411,7 +411,6 @@ namespace Takochu.ui
             }
 
             mGalaxy.Close();
-            
         }
 
         private void EditorWindow_Load(object sender, EventArgs e)
@@ -1010,7 +1009,7 @@ namespace Takochu.ui
             m_LastMouseMove = m_LastMouseClick = e.Location;
         }
 
-        private void ChangeToNode(TreeNode node)
+        private void ChangeToNode(TreeNode node, bool changeCamera=false)
         {
             AbstractObj abstractObj = node.Tag as AbstractObj;
 
@@ -1025,20 +1024,23 @@ namespace Takochu.ui
             }
             else
             {
-                //objects Camera Setting
-                //The following process moves the camera to the object.
-                var ZoneName = abstractObj.mParentZone.mZoneName;
-                var Pos_ZoneOffset = mGalaxy.Get_Pos_GlobalOffset(ZoneName);
-                var Rot_ZoneOffset = mGalaxy.Get_Rot_GlobalOffset(ZoneName);
+                if (changeCamera)
+                {
+                    //objects Camera Setting
+                    //The following process moves the camera to the object.
+                    var ZoneName = abstractObj.mParentZone.mZoneName;
+                    var Pos_ZoneOffset = mGalaxy.Get_Pos_GlobalOffset(ZoneName);
+                    var Rot_ZoneOffset = mGalaxy.Get_Rot_GlobalOffset(ZoneName);
 
-                var PosObj = abstractObj.mTruePosition;
-                var CorrectPos_Object = calc.RotAfin.GetPositionAfterRotation(PosObj, Rot_ZoneOffset, calc.RotAfin.TargetVector.All);
+                    var PosObj = abstractObj.mTruePosition;
+                    var CorrectPos_Object = calc.RotAfin.GetPositionAfterRotation(PosObj, Rot_ZoneOffset, calc.RotAfin.TargetVector.All);
 
-                m_CamDistance = 0.200f;
-                m_CamTarget = Pos_ZoneOffset / 10000f + CorrectPos_Object / 10000;
-                m_CamPosition = CorrectPos_Object / 10000;
-                m_CamRotation.Y = (float)Math.PI / 8f;
-                m_CamRotation.X = (-(abstractObj.mTrueRotation.Y + Pos_ZoneOffset.Y) / 180f) * (float)Math.PI;
+                    m_CamDistance = 0.200f;
+                    m_CamTarget = Pos_ZoneOffset / 10000f + CorrectPos_Object / 10000;
+                    m_CamPosition = CorrectPos_Object / 10000;
+                    m_CamRotation.Y = (float)Math.PI / 8f;
+                    m_CamRotation.X = (-(abstractObj.mTrueRotation.Y + Pos_ZoneOffset.Y) / 180f) * (float)Math.PI;
+                }
 
                 //objects PropertyGrideSetting
                 //Display the property grid for setting the currently selected object.
@@ -1124,7 +1126,7 @@ namespace Takochu.ui
 
         private void objectsListTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            ChangeToNode(e.Node);
+            ChangeToNode(e.Node, (Control.ModifierKeys == Keys.Shift));
         }
 
         private void objectsListTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -1600,6 +1602,12 @@ namespace Takochu.ui
         {
             AbstractObj obj = node.Tag as AbstractObj;
 
+            if (node.Text == mGalaxy.mName)
+            {
+                MessageBox.Show("You cannot delete the main galaxy!");
+                return;
+            }
+
             // paths and stages require additional logic to delete
             if (obj.mType != "StageObj" && obj.mType != "PathPointObj")
             {
@@ -1670,7 +1678,28 @@ namespace Takochu.ui
             }
             else if (obj.mType == "StageObj")
             {
+                DialogResult res = MessageBox.Show("You are about to delete an entire zone. Are you sure?", "Zone Deletion", MessageBoxButtons.YesNo);
 
+                if (res == DialogResult.Yes)
+                {
+                    List<int> ids = mGalaxy.GetZone(obj.mName).GetAllUniqueIDS();
+                    mGalaxy.RemoveZone(obj.mName);
+
+                    foreach (int id in ids)
+                    {
+                        // only delete the display lists for the objects that are currently in the scene
+                        // the RemoveZone functions removes the ones not in it
+                        if (mDispLists[0].ContainsKey(id))
+                        {
+                            GL.DeleteLists(mDispLists[0][id], 1);
+                        }
+                    }
+
+                    objectsListTreeView.Nodes.Remove(node);
+
+                    m_AreChanges = true;
+                    glLevelView.Refresh();
+                }
             }
         }
 

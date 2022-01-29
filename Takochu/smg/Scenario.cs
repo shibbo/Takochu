@@ -32,6 +32,11 @@ namespace Takochu.smg
                 mZoneMasks.Add(zone, mEntry.Get<int>(zone));
         }
 
+        public void RemoveZone(string zoneName)
+        {
+            mZoneMasks.Remove(zoneName);
+        }
+
         public BCSV.Entry mEntry;
         public int mScenarioNo;
         public string mScenarioName;

@@ -21,7 +21,9 @@ namespace Takochu.smg
             mFilesystem = game.mFilesystem;
             mName = name;
 
+            mRemovedZones = new List<string>();
             mZones = new Dictionary<string, Zone>();
+            mZoneEntries = new Dictionary<string, BCSV.Entry>();
             //var a = mFilesystem.OpenFile($"/StageData/{name}/{name}Scenario.arc");
             mScenarioFile = new RARCFilesystem(mFilesystem.OpenFile($"/StageData/{name}/{name}Scenario.arc"));
             //a.Close();
@@ -38,6 +40,7 @@ namespace Takochu.smg
                     continue;
 
                 mZones.Add(n, new Zone(this, n));
+                mZoneEntries.Add(n, e);
             }
 
             zonesBCSV.Close();
@@ -60,6 +63,37 @@ namespace Takochu.smg
             mGalaxyName = NameHolder.GetGalaxyName(name);
         }
 
+        public void RemoveZone(string zoneName)
+        {
+            mZones[zoneName].Close();
+
+            Zone galaxyZone = GetGalaxyZone();
+
+            foreach(KeyValuePair<string, List<StageObj>> kvp in galaxyZone.mZones)
+            {
+                List<StageObj> objs = new List<StageObj>();
+
+                foreach(StageObj stageObj in kvp.Value)
+                {
+                    if (stageObj.mName == zoneName)
+                    {
+                        galaxyZone.mZones[kvp.Key].RemoveAt(galaxyZone.mZones[kvp.Key].IndexOf(stageObj));
+                        break;
+                    }
+                }
+            }
+
+            mZones.Remove(zoneName);
+            mZoneEntries.Remove(zoneName);
+            
+            foreach(KeyValuePair<int, Scenario> kvp in mScenarios)
+            {
+                kvp.Value.RemoveZone(zoneName);
+            }
+
+            mRemovedZones.Add(zoneName);
+        }
+
         public void Close()
         {
             mFilesystem.Close();
@@ -68,6 +102,7 @@ namespace Takochu.smg
             {
                 zone.Close();
             }
+
             mScenarioFile.Close();
         }
 
@@ -249,11 +284,22 @@ namespace Takochu.smg
 
         public void Save()
         {
-            foreach(KeyValuePair<string, Zone> z in mZones)
+            BCSV zonesBCSV = new BCSV(mScenarioFile.OpenFile("/root/ZoneList.bcsv"));
+            zonesBCSV.mEntries.Clear();
+
+            foreach (KeyValuePair<string, Zone> z in mZones)
             {
                 z.Value.Save();
+                zonesBCSV.mEntries.Add(mZoneEntries[z.Key]);
             }
 
+            foreach (string zone in mRemovedZones)
+            {
+                zonesBCSV.RemoveField(zone);
+            }
+
+            zonesBCSV.Save();
+            mScenarioFile.Save();
             NameHolder.Save();
         }
 
@@ -279,6 +325,8 @@ namespace Takochu.smg
 
         public string mName;
         private Dictionary<string, Zone> mZones;
+        private Dictionary<string, BCSV.Entry> mZoneEntries;
+        private List<string> mRemovedZones;
         public string mGalaxyName;
         public string mCurScenarioName;
     }
