@@ -37,15 +37,37 @@ namespace Takochu.smg
             mZoneMasks.Remove(zoneName);
         }
 
-        public BCSV.Entry mEntry;
-        public int mScenarioNo;
-        public string mScenarioName;
-        public int mPowerStarID;
-        public string mAppearPowerStar;
-        public string mPowerStarType;
-        public string mComet;
-        public int mCometLimitTimer;
+        public BCSV.Entry mEntry { get; private set; }
+        public int mScenarioNo { get; private set; }
+        public string mScenarioName { get; private set; }
+        public int mPowerStarID { get; private set; }
+        public string mAppearPowerStar { get; private set; }
+        public string mPowerStarType { get; private set; }
+        public string mComet { get; private set; }
+        public int mCometLimitTimer { get; private set; }
 
-        public Dictionary<string, int> mZoneMasks;
+        public Dictionary<string, int> mZoneMasks { get; private set; }
+
+        public enum SMG2Comets 
+        {
+            None,
+            Red,
+            Purple,
+            Quick,
+            Dark,
+            Exterminate,
+            Mimic
+        }
+
+        public enum SMG1Comets 
+        {
+            None,
+            Red,
+            Purple,
+            Quick,
+            Dark,
+            Black,
+            Ghost
+        }
     }
 }
