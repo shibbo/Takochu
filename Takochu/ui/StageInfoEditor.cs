@@ -11,94 +11,128 @@ using Takochu.fmt;
 using Takochu.smg;
 using Takochu.smg.img;
 using Takochu.util;
+using Takochu.ui.StageInfoEditorSys;
+using System.Collections;
 
 namespace Takochu.ui
 {
     public partial class StageInfoEditor : Form
     {
-        private Galaxy mGalaxy;
-        private BGMInfo.BGMInfoEntry mInfoEntry;
-        private List<BGMInfo.ScenarioBGMEntry> mScenarioEntries;
-        private List<int> mBGMRestrictedIDs;
-        private bool mIsRestrictBGM = false;
-        private Dictionary<int, Scenario> mScenarios;
-        private int mCurScenario;
-        private bool mIsInitialized = false;
+        private Galaxy _galaxy;
+        private BGMInfo.BGMInfoEntry _infoEntry;
+        private List<BGMInfo.ScenarioBGMEntry> _scenarioEntries;
+        private List<int> _bgmRestrictedIDs;
+        private bool _isRestrictBGM = false;
+        private int _currentScenario;
+        private bool misInitialized = false;
+        private readonly ScenarioInformation _scenarioInformation;
+
 
         public StageInfoEditor(ref Galaxy galaxy, int scenarioNo)
         {
             InitializeComponent();
-            ToggleLayersEnabled(false);
+            ToggleLayersEnabled(UseLayerFlags, false);
 
-            tabPage3.Visible = false;
+            //コメットのコンボボックスにコメット名を入れる
+            Type cometGameType = typeof(Scenario.SMG1Comets);
+            if (GameUtil.IsSMG2()) cometGameType = typeof(Scenario.SMG2Comets);
 
-            mGalaxy = galaxy;
-            mScenarios = new Dictionary<int, Scenario>();
-
-            galaxyInfoTexture.Image = ImageHolder.GetImage(mGalaxy.mName);
-
-
-
-            mCurScenario = 0;
-
-            foreach (KeyValuePair<int, Scenario> scenarios in mGalaxy.mScenarios)
+            foreach (var cometName in Enum.GetValues(cometGameType))
             {
-                Scenario ReadScenario = scenarios.Value;
-
-                TreeNode n = new TreeNode($"[{ReadScenario.mScenarioNo}] {ReadScenario.mScenarioName}")
-                {
-                    Tag = ReadScenario.mScenarioNo
-                };
-
-                scenarioListTreeView.Nodes.Add(n);
-
-                mScenarios.Add(ReadScenario.mScenarioNo, mGalaxy.GetScenario(ReadScenario.mScenarioNo));
+                CometTypeComboBox.Items.Add(cometName);
             }
 
-            if (scenarioListTreeView.Nodes.Count == 0)
+
+#if DEBUG
+#else
+            //デバッグのタブページを削除
+            MainTabControl.TabPages.Remove(MainTabControl.TabPages["DebugTabPage"]);
+#endif
+            //初期化
+            _galaxy = galaxy;
+            _scenarioInformation = new ScenarioInformation(_galaxy, ScenarioListTreeView);
+            GalaxyNameLabel.Text = _galaxy.mGalaxyName;
+            ScenarioListTreeView.SelectedNode = ScenarioListTreeView.Nodes[0];
+
+            SetGalaxyImageLayouts();
+
+
+
+
+            //コンボボックスにゾーンを入れる
+            foreach (KeyValuePair<string, Zone> zone in _galaxy.GetZones())
             {
-                throw new Exception("scenarioListTreeView Node Count is 0");
+                ZoneComboBox.Items.Add(zone.Key);
             }
 
-            scenarioListTreeView.SelectedNode = scenarioListTreeView.Nodes[0];
+            SetStageBGMListBox();
 
-
-
-            foreach (KeyValuePair<string, Zone> z in mGalaxy.GetZones())
-                zoneListsBox.Items.Add(z.Key);
-
-            mIsInitialized = true;
+            //必要か不明
+            //_currentScenario = 0;
+            misInitialized = true;
         }
 
-
-
-        private void scenarioListTreeView_AfterSelect(object sender, TreeViewEventArgs e)
+        private void SetStageBGMListBox()
         {
-            var ScenarioTreeView = (TreeView)sender;
-
-            var SelectedScenarioNo = Convert.ToInt32(ScenarioTreeView.SelectedNode.Tag);
-
-            if (scenarioListTreeView.SelectedNode == null) return;
-
-            mIsInitialized = false;
-            mCurScenario = SelectedScenarioNo;
-
-
-
-
-            var scenario = mScenarios[mCurScenario];
-            scenarioNameTxt.Text = scenario.mEntry.Get<string>("ScenarioName");
-            powerStarID.Value = scenario.mEntry.Get<int>("PowerStarId");
-            appearPowerStarTxt.Text = scenario.mEntry.Get<string>("AppearPowerStarObj");
-            powerStarTypeTxt.Text = scenario.mEntry.Get<string>("PowerStarType");
-            cometTypeTxt.Text = scenario.mEntry.Get<string>("Comet");
-            cometTimer.Value = scenario.mEntry.Get<int>("CometLimitTimer");
-
-            mIsInitialized = true;
+            StageBGMListBox.Items.Clear();
+            foreach (var stageBGM in BGMInfo.mStageEntries)
+            {
+                StageBGMListBox.Items.Add(stageBGM.Key);
+            }
 
         }
 
-        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        /// <summary>
+        /// ギャラクシーのサムネイルを設定
+        /// </summary>
+        private void SetGalaxyImageLayouts()
+        {
+            //ギャラクシーイメージの制御
+            GalaxyInfoPictureBox.Image = ImageHolder.GetImage(_galaxy.mName);
+
+            //ピクチャーボックスにラベルコントロールを追加
+            GalaxyInfoPictureBox.Controls.Add(GalaxyNameLabel);
+
+            //ピクチャーボックス上の名前の処理
+            GalaxyNameLabel.Top -= GalaxyInfoPictureBox.Top;
+            GalaxyNameLabel.Left -= GalaxyInfoPictureBox.Left;
+            GalaxyNameLabel.BackColor = Color.Transparent;
+        }
+
+        /// <summary>
+        /// テキストボックスなどにシナリオの情報を表示
+        /// </summary>
+        /// <param name="scenario">対象のシナリオ</param>
+        private void SetScenarioInfo(Scenario scenario)
+        {
+            ScenarioNameTextBox.Text = scenario.mEntry.Get<string>("ScenarioName");
+            AppearPowerStarTextBox.Text = scenario.mEntry.Get<string>("AppearPowerStarObj");
+            PowerStarTypeTextBox.Text = scenario.mEntry.Get<string>("PowerStarType");
+            CometTypeTextBox.Text = scenario.mEntry.Get<string>("Comet");
+            PowerStarIDTextBox.Value = scenario.mEntry.Get<int>("PowerStarId");
+            CometTimerTextBox.Value = scenario.mEntry.Get<int>("CometLimitTimer");
+        }
+
+        private void ScenarioListTreeView_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            var scenarioTreeView = (TreeView)sender;
+
+            if (scenarioTreeView.Nodes.Count < 1) return;
+
+            _currentScenario = Convert.ToInt32(scenarioTreeView.SelectedNode.Tag);
+
+            SetScenarioInfo(_scenarioInformation.Scenarios[_currentScenario]);
+            ZoneComboBox.SelectedItem = _galaxy.mName;
+            UseLayerCheckBoxReload();
+
+            misInitialized = false;
+            misInitialized = true;
+
+        }
+
+
+
+        private void BGMTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             //if (tabControl1.SelectedTab != null && tabControl1.SelectedTab.Tag != null)
             //{
@@ -138,144 +172,210 @@ namespace Takochu.ui
             //}
         }
 
-        private void zoneListsBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void ZoneComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ResetLayers();
-            ToggleLayersEnabled(true);
-
-            if (zoneListsBox.SelectedIndex < 0) return;
-            if (zoneListsBox.SelectedIndex > zoneListsBox.Items.Count) 
-            {
-                zoneListsBox.SelectedIndex = 0;
-            }
-
-            var ZoneName = Convert.ToString(zoneListsBox.SelectedItem);
-
-            var BCSV_Entry = mScenarios[mCurScenario /*+1*/].mEntry;
-
-            var Mask = BCSV_Entry.Get<int>(ZoneName);
-            var LayerList = GameUtil.GetGalaxyLayers(Mask);
-
-            foreach (Control control in layerMasksBox.Controls)
-            {
-                if (control.Tag == null)
-                    continue;
-
-                string TagStr = control.Tag.ToString();
-                if (control is CheckBox && TagStr.StartsWith("Layer"))
-                {
-                    CheckBox checkBox = control as CheckBox;
-                    if (LayerList.Contains(TagStr))
-                        checkBox.Checked = true;
-                }
-            }
-
+            UseLayerCheckBoxReload();
         }
 
-        private void ResetLayers()
+
+        /// <summary>
+        /// ゾーンで使用されるレイヤーのチェックボックスを再読み込みします。
+        /// </summary>
+        private void UseLayerCheckBoxReload()
         {
-            foreach (Control c in layerMasksBox.Controls)
+            ResetLayers(UseLayerFlags);
+            ToggleLayersEnabled(UseLayerFlags, true);
+
+            if (ZoneComboBox.SelectedIndex < 0) return;
+
+            //var zoneName = Convert.ToString(ZoneComboBox.SelectedItem);
+
+            var bcsv_Entry = _scenarioInformation.Scenarios[_currentScenario].mEntry;
+            var powerStarID = bcsv_Entry.Get<int>("PowerStarId");
+            var maskBitData = bcsv_Entry.Get<int>(Convert.ToString(ZoneComboBox.SelectedItem));
+            var layerList = GameUtil.GetGalaxyLayers(maskBitData);
+
+            DebugTextBox.Text = string.Empty;
+            DebugTextBox.Text = maskBitData.ToString();
+
+            foreach (Control control in UseLayerFlags.Controls)
             {
-                if (c is CheckBox)
-                {
-                    CheckBox box = c as CheckBox;
-                    box.Checked = false;
-                }
+                if (control.Tag == null) continue;
+
+                string TagStr = control.Tag.ToString();
+
+                if (!(control is CheckBox && TagStr.StartsWith("Layer"))) continue;
+                CheckBox checkBox = control as CheckBox;
+
+
+                if (!layerList.Contains(TagStr)) continue;
+                checkBox.Checked = true;
+
+
+
+            }
+
+
+            ResetLayers(ShowScenarioStarFlags);
+            ToggleLayersEnabled(ShowScenarioStarFlags, true);
+            int[] powerStarIDArray = new int[] { powerStarID };
+            var bitarray = new BitArray(powerStarIDArray);
+
+
+            for (int i = 0; i < ShowScenarioStarFlags.Controls.Count; i++)
+            {
+
+                if (!ShowScenarioStarFlags.Controls[i].Tag.ToString().StartsWith("Scenario")) continue;
+
+                var scenarioNostr = ShowScenarioStarFlags.Controls[i].Tag.ToString().Skip("Scenario".Length).ToArray();
+                var scenarioNo = int.Parse(string.Concat(scenarioNostr));
+
+                if (!(ShowScenarioStarFlags.Controls[i] is CheckBox)) continue;
+
+                var cb = ShowScenarioStarFlags.Controls[i] as CheckBox;
+                cb.Checked = bitarray[scenarioNo - 1];
+
+
+
+            }
+        }
+
+        /// <summary>
+        /// グループボックス内の「<see cref="CheckBox.Checked"/>」プロパティをすべて<see langword="false"/>にする
+        /// </summary>
+        /// <param name="groupBox"></param>
+        private void ResetLayers(GroupBox groupBox)
+        {
+            foreach (Control control in groupBox.Controls)
+            {
+                if (!(control is CheckBox)) continue;
+                CheckBox checkBox = control as CheckBox;
+                checkBox.Checked = false;
+
             }
         }
 
         private void saveScenarioBtn_Click(object sender, EventArgs e)
         {
-            mGalaxy.SaveScenario();
+
             //BGMInfo.Save();
         }
 
         private void NumericInt_ValueChanged(object sender, EventArgs e)
         {
-            if (!mIsInitialized)
-                return;
+            //if (!misInitialized)
+            //    return;
 
-            NumericUpDown n = sender as NumericUpDown;
+            //NumericUpDown n = sender as NumericUpDown;
 
-            // time for some hacks
-            if (tabControl2.SelectedTab.Text == "BGM")
-            {
-                if (tabControl1.SelectedTab.Text == "Stage")
-                {
-                    mInfoEntry.Entry.Set(n.Tag.ToString(), Convert.ToInt32(n.Value));
-                }
-                else
-                {
-                    int scenario = 0;
+            //// time for some hacks
+            //if (MainTabControl.SelectedTab.Text == "BGM")
+            //{
+            //    if (BGMTabControl.SelectedTab.Text == "Stage")
+            //    {
+            //        _infoEntry.Entry.Set(n.Tag.ToString(), Convert.ToInt32(n.Value));
+            //    }
+            //    else
+            //    {
+            //        int scenario = 0;
 
-                    // if we are in a restricted scenario, we default to changing the entry with scenario 0
-                    if (!mBGMRestrictedIDs.Contains(mCurScenario))
-                    {
-                        scenario = mCurScenario;
-                    }
+            //        // if we are in a restricted scenario, we default to changing the entry with scenario 0
+            //        if (!_bgmRestrictedIDs.Contains(_currentScenario))
+            //        {
+            //            scenario = _currentScenario;
+            //        }
 
-                    BGMInfo.ScenarioBGMEntry scenarioEntry = mScenarioEntries.Find(entry => entry.Entry.Get<int>("ScenarioNo") == 0);
-                    scenarioEntry.Entry.Set(n.Tag.ToString(), Convert.ToInt32(n.Value));
-                }
-            }
-            else
-            {
-                mScenarios[mCurScenario].mEntry.Set(n.Tag.ToString(), Convert.ToInt32(n.Value));
-            }
+            //        BGMInfo.ScenarioBGMEntry scenarioEntry = _scenarioEntries.Find(entry => entry.Entry.Get<int>("ScenarioNo") == 0);
+            //        scenarioEntry.Entry.Set(n.Tag.ToString(), Convert.ToInt32(n.Value));
+            //    }
+            //}
+            //else
+            //{
+            //    _scenarioInformation.Scenarios[_currentScenario].mEntry.Set(n.Tag.ToString(), Convert.ToInt32(n.Value));
+            //}
         }
 
         private void TextBox_ValueChanged(object sender, EventArgs e)
         {
-            if (!mIsInitialized)
-                return;
+            //if (!misInitialized)
+            //    return;
 
-            TextBox n = sender as TextBox;
+            TextBox textBox = sender as TextBox;
 
             // time for some hacks
-            if (tabControl2.SelectedTab.Text == "BGM")
+            if (MainTabControl.SelectedTab.Text != "BGM_InfoTabPage") return;
+
+
+
+            if (BGMTabControl.SelectedTab.Text == "StageBGM_InfoTabPage")
             {
-                if (tabControl1.SelectedTab.Text == "Stage")
-                {
-                    mInfoEntry.Entry.Set(n.Tag.ToString(), n.Text);
-                }
-                else
-                {
-                    int scenario = 0;
-
-                    // if we are in a restricted scenario, we default to changing the entry with scenario 0
-                    if (!mBGMRestrictedIDs.Contains(mCurScenario))
-                    {
-                        scenario = mCurScenario;
-                    }
-
-                    BGMInfo.ScenarioBGMEntry scenarioEntry = mScenarioEntries.Find(entry => entry.Entry.Get<int>("ScenarioNo") == 0);
-                    scenarioEntry.Entry.Set(n.Tag.ToString(), n.Text);
-                }
+                _infoEntry.Entry.Set(textBox.Tag.ToString(), textBox.Text);
             }
             else
             {
-                mScenarios[mCurScenario].mEntry.Set(n.Tag.ToString(), n.Text);
+                int scenario = 0;
+
+                // if we are in a restricted scenario, we default to changing the entry with scenario 0
+                if (!_bgmRestrictedIDs.Contains(_currentScenario))
+                {
+                    scenario = _currentScenario;
+                }
+
+                BGMInfo.ScenarioBGMEntry scenarioEntry = _scenarioEntries.Find(entry => entry.Entry.Get<int>("ScenarioNo") == 0);
+                scenarioEntry.Entry.Set(textBox.Tag.ToString(), textBox.Text);
             }
+
+
         }
 
-        private void ToggleLayersEnabled(bool isEnabled)
+
+        /// <summary>
+        /// グループボックス内にある「<see cref="CheckBox"/>」の「<see cref="Control.Enabled"/>」プロパティをすべて「<paramref name="isEnabled"/>」にする
+        /// </summary>
+        /// <param name="groupBox"></param>
+        /// <param name="isEnabled"></param>
+        private void ToggleLayersEnabled(GroupBox groupBox, bool isEnabled)
         {
-            foreach (Control control in layerMasksBox.Controls)
+            foreach (Control control in groupBox.Controls)
             {
-                if (control is CheckBox)
-                {
-                    CheckBox box = control as CheckBox;
-                    box.Enabled = isEnabled;
-                }
+                if (!(control is CheckBox)) continue;
+                CheckBox checkBox = control as CheckBox;
+                checkBox.Enabled = isEnabled;
             }
         }
 
         private void ZoneLayerCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-            CheckBox c = sender as CheckBox;
-            string zone = zoneListsBox.SelectedItem.ToString();
-            int newMask = GameUtil.SetLayerOnMask(c.Tag.ToString(), mScenarios[mCurScenario /*+ 1*/].mEntry.Get<int>(zone), c.Checked);
-            mScenarios[mCurScenario /*+ 1*/].mEntry.Set(zone, newMask);
+            CheckBox checkbox = sender as CheckBox;
+            string zoneName = ZoneComboBox.SelectedItem.ToString();
+            int newMask = GameUtil.SetLayerOnMask(checkbox.Tag.ToString(), _scenarioInformation.Scenarios[_currentScenario].mEntry.Get<int>(zoneName), checkbox.Checked);
+            //_scenarioInformation.Scenarios[_currentScenario /*+ 1*/].mEntry.Set(zone, newMask);
+        }
+
+        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _galaxy.SaveScenario();
+        }
+
+        private void StageBGMListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var listBox = (ListBox)sender;
+            if (listBox.Items.Count == 0) return;
+
+            var selectString = listBox.Items[listBox.SelectedIndex].ToString();
+            var stageBgm = BGMInfo.mStageEntries[selectString];
+            changeBgmIdName_0.Text = stageBgm.ChangeBGMIDName[0];
+            changeBgmIdName_1.Text = stageBgm.ChangeBGMIDName[1];
+            changeBgmIdName_2.Text = stageBgm.ChangeBGMIDName[2];
+            changeBgmIdName_3.Text = stageBgm.ChangeBGMIDName[3];
+            changeBgmIdName_4.Text = stageBgm.ChangeBGMIDName[4];
+
+            changeBgmState_0.Value = stageBgm.ChangeBGMState[0];
+            changeBgmState_1.Value = stageBgm.ChangeBGMState[1];
+            changeBgmState_2.Value = stageBgm.ChangeBGMState[2];
+            changeBgmState_3.Value = stageBgm.ChangeBGMState[3];
+            changeBgmState_4.Value = stageBgm.ChangeBGMState[4];
+
         }
 
         //public StageInfoEditor(ref Galaxy galaxy, int scenarioNo)
