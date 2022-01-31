@@ -572,6 +572,19 @@ namespace Takochu.smg
             }
         }
 
+        public PathObj GetPathFromID(int id)
+        {
+            foreach (PathObj pobj in mPaths)
+            {
+                if (pobj.mID == id)
+                {
+                    return pobj;
+                }
+            }
+
+            return null;
+        }
+
         public AbstractObj GetObjFromUniqueID(int id)
         {
             List<string> layers = GameUtil.GetGalaxyLayers(mGalaxy.GetMaskUsedInZoneOnCurrentScenario(mZoneName));
