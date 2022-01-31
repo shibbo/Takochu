@@ -1124,15 +1124,14 @@ namespace Takochu.ui
                     if (abstractObj.CanUsePath())
                     {
                         Zone z = abstractObj.mParentZone;
+                        // we need to delete any rendered paths
+                        List<int> ids = z.GetAllUniqueIDsFromObjectsOfType("PathObj");
+                        ids.ForEach(i => GL.DeleteLists(mDispLists[0][i], 1));
                         PathObj path = z.GetPathFromID(abstractObj.mEntry.Get<short>("CommonPath_ID"));
 
                         if (path != null)
                         {
                             // now we render only this path
-                            // we also need to delete any rendered paths
-                            List<int> ids = z.GetAllUniqueIDsFromObjectsOfType("PathObj");
-                            ids.ForEach(i => GL.DeleteLists(mDispLists[0][i], 1));
-
                             var Pos_ZoneOffset = mGalaxy.Get_Pos_GlobalOffset(path.mParentZone.mZoneName);
                             var Rot_ZoneOffset = mGalaxy.Get_Rot_GlobalOffset(path.mParentZone.mZoneName);
 
