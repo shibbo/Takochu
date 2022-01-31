@@ -249,6 +249,7 @@
     <Compile Include="ui\RARCExplorer.Designer.cs">
       <DependentUpon>RARCExplorer.cs</DependentUpon>
     </Compile>
+    <Compile Include="util\EditorUtil.cs" />
     <Compile Include="util\GameUtil.cs" />
     <Compile Include="ui\MessageEditor.cs">
       <SubType>Form</SubType>
@@ -328,6 +329,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="res\FieldTypes.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="res\translations\jp\GalaxyNames_SMG1.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -176,6 +176,20 @@ namespace Takochu.ui.EditorWindowSys
         private void Change_mValues(string name, object value)
         {
             Console.WriteLine($"Change_mValues: {name}");
+
+            if (BCSV.sFieldTypeTable.ContainsKey(name))
+            {
+                switch(BCSV.sFieldTypeTable[name])
+                {
+                    case "float":
+                        value = Convert.ToSingle(value);
+                        break;
+                }
+            }
+
+            EditorUtil.ObjectEditAction prev = new EditorUtil.ObjectEditAction(_abstObj, name, _abstObj.mEntry.Get<object>(name));
+            EditorUtil.ObjectEditAction now = new EditorUtil.ObjectEditAction(_abstObj, name, value);
+            EditorUtil.EditorActionHolder.AddAction(EditorUtil.EditorActionHolder.ActionType.ActionType_AddObject, prev, now);
             
             if (IsObj_args(name)) 
             {

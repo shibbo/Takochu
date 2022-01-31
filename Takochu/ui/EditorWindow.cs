@@ -1209,7 +1209,7 @@ namespace Takochu.ui
                 var tes = dgv[e.ColumnIndex, e.RowIndex] as DataGridViewComboBoxCell;
                 cell_value = tes.Items.IndexOf(cell_value)-1;
                 Console.WriteLine("DataGridViewComboBoxCellです");
-            } 
+            }
             
             dataGridViewEdit.ChangeValue(e.RowIndex,cell_value);
 
@@ -1282,7 +1282,15 @@ namespace Takochu.ui
             }
 
             m_AreChanges = true;
+            undoToolStripMenuItem.Enabled = true;
             glLevelView.Refresh();
+
+            // if redoing was possible at this point, it is no longer possible since we have introduced a more recent redo
+            if (EditorUtil.EditorActionHolder.CanRedo())
+            {
+                EditorUtil.EditorActionHolder.ClearActionsAfterCurrent();
+                redoToolStripMenuItem.Enabled = false;
+            }
             
         }
 
@@ -1766,6 +1774,127 @@ namespace Takochu.ui
             {
                 deleteObjNode(objectsListTreeView.SelectedNode);
             }
+        }
+
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EditorUtil.EditorAction to;
+            EditorUtil.EditorAction from;
+            EditorUtil.EditorActionHolder.DoUndo(out from, out to);
+
+            if (from.mActionType == EditorUtil.EditorActionHolder.ActionType.ActionType_EditObject)
+            {
+                EditorUtil.ObjectEditAction objAction = from as EditorUtil.ObjectEditAction;
+                AbstractObj obj = objAction.mEditedObject;
+                Console.WriteLine($"in a perfect would, we would set {objAction.mFieldName} to {objAction.mValue}");
+
+                // this code is only here because there seems to be some issues when it comes to converting types...
+                // forcing these types (as defined in a file) seems to fix a lot of casting issues
+                if (BCSV.sFieldTypeTable.ContainsKey(objAction.mFieldName))
+                {
+                    string fieldtype = BCSV.sFieldTypeTable[objAction.mFieldName];
+
+                    switch (fieldtype)
+                    {
+                        case "float":
+                            obj.mEntry.Set(objAction.mFieldName, (float)objAction.mValue);
+                            break;
+                    }
+                }
+                else
+                {
+                    obj.mEntry.Set(objAction.mFieldName, objAction.mValue);
+                }
+
+                if (objAction.mFieldName.StartsWith("pos_"))
+                {
+                    obj.SetPosition(new Vector3(obj.mEntry.Get<float>("pos_x"), obj.mEntry.Get<float>("pos_y"), obj.mEntry.Get<float>("pos_z")));
+
+                    var Pos_ZoneOffset = mGalaxy.Get_Pos_GlobalOffset(obj.mParentZone.mZoneName);
+                    var Rot_ZoneOffset = mGalaxy.Get_Rot_GlobalOffset(obj.mParentZone.mZoneName);
+
+                    GL.DeleteLists(mDispLists[0][obj.mUnique], 1);
+                    GL.NewList(mDispLists[0][obj.mUnique], ListMode.Compile);
+
+                    GL.PushMatrix();
+                    {
+                        GL.Translate(Pos_ZoneOffset);
+                        GL.Rotate(Rot_ZoneOffset.Z, 0f, 0f, 1f);
+                        GL.Rotate(Rot_ZoneOffset.Y, 0f, 1f, 0f);
+                        GL.Rotate(Rot_ZoneOffset.X, 1f, 0f, 0f);
+                    }
+
+                    obj.Render(RenderMode.Opaque);
+                    GL.PopMatrix();
+                    GL.EndList();
+                    glLevelView.Refresh();
+                }
+
+                m_AreChanges = true;
+            }
+
+            undoToolStripMenuItem.Enabled = EditorUtil.EditorActionHolder.CanUndo();
+            // undoing causes the ability to redo!
+            redoToolStripMenuItem.Enabled = true;
+        }
+
+        private void redoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EditorUtil.EditorAction from;
+            EditorUtil.EditorAction to;
+            EditorUtil.EditorActionHolder.DoRedo(out from, out to);
+
+            if (from.mActionType == EditorUtil.EditorActionHolder.ActionType.ActionType_EditObject)
+            {
+                EditorUtil.ObjectEditAction objAction = to as EditorUtil.ObjectEditAction;
+                AbstractObj obj = objAction.mEditedObject;
+                Console.WriteLine($"in a perfect would, we would set {objAction.mFieldName} to {objAction.mValue}");
+
+                if (BCSV.sFieldTypeTable.ContainsKey(objAction.mFieldName))
+                {
+                    string fieldtype = BCSV.sFieldTypeTable[objAction.mFieldName];
+
+                    switch(fieldtype)
+                    {
+                        case "float":
+                            obj.mEntry.Set(objAction.mFieldName, (float)objAction.mValue);
+                            break;
+                    }
+                }
+                else
+                {
+                    obj.mEntry.Set(objAction.mFieldName, objAction.mValue);
+                }
+
+                if (objAction.mFieldName.StartsWith("pos_"))
+                {
+                    obj.SetPosition(new Vector3(obj.mEntry.Get<float>("pos_x"), obj.mEntry.Get<float>("pos_y"), obj.mEntry.Get<float>("pos_z")));
+
+                    var Pos_ZoneOffset = mGalaxy.Get_Pos_GlobalOffset(obj.mParentZone.mZoneName);
+                    var Rot_ZoneOffset = mGalaxy.Get_Rot_GlobalOffset(obj.mParentZone.mZoneName);
+
+                    GL.DeleteLists(mDispLists[0][obj.mUnique], 1);
+                    GL.NewList(mDispLists[0][obj.mUnique], ListMode.Compile);
+
+                    GL.PushMatrix();
+                    {
+                        GL.Translate(Pos_ZoneOffset);
+                        GL.Rotate(Rot_ZoneOffset.Z, 0f, 0f, 1f);
+                        GL.Rotate(Rot_ZoneOffset.Y, 0f, 1f, 0f);
+                        GL.Rotate(Rot_ZoneOffset.X, 1f, 0f, 0f);
+                    }
+
+                    obj.Render(RenderMode.Opaque);
+                    GL.PopMatrix();
+                    GL.EndList();
+                    glLevelView.Refresh();
+                }
+               
+                m_AreChanges = true; 
+            }
+
+            redoToolStripMenuItem.Enabled = EditorUtil.EditorActionHolder.CanRedo();
+            undoToolStripMenuItem.Enabled = EditorUtil.EditorActionHolder.CanUndo();
         }
 
         private void cameraListTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)

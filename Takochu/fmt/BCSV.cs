@@ -339,6 +339,11 @@ namespace Takochu.fmt
             {
                 return this.ContainsKey(FieldNameToHash(key));
             }
+
+            public object GetTypeOfField(string fieldName)
+            {
+                return this[FieldNameToHash(fieldName)].GetType();
+            }
         }
 
         public static int FieldNameToHash(string name)
@@ -385,11 +390,28 @@ namespace Takochu.fmt
             }
         }
 
+        public static void PopulateFieldTypeTable()
+        {
+            sFieldTypeTable = new Dictionary<string, string>();
+
+            if (!File.Exists("res/FieldTypes.txt"))
+                throw new Exception("BCSV::PopulateFieldTypeTable() - res/FieldTypes.txt not found.");
+
+            string[] lines = File.ReadAllLines("res/FieldTypes.txt");
+
+            foreach (string line in lines)
+            {
+                string[] spl = line.Split('=');
+                sFieldTypeTable.Add(spl[0], spl[1]);
+            }
+        }
+
         private FileBase mFile;
         public Dictionary<int, Field> mFields;
         public List<Entry> mEntries;
 
 
         public static Dictionary<int, string> sHashTable;
+        public static Dictionary<string, string> sFieldTypeTable;
     }
 }
