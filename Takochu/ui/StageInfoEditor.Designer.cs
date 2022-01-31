@@ -115,7 +115,8 @@
             this.DebugTextBox = new System.Windows.Forms.TextBox();
             this.CometTypeComboBox = new System.Windows.Forms.ComboBox();
             this.StageBGMListBox = new System.Windows.Forms.ListBox();
-            this.ScenarioBGMInfoListBox = new System.Windows.Forms.ListBox();
+            this.PowerStarTypeComboBox = new System.Windows.Forms.ComboBox();
+            this.ScenBGM_dgv = new System.Windows.Forms.DataGridView();
             this.MainTabControl.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -140,6 +141,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.changeBgmState_2)).BeginInit();
             this.MainToolStrip.SuspendLayout();
             this.MainMenuStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ScenBGM_dgv)).BeginInit();
             this.SuspendLayout();
             // 
             // ScenarioListTreeView
@@ -154,16 +156,15 @@
             // 
             // MainTabControl
             // 
-            this.MainTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.MainTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.MainTabControl.Controls.Add(this.tabPage4);
             this.MainTabControl.Controls.Add(this.BGM_InfoTabPage);
             this.MainTabControl.Controls.Add(this.DebugTabPage);
             this.MainTabControl.Location = new System.Drawing.Point(0, 27);
             this.MainTabControl.Name = "MainTabControl";
             this.MainTabControl.SelectedIndex = 0;
-            this.MainTabControl.Size = new System.Drawing.Size(800, 419);
+            this.MainTabControl.Size = new System.Drawing.Size(805, 419);
             this.MainTabControl.TabIndex = 3;
             this.MainTabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl2_SelectedIndexChanged);
             // 
@@ -174,7 +175,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(792, 393);
+            this.tabPage4.Size = new System.Drawing.Size(797, 393);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "Scenario";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -183,14 +184,14 @@
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox2.Controls.Add(this.PowerStarTypeComboBox);
+            this.groupBox2.Controls.Add(this.CometTypeComboBox);
             this.groupBox2.Controls.Add(this.GalaxyNameLabel);
             this.groupBox2.Controls.Add(this.layerMasksBox);
             this.groupBox2.Controls.Add(this.CometTimerTextBox);
             this.groupBox2.Controls.Add(this.label19);
-            this.groupBox2.Controls.Add(this.CometTypeTextBox);
             this.groupBox2.Controls.Add(this.GalaxyInfoPictureBox);
             this.groupBox2.Controls.Add(this.label18);
-            this.groupBox2.Controls.Add(this.PowerStarTypeTextBox);
             this.groupBox2.Controls.Add(this.label17);
             this.groupBox2.Controls.Add(this.AppearPowerStarTextBox);
             this.groupBox2.Controls.Add(this.label16);
@@ -582,7 +583,7 @@
             // 
             // CometTypeTextBox
             // 
-            this.CometTypeTextBox.Location = new System.Drawing.Point(8, 213);
+            this.CometTypeTextBox.Location = new System.Drawing.Point(342, 118);
             this.CometTypeTextBox.Name = "CometTypeTextBox";
             this.CometTypeTextBox.Size = new System.Drawing.Size(256, 19);
             this.CometTypeTextBox.TabIndex = 9;
@@ -609,7 +610,7 @@
             // 
             // PowerStarTypeTextBox
             // 
-            this.PowerStarTypeTextBox.Location = new System.Drawing.Point(8, 176);
+            this.PowerStarTypeTextBox.Location = new System.Drawing.Point(342, 74);
             this.PowerStarTypeTextBox.Name = "PowerStarTypeTextBox";
             this.PowerStarTypeTextBox.Size = new System.Drawing.Size(256, 19);
             this.PowerStarTypeTextBox.TabIndex = 7;
@@ -667,21 +668,29 @@
             this.BGM_InfoTabPage.Location = new System.Drawing.Point(4, 22);
             this.BGM_InfoTabPage.Name = "BGM_InfoTabPage";
             this.BGM_InfoTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.BGM_InfoTabPage.Size = new System.Drawing.Size(792, 393);
+            this.BGM_InfoTabPage.Size = new System.Drawing.Size(797, 393);
             this.BGM_InfoTabPage.TabIndex = 0;
             this.BGM_InfoTabPage.Text = "BGM Info";
             this.BGM_InfoTabPage.UseVisualStyleBackColor = true;
             // 
             // DebugTabPage
             // 
-            this.DebugTabPage.Controls.Add(this.CometTypeComboBox);
             this.DebugTabPage.Controls.Add(this.DebugTextBox);
+            this.DebugTabPage.Controls.Add(this.scenarioBGMId);
+            this.DebugTabPage.Controls.Add(this.label11);
             this.DebugTabPage.Controls.Add(this.PowerStarIDTextBox);
             this.DebugTabPage.Controls.Add(this.label15);
+            this.DebugTabPage.Controls.Add(this.scenarioBGMIsPrepare);
+            this.DebugTabPage.Controls.Add(this.CometTypeTextBox);
+            this.DebugTabPage.Controls.Add(this.PowerStarTypeTextBox);
+            this.DebugTabPage.Controls.Add(this.label12);
+            this.DebugTabPage.Controls.Add(this.scenarioBGMStartFrame);
+            this.DebugTabPage.Controls.Add(this.label13);
+            this.DebugTabPage.Controls.Add(this.scenarioBGMStartType);
             this.DebugTabPage.Location = new System.Drawing.Point(4, 22);
             this.DebugTabPage.Name = "DebugTabPage";
             this.DebugTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.DebugTabPage.Size = new System.Drawing.Size(792, 393);
+            this.DebugTabPage.Size = new System.Drawing.Size(781, 393);
             this.DebugTabPage.TabIndex = 2;
             this.DebugTabPage.Text = "Debug";
             this.DebugTabPage.UseVisualStyleBackColor = true;
@@ -689,7 +698,7 @@
             // scenarioBGMIsPrepare
             // 
             this.scenarioBGMIsPrepare.AutoSize = true;
-            this.scenarioBGMIsPrepare.Location = new System.Drawing.Point(614, 81);
+            this.scenarioBGMIsPrepare.Location = new System.Drawing.Point(480, 252);
             this.scenarioBGMIsPrepare.Name = "scenarioBGMIsPrepare";
             this.scenarioBGMIsPrepare.Size = new System.Drawing.Size(76, 16);
             this.scenarioBGMIsPrepare.TabIndex = 6;
@@ -704,7 +713,7 @@
             this.BGMTabControl.Location = new System.Drawing.Point(3, 3);
             this.BGMTabControl.Name = "BGMTabControl";
             this.BGMTabControl.SelectedIndex = 0;
-            this.BGMTabControl.Size = new System.Drawing.Size(786, 387);
+            this.BGMTabControl.Size = new System.Drawing.Size(791, 387);
             this.BGMTabControl.TabIndex = 2;
             this.BGMTabControl.SelectedIndexChanged += new System.EventHandler(this.BGMTabControl_SelectedIndexChanged);
             // 
@@ -715,25 +724,18 @@
             this.StageBGM_InfoTabPage.Location = new System.Drawing.Point(4, 22);
             this.StageBGM_InfoTabPage.Name = "StageBGM_InfoTabPage";
             this.StageBGM_InfoTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.StageBGM_InfoTabPage.Size = new System.Drawing.Size(778, 361);
+            this.StageBGM_InfoTabPage.Size = new System.Drawing.Size(783, 361);
             this.StageBGM_InfoTabPage.TabIndex = 0;
             this.StageBGM_InfoTabPage.Text = "StageBGM_Info";
             this.StageBGM_InfoTabPage.UseVisualStyleBackColor = true;
             // 
             // ScenarioBGM_InfoTabPage
             // 
-            this.ScenarioBGM_InfoTabPage.Controls.Add(this.ScenarioBGMInfoListBox);
-            this.ScenarioBGM_InfoTabPage.Controls.Add(this.scenarioBGMId);
-            this.ScenarioBGM_InfoTabPage.Controls.Add(this.label11);
-            this.ScenarioBGM_InfoTabPage.Controls.Add(this.scenarioBGMIsPrepare);
-            this.ScenarioBGM_InfoTabPage.Controls.Add(this.label12);
-            this.ScenarioBGM_InfoTabPage.Controls.Add(this.scenarioBGMStartType);
-            this.ScenarioBGM_InfoTabPage.Controls.Add(this.scenarioBGMStartFrame);
-            this.ScenarioBGM_InfoTabPage.Controls.Add(this.label13);
+            this.ScenarioBGM_InfoTabPage.Controls.Add(this.ScenBGM_dgv);
             this.ScenarioBGM_InfoTabPage.Location = new System.Drawing.Point(4, 22);
             this.ScenarioBGM_InfoTabPage.Name = "ScenarioBGM_InfoTabPage";
             this.ScenarioBGM_InfoTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.ScenarioBGM_InfoTabPage.Size = new System.Drawing.Size(778, 361);
+            this.ScenarioBGM_InfoTabPage.Size = new System.Drawing.Size(783, 361);
             this.ScenarioBGM_InfoTabPage.TabIndex = 1;
             this.ScenarioBGM_InfoTabPage.Tag = "1";
             this.ScenarioBGM_InfoTabPage.Text = "ScenarioBGM_Info";
@@ -766,7 +768,7 @@
             this.StageBGMInfoGroupBox.Controls.Add(this.changeBgmIdName_2);
             this.StageBGMInfoGroupBox.Location = new System.Drawing.Point(214, 6);
             this.StageBGMInfoGroupBox.Name = "StageBGMInfoGroupBox";
-            this.StageBGMInfoGroupBox.Size = new System.Drawing.Size(558, 137);
+            this.StageBGMInfoGroupBox.Size = new System.Drawing.Size(563, 137);
             this.StageBGMInfoGroupBox.TabIndex = 1;
             this.StageBGMInfoGroupBox.TabStop = false;
             this.StageBGMInfoGroupBox.Tag = "0";
@@ -788,9 +790,9 @@
             // 
             // scenarioBGMStartFrame
             // 
-            this.scenarioBGMStartFrame.Location = new System.Drawing.Point(680, 57);
+            this.scenarioBGMStartFrame.Location = new System.Drawing.Point(546, 228);
             this.scenarioBGMStartFrame.Name = "scenarioBGMStartFrame";
-            this.scenarioBGMStartFrame.Size = new System.Drawing.Size(92, 19);
+            this.scenarioBGMStartFrame.Size = new System.Drawing.Size(81, 19);
             this.scenarioBGMStartFrame.TabIndex = 5;
             this.scenarioBGMStartFrame.Tag = "StartFrame";
             this.scenarioBGMStartFrame.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
@@ -821,7 +823,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(611, 59);
+            this.label13.Location = new System.Drawing.Point(477, 230);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(68, 12);
             this.label13.TabIndex = 4;
@@ -847,9 +849,9 @@
             // 
             // scenarioBGMStartType
             // 
-            this.scenarioBGMStartType.Location = new System.Drawing.Point(680, 33);
+            this.scenarioBGMStartType.Location = new System.Drawing.Point(546, 204);
             this.scenarioBGMStartType.Name = "scenarioBGMStartType";
-            this.scenarioBGMStartType.Size = new System.Drawing.Size(92, 19);
+            this.scenarioBGMStartType.Size = new System.Drawing.Size(81, 19);
             this.scenarioBGMStartType.TabIndex = 3;
             this.scenarioBGMStartType.Tag = "StartType";
             this.scenarioBGMStartType.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
@@ -871,7 +873,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(611, 35);
+            this.label12.Location = new System.Drawing.Point(477, 206);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(61, 12);
             this.label12.TabIndex = 2;
@@ -888,9 +890,9 @@
             // 
             // scenarioBGMId
             // 
-            this.scenarioBGMId.Location = new System.Drawing.Point(680, 6);
+            this.scenarioBGMId.Location = new System.Drawing.Point(546, 177);
             this.scenarioBGMId.Name = "scenarioBGMId";
-            this.scenarioBGMId.Size = new System.Drawing.Size(92, 19);
+            this.scenarioBGMId.Size = new System.Drawing.Size(81, 19);
             this.scenarioBGMId.TabIndex = 1;
             this.scenarioBGMId.Tag = "BgmIdName";
             this.scenarioBGMId.TextChanged += new System.EventHandler(this.TextBox_ValueChanged);
@@ -907,7 +909,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(611, 9);
+            this.label11.Location = new System.Drawing.Point(477, 180);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(52, 12);
             this.label11.TabIndex = 0;
@@ -1062,7 +1064,7 @@
             this.StateToolStripLabel});
             this.MainToolStrip.Location = new System.Drawing.Point(0, 449);
             this.MainToolStrip.Name = "MainToolStrip";
-            this.MainToolStrip.Size = new System.Drawing.Size(1037, 25);
+            this.MainToolStrip.Size = new System.Drawing.Size(814, 25);
             this.MainToolStrip.TabIndex = 4;
             this.MainToolStrip.Text = "toolStrip1";
             // 
@@ -1078,7 +1080,7 @@
             this.fileToolStripMenuItem});
             this.MainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MainMenuStrip.Name = "MainMenuStrip";
-            this.MainMenuStrip.Size = new System.Drawing.Size(1037, 24);
+            this.MainMenuStrip.Size = new System.Drawing.Size(814, 24);
             this.MainMenuStrip.TabIndex = 5;
             this.MainMenuStrip.Text = "menuStrip1";
             // 
@@ -1110,9 +1112,9 @@
             // CometTypeComboBox
             // 
             this.CometTypeComboBox.FormattingEnabled = true;
-            this.CometTypeComboBox.Location = new System.Drawing.Point(19, 6);
+            this.CometTypeComboBox.Location = new System.Drawing.Point(8, 213);
             this.CometTypeComboBox.Name = "CometTypeComboBox";
-            this.CometTypeComboBox.Size = new System.Drawing.Size(100, 20);
+            this.CometTypeComboBox.Size = new System.Drawing.Size(256, 20);
             this.CometTypeComboBox.TabIndex = 20;
             // 
             // StageBGMListBox
@@ -1126,21 +1128,29 @@
             this.StageBGMListBox.TabIndex = 0;
             this.StageBGMListBox.SelectedIndexChanged += new System.EventHandler(this.StageBGMListBox_SelectedIndexChanged);
             // 
-            // ScenarioBGMInfoListBox
+            // PowerStarTypeComboBox
             // 
-            this.ScenarioBGMInfoListBox.Dock = System.Windows.Forms.DockStyle.Left;
-            this.ScenarioBGMInfoListBox.FormattingEnabled = true;
-            this.ScenarioBGMInfoListBox.ItemHeight = 12;
-            this.ScenarioBGMInfoListBox.Location = new System.Drawing.Point(3, 3);
-            this.ScenarioBGMInfoListBox.Name = "ScenarioBGMInfoListBox";
-            this.ScenarioBGMInfoListBox.Size = new System.Drawing.Size(277, 355);
-            this.ScenarioBGMInfoListBox.TabIndex = 7;
+            this.PowerStarTypeComboBox.FormattingEnabled = true;
+            this.PowerStarTypeComboBox.Location = new System.Drawing.Point(8, 176);
+            this.PowerStarTypeComboBox.Name = "PowerStarTypeComboBox";
+            this.PowerStarTypeComboBox.Size = new System.Drawing.Size(256, 20);
+            this.PowerStarTypeComboBox.TabIndex = 21;
+            // 
+            // ScenBGM_dgv
+            // 
+            this.ScenBGM_dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.ScenBGM_dgv.Dock = System.Windows.Forms.DockStyle.Left;
+            this.ScenBGM_dgv.Location = new System.Drawing.Point(3, 3);
+            this.ScenBGM_dgv.Name = "ScenBGM_dgv";
+            this.ScenBGM_dgv.RowTemplate.Height = 21;
+            this.ScenBGM_dgv.Size = new System.Drawing.Size(774, 355);
+            this.ScenBGM_dgv.TabIndex = 7;
             // 
             // StageInfoEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1037, 474);
+            this.ClientSize = new System.Drawing.Size(814, 474);
             this.Controls.Add(this.MainToolStrip);
             this.Controls.Add(this.MainMenuStrip);
             this.Controls.Add(this.MainTabControl);
@@ -1163,7 +1173,6 @@
             this.BGMTabControl.ResumeLayout(false);
             this.StageBGM_InfoTabPage.ResumeLayout(false);
             this.ScenarioBGM_InfoTabPage.ResumeLayout(false);
-            this.ScenarioBGM_InfoTabPage.PerformLayout();
             this.StageBGMInfoGroupBox.ResumeLayout(false);
             this.StageBGMInfoGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.changeBgmState_4)).EndInit();
@@ -1178,6 +1187,7 @@
             this.MainToolStrip.PerformLayout();
             this.MainMenuStrip.ResumeLayout(false);
             this.MainMenuStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ScenBGM_dgv)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1272,6 +1282,7 @@
         private System.Windows.Forms.TextBox DebugTextBox;
         private System.Windows.Forms.ComboBox CometTypeComboBox;
         private System.Windows.Forms.ListBox StageBGMListBox;
-        private System.Windows.Forms.ListBox ScenarioBGMInfoListBox;
+        private System.Windows.Forms.ComboBox PowerStarTypeComboBox;
+        private System.Windows.Forms.DataGridView ScenBGM_dgv;
     }
 }

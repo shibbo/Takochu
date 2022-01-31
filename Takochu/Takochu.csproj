@@ -219,6 +219,7 @@
     <Compile Include="ui\StageInfoEditor.Designer.cs">
       <DependentUpon>StageInfoEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="ui\StageInfoEditorSys\ScenarioBGMInfo_DataGridView.cs" />
     <Compile Include="ui\StageInfoEditorSys\ScenarioInformation.cs" />
     <Compile Include="util\CameraUtil.cs" />
     <Compile Include="smg\Galaxy.cs" />

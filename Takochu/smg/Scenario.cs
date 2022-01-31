@@ -48,6 +48,9 @@ namespace Takochu.smg
 
         public Dictionary<string, int> mZoneMasks { get; private set; }
 
+        /// <summary>
+        /// SMG2で使用されるコメットの一覧
+        /// </summary>
         public enum SMG2Comets 
         {
             None,
@@ -59,6 +62,17 @@ namespace Takochu.smg
             Mimic
         }
 
+        public enum StarType 
+        {
+            Normal,
+            Hidden,
+            Green
+        }
+
+
+        /// <summary>
+        /// SMG1で使用されるコメットの一覧
+        /// </summary>
         public enum SMG1Comets 
         {
             None,

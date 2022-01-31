@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.Layout;
 using Takochu.fmt;
 using Takochu.smg;
 using Takochu.smg.img;
@@ -26,6 +27,8 @@ namespace Takochu.ui
         private int _currentScenario;
         private bool misInitialized = false;
         private readonly ScenarioInformation _scenarioInformation;
+        private readonly Type _cometGameType;
+        private readonly Type _starType;
 
 
         public StageInfoEditor(ref Galaxy galaxy, int scenarioNo)
@@ -34,14 +37,26 @@ namespace Takochu.ui
             ToggleLayersEnabled(UseLayerFlags, false);
 
             //コメットのコンボボックスにコメット名を入れる
-            Type cometGameType = typeof(Scenario.SMG1Comets);
-            if (GameUtil.IsSMG2()) cometGameType = typeof(Scenario.SMG2Comets);
+            _cometGameType = typeof(Scenario.SMG1Comets);
+            
+            if (GameUtil.IsSMG2()) _cometGameType = typeof(Scenario.SMG2Comets);
 
-            foreach (var cometName in Enum.GetValues(cometGameType))
+            foreach (var cometName in Enum.GetValues(_cometGameType))
             {
                 CometTypeComboBox.Items.Add(cometName);
             }
 
+            _starType = typeof(Scenario.StarType);
+
+            foreach (var starType in Enum.GetValues(_starType)) 
+            {
+                PowerStarTypeComboBox.Items.Add(starType);
+            }
+
+
+            var scenarioBGM_dgv = new ScenarioBGMInfo_DataGridView(ScenBGM_dgv);
+            ScenBGM_dgv = scenarioBGM_dgv.GetDataTable();
+            
 
 #if DEBUG
 #else
@@ -93,9 +108,9 @@ namespace Takochu.ui
             //ピクチャーボックスにラベルコントロールを追加
             GalaxyInfoPictureBox.Controls.Add(GalaxyNameLabel);
 
-            //ピクチャーボックス上の名前の処理
-            GalaxyNameLabel.Top -= GalaxyInfoPictureBox.Top;
-            GalaxyNameLabel.Left -= GalaxyInfoPictureBox.Left;
+            //ピクチャーボックス上のラベルの処理
+            GalaxyNameLabel.Top      -= GalaxyInfoPictureBox.Top;
+            GalaxyNameLabel.Left     -= GalaxyInfoPictureBox.Left;
             GalaxyNameLabel.BackColor = Color.Transparent;
         }
 
@@ -105,12 +120,22 @@ namespace Takochu.ui
         /// <param name="scenario">対象のシナリオ</param>
         private void SetScenarioInfo(Scenario scenario)
         {
-            ScenarioNameTextBox.Text = scenario.mEntry.Get<string>("ScenarioName");
-            AppearPowerStarTextBox.Text = scenario.mEntry.Get<string>("AppearPowerStarObj");
-            PowerStarTypeTextBox.Text = scenario.mEntry.Get<string>("PowerStarType");
-            CometTypeTextBox.Text = scenario.mEntry.Get<string>("Comet");
-            PowerStarIDTextBox.Value = scenario.mEntry.Get<int>("PowerStarId");
-            CometTimerTextBox.Value = scenario.mEntry.Get<int>("CometLimitTimer");
+            ScenarioNameTextBox.Text     = scenario.mEntry.Get<string>  ("ScenarioName");
+            AppearPowerStarTextBox.Text  = scenario.mEntry.Get<string>  ("AppearPowerStarObj");
+            PowerStarTypeTextBox.Text    = scenario.mEntry.Get<string>  ("PowerStarType");
+            CometTypeTextBox.Text        = scenario.mEntry.Get<string>  ("Comet");
+            PowerStarIDTextBox.Value     = scenario.mEntry.Get<int>     ("PowerStarId");
+            CometTimerTextBox.Value      = scenario.mEntry.Get<int>     ("CometLimitTimer");
+
+            PowerStarTypeComboBox.SelectedIndex = (int)Enum.Parse(_starType, scenario.mEntry.Get<string>("PowerStarType"));
+
+            if (scenario.mEntry.Get<string>("Comet") == string.Empty) 
+            {
+                CometTypeComboBox.SelectedIndex = 0;
+                return;
+            }
+            
+            CometTypeComboBox.SelectedIndex = (int)Enum.Parse(_cometGameType,scenario.mEntry.Get<string>("Comet"));
         }
 
         private void ScenarioListTreeView_AfterSelect(object sender, TreeViewEventArgs e)
@@ -190,10 +215,10 @@ namespace Takochu.ui
 
             //var zoneName = Convert.ToString(ZoneComboBox.SelectedItem);
 
-            var bcsv_Entry = _scenarioInformation.Scenarios[_currentScenario].mEntry;
-            var powerStarID = bcsv_Entry.Get<int>("PowerStarId");
-            var maskBitData = bcsv_Entry.Get<int>(Convert.ToString(ZoneComboBox.SelectedItem));
-            var layerList = GameUtil.GetGalaxyLayers(maskBitData);
+            var bcsv_Entry   = _scenarioInformation.Scenarios[_currentScenario].mEntry;
+            var powerStarID  = bcsv_Entry.Get<int>("PowerStarId");
+            var maskBitData  = bcsv_Entry.Get<int>(Convert.ToString(ZoneComboBox.SelectedItem));
+            var layerList    = GameUtil.GetGalaxyLayers(maskBitData);
 
             DebugTextBox.Text = string.Empty;
             DebugTextBox.Text = maskBitData.ToString();
@@ -207,12 +232,8 @@ namespace Takochu.ui
                 if (!(control is CheckBox && TagStr.StartsWith("Layer"))) continue;
                 CheckBox checkBox = control as CheckBox;
 
-
                 if (!layerList.Contains(TagStr)) continue;
                 checkBox.Checked = true;
-
-
-
             }
 
 
@@ -224,11 +245,11 @@ namespace Takochu.ui
 
             for (int i = 0; i < ShowScenarioStarFlags.Controls.Count; i++)
             {
+                var ControlTagString = ShowScenarioStarFlags.Controls[i].Tag.ToString();
+                if (!ControlTagString.StartsWith("Scenario")) continue;
 
-                if (!ShowScenarioStarFlags.Controls[i].Tag.ToString().StartsWith("Scenario")) continue;
-
-                var scenarioNostr = ShowScenarioStarFlags.Controls[i].Tag.ToString().Skip("Scenario".Length).ToArray();
-                var scenarioNo = int.Parse(string.Concat(scenarioNostr));
+                var scenarioNoChars  = ControlTagString.Skip("Scenario".Length).ToArray();
+                var scenarioNo       = int.Parse(string.Concat(scenarioNoChars));
 
                 if (!(ShowScenarioStarFlags.Controls[i] is CheckBox)) continue;
 
@@ -354,7 +375,7 @@ namespace Takochu.ui
 
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _galaxy.SaveScenario();
+            //_galaxy.SaveScenario();
         }
 
         private void StageBGMListBox_SelectedIndexChanged(object sender, EventArgs e)
