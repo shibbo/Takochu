@@ -12,14 +12,11 @@ namespace Takochu.smg
     {
         public static void Initialize()
         {
-            //Program.sGame.mFilesystem.Close();
-            
-            var a = Program.sGame.mFilesystem.OpenFile("/AudioRes/Info/StageBgmInfo.arc");
-            mFilesystem = new RARCFilesystem(a);
-            //a.Close();
+            mFilesystem = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile("/AudioRes/Info/StageBgmInfo.arc"));
+
+            //StageBGMInfoを読み込む
             BCSV stageBgm = new BCSV(mFilesystem.OpenFile("/StageBgmInfo/StageBgmInfo.bcsv"));
             mStageEntries = new Dictionary<string, BGMInfoEntry>();
-
             foreach(BCSV.Entry e in stageBgm.mEntries)
             {
                 BGMInfoEntry bgmEntry = new BGMInfoEntry
@@ -40,9 +37,9 @@ namespace Takochu.smg
                 mStageEntries.Add(bgmEntry.StageName, bgmEntry);
             }
 
+            //ScenarioBGMInfoを読み込む
             BCSV scenarioBgm = new BCSV(mFilesystem.OpenFile("/StageBgmInfo/ScenarioBgmInfo.bcsv"));
             mScenarioEntries = new List<ScenarioBGMEntry>();
-
             foreach(BCSV.Entry e in scenarioBgm.mEntries)
             {
                 ScenarioBGMEntry scenarioEntry = new ScenarioBGMEntry
@@ -58,7 +55,6 @@ namespace Takochu.smg
 
                 mScenarioEntries.Add(scenarioEntry);
             }
-            //Close();
         }
 
         public static bool HasBGMInfo(string name)

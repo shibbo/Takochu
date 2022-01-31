@@ -44,7 +44,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>embedded</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\TakochuDev4.0\</OutputPath>
+    <OutputPath>bin\Release\TakochuDev0001\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -219,6 +219,8 @@
     <Compile Include="ui\StageInfoEditor.Designer.cs">
       <DependentUpon>StageInfoEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="ui\StageInfoEditorSys\ScenarioBGMInfo_DataGridView.cs" />
+    <Compile Include="ui\StageInfoEditorSys\ScenarioInformation.cs" />
     <Compile Include="util\CameraUtil.cs" />
     <Compile Include="smg\Galaxy.cs" />
     <Compile Include="smg\Game.cs" />
