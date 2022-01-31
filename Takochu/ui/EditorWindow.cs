@@ -38,6 +38,8 @@ namespace Takochu.ui
 
             mGalaxy = Program.sGame.OpenGalaxy(mGalaxyName);
             galaxyNameTxtBox.Text = mGalaxy.mGalaxyName;
+            AreaToolStripMenuItem.Checked = Properties.Settings.Default.EditorWindowDisplayArea;
+            pathsToolStripMenuItem.Checked = Properties.Settings.Default.EditorWindowDisplayPath;
 
             foreach(KeyValuePair<int, Scenario> scenarios in mGalaxy.mScenarios)
             {
@@ -675,11 +677,16 @@ namespace Takochu.ui
                     keyValuePairs.Add(o.mUnique, GL.GenLists(1));
                     mDispLists.Add(t, keyValuePairs);
 
+                    if (o.mType == "AreaObj" && AreaToolStripMenuItem.Checked == false)
+                        continue;
+
+                    if (o.mType == "PathObj" && pathsToolStripMenuItem.Checked == false)
+                        continue;
+
                     GL.NewList(mDispLists[t][o.mUnique], ListMode.Compile);
 
                     GL.Color4(Color.FromArgb(o.mUnique));
                     o.Render(mode);
-                    //Console.WriteLine(o.mName);
                     GL.EndList();
                     
                 }
@@ -702,6 +709,9 @@ namespace Takochu.ui
 
                         keyValuePairs.Add(o.mUnique, GL.GenLists(1));
                         mDispLists[t].Add(o.mUnique, GL.GenLists(1));
+
+                        if (o.mType == "AreaObj" && AreaToolStripMenuItem.Checked == false)
+                            continue;
 
                         GL.NewList(mDispLists[t][o.mUnique], ListMode.Compile);
 
@@ -729,6 +739,9 @@ namespace Takochu.ui
 
                         keyValuePairs.Add(p.mUnique, GL.GenLists(1));
                         mDispLists[t].Add(p.mUnique, GL.GenLists(1));
+
+                        if (pathsToolStripMenuItem.Checked == false)
+                            continue;
 
                         GL.NewList(mDispLists[t][p.mUnique], ListMode.Compile);
 
@@ -763,6 +776,9 @@ namespace Takochu.ui
                     keyValuePairs.Add(o.mUnique, GL.GenLists(1));
                     mDispLists[t].Add(o.mUnique, GL.GenLists(1));
 
+                    if (o.mType == "AreaObj" && AreaToolStripMenuItem.Checked == false)
+                            continue;
+
                     GL.NewList(mDispLists[t][o.mUnique], ListMode.Compile);
 
                     GL.PushMatrix();
@@ -785,6 +801,9 @@ namespace Takochu.ui
 
                     keyValuePairs.Add(path.mUnique, GL.GenLists(1));
                     mDispLists[t].Add(path.mUnique, GL.GenLists(1));
+
+                    if (pathsToolStripMenuItem.Checked == false)
+                        continue;
 
                     GL.NewList(mDispLists[t][path.mUnique], ListMode.Compile);
 
@@ -1331,6 +1350,8 @@ namespace Takochu.ui
             }
 
             glLevelView.Refresh();
+            Properties.Settings.Default.EditorWindowDisplayArea = AreaToolStripMenuItem.Checked;
+            Properties.Settings.Default.Save();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -1630,6 +1651,8 @@ namespace Takochu.ui
             }
 
             glLevelView.Refresh();
+            Properties.Settings.Default.EditorWindowDisplayPath = pathsToolStripMenuItem.Checked;
+            Properties.Settings.Default.Save();
         }
 
         private void deleteObjNode(TreeNode node)

@@ -107,35 +107,7 @@ namespace Takochu.ui
 
         private void scenarioListTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            int scenarioNo = Convert.ToInt32(scenarioListTreeView.SelectedNode.Tag);
 
-            if (scenarioListTreeView.SelectedNode != null && !mBGMRestrictedIDs.Contains(scenarioNo))
-            {
-                mIsInitialized = false;
-                mCurScenario = scenarioNo;
-
-                if (mIsRestrictBGM || mBGMRestrictedIDs.Contains(scenarioNo))
-                {
-                    scenarioNo = 0;
-                }
-
-                BGMInfo.ScenarioBGMEntry scenarioEntry = mScenarioEntries.Find(entry => entry.ScenarioNo == scenarioNo);
-
-                scenarioBGMId.Text = scenarioEntry.Entry.Get<string>("BgmIdName");
-                scenarioBGMStartType.Value = scenarioEntry.Entry.Get<int>("StartType");
-                scenarioBGMStartFrame.Value = scenarioEntry.Entry.Get<int>("StartFrame");
-                scenarioBGMIsPrepare.Checked = scenarioEntry.Entry.Get<int>("IsPrepare") != 0;
-
-                Scenario scenario = mScenarios[mCurScenario];
-                scenarioNameTxt.Text = scenario.mEntry.Get<string>("ScenarioName");
-                powerStarID.Value = scenario.mEntry.Get<int>("PowerStarId");
-                appearPowerStarTxt.Text = scenario.mEntry.Get<string>("AppearPowerStarObj");
-                powerStarTypeTxt.Text = scenario.mEntry.Get<string>("PowerStarType");
-                cometTypeTxt.Text = scenario.mEntry.Get<string>("Comet");
-                cometTimer.Value = scenario.mEntry.Get<int>("CometLimitTimer");
-
-                mIsInitialized = true;
-            }
         }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
@@ -312,6 +284,39 @@ namespace Takochu.ui
             string zone = zoneListsBox.SelectedItem.ToString();
             int newMask = GameUtil.SetLayerOnMask(c.Tag.ToString(), mScenarios[mCurScenario + 1].mEntry.Get<int>(zone), c.Checked);
             mScenarios[mCurScenario + 1].mEntry.Set(zone, newMask);
+        }
+
+        private void scenarioListTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            int scenarioNo = Convert.ToInt32(scenarioListTreeView.SelectedNode.Tag);
+
+            if (scenarioListTreeView.SelectedNode != null && !mBGMRestrictedIDs.Contains(scenarioNo))
+            {
+                mIsInitialized = false;
+                mCurScenario = scenarioNo;
+
+                if (mIsRestrictBGM || mBGMRestrictedIDs.Contains(scenarioNo))
+                {
+                    scenarioNo = 0;
+                }
+
+                BGMInfo.ScenarioBGMEntry scenarioEntry = mScenarioEntries.Find(entry => entry.ScenarioNo == scenarioNo);
+
+                scenarioBGMId.Text = scenarioEntry.Entry.Get<string>("BgmIdName");
+                scenarioBGMStartType.Value = scenarioEntry.Entry.Get<int>("StartType");
+                scenarioBGMStartFrame.Value = scenarioEntry.Entry.Get<int>("StartFrame");
+                scenarioBGMIsPrepare.Checked = scenarioEntry.Entry.Get<int>("IsPrepare") != 0;
+
+                Scenario scenario = mScenarios[mCurScenario];
+                scenarioNameTxt.Text = scenario.mEntry.Get<string>("ScenarioName");
+                powerStarID.Value = scenario.mEntry.Get<int>("PowerStarId");
+                appearPowerStarTxt.Text = scenario.mEntry.Get<string>("AppearPowerStarObj");
+                powerStarTypeTxt.Text = scenario.mEntry.Get<string>("PowerStarType");
+                cometTypeTxt.Text = scenario.mEntry.Get<string>("Comet");
+                cometTimer.Value = scenario.mEntry.Get<int>("CometLimitTimer");
+
+                mIsInitialized = true;
+            }
         }
     }
 }
