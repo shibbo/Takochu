@@ -1118,6 +1118,41 @@ namespace Takochu.ui
                     dataGridViewEdit = new EditorWindowSys.DataGridViewEdit(dataGridView1, pathPoint);
                     dataGridView1 = dataGridViewEdit.GetDataTable();
                 }
+
+                if (pathsToolStripMenuItem.Checked == false)
+                {
+                    if (abstractObj.CanUsePath())
+                    {
+                        Zone z = abstractObj.mParentZone;
+                        PathObj path = z.GetPathFromID(abstractObj.mEntry.Get<short>("CommonPath_ID"));
+
+                        if (path != null)
+                        {
+                            // now we render only this path
+                            // we also need to delete any rendered paths
+                            List<int> ids = z.GetAllUniqueIDsFromObjectsOfType("PathObj");
+                            ids.ForEach(i => GL.DeleteLists(mDispLists[0][i], 1));
+
+                            var Pos_ZoneOffset = mGalaxy.Get_Pos_GlobalOffset(path.mParentZone.mZoneName);
+                            var Rot_ZoneOffset = mGalaxy.Get_Rot_GlobalOffset(path.mParentZone.mZoneName);
+
+                            GL.DeleteLists(mDispLists[0][path.mUnique], 1);
+                            GL.NewList(mDispLists[0][path.mUnique], ListMode.Compile);
+
+                            GL.PushMatrix();
+                            {
+                                GL.Translate(Pos_ZoneOffset);
+                                GL.Rotate(Rot_ZoneOffset.Z, 0f, 0f, 1f);
+                                GL.Rotate(Rot_ZoneOffset.Y, 0f, 1f, 0f);
+                                GL.Rotate(Rot_ZoneOffset.X, 1f, 0f, 0f);
+                            }
+
+                            path.Render(RenderMode.Opaque);
+                            GL.PopMatrix();
+                            GL.EndList();
+                        }
+                    }
+                }
             }
 
             UpdateCamera();
@@ -1180,7 +1215,7 @@ namespace Takochu.ui
                 }
 
                 path.Render(RenderMode.Opaque);
-                GL.PushMatrix();
+                GL.PopMatrix();
                 GL.EndList();
             }
             else if (mSelectedObject.GetType() == typeof(StageObj))

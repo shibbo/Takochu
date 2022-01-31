@@ -24,6 +24,20 @@ namespace Takochu.smg.obj
                 mName = Get<string>("name");
             mUnique = Program.sUniqueID++;
         }
+
+        public bool CanUsePath()
+        {
+            switch(mType)
+            {
+                case "Obj":
+                case "AreaObj":
+                case "MapPartsObj":
+                case "PlanetObj":
+                    return true;
+            }
+
+            return false;
+        }
         
         public virtual void Save() { }
 
