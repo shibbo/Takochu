@@ -1820,6 +1820,7 @@ EnterWorld
 EntryActorList
 EnvColor
 Erase
+ErrorCheck
 ErrorMessage
 ErrorMessageWindow
 ErrorTextHalf
@@ -2837,6 +2838,7 @@ IsBreakCrystal
 IsColorChange
 IsContinuous
 IsFixRoot
+IsHidden
 IsOpenScenario%s%01d
 IsOpenScenarioChallengeGliderGalaxy2
 IsOpenScenarioGoroRockGalaxy3
