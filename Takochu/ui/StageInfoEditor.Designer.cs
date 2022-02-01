@@ -118,7 +118,6 @@
             this.MainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.IsErrorCheckBox = new System.Windows.Forms.CheckBox();
             this.MainTabControl.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -186,7 +185,6 @@
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.groupBox2.Controls.Add(this.IsErrorCheckBox);
             this.groupBox2.Controls.Add(this.AppearPowerStarObjComboBox);
             this.groupBox2.Controls.Add(this.PowerStarTypeComboBox);
             this.groupBox2.Controls.Add(this.CometTypeComboBox);
@@ -585,7 +583,7 @@
             this.Scenario1.Text = "Scenario1";
             this.Scenario1.UseVisualStyleBackColor = true;
             // 
-            // CometTimerTextBox
+            // CometAndLuigi_TimerNumericUpDown
             // 
             this.CometAndLuigi_TimerNumericUpDown.Location = new System.Drawing.Point(8, 251);
             this.CometAndLuigi_TimerNumericUpDown.Maximum = new decimal(new int[] {
@@ -593,7 +591,7 @@
             0,
             0,
             0});
-            this.CometAndLuigi_TimerNumericUpDown.Name = "CometTimerTextBox";
+            this.CometAndLuigi_TimerNumericUpDown.Name = "CometAndLuigi_TimerNumericUpDown";
             this.CometAndLuigi_TimerNumericUpDown.Size = new System.Drawing.Size(138, 19);
             this.CometAndLuigi_TimerNumericUpDown.TabIndex = 11;
             this.CometAndLuigi_TimerNumericUpDown.Tag = "CometLimitTimer";
@@ -1158,16 +1156,6 @@
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
             // 
-            // IsErrorCheckBox
-            // 
-            this.IsErrorCheckBox.AutoSize = true;
-            this.IsErrorCheckBox.Location = new System.Drawing.Point(183, 252);
-            this.IsErrorCheckBox.Name = "IsErrorCheckBox";
-            this.IsErrorCheckBox.Size = new System.Drawing.Size(81, 16);
-            this.IsErrorCheckBox.TabIndex = 23;
-            this.IsErrorCheckBox.Text = "ErrorCheck";
-            this.IsErrorCheckBox.UseVisualStyleBackColor = true;
-            // 
             // StageInfoEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1307,6 +1295,5 @@
         private System.Windows.Forms.ComboBox PowerStarTypeComboBox;
         private System.Windows.Forms.DataGridView ScenBGM_dgv;
         private System.Windows.Forms.ComboBox AppearPowerStarObjComboBox;
-        private System.Windows.Forms.CheckBox IsErrorCheckBox;
     }
 }

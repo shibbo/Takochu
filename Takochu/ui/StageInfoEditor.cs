@@ -140,7 +140,6 @@ namespace Takochu.ui
             ScenarioNameTextBox.Text     = scenario.mScenarioName;
             AppearPowerStarTextBox.Text  = scenario.mAppearPowerStar;
             PowerStarIDTextBox.Value     = scenario.mPowerStarID;
-            IsErrorCheckBox.Checked = Convert.ToBoolean(scenario.mErrorCheck);
 
             if (GameUtil.IsSMG2())
             {

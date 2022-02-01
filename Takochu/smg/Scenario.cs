@@ -10,14 +10,10 @@ namespace Takochu.smg
         public Scenario(BCSV.Entry entry, List<string> zoneList)
         {
             mEntry = entry;
-            //foreach(var e in entry)
-            //Console.WriteLine(BCSV.HashToFieldName(e.Key));
             mScenarioNo = mEntry.Get<int>("ScenarioNo");
             mScenarioName = mEntry.Get<string>("ScenarioName");
             mPowerStarID = mEntry.Get<int>("PowerStarId");
             mAppearPowerStar = mEntry.Get<string>("AppearPowerStarObj");
-
-            mErrorCheck = mEntry.Get<int>("ErrorCheck");
 
             if (GameUtil.IsSMG2())
             {
@@ -58,7 +54,6 @@ namespace Takochu.smg
         public string mComet { get; private set; }
         public int mCometLimitTimer { get; private set; }
         public int mIsHidden { get; private set; }
-        public int mErrorCheck { get; private set; }
         public int mLuigiModeTimer { get; private set; }
 
         public Dictionary<string, int> mZoneMasks { get; private set; }
