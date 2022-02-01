@@ -32,6 +32,9 @@
             this.MainTabControl = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.AppearPowerStarObjComboBox = new System.Windows.Forms.ComboBox();
+            this.PowerStarTypeComboBox = new System.Windows.Forms.ComboBox();
+            this.CometTypeComboBox = new System.Windows.Forms.ComboBox();
             this.GalaxyNameLabel = new System.Windows.Forms.Label();
             this.layerMasksBox = new System.Windows.Forms.GroupBox();
             this.UseLayerFlags = new System.Windows.Forms.GroupBox();
@@ -61,87 +64,86 @@
             this.Scenario3 = new System.Windows.Forms.CheckBox();
             this.Scenario2 = new System.Windows.Forms.CheckBox();
             this.Scenario1 = new System.Windows.Forms.CheckBox();
-            this.CometTimerTextBox = new System.Windows.Forms.NumericUpDown();
-            this.label19 = new System.Windows.Forms.Label();
-            this.CometTypeTextBox = new System.Windows.Forms.TextBox();
+            this.CometAndLuigi_TimerNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.CometTimerLabel = new System.Windows.Forms.Label();
             this.GalaxyInfoPictureBox = new System.Windows.Forms.PictureBox();
             this.label18 = new System.Windows.Forms.Label();
-            this.PowerStarTypeTextBox = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
-            this.AppearPowerStarTextBox = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.ScenarioNameTextBox = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.BGM_InfoTabPage = new System.Windows.Forms.TabPage();
-            this.DebugTabPage = new System.Windows.Forms.TabPage();
-            this.scenarioBGMIsPrepare = new System.Windows.Forms.CheckBox();
             this.BGMTabControl = new System.Windows.Forms.TabControl();
             this.StageBGM_InfoTabPage = new System.Windows.Forms.TabPage();
-            this.ScenarioBGM_InfoTabPage = new System.Windows.Forms.TabPage();
             this.StageBGMInfoGroupBox = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.changeBgmIdName_0 = new System.Windows.Forms.TextBox();
+            this.changeBgmState_2 = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
+            this.changeBgmState_3 = new System.Windows.Forms.NumericUpDown();
+            this.changeBgmIdName_4 = new System.Windows.Forms.TextBox();
+            this.changeBgmState_0 = new System.Windows.Forms.NumericUpDown();
+            this.changeBgmIdName_1 = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.changeBgmState_1 = new System.Windows.Forms.NumericUpDown();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.changeBgmState_4 = new System.Windows.Forms.NumericUpDown();
-            this.scenarioBGMStartFrame = new System.Windows.Forms.NumericUpDown();
+            this.label9 = new System.Windows.Forms.Label();
+            this.changeBgmIdName_3 = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.changeBgmIdName_2 = new System.Windows.Forms.TextBox();
+            this.StageBGMListBox = new System.Windows.Forms.ListBox();
+            this.ScenarioBGM_InfoTabPage = new System.Windows.Forms.TabPage();
+            this.ScenBGM_dgv = new System.Windows.Forms.DataGridView();
+            this.DebugTabPage = new System.Windows.Forms.TabPage();
+            this.DebugTextBox = new System.Windows.Forms.TextBox();
+            this.scenarioBGMId = new System.Windows.Forms.TextBox();
+            this.AppearPowerStarTextBox = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.PowerStarIDTextBox = new System.Windows.Forms.NumericUpDown();
             this.label15 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.scenarioBGMStartType = new System.Windows.Forms.NumericUpDown();
-            this.changeBgmState_1 = new System.Windows.Forms.NumericUpDown();
+            this.scenarioBGMIsPrepare = new System.Windows.Forms.CheckBox();
+            this.CometTypeTextBox = new System.Windows.Forms.TextBox();
+            this.PowerStarTypeTextBox = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.changeBgmIdName_4 = new System.Windows.Forms.TextBox();
-            this.scenarioBGMId = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.changeBgmIdName_1 = new System.Windows.Forms.TextBox();
-            this.changeBgmIdName_2 = new System.Windows.Forms.TextBox();
-            this.changeBgmState_3 = new System.Windows.Forms.NumericUpDown();
-            this.label4 = new System.Windows.Forms.Label();
-            this.changeBgmIdName_3 = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.changeBgmState_0 = new System.Windows.Forms.NumericUpDown();
-            this.changeBgmState_2 = new System.Windows.Forms.NumericUpDown();
-            this.changeBgmIdName_0 = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
+            this.scenarioBGMStartFrame = new System.Windows.Forms.NumericUpDown();
+            this.label13 = new System.Windows.Forms.Label();
+            this.scenarioBGMStartType = new System.Windows.Forms.NumericUpDown();
             this.MainToolStrip = new System.Windows.Forms.ToolStrip();
             this.StateToolStripLabel = new System.Windows.Forms.ToolStripLabel();
             this.MainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.DebugTextBox = new System.Windows.Forms.TextBox();
-            this.CometTypeComboBox = new System.Windows.Forms.ComboBox();
-            this.StageBGMListBox = new System.Windows.Forms.ListBox();
-            this.PowerStarTypeComboBox = new System.Windows.Forms.ComboBox();
-            this.ScenBGM_dgv = new System.Windows.Forms.DataGridView();
+            this.IsErrorCheckBox = new System.Windows.Forms.CheckBox();
             this.MainTabControl.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.layerMasksBox.SuspendLayout();
             this.UseLayerFlags.SuspendLayout();
             this.ShowScenarioStarFlags.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.CometTimerTextBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CometAndLuigi_TimerNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GalaxyInfoPictureBox)).BeginInit();
             this.BGM_InfoTabPage.SuspendLayout();
-            this.DebugTabPage.SuspendLayout();
             this.BGMTabControl.SuspendLayout();
             this.StageBGM_InfoTabPage.SuspendLayout();
-            this.ScenarioBGM_InfoTabPage.SuspendLayout();
             this.StageBGMInfoGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.changeBgmState_4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.scenarioBGMStartFrame)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PowerStarIDTextBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.scenarioBGMStartType)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.changeBgmState_1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.changeBgmState_2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.changeBgmState_3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.changeBgmState_0)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.changeBgmState_2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.changeBgmState_1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.changeBgmState_4)).BeginInit();
+            this.ScenarioBGM_InfoTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ScenBGM_dgv)).BeginInit();
+            this.DebugTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PowerStarIDTextBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.scenarioBGMStartFrame)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.scenarioBGMStartType)).BeginInit();
             this.MainToolStrip.SuspendLayout();
             this.MainMenuStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ScenBGM_dgv)).BeginInit();
             this.SuspendLayout();
             // 
             // ScenarioListTreeView
@@ -184,16 +186,17 @@
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox2.Controls.Add(this.IsErrorCheckBox);
+            this.groupBox2.Controls.Add(this.AppearPowerStarObjComboBox);
             this.groupBox2.Controls.Add(this.PowerStarTypeComboBox);
             this.groupBox2.Controls.Add(this.CometTypeComboBox);
             this.groupBox2.Controls.Add(this.GalaxyNameLabel);
             this.groupBox2.Controls.Add(this.layerMasksBox);
-            this.groupBox2.Controls.Add(this.CometTimerTextBox);
-            this.groupBox2.Controls.Add(this.label19);
+            this.groupBox2.Controls.Add(this.CometAndLuigi_TimerNumericUpDown);
+            this.groupBox2.Controls.Add(this.CometTimerLabel);
             this.groupBox2.Controls.Add(this.GalaxyInfoPictureBox);
             this.groupBox2.Controls.Add(this.label18);
             this.groupBox2.Controls.Add(this.label17);
-            this.groupBox2.Controls.Add(this.AppearPowerStarTextBox);
             this.groupBox2.Controls.Add(this.label16);
             this.groupBox2.Controls.Add(this.ScenarioNameTextBox);
             this.groupBox2.Controls.Add(this.label14);
@@ -203,6 +206,30 @@
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Scenario Information";
+            // 
+            // AppearPowerStarObjComboBox
+            // 
+            this.AppearPowerStarObjComboBox.FormattingEnabled = true;
+            this.AppearPowerStarObjComboBox.Location = new System.Drawing.Point(8, 138);
+            this.AppearPowerStarObjComboBox.Name = "AppearPowerStarObjComboBox";
+            this.AppearPowerStarObjComboBox.Size = new System.Drawing.Size(256, 20);
+            this.AppearPowerStarObjComboBox.TabIndex = 22;
+            // 
+            // PowerStarTypeComboBox
+            // 
+            this.PowerStarTypeComboBox.FormattingEnabled = true;
+            this.PowerStarTypeComboBox.Location = new System.Drawing.Point(8, 176);
+            this.PowerStarTypeComboBox.Name = "PowerStarTypeComboBox";
+            this.PowerStarTypeComboBox.Size = new System.Drawing.Size(256, 20);
+            this.PowerStarTypeComboBox.TabIndex = 21;
+            // 
+            // CometTypeComboBox
+            // 
+            this.CometTypeComboBox.FormattingEnabled = true;
+            this.CometTypeComboBox.Location = new System.Drawing.Point(8, 213);
+            this.CometTypeComboBox.Name = "CometTypeComboBox";
+            this.CometTypeComboBox.Size = new System.Drawing.Size(256, 20);
+            this.CometTypeComboBox.TabIndex = 20;
             // 
             // GalaxyNameLabel
             // 
@@ -560,35 +587,26 @@
             // 
             // CometTimerTextBox
             // 
-            this.CometTimerTextBox.Location = new System.Drawing.Point(8, 250);
-            this.CometTimerTextBox.Maximum = new decimal(new int[] {
+            this.CometAndLuigi_TimerNumericUpDown.Location = new System.Drawing.Point(8, 251);
+            this.CometAndLuigi_TimerNumericUpDown.Maximum = new decimal(new int[] {
             99999,
             0,
             0,
             0});
-            this.CometTimerTextBox.Name = "CometTimerTextBox";
-            this.CometTimerTextBox.Size = new System.Drawing.Size(256, 19);
-            this.CometTimerTextBox.TabIndex = 11;
-            this.CometTimerTextBox.Tag = "CometLimitTimer";
-            this.CometTimerTextBox.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
+            this.CometAndLuigi_TimerNumericUpDown.Name = "CometTimerTextBox";
+            this.CometAndLuigi_TimerNumericUpDown.Size = new System.Drawing.Size(138, 19);
+            this.CometAndLuigi_TimerNumericUpDown.TabIndex = 11;
+            this.CometAndLuigi_TimerNumericUpDown.Tag = "CometLimitTimer";
+            this.CometAndLuigi_TimerNumericUpDown.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
             // 
-            // label19
+            // CometTimerLabel
             // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(6, 235);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(73, 12);
-            this.label19.TabIndex = 10;
-            this.label19.Text = "Comet Timer:";
-            // 
-            // CometTypeTextBox
-            // 
-            this.CometTypeTextBox.Location = new System.Drawing.Point(342, 118);
-            this.CometTypeTextBox.Name = "CometTypeTextBox";
-            this.CometTypeTextBox.Size = new System.Drawing.Size(256, 19);
-            this.CometTypeTextBox.TabIndex = 9;
-            this.CometTypeTextBox.Tag = "Comet";
-            this.CometTypeTextBox.TextChanged += new System.EventHandler(this.TextBox_ValueChanged);
+            this.CometTimerLabel.AutoSize = true;
+            this.CometTimerLabel.Location = new System.Drawing.Point(6, 236);
+            this.CometTimerLabel.Name = "CometTimerLabel";
+            this.CometTimerLabel.Size = new System.Drawing.Size(73, 12);
+            this.CometTimerLabel.TabIndex = 10;
+            this.CometTimerLabel.Text = "Comet Timer:";
             // 
             // GalaxyInfoPictureBox
             // 
@@ -608,15 +626,6 @@
             this.label18.TabIndex = 8;
             this.label18.Text = "Comet Type:";
             // 
-            // PowerStarTypeTextBox
-            // 
-            this.PowerStarTypeTextBox.Location = new System.Drawing.Point(342, 74);
-            this.PowerStarTypeTextBox.Name = "PowerStarTypeTextBox";
-            this.PowerStarTypeTextBox.Size = new System.Drawing.Size(256, 19);
-            this.PowerStarTypeTextBox.TabIndex = 7;
-            this.PowerStarTypeTextBox.Tag = "PowerStarType";
-            this.PowerStarTypeTextBox.TextChanged += new System.EventHandler(this.TextBox_ValueChanged);
-            // 
             // label17
             // 
             this.label17.AutoSize = true;
@@ -625,15 +634,6 @@
             this.label17.Size = new System.Drawing.Size(92, 12);
             this.label17.TabIndex = 6;
             this.label17.Text = "Power Star Type:";
-            // 
-            // AppearPowerStarTextBox
-            // 
-            this.AppearPowerStarTextBox.Location = new System.Drawing.Point(8, 139);
-            this.AppearPowerStarTextBox.Name = "AppearPowerStarTextBox";
-            this.AppearPowerStarTextBox.Size = new System.Drawing.Size(256, 19);
-            this.AppearPowerStarTextBox.TabIndex = 5;
-            this.AppearPowerStarTextBox.Tag = "AppearPowerStarObj";
-            this.AppearPowerStarTextBox.TextChanged += new System.EventHandler(this.TextBox_ValueChanged);
             // 
             // label16
             // 
@@ -673,38 +673,6 @@
             this.BGM_InfoTabPage.Text = "BGM Info";
             this.BGM_InfoTabPage.UseVisualStyleBackColor = true;
             // 
-            // DebugTabPage
-            // 
-            this.DebugTabPage.Controls.Add(this.DebugTextBox);
-            this.DebugTabPage.Controls.Add(this.scenarioBGMId);
-            this.DebugTabPage.Controls.Add(this.label11);
-            this.DebugTabPage.Controls.Add(this.PowerStarIDTextBox);
-            this.DebugTabPage.Controls.Add(this.label15);
-            this.DebugTabPage.Controls.Add(this.scenarioBGMIsPrepare);
-            this.DebugTabPage.Controls.Add(this.CometTypeTextBox);
-            this.DebugTabPage.Controls.Add(this.PowerStarTypeTextBox);
-            this.DebugTabPage.Controls.Add(this.label12);
-            this.DebugTabPage.Controls.Add(this.scenarioBGMStartFrame);
-            this.DebugTabPage.Controls.Add(this.label13);
-            this.DebugTabPage.Controls.Add(this.scenarioBGMStartType);
-            this.DebugTabPage.Location = new System.Drawing.Point(4, 22);
-            this.DebugTabPage.Name = "DebugTabPage";
-            this.DebugTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.DebugTabPage.Size = new System.Drawing.Size(781, 393);
-            this.DebugTabPage.TabIndex = 2;
-            this.DebugTabPage.Text = "Debug";
-            this.DebugTabPage.UseVisualStyleBackColor = true;
-            // 
-            // scenarioBGMIsPrepare
-            // 
-            this.scenarioBGMIsPrepare.AutoSize = true;
-            this.scenarioBGMIsPrepare.Location = new System.Drawing.Point(480, 252);
-            this.scenarioBGMIsPrepare.Name = "scenarioBGMIsPrepare";
-            this.scenarioBGMIsPrepare.Size = new System.Drawing.Size(76, 16);
-            this.scenarioBGMIsPrepare.TabIndex = 6;
-            this.scenarioBGMIsPrepare.Text = "Is Prepare";
-            this.scenarioBGMIsPrepare.UseVisualStyleBackColor = true;
-            // 
             // BGMTabControl
             // 
             this.BGMTabControl.Controls.Add(this.StageBGM_InfoTabPage);
@@ -728,18 +696,6 @@
             this.StageBGM_InfoTabPage.TabIndex = 0;
             this.StageBGM_InfoTabPage.Text = "StageBGM_Info";
             this.StageBGM_InfoTabPage.UseVisualStyleBackColor = true;
-            // 
-            // ScenarioBGM_InfoTabPage
-            // 
-            this.ScenarioBGM_InfoTabPage.Controls.Add(this.ScenBGM_dgv);
-            this.ScenarioBGM_InfoTabPage.Location = new System.Drawing.Point(4, 22);
-            this.ScenarioBGM_InfoTabPage.Name = "ScenarioBGM_InfoTabPage";
-            this.ScenarioBGM_InfoTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.ScenarioBGM_InfoTabPage.Size = new System.Drawing.Size(783, 361);
-            this.ScenarioBGM_InfoTabPage.TabIndex = 1;
-            this.ScenarioBGM_InfoTabPage.Tag = "1";
-            this.ScenarioBGM_InfoTabPage.Text = "ScenarioBGM_Info";
-            this.ScenarioBGM_InfoTabPage.UseVisualStyleBackColor = true;
             // 
             // StageBGMInfoGroupBox
             // 
@@ -774,6 +730,152 @@
             this.StageBGMInfoGroupBox.Tag = "0";
             this.StageBGMInfoGroupBox.Text = "StageBGMInfo";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 15);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(116, 12);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "ChangeBgmIdName 0:";
+            // 
+            // changeBgmIdName_0
+            // 
+            this.changeBgmIdName_0.Location = new System.Drawing.Point(128, 12);
+            this.changeBgmIdName_0.Name = "changeBgmIdName_0";
+            this.changeBgmIdName_0.Size = new System.Drawing.Size(221, 19);
+            this.changeBgmIdName_0.TabIndex = 1;
+            this.changeBgmIdName_0.Tag = "ChangeBgmIdName0";
+            this.changeBgmIdName_0.TextChanged += new System.EventHandler(this.TextBox_ValueChanged);
+            // 
+            // changeBgmState_2
+            // 
+            this.changeBgmState_2.Location = new System.Drawing.Point(466, 63);
+            this.changeBgmState_2.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.changeBgmState_2.Name = "changeBgmState_2";
+            this.changeBgmState_2.Size = new System.Drawing.Size(82, 19);
+            this.changeBgmState_2.TabIndex = 11;
+            this.changeBgmState_2.Tag = "ChangeBgmState2";
+            this.changeBgmState_2.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(355, 15);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(105, 12);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "ChangeBgmState 0:";
+            // 
+            // changeBgmState_3
+            // 
+            this.changeBgmState_3.Location = new System.Drawing.Point(466, 88);
+            this.changeBgmState_3.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.changeBgmState_3.Name = "changeBgmState_3";
+            this.changeBgmState_3.Size = new System.Drawing.Size(82, 19);
+            this.changeBgmState_3.TabIndex = 15;
+            this.changeBgmState_3.Tag = "ChangeBgmState3";
+            this.changeBgmState_3.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
+            // 
+            // changeBgmIdName_4
+            // 
+            this.changeBgmIdName_4.Location = new System.Drawing.Point(128, 112);
+            this.changeBgmIdName_4.Name = "changeBgmIdName_4";
+            this.changeBgmIdName_4.Size = new System.Drawing.Size(221, 19);
+            this.changeBgmIdName_4.TabIndex = 17;
+            this.changeBgmIdName_4.Tag = "ChangeBgmIdName4";
+            this.changeBgmIdName_4.TextChanged += new System.EventHandler(this.TextBox_ValueChanged);
+            // 
+            // changeBgmState_0
+            // 
+            this.changeBgmState_0.Location = new System.Drawing.Point(466, 13);
+            this.changeBgmState_0.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.changeBgmState_0.Name = "changeBgmState_0";
+            this.changeBgmState_0.Size = new System.Drawing.Size(82, 19);
+            this.changeBgmState_0.TabIndex = 3;
+            this.changeBgmState_0.Tag = "ChangeBgmState0";
+            this.changeBgmState_0.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
+            // 
+            // changeBgmIdName_1
+            // 
+            this.changeBgmIdName_1.Location = new System.Drawing.Point(128, 37);
+            this.changeBgmIdName_1.Name = "changeBgmIdName_1";
+            this.changeBgmIdName_1.Size = new System.Drawing.Size(221, 19);
+            this.changeBgmIdName_1.TabIndex = 5;
+            this.changeBgmIdName_1.Tag = "ChangeBgmIdName1";
+            this.changeBgmIdName_1.TextChanged += new System.EventHandler(this.TextBox_ValueChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 65);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(116, 12);
+            this.label6.TabIndex = 8;
+            this.label6.Text = "ChangeBgmIdName 2:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(355, 90);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(105, 12);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "ChangeBgmState 3:";
+            // 
+            // changeBgmState_1
+            // 
+            this.changeBgmState_1.Location = new System.Drawing.Point(466, 38);
+            this.changeBgmState_1.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.changeBgmState_1.Name = "changeBgmState_1";
+            this.changeBgmState_1.Size = new System.Drawing.Size(82, 19);
+            this.changeBgmState_1.TabIndex = 7;
+            this.changeBgmState_1.Tag = "ChangeBgmState1";
+            this.changeBgmState_1.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(355, 65);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(105, 12);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "ChangeBgmState 2:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 90);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(116, 12);
+            this.label8.TabIndex = 12;
+            this.label8.Text = "ChangeBgmIdName 3:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(355, 40);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(105, 12);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "ChangeBgmState 1:";
+            // 
             // changeBgmState_4
             // 
             this.changeBgmState_4.Location = new System.Drawing.Point(466, 113);
@@ -788,14 +890,142 @@
             this.changeBgmState_4.Tag = "ChangeBgmState4";
             this.changeBgmState_4.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
             // 
-            // scenarioBGMStartFrame
+            // label9
             // 
-            this.scenarioBGMStartFrame.Location = new System.Drawing.Point(546, 228);
-            this.scenarioBGMStartFrame.Name = "scenarioBGMStartFrame";
-            this.scenarioBGMStartFrame.Size = new System.Drawing.Size(81, 19);
-            this.scenarioBGMStartFrame.TabIndex = 5;
-            this.scenarioBGMStartFrame.Tag = "StartFrame";
-            this.scenarioBGMStartFrame.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(355, 115);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(105, 12);
+            this.label9.TabIndex = 18;
+            this.label9.Text = "ChangeBgmState 4:";
+            // 
+            // changeBgmIdName_3
+            // 
+            this.changeBgmIdName_3.Location = new System.Drawing.Point(128, 87);
+            this.changeBgmIdName_3.Name = "changeBgmIdName_3";
+            this.changeBgmIdName_3.Size = new System.Drawing.Size(221, 19);
+            this.changeBgmIdName_3.TabIndex = 13;
+            this.changeBgmIdName_3.Tag = "ChangeBgmIdName3";
+            this.changeBgmIdName_3.TextChanged += new System.EventHandler(this.TextBox_ValueChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 40);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(116, 12);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "ChangeBgmIdName 1:";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(6, 115);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(116, 12);
+            this.label10.TabIndex = 16;
+            this.label10.Text = "ChangeBgmIdName 4:";
+            // 
+            // changeBgmIdName_2
+            // 
+            this.changeBgmIdName_2.Location = new System.Drawing.Point(128, 62);
+            this.changeBgmIdName_2.Name = "changeBgmIdName_2";
+            this.changeBgmIdName_2.Size = new System.Drawing.Size(221, 19);
+            this.changeBgmIdName_2.TabIndex = 9;
+            this.changeBgmIdName_2.Tag = "ChangeBgmIdName2";
+            this.changeBgmIdName_2.TextChanged += new System.EventHandler(this.TextBox_ValueChanged);
+            // 
+            // StageBGMListBox
+            // 
+            this.StageBGMListBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.StageBGMListBox.FormattingEnabled = true;
+            this.StageBGMListBox.ItemHeight = 12;
+            this.StageBGMListBox.Location = new System.Drawing.Point(3, 3);
+            this.StageBGMListBox.Name = "StageBGMListBox";
+            this.StageBGMListBox.Size = new System.Drawing.Size(205, 355);
+            this.StageBGMListBox.TabIndex = 0;
+            this.StageBGMListBox.SelectedIndexChanged += new System.EventHandler(this.StageBGMListBox_SelectedIndexChanged);
+            // 
+            // ScenarioBGM_InfoTabPage
+            // 
+            this.ScenarioBGM_InfoTabPage.Controls.Add(this.ScenBGM_dgv);
+            this.ScenarioBGM_InfoTabPage.Location = new System.Drawing.Point(4, 22);
+            this.ScenarioBGM_InfoTabPage.Name = "ScenarioBGM_InfoTabPage";
+            this.ScenarioBGM_InfoTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.ScenarioBGM_InfoTabPage.Size = new System.Drawing.Size(783, 361);
+            this.ScenarioBGM_InfoTabPage.TabIndex = 1;
+            this.ScenarioBGM_InfoTabPage.Tag = "1";
+            this.ScenarioBGM_InfoTabPage.Text = "ScenarioBGM_Info";
+            this.ScenarioBGM_InfoTabPage.UseVisualStyleBackColor = true;
+            // 
+            // ScenBGM_dgv
+            // 
+            this.ScenBGM_dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.ScenBGM_dgv.Dock = System.Windows.Forms.DockStyle.Left;
+            this.ScenBGM_dgv.Location = new System.Drawing.Point(3, 3);
+            this.ScenBGM_dgv.Name = "ScenBGM_dgv";
+            this.ScenBGM_dgv.RowTemplate.Height = 21;
+            this.ScenBGM_dgv.Size = new System.Drawing.Size(774, 355);
+            this.ScenBGM_dgv.TabIndex = 7;
+            // 
+            // DebugTabPage
+            // 
+            this.DebugTabPage.Controls.Add(this.DebugTextBox);
+            this.DebugTabPage.Controls.Add(this.scenarioBGMId);
+            this.DebugTabPage.Controls.Add(this.AppearPowerStarTextBox);
+            this.DebugTabPage.Controls.Add(this.label11);
+            this.DebugTabPage.Controls.Add(this.PowerStarIDTextBox);
+            this.DebugTabPage.Controls.Add(this.label15);
+            this.DebugTabPage.Controls.Add(this.scenarioBGMIsPrepare);
+            this.DebugTabPage.Controls.Add(this.CometTypeTextBox);
+            this.DebugTabPage.Controls.Add(this.PowerStarTypeTextBox);
+            this.DebugTabPage.Controls.Add(this.label12);
+            this.DebugTabPage.Controls.Add(this.scenarioBGMStartFrame);
+            this.DebugTabPage.Controls.Add(this.label13);
+            this.DebugTabPage.Controls.Add(this.scenarioBGMStartType);
+            this.DebugTabPage.Location = new System.Drawing.Point(4, 22);
+            this.DebugTabPage.Name = "DebugTabPage";
+            this.DebugTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.DebugTabPage.Size = new System.Drawing.Size(797, 393);
+            this.DebugTabPage.TabIndex = 2;
+            this.DebugTabPage.Text = "Debug";
+            this.DebugTabPage.UseVisualStyleBackColor = true;
+            // 
+            // DebugTextBox
+            // 
+            this.DebugTextBox.Location = new System.Drawing.Point(19, 83);
+            this.DebugTextBox.Multiline = true;
+            this.DebugTextBox.Name = "DebugTextBox";
+            this.DebugTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.DebugTextBox.Size = new System.Drawing.Size(178, 130);
+            this.DebugTextBox.TabIndex = 20;
+            // 
+            // scenarioBGMId
+            // 
+            this.scenarioBGMId.Location = new System.Drawing.Point(546, 177);
+            this.scenarioBGMId.Name = "scenarioBGMId";
+            this.scenarioBGMId.Size = new System.Drawing.Size(81, 19);
+            this.scenarioBGMId.TabIndex = 1;
+            this.scenarioBGMId.Tag = "BgmIdName";
+            this.scenarioBGMId.TextChanged += new System.EventHandler(this.TextBox_ValueChanged);
+            // 
+            // AppearPowerStarTextBox
+            // 
+            this.AppearPowerStarTextBox.Location = new System.Drawing.Point(342, 29);
+            this.AppearPowerStarTextBox.Name = "AppearPowerStarTextBox";
+            this.AppearPowerStarTextBox.Size = new System.Drawing.Size(96, 19);
+            this.AppearPowerStarTextBox.TabIndex = 5;
+            this.AppearPowerStarTextBox.Tag = "AppearPowerStarObj";
+            this.AppearPowerStarTextBox.TextChanged += new System.EventHandler(this.TextBox_ValueChanged);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(477, 180);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(52, 12);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "Music ID:";
             // 
             // PowerStarIDTextBox
             // 
@@ -820,55 +1050,33 @@
             this.label15.TabIndex = 2;
             this.label15.Text = "Power Star ID:";
             // 
-            // label13
+            // scenarioBGMIsPrepare
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(477, 230);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(68, 12);
-            this.label13.TabIndex = 4;
-            this.label13.Text = "Start Frame:";
+            this.scenarioBGMIsPrepare.AutoSize = true;
+            this.scenarioBGMIsPrepare.Location = new System.Drawing.Point(480, 252);
+            this.scenarioBGMIsPrepare.Name = "scenarioBGMIsPrepare";
+            this.scenarioBGMIsPrepare.Size = new System.Drawing.Size(76, 16);
+            this.scenarioBGMIsPrepare.TabIndex = 6;
+            this.scenarioBGMIsPrepare.Text = "Is Prepare";
+            this.scenarioBGMIsPrepare.UseVisualStyleBackColor = true;
             // 
-            // label9
+            // CometTypeTextBox
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(355, 115);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(105, 12);
-            this.label9.TabIndex = 18;
-            this.label9.Text = "ChangeBgmState 4:";
+            this.CometTypeTextBox.Location = new System.Drawing.Point(342, 118);
+            this.CometTypeTextBox.Name = "CometTypeTextBox";
+            this.CometTypeTextBox.Size = new System.Drawing.Size(256, 19);
+            this.CometTypeTextBox.TabIndex = 9;
+            this.CometTypeTextBox.Tag = "Comet";
+            this.CometTypeTextBox.TextChanged += new System.EventHandler(this.TextBox_ValueChanged);
             // 
-            // label1
+            // PowerStarTypeTextBox
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 15);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(116, 12);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "ChangeBgmIdName 0:";
-            // 
-            // scenarioBGMStartType
-            // 
-            this.scenarioBGMStartType.Location = new System.Drawing.Point(546, 204);
-            this.scenarioBGMStartType.Name = "scenarioBGMStartType";
-            this.scenarioBGMStartType.Size = new System.Drawing.Size(81, 19);
-            this.scenarioBGMStartType.TabIndex = 3;
-            this.scenarioBGMStartType.Tag = "StartType";
-            this.scenarioBGMStartType.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
-            // 
-            // changeBgmState_1
-            // 
-            this.changeBgmState_1.Location = new System.Drawing.Point(466, 38);
-            this.changeBgmState_1.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
-            this.changeBgmState_1.Name = "changeBgmState_1";
-            this.changeBgmState_1.Size = new System.Drawing.Size(82, 19);
-            this.changeBgmState_1.TabIndex = 7;
-            this.changeBgmState_1.Tag = "ChangeBgmState1";
-            this.changeBgmState_1.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
+            this.PowerStarTypeTextBox.Location = new System.Drawing.Point(342, 74);
+            this.PowerStarTypeTextBox.Name = "PowerStarTypeTextBox";
+            this.PowerStarTypeTextBox.Size = new System.Drawing.Size(256, 19);
+            this.PowerStarTypeTextBox.TabIndex = 7;
+            this.PowerStarTypeTextBox.Tag = "PowerStarType";
+            this.PowerStarTypeTextBox.TextChanged += new System.EventHandler(this.TextBox_ValueChanged);
             // 
             // label12
             // 
@@ -879,182 +1087,32 @@
             this.label12.TabIndex = 2;
             this.label12.Text = "Start Type:";
             // 
-            // changeBgmIdName_4
+            // scenarioBGMStartFrame
             // 
-            this.changeBgmIdName_4.Location = new System.Drawing.Point(128, 112);
-            this.changeBgmIdName_4.Name = "changeBgmIdName_4";
-            this.changeBgmIdName_4.Size = new System.Drawing.Size(221, 19);
-            this.changeBgmIdName_4.TabIndex = 17;
-            this.changeBgmIdName_4.Tag = "ChangeBgmIdName4";
-            this.changeBgmIdName_4.TextChanged += new System.EventHandler(this.TextBox_ValueChanged);
+            this.scenarioBGMStartFrame.Location = new System.Drawing.Point(546, 228);
+            this.scenarioBGMStartFrame.Name = "scenarioBGMStartFrame";
+            this.scenarioBGMStartFrame.Size = new System.Drawing.Size(81, 19);
+            this.scenarioBGMStartFrame.TabIndex = 5;
+            this.scenarioBGMStartFrame.Tag = "StartFrame";
+            this.scenarioBGMStartFrame.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
             // 
-            // scenarioBGMId
+            // label13
             // 
-            this.scenarioBGMId.Location = new System.Drawing.Point(546, 177);
-            this.scenarioBGMId.Name = "scenarioBGMId";
-            this.scenarioBGMId.Size = new System.Drawing.Size(81, 19);
-            this.scenarioBGMId.TabIndex = 1;
-            this.scenarioBGMId.Tag = "BgmIdName";
-            this.scenarioBGMId.TextChanged += new System.EventHandler(this.TextBox_ValueChanged);
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(477, 230);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(68, 12);
+            this.label13.TabIndex = 4;
+            this.label13.Text = "Start Frame:";
             // 
-            // label3
+            // scenarioBGMStartType
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(355, 40);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(105, 12);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "ChangeBgmState 1:";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(477, 180);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(52, 12);
-            this.label11.TabIndex = 0;
-            this.label11.Text = "Music ID:";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 65);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(116, 12);
-            this.label6.TabIndex = 8;
-            this.label6.Text = "ChangeBgmIdName 2:";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(6, 115);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(116, 12);
-            this.label10.TabIndex = 16;
-            this.label10.Text = "ChangeBgmIdName 4:";
-            // 
-            // changeBgmIdName_1
-            // 
-            this.changeBgmIdName_1.Location = new System.Drawing.Point(128, 37);
-            this.changeBgmIdName_1.Name = "changeBgmIdName_1";
-            this.changeBgmIdName_1.Size = new System.Drawing.Size(221, 19);
-            this.changeBgmIdName_1.TabIndex = 5;
-            this.changeBgmIdName_1.Tag = "ChangeBgmIdName1";
-            this.changeBgmIdName_1.TextChanged += new System.EventHandler(this.TextBox_ValueChanged);
-            // 
-            // changeBgmIdName_2
-            // 
-            this.changeBgmIdName_2.Location = new System.Drawing.Point(128, 62);
-            this.changeBgmIdName_2.Name = "changeBgmIdName_2";
-            this.changeBgmIdName_2.Size = new System.Drawing.Size(221, 19);
-            this.changeBgmIdName_2.TabIndex = 9;
-            this.changeBgmIdName_2.Tag = "ChangeBgmIdName2";
-            this.changeBgmIdName_2.TextChanged += new System.EventHandler(this.TextBox_ValueChanged);
-            // 
-            // changeBgmState_3
-            // 
-            this.changeBgmState_3.Location = new System.Drawing.Point(466, 88);
-            this.changeBgmState_3.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
-            this.changeBgmState_3.Name = "changeBgmState_3";
-            this.changeBgmState_3.Size = new System.Drawing.Size(82, 19);
-            this.changeBgmState_3.TabIndex = 15;
-            this.changeBgmState_3.Tag = "ChangeBgmState3";
-            this.changeBgmState_3.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 40);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(116, 12);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "ChangeBgmIdName 1:";
-            // 
-            // changeBgmIdName_3
-            // 
-            this.changeBgmIdName_3.Location = new System.Drawing.Point(128, 87);
-            this.changeBgmIdName_3.Name = "changeBgmIdName_3";
-            this.changeBgmIdName_3.Size = new System.Drawing.Size(221, 19);
-            this.changeBgmIdName_3.TabIndex = 13;
-            this.changeBgmIdName_3.Tag = "ChangeBgmIdName3";
-            this.changeBgmIdName_3.TextChanged += new System.EventHandler(this.TextBox_ValueChanged);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(355, 65);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(105, 12);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "ChangeBgmState 2:";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(355, 90);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(105, 12);
-            this.label7.TabIndex = 14;
-            this.label7.Text = "ChangeBgmState 3:";
-            // 
-            // changeBgmState_0
-            // 
-            this.changeBgmState_0.Location = new System.Drawing.Point(466, 13);
-            this.changeBgmState_0.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
-            this.changeBgmState_0.Name = "changeBgmState_0";
-            this.changeBgmState_0.Size = new System.Drawing.Size(82, 19);
-            this.changeBgmState_0.TabIndex = 3;
-            this.changeBgmState_0.Tag = "ChangeBgmState0";
-            this.changeBgmState_0.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
-            // 
-            // changeBgmState_2
-            // 
-            this.changeBgmState_2.Location = new System.Drawing.Point(466, 63);
-            this.changeBgmState_2.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
-            this.changeBgmState_2.Name = "changeBgmState_2";
-            this.changeBgmState_2.Size = new System.Drawing.Size(82, 19);
-            this.changeBgmState_2.TabIndex = 11;
-            this.changeBgmState_2.Tag = "ChangeBgmState2";
-            this.changeBgmState_2.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
-            // 
-            // changeBgmIdName_0
-            // 
-            this.changeBgmIdName_0.Location = new System.Drawing.Point(128, 12);
-            this.changeBgmIdName_0.Name = "changeBgmIdName_0";
-            this.changeBgmIdName_0.Size = new System.Drawing.Size(221, 19);
-            this.changeBgmIdName_0.TabIndex = 1;
-            this.changeBgmIdName_0.Tag = "ChangeBgmIdName0";
-            this.changeBgmIdName_0.TextChanged += new System.EventHandler(this.TextBox_ValueChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(355, 15);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(105, 12);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "ChangeBgmState 0:";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 90);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(116, 12);
-            this.label8.TabIndex = 12;
-            this.label8.Text = "ChangeBgmIdName 3:";
+            this.scenarioBGMStartType.Location = new System.Drawing.Point(546, 204);
+            this.scenarioBGMStartType.Name = "scenarioBGMStartType";
+            this.scenarioBGMStartType.Size = new System.Drawing.Size(81, 19);
+            this.scenarioBGMStartType.TabIndex = 3;
+            this.scenarioBGMStartType.Tag = "StartType";
+            this.scenarioBGMStartType.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
             // 
             // MainToolStrip
             // 
@@ -1096,55 +1154,19 @@
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
             // 
-            // DebugTextBox
+            // IsErrorCheckBox
             // 
-            this.DebugTextBox.Location = new System.Drawing.Point(19, 83);
-            this.DebugTextBox.Multiline = true;
-            this.DebugTextBox.Name = "DebugTextBox";
-            this.DebugTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.DebugTextBox.Size = new System.Drawing.Size(178, 130);
-            this.DebugTextBox.TabIndex = 20;
-            // 
-            // CometTypeComboBox
-            // 
-            this.CometTypeComboBox.FormattingEnabled = true;
-            this.CometTypeComboBox.Location = new System.Drawing.Point(8, 213);
-            this.CometTypeComboBox.Name = "CometTypeComboBox";
-            this.CometTypeComboBox.Size = new System.Drawing.Size(256, 20);
-            this.CometTypeComboBox.TabIndex = 20;
-            // 
-            // StageBGMListBox
-            // 
-            this.StageBGMListBox.Dock = System.Windows.Forms.DockStyle.Left;
-            this.StageBGMListBox.FormattingEnabled = true;
-            this.StageBGMListBox.ItemHeight = 12;
-            this.StageBGMListBox.Location = new System.Drawing.Point(3, 3);
-            this.StageBGMListBox.Name = "StageBGMListBox";
-            this.StageBGMListBox.Size = new System.Drawing.Size(205, 355);
-            this.StageBGMListBox.TabIndex = 0;
-            this.StageBGMListBox.SelectedIndexChanged += new System.EventHandler(this.StageBGMListBox_SelectedIndexChanged);
-            // 
-            // PowerStarTypeComboBox
-            // 
-            this.PowerStarTypeComboBox.FormattingEnabled = true;
-            this.PowerStarTypeComboBox.Location = new System.Drawing.Point(8, 176);
-            this.PowerStarTypeComboBox.Name = "PowerStarTypeComboBox";
-            this.PowerStarTypeComboBox.Size = new System.Drawing.Size(256, 20);
-            this.PowerStarTypeComboBox.TabIndex = 21;
-            // 
-            // ScenBGM_dgv
-            // 
-            this.ScenBGM_dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ScenBGM_dgv.Dock = System.Windows.Forms.DockStyle.Left;
-            this.ScenBGM_dgv.Location = new System.Drawing.Point(3, 3);
-            this.ScenBGM_dgv.Name = "ScenBGM_dgv";
-            this.ScenBGM_dgv.RowTemplate.Height = 21;
-            this.ScenBGM_dgv.Size = new System.Drawing.Size(774, 355);
-            this.ScenBGM_dgv.TabIndex = 7;
+            this.IsErrorCheckBox.AutoSize = true;
+            this.IsErrorCheckBox.Location = new System.Drawing.Point(183, 252);
+            this.IsErrorCheckBox.Name = "IsErrorCheckBox";
+            this.IsErrorCheckBox.Size = new System.Drawing.Size(81, 16);
+            this.IsErrorCheckBox.TabIndex = 23;
+            this.IsErrorCheckBox.Text = "ErrorCheck";
+            this.IsErrorCheckBox.UseVisualStyleBackColor = true;
             // 
             // StageInfoEditor
             // 
@@ -1152,8 +1174,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(814, 474);
             this.Controls.Add(this.MainToolStrip);
-            this.Controls.Add(this.MainMenuStrip);
             this.Controls.Add(this.MainTabControl);
+            this.Controls.Add(this.MainMenuStrip);
             this.Name = "StageInfoEditor";
             this.Text = "StageInfoEditor";
             this.MainTabControl.ResumeLayout(false);
@@ -1165,29 +1187,29 @@
             this.UseLayerFlags.PerformLayout();
             this.ShowScenarioStarFlags.ResumeLayout(false);
             this.ShowScenarioStarFlags.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.CometTimerTextBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CometAndLuigi_TimerNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GalaxyInfoPictureBox)).EndInit();
             this.BGM_InfoTabPage.ResumeLayout(false);
-            this.DebugTabPage.ResumeLayout(false);
-            this.DebugTabPage.PerformLayout();
             this.BGMTabControl.ResumeLayout(false);
             this.StageBGM_InfoTabPage.ResumeLayout(false);
-            this.ScenarioBGM_InfoTabPage.ResumeLayout(false);
             this.StageBGMInfoGroupBox.ResumeLayout(false);
             this.StageBGMInfoGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.changeBgmState_4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.scenarioBGMStartFrame)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PowerStarIDTextBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.scenarioBGMStartType)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.changeBgmState_1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.changeBgmState_2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.changeBgmState_3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.changeBgmState_0)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.changeBgmState_2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.changeBgmState_1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.changeBgmState_4)).EndInit();
+            this.ScenarioBGM_InfoTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ScenBGM_dgv)).EndInit();
+            this.DebugTabPage.ResumeLayout(false);
+            this.DebugTabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PowerStarIDTextBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.scenarioBGMStartFrame)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.scenarioBGMStartType)).EndInit();
             this.MainToolStrip.ResumeLayout(false);
             this.MainToolStrip.PerformLayout();
             this.MainMenuStrip.ResumeLayout(false);
             this.MainMenuStrip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ScenBGM_dgv)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1257,8 +1279,8 @@
         private System.Windows.Forms.CheckBox layerB;
         private System.Windows.Forms.CheckBox layerA;
         private System.Windows.Forms.ComboBox ZoneComboBox;
-        private System.Windows.Forms.NumericUpDown CometTimerTextBox;
-        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.NumericUpDown CometAndLuigi_TimerNumericUpDown;
+        private System.Windows.Forms.Label CometTimerLabel;
         private System.Windows.Forms.TextBox CometTypeTextBox;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ToolStrip MainToolStrip;
@@ -1284,5 +1306,7 @@
         private System.Windows.Forms.ListBox StageBGMListBox;
         private System.Windows.Forms.ComboBox PowerStarTypeComboBox;
         private System.Windows.Forms.DataGridView ScenBGM_dgv;
+        private System.Windows.Forms.ComboBox AppearPowerStarObjComboBox;
+        private System.Windows.Forms.CheckBox IsErrorCheckBox;
     }
 }

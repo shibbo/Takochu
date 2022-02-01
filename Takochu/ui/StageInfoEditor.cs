@@ -27,8 +27,9 @@ namespace Takochu.ui
         private int _currentScenario;
         private bool misInitialized = false;
         private readonly ScenarioInformation _scenarioInformation;
-        private readonly Type _cometGameType;
-        private readonly Type _starType;
+        private readonly string[] _cometType;
+        private readonly string[] _starType;
+        private readonly string[] AppearPowerStarObj;
 
 
         public StageInfoEditor(ref Galaxy galaxy, int scenarioNo)
@@ -37,26 +38,41 @@ namespace Takochu.ui
             ToggleLayersEnabled(UseLayerFlags, false);
 
             //コメットのコンボボックスにコメット名を入れる
-            _cometGameType = typeof(Scenario.SMG1Comets);
-            
-            if (GameUtil.IsSMG2()) _cometGameType = typeof(Scenario.SMG2Comets);
 
-            foreach (var cometName in Enum.GetValues(_cometGameType))
+            if (GameUtil.IsSMG1())
+            {
+                _cometType   = Scenario.SMG1Comets;
+                AppearPowerStarObj = Scenario.SMG1AppearPowerStarObj;
+                CometTimerLabel.Text = "LuigiModeTimer:";
+                PowerStarTypeComboBox.Enabled = false;
+                MainTabControl.TabPages.Remove(MainTabControl.TabPages["BGM_InfoTabPage"]);
+            }
+            else 
+            {
+                _cometType   = Scenario.SMG2Comets;
+                _starType    = Scenario.StarType;
+                AppearPowerStarObj = Scenario.SMG2AppearPowerStarObj;
+                CometTimerLabel.Text = "CometTimer:";
+
+                foreach (var starType in _starType)
+                {
+                    PowerStarTypeComboBox.Items.Add(starType);
+                }
+
+                var scenarioBGM_dgv = new ScenarioBGMInfo_DataGridView(ScenBGM_dgv);
+                ScenBGM_dgv = scenarioBGM_dgv.GetDataTable();
+            }
+            
+
+            foreach (var cometName in _cometType)
             {
                 CometTypeComboBox.Items.Add(cometName);
             }
 
-            _starType = typeof(Scenario.StarType);
-
-            foreach (var starType in Enum.GetValues(_starType)) 
+            foreach (var str in AppearPowerStarObj) 
             {
-                PowerStarTypeComboBox.Items.Add(starType);
+                AppearPowerStarObjComboBox.Items.Add(str);
             }
-
-
-            var scenarioBGM_dgv = new ScenarioBGMInfo_DataGridView(ScenBGM_dgv);
-            ScenBGM_dgv = scenarioBGM_dgv.GetDataTable();
-            
 
 #if DEBUG
 #else
@@ -80,7 +96,8 @@ namespace Takochu.ui
                 ZoneComboBox.Items.Add(zone.Key);
             }
 
-            SetStageBGMListBox();
+            if(GameUtil.IsSMG2())
+                SetStageBGMListBox();
 
             //必要か不明
             //_currentScenario = 0;
@@ -120,22 +137,46 @@ namespace Takochu.ui
         /// <param name="scenario">対象のシナリオ</param>
         private void SetScenarioInfo(Scenario scenario)
         {
-            ScenarioNameTextBox.Text     = scenario.mEntry.Get<string>  ("ScenarioName");
-            AppearPowerStarTextBox.Text  = scenario.mEntry.Get<string>  ("AppearPowerStarObj");
-            PowerStarTypeTextBox.Text    = scenario.mEntry.Get<string>  ("PowerStarType");
-            CometTypeTextBox.Text        = scenario.mEntry.Get<string>  ("Comet");
-            PowerStarIDTextBox.Value     = scenario.mEntry.Get<int>     ("PowerStarId");
-            CometTimerTextBox.Value      = scenario.mEntry.Get<int>     ("CometLimitTimer");
+            ScenarioNameTextBox.Text     = scenario.mScenarioName;
+            AppearPowerStarTextBox.Text  = scenario.mAppearPowerStar;
+            PowerStarIDTextBox.Value     = scenario.mPowerStarID;
+            IsErrorCheckBox.Checked = Convert.ToBoolean(scenario.mErrorCheck);
 
-            PowerStarTypeComboBox.SelectedIndex = (int)Enum.Parse(_starType, scenario.mEntry.Get<string>("PowerStarType"));
+            if (GameUtil.IsSMG2())
+            {
+                CometAndLuigi_TimerNumericUpDown.Value = scenario.mCometLimitTimer;
+                PowerStarTypeComboBox.SelectedIndex = Array.IndexOf(_starType,scenario.mPowerStarType);
+            }
+            else 
+            {
+                if (scenario.mLuigiModeTimer != default)
+                {
+                    CometAndLuigi_TimerNumericUpDown.Value = scenario.mLuigiModeTimer;
+                    CometAndLuigi_TimerNumericUpDown.Enabled = true;
+                }
+                else 
+                {
+                    CometAndLuigi_TimerNumericUpDown.Enabled = false;
+                }
+                    
+            }
+            
+            AppearPowerStarObjComboBox.SelectedItem = scenario.mAppearPowerStar;
 
-            if (scenario.mEntry.Get<string>("Comet") == string.Empty) 
+            if (!scenario.mEntry.ContainsKey("Comet")) 
+            {
+                CometTypeComboBox.Enabled = false;
+                return;
+            }
+
+            CometTypeComboBox.Enabled = true;
+            if (scenario.mComet == string.Empty) 
             {
                 CometTypeComboBox.SelectedIndex = 0;
                 return;
             }
             
-            CometTypeComboBox.SelectedIndex = (int)Enum.Parse(_cometGameType,scenario.mEntry.Get<string>("Comet"));
+            CometTypeComboBox.SelectedIndex = Array.IndexOf(_cometType,scenario.mComet);
         }
 
         private void ScenarioListTreeView_AfterSelect(object sender, TreeViewEventArgs e)
@@ -229,7 +270,9 @@ namespace Takochu.ui
 
                 string TagStr = control.Tag.ToString();
 
-                if (!(control is CheckBox && TagStr.StartsWith("Layer"))) continue;
+                TagStr = GameUtil.IsSMG1() ? TagStr.ToLower() : TagStr;
+
+                if (!(control is CheckBox /*&& TagStr.StartsWith("Layer")*/)) continue;
                 CheckBox checkBox = control as CheckBox;
 
                 if (!layerList.Contains(TagStr)) continue;
@@ -330,7 +373,7 @@ namespace Takochu.ui
 
             if (BGMTabControl.SelectedTab.Text == "StageBGM_InfoTabPage")
             {
-                _infoEntry.Entry.Set(textBox.Tag.ToString(), textBox.Text);
+                //_infoEntry.Entry.Set(textBox.Tag.ToString(), textBox.Text);
             }
             else
             {
@@ -343,7 +386,7 @@ namespace Takochu.ui
                 }
 
                 BGMInfo.ScenarioBGMEntry scenarioEntry = _scenarioEntries.Find(entry => entry.Entry.Get<int>("ScenarioNo") == 0);
-                scenarioEntry.Entry.Set(textBox.Tag.ToString(), textBox.Text);
+                //scenarioEntry.Entry.Set(textBox.Tag.ToString(), textBox.Text);
             }
 
 
