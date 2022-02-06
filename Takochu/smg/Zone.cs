@@ -18,6 +18,7 @@ namespace Takochu.smg
     public class Zone
     {
         public string[] cPossibleFiles = { "Design", "Light", "Ghost", "Map", "Sound", "ZoneInfo" };
+        public static int MissingPathArgumentsRemove { get; private set; }
 
         public Zone(Galaxy galaxy, string name)
         {
@@ -36,6 +37,8 @@ namespace Takochu.smg
 
         public void Load()
         {
+
+            MissingPathArgumentsRemove = 0;
             if (GameUtil.IsSMG1())
             {
                 string path = $"/StageData/{mZoneName}.arc";
@@ -196,7 +199,8 @@ namespace Takochu.smg
                 pathsBCSV.Save();
                 mMapFiles["Map"].Save();
 
-                MessageBox.Show("Takochu just added in missing path arguments that Whitehole was known to remove.");
+                MissingPathArgumentsRemove++;
+                
 
                 pathsBCSV = new BCSV(mMapFiles["Map"].OpenFile("/root/jmp/Path/CommonPathInfo"));
             }

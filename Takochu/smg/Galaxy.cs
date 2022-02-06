@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Takochu.fmt;
 using Takochu.io;
 using Takochu.smg.msg;
@@ -32,7 +33,8 @@ namespace Takochu.smg
             if (GameUtil.IsSMG1()) text = "/root/zonelist.bcsv";
             BCSV zonesBCSV = new BCSV(mScenarioFile.OpenFile(text));
 
-            foreach(BCSV.Entry e in zonesBCSV.mEntries)
+            var MissingPathArgumentsRemove = 0;
+            foreach (BCSV.Entry e in zonesBCSV.mEntries)
             {
                 string n = e.Get<string>("ZoneName");
 
@@ -40,9 +42,12 @@ namespace Takochu.smg
                     continue;
 
                 mZones.Add(n, new Zone(this, n));
+                
                 mZoneEntries.Add(n, e);
+                MissingPathArgumentsRemove += Zone.MissingPathArgumentsRemove;
             }
-
+            if(MissingPathArgumentsRemove > 0)
+            MessageBox.Show($"Takochu just added in missing path arguments that Whitehole was known to remove.\nRemove arguments count: {MissingPathArgumentsRemove}");
             zonesBCSV.Close();
             var text2 = "/root/ScenarioData.bcsv";
             if (GameUtil.IsSMG1()) text2 = "/root/scenariodata.bcsv";

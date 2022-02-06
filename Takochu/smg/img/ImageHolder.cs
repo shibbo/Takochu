@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Takochu.fmt;
 using Takochu.io;
+using Takochu.util;
 
 namespace Takochu.smg.img
 {
@@ -31,12 +32,13 @@ namespace Takochu.smg.img
 
         public static Bitmap GetImage(string stage)
         {
-            if (mImages.ContainsKey(stage))
-                return mImages[stage].GetImg();
+            string stageName = GameUtil.IsSMG1() ? stage.ToLower() : stage; 
+
+            if (mImages.ContainsKey(stageName))
+                return mImages[stageName].GetImg();
 
             return null;
         }
-
         private static Dictionary<string, BTI> mImages;
     }
 }

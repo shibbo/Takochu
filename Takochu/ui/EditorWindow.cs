@@ -52,8 +52,8 @@ namespace Takochu.ui
                 scenarioTreeView.Nodes.Add(n);
             }
 
-            if (!BGMInfo.HasBGMInfo(mGalaxy.mName))
-                stageInformationBtn.Enabled = false;
+            //if (!BGMInfo.HasBGMInfo(mGalaxy.mName))
+            //    stageInformationBtn.Enabled = false;
         }
 
         private string mGalaxyName;
