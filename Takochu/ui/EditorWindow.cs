@@ -37,19 +37,19 @@ namespace Takochu.ui
             //base.OnLoad(e);
 
             mGalaxy = Program.sGame.OpenGalaxy(mGalaxyName);
-            galaxyNameTxtBox.Text = mGalaxy.mGalaxyName;
+            GalaxyNameTxtBox.Text = mGalaxy.mGalaxyName;
             AreaToolStripMenuItem.Checked = Properties.Settings.Default.EditorWindowDisplayArea;
             pathsToolStripMenuItem.Checked = Properties.Settings.Default.EditorWindowDisplayPath;
 
             foreach(KeyValuePair<int, Scenario> scenarios in mGalaxy.mScenarios)
             {
-                Scenario s = scenarios.Value;
-                TreeNode n = new TreeNode($"[{s.mScenarioNo}] {s.mScenarioName}")
+                Scenario senario = scenarios.Value;
+                TreeNode treeNode = new TreeNode($"[{senario.mScenarioNo}] {senario.mScenarioName}")
                 {
-                    Tag = s.mScenarioNo
+                    Tag = senario.mScenarioNo
                 };
 
-                scenarioTreeView.Nodes.Add(n);
+                scenarioTreeView.Nodes.Add(treeNode);
             }
 
             //if (!BGMInfo.HasBGMInfo(mGalaxy.mName))
@@ -454,7 +454,7 @@ namespace Takochu.ui
             string galaxy_lbl = $"GalaxyName_{mGalaxyName}";
             string scenario_lbl = $"ScenarioName_{mGalaxyName}{mCurrentScenario}";
 
-            NameHolder.AssignToGalaxy(galaxy_lbl, galaxyNameTxtBox.Text);
+            NameHolder.AssignToGalaxy(galaxy_lbl, GalaxyNameTxtBox.Text);
             NameHolder.AssignToScenario(scenario_lbl, scenarioNameTxtBox.Text);
         }
 
