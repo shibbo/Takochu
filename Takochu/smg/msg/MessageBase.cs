@@ -14,6 +14,8 @@ namespace Takochu.smg.msg
         {
             file.Write((short)0xE);
         }
+
+        //Is this the number of characters in hexadecimal? I'm not sure what the intent of this value is.
         public virtual int CalcSize() { return 0; }
     }
 
@@ -59,11 +61,17 @@ namespace Takochu.smg.msg
                 return;
             }
 
+            //mType = file.ReadUInt16();
             mType = file.ReadUInt16();
-
             // we skip the data size here, we can safely determine the size by the type
-            ushort val = file.ReadUInt16();
+            //ushort val = file.ReadUInt16();
             // type 0 is japanese only
+            if (mType == 0) 
+            {
+                mRubi.UTF16Count = file.ReadUInt16();
+                mRubi.Target     = file.ReadUInt16();
+                mRubi.Furigana   = file.ReadUInt16();
+            }
             // type 3 is color
             if (mType == 3)
             {
@@ -73,7 +81,15 @@ namespace Takochu.smg.msg
 
         public override int CalcSize()
         {
-            return 0x8;
+            switch (mType) 
+            {
+                case 0:
+                    return 8;
+                case 3:
+                    return 8;
+                default:
+                    return 8;
+            }
         }
 
         public override void Save(ref FileBase file)
@@ -89,12 +105,33 @@ namespace Takochu.smg.msg
 
         public override string ToString()
         {
-            return $"[color={mColor}]";
+            string retTag = "UnusedTag";
+            switch (mType) 
+            {
+                case 0:
+                    retTag = $"[Ruby uc=\"{mRubi.UTF16Count}\" tg=\"{mRubi.Target}\" fg=\"{mRubi.Furigana}\" ]";
+                    break;
+                case 3:
+                    retTag = $"[color={mColor}]";
+                    break;
+                default:
+                    break;
+            }
+            return retTag;
         }
 
         ushort mType;
         short mColor;
+        Rubi mRubi;
+        public struct Rubi 
+        {
+            public ushort UTF16Count;
+            public ushort Target;
+            public ushort Furigana;
+        }
     }
+
+
 
     class PictureGroup : MessageBase
     {
