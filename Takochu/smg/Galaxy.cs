@@ -11,61 +11,112 @@ using Takochu.io;
 using Takochu.smg.msg;
 using Takochu.smg.obj;
 using Takochu.util;
+using Takochu.io.SpecificNameARC;
 
 namespace Takochu.smg
 {
     public class Galaxy
     {
-        public Galaxy(Game game, string name)
+        //class ARC_FileOpen
+        //{
+        //    public RARCFilesystem ScenarioArc { get; private set; }
+
+        //    public ARC_FileOpen(FilesystemBase fsb, string galaxyName) 
+        //    {
+        //        ScenarioArc = new RARCFilesystem(fsb.OpenFile($"/StageData/{galaxyName}/{galaxyName}Scenario.arc"));
+        //    }
+
+        //    public enum BCSV_Name
+        //    {
+        //        ZoneList,
+        //        ScenarioList
+        //    }
+
+        //    private static readonly Dictionary<BCSV_Name, string> BCSV_Path = new Dictionary<BCSV_Name, string>() 
+        //    {
+        //        { BCSV_Name.ZoneList , "/root/ZoneList.bcsv"},
+        //        { BCSV_Name.ScenarioList , "/root/ScenarioData.bcsv"}
+        //    };
+
+        //    public BCSV BCSV_Open(BCSV_Name bcsvName) 
+        //    {
+        //        var bcsvPath = PathGenerate_FromGameVer(BCSV_Path[bcsvName]);
+        //        return new BCSV(ScenarioArc.OpenFile(bcsvPath));
+        //    }
+
+        //    private string PathGenerate_FromGameVer(string path) 
+        //    {
+        //        return GameUtil.IsSMG1() ? path.ToLower() : path;
+        //    }
+        //}
+
+        
+
+        public Galaxy(Game game, string galaxyName)
         {
             mGame = game;
             mFilesystem = game.mFilesystem;
-            mName = name;
-
+            mName = galaxyName;
             mRemovedZones = new List<string>();
             mZones = new Dictionary<string, Zone>();
             mZoneEntries = new Dictionary<string, BCSV.Entry>();
-            //var a = mFilesystem.OpenFile($"/StageData/{name}/{name}Scenario.arc");
-            mScenarioFile = new RARCFilesystem(mFilesystem.OpenFile($"/StageData/{name}/{name}Scenario.arc"));
-            //a.Close();
+            
+            ReadScenarioArc();
 
-            var text = "/root/ZoneList.bcsv";
-            if (GameUtil.IsSMG1()) text = "/root/zonelist.bcsv";
-            BCSV zonesBCSV = new BCSV(mScenarioFile.OpenFile(text));
 
-            var MissingPathArgumentsRemove = 0;
-            foreach (BCSV.Entry e in zonesBCSV.mEntries)
-            {
-                string n = e.Get<string>("ZoneName");
-
-                if (n == "PoleUnizoZone")
-                    continue;
-
-                mZones.Add(n, new Zone(this, n));
-                
-                mZoneEntries.Add(n, e);
-                MissingPathArgumentsRemove += Zone.MissingPathArgumentsRemove;
-            }
-            if(MissingPathArgumentsRemove > 0)
-            MessageBox.Show($"Takochu just added in missing path arguments that Whitehole was known to remove.\nRemove arguments count: {MissingPathArgumentsRemove}");
-            zonesBCSV.Close();
-            var text2 = "/root/ScenarioData.bcsv";
-            if (GameUtil.IsSMG1()) text2 = "/root/scenariodata.bcsv";
-            BCSV scenarioBCSV = new BCSV(mScenarioFile.OpenFile("/root/ScenarioData.bcsv"));
-
-            mScenarios = new Dictionary<int, Scenario>();
-
-            foreach (BCSV.Entry e in scenarioBCSV.mEntries)
-            {
-                mScenarios.Add(e.Get<int>("ScenarioNo"), new Scenario(e, mZones.Keys.ToList()));
-            }
-
-            scenarioBCSV.Close();
-
-            if (!NameHolder.HasGalaxyName(name))
+            if (!NameHolder.HasGalaxyName(galaxyName))
                 return;
 
-            mGalaxyName = NameHolder.GetGalaxyName(name);
+            mGalaxyName = NameHolder.GetGalaxyName(galaxyName);
+        }
+
+        private void ReadScenarioArc() 
+        {
+            ScenarioArc scenarioArc = new ScenarioArc(mFilesystem, this);
+            mScenarioFile = scenarioArc.InFiles;
+            scenarioArc.ReadAllFiles();
+
+            mZones = scenarioArc.mZones;
+            mZoneEntries = scenarioArc.mZoneEntries;
+            mScenarios = scenarioArc.mScenarios;
+
+            //var arcOpen = new ARC_FileOpen(mFilesystem, mName);
+            //mScenarioFile = arcOpen.ScenarioArc;
+
+
+
+
+            ////ZoneList.bcsvを開く
+            //BCSV zonesList = arcOpen.BCSV_Open(ARC_FileOpen.BCSV_Name.ZoneList);
+            //{
+            //    var MissingPathArgumentsRemove = 0;
+            //    foreach (BCSV.Entry zoneEntry in zonesList.mEntries)
+            //    {
+            //        string name = zoneEntry.Get<string>("ZoneName");
+
+            //        if (name == "PoleUnizoZone")
+            //            continue;
+
+            //        mZones.Add(name, new Zone(this, name));
+            //        mZoneEntries.Add(name, zoneEntry);
+            //        MissingPathArgumentsRemove += Zone.MissingPathArgumentsRemove;
+            //    }
+            //    if (MissingPathArgumentsRemove > 0)
+            //        MessageBox.Show($"Takochu just added in missing path arguments that Whitehole was known to remove.\nRemove arguments count: {MissingPathArgumentsRemove}");
+            //}
+            //zonesList.Close();
+
+            ////ScenarioList.bcsvを開く
+            //BCSV scenarios = arcOpen.BCSV_Open(ARC_FileOpen.BCSV_Name.ScenarioList);
+            //{
+            //    mScenarios = new Dictionary<int, Scenario>();
+
+            //    foreach (BCSV.Entry scenarioEntry in scenarios.mEntries)
+            //    {
+            //        mScenarios.Add(scenarioEntry.Get<int>("ScenarioNo"), new Scenario(scenarioEntry, mZones.Keys.ToList()));
+            //    }
+            //}
+            //scenarios.Close();
         }
 
         public void RemoveZone(string zoneName)
