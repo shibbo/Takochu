@@ -59,7 +59,13 @@ namespace Takochu.ui.StageInfoEditorSys
             NullCheck();
             SetColumn();
             SetRow();
+            GridSizeSetting();
+            Console.WriteLine($"{_defHeight} : {_maxHeight} : {_minHeight}");
+            return _dataGridView;
+        }
 
+        private void GridSizeSetting() 
+        {
             var change = (_dataGridView.Rows.Count + 1) * _dataGridView.RowTemplate.Height;
 
             if (change < _maxHeight && change > _minHeight)
@@ -76,9 +82,6 @@ namespace Takochu.ui.StageInfoEditorSys
             {
                 _dataGridView.Height = _minHeight;
             }
-
-            Console.WriteLine($"{_defHeight} : {_maxHeight} : {_minHeight}");
-            return _dataGridView;
         }
 
         private void NullCheck()

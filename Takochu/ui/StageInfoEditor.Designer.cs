@@ -31,9 +31,9 @@
             this.ScenarioListTreeView = new System.Windows.Forms.TreeView();
             this.MainTabControl = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.AppearPowerStarObjComboBox = new System.Windows.Forms.ComboBox();
-            this.PowerStarTypeComboBox = new System.Windows.Forms.ComboBox();
+            this.ScenarioInformation_GroupBox = new System.Windows.Forms.GroupBox();
+            this.AppearStarObj = new System.Windows.Forms.ComboBox();
+            this.StarType = new System.Windows.Forms.ComboBox();
             this.CometTypeComboBox = new System.Windows.Forms.ComboBox();
             this.GalaxyNameLabel = new System.Windows.Forms.Label();
             this.layerMasksBox = new System.Windows.Forms.GroupBox();
@@ -64,13 +64,13 @@
             this.Scenario3 = new System.Windows.Forms.CheckBox();
             this.Scenario2 = new System.Windows.Forms.CheckBox();
             this.Scenario1 = new System.Windows.Forms.CheckBox();
-            this.CometAndLuigi_TimerNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.CometTimerLabel = new System.Windows.Forms.Label();
+            this.TimerNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.Timer_Label = new System.Windows.Forms.Label();
             this.GalaxyInfoPictureBox = new System.Windows.Forms.PictureBox();
             this.label18 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
-            this.ScenarioNameTextBox = new System.Windows.Forms.TextBox();
+            this.ScenarioName = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.BGM_InfoTabPage = new System.Windows.Forms.TabPage();
             this.BGMTabControl = new System.Windows.Forms.TabControl();
@@ -102,9 +102,9 @@
             this.DebugTabPage = new System.Windows.Forms.TabPage();
             this.DebugTextBox = new System.Windows.Forms.TextBox();
             this.scenarioBGMId = new System.Windows.Forms.TextBox();
-            this.AppearPowerStarTextBox = new System.Windows.Forms.TextBox();
+            this.AppearPowerStar = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.PowerStarIDTextBox = new System.Windows.Forms.NumericUpDown();
+            this.PowerStarID = new System.Windows.Forms.NumericUpDown();
             this.label15 = new System.Windows.Forms.Label();
             this.scenarioBGMIsPrepare = new System.Windows.Forms.CheckBox();
             this.CometTypeTextBox = new System.Windows.Forms.TextBox();
@@ -120,11 +120,11 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainTabControl.SuspendLayout();
             this.tabPage4.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.ScenarioInformation_GroupBox.SuspendLayout();
             this.layerMasksBox.SuspendLayout();
             this.UseLayerFlags.SuspendLayout();
             this.ShowScenarioStarFlags.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.CometAndLuigi_TimerNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TimerNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GalaxyInfoPictureBox)).BeginInit();
             this.BGM_InfoTabPage.SuspendLayout();
             this.BGMTabControl.SuspendLayout();
@@ -138,7 +138,7 @@
             this.ScenarioBGM_InfoTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ScenBGM_dgv)).BeginInit();
             this.DebugTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PowerStarIDTextBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PowerStarID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.scenarioBGMStartFrame)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.scenarioBGMStartType)).BeginInit();
             this.MainToolStrip.SuspendLayout();
@@ -171,7 +171,7 @@
             // 
             // tabPage4
             // 
-            this.tabPage4.Controls.Add(this.groupBox2);
+            this.tabPage4.Controls.Add(this.ScenarioInformation_GroupBox);
             this.tabPage4.Controls.Add(this.ScenarioListTreeView);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
@@ -181,45 +181,45 @@
             this.tabPage4.Text = "Scenario";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // groupBox2
+            // ScenarioInformation_GroupBox
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.ScenarioInformation_GroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.groupBox2.Controls.Add(this.AppearPowerStarObjComboBox);
-            this.groupBox2.Controls.Add(this.PowerStarTypeComboBox);
-            this.groupBox2.Controls.Add(this.CometTypeComboBox);
-            this.groupBox2.Controls.Add(this.GalaxyNameLabel);
-            this.groupBox2.Controls.Add(this.layerMasksBox);
-            this.groupBox2.Controls.Add(this.CometAndLuigi_TimerNumericUpDown);
-            this.groupBox2.Controls.Add(this.CometTimerLabel);
-            this.groupBox2.Controls.Add(this.GalaxyInfoPictureBox);
-            this.groupBox2.Controls.Add(this.label18);
-            this.groupBox2.Controls.Add(this.label17);
-            this.groupBox2.Controls.Add(this.label16);
-            this.groupBox2.Controls.Add(this.ScenarioNameTextBox);
-            this.groupBox2.Controls.Add(this.label14);
-            this.groupBox2.Location = new System.Drawing.Point(252, 6);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(534, 381);
-            this.groupBox2.TabIndex = 0;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Scenario Information";
+            this.ScenarioInformation_GroupBox.Controls.Add(this.AppearStarObj);
+            this.ScenarioInformation_GroupBox.Controls.Add(this.StarType);
+            this.ScenarioInformation_GroupBox.Controls.Add(this.CometTypeComboBox);
+            this.ScenarioInformation_GroupBox.Controls.Add(this.GalaxyNameLabel);
+            this.ScenarioInformation_GroupBox.Controls.Add(this.layerMasksBox);
+            this.ScenarioInformation_GroupBox.Controls.Add(this.TimerNumericUpDown);
+            this.ScenarioInformation_GroupBox.Controls.Add(this.Timer_Label);
+            this.ScenarioInformation_GroupBox.Controls.Add(this.GalaxyInfoPictureBox);
+            this.ScenarioInformation_GroupBox.Controls.Add(this.label18);
+            this.ScenarioInformation_GroupBox.Controls.Add(this.label17);
+            this.ScenarioInformation_GroupBox.Controls.Add(this.label16);
+            this.ScenarioInformation_GroupBox.Controls.Add(this.ScenarioName);
+            this.ScenarioInformation_GroupBox.Controls.Add(this.label14);
+            this.ScenarioInformation_GroupBox.Location = new System.Drawing.Point(252, 6);
+            this.ScenarioInformation_GroupBox.Name = "ScenarioInformation_GroupBox";
+            this.ScenarioInformation_GroupBox.Size = new System.Drawing.Size(534, 381);
+            this.ScenarioInformation_GroupBox.TabIndex = 0;
+            this.ScenarioInformation_GroupBox.TabStop = false;
+            this.ScenarioInformation_GroupBox.Text = "Scenario Information";
             // 
             // AppearPowerStarObjComboBox
             // 
-            this.AppearPowerStarObjComboBox.FormattingEnabled = true;
-            this.AppearPowerStarObjComboBox.Location = new System.Drawing.Point(8, 138);
-            this.AppearPowerStarObjComboBox.Name = "AppearPowerStarObjComboBox";
-            this.AppearPowerStarObjComboBox.Size = new System.Drawing.Size(256, 20);
-            this.AppearPowerStarObjComboBox.TabIndex = 22;
+            this.AppearStarObj.FormattingEnabled = true;
+            this.AppearStarObj.Location = new System.Drawing.Point(8, 138);
+            this.AppearStarObj.Name = "AppearPowerStarObjComboBox";
+            this.AppearStarObj.Size = new System.Drawing.Size(256, 20);
+            this.AppearStarObj.TabIndex = 22;
             // 
             // PowerStarTypeComboBox
             // 
-            this.PowerStarTypeComboBox.FormattingEnabled = true;
-            this.PowerStarTypeComboBox.Location = new System.Drawing.Point(8, 176);
-            this.PowerStarTypeComboBox.Name = "PowerStarTypeComboBox";
-            this.PowerStarTypeComboBox.Size = new System.Drawing.Size(256, 20);
-            this.PowerStarTypeComboBox.TabIndex = 21;
+            this.StarType.FormattingEnabled = true;
+            this.StarType.Location = new System.Drawing.Point(8, 176);
+            this.StarType.Name = "PowerStarTypeComboBox";
+            this.StarType.Size = new System.Drawing.Size(256, 20);
+            this.StarType.TabIndex = 21;
             // 
             // CometTypeComboBox
             // 
@@ -585,26 +585,26 @@
             // 
             // CometAndLuigi_TimerNumericUpDown
             // 
-            this.CometAndLuigi_TimerNumericUpDown.Location = new System.Drawing.Point(8, 251);
-            this.CometAndLuigi_TimerNumericUpDown.Maximum = new decimal(new int[] {
+            this.TimerNumericUpDown.Location = new System.Drawing.Point(8, 251);
+            this.TimerNumericUpDown.Maximum = new decimal(new int[] {
             99999,
             0,
             0,
             0});
-            this.CometAndLuigi_TimerNumericUpDown.Name = "CometAndLuigi_TimerNumericUpDown";
-            this.CometAndLuigi_TimerNumericUpDown.Size = new System.Drawing.Size(138, 19);
-            this.CometAndLuigi_TimerNumericUpDown.TabIndex = 11;
-            this.CometAndLuigi_TimerNumericUpDown.Tag = "CometLimitTimer";
-            this.CometAndLuigi_TimerNumericUpDown.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
+            this.TimerNumericUpDown.Name = "CometAndLuigi_TimerNumericUpDown";
+            this.TimerNumericUpDown.Size = new System.Drawing.Size(138, 19);
+            this.TimerNumericUpDown.TabIndex = 11;
+            this.TimerNumericUpDown.Tag = "CometLimitTimer";
+            this.TimerNumericUpDown.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
             // 
-            // CometTimerLabel
+            // CometTimerAndLuigTimer_Label
             // 
-            this.CometTimerLabel.AutoSize = true;
-            this.CometTimerLabel.Location = new System.Drawing.Point(6, 236);
-            this.CometTimerLabel.Name = "CometTimerLabel";
-            this.CometTimerLabel.Size = new System.Drawing.Size(73, 12);
-            this.CometTimerLabel.TabIndex = 10;
-            this.CometTimerLabel.Text = "Comet Timer:";
+            this.Timer_Label.AutoSize = true;
+            this.Timer_Label.Location = new System.Drawing.Point(6, 236);
+            this.Timer_Label.Name = "CometTimerAndLuigTimer_Label";
+            this.Timer_Label.Size = new System.Drawing.Size(73, 12);
+            this.Timer_Label.TabIndex = 10;
+            this.Timer_Label.Text = "Comet Timer:";
             // 
             // GalaxyInfoPictureBox
             // 
@@ -644,12 +644,12 @@
             // 
             // ScenarioNameTextBox
             // 
-            this.ScenarioNameTextBox.Location = new System.Drawing.Point(8, 102);
-            this.ScenarioNameTextBox.Name = "ScenarioNameTextBox";
-            this.ScenarioNameTextBox.Size = new System.Drawing.Size(256, 19);
-            this.ScenarioNameTextBox.TabIndex = 1;
-            this.ScenarioNameTextBox.Tag = "ScenarioName";
-            this.ScenarioNameTextBox.TextChanged += new System.EventHandler(this.TextBox_ValueChanged);
+            this.ScenarioName.Location = new System.Drawing.Point(8, 102);
+            this.ScenarioName.Name = "ScenarioNameTextBox";
+            this.ScenarioName.Size = new System.Drawing.Size(256, 19);
+            this.ScenarioName.TabIndex = 1;
+            this.ScenarioName.Tag = "ScenarioName";
+            this.ScenarioName.TextChanged += new System.EventHandler(this.TextBox_ValueChanged);
             // 
             // label14
             // 
@@ -970,9 +970,9 @@
             // 
             this.DebugTabPage.Controls.Add(this.DebugTextBox);
             this.DebugTabPage.Controls.Add(this.scenarioBGMId);
-            this.DebugTabPage.Controls.Add(this.AppearPowerStarTextBox);
+            this.DebugTabPage.Controls.Add(this.AppearPowerStar);
             this.DebugTabPage.Controls.Add(this.label11);
-            this.DebugTabPage.Controls.Add(this.PowerStarIDTextBox);
+            this.DebugTabPage.Controls.Add(this.PowerStarID);
             this.DebugTabPage.Controls.Add(this.label15);
             this.DebugTabPage.Controls.Add(this.scenarioBGMIsPrepare);
             this.DebugTabPage.Controls.Add(this.CometTypeTextBox);
@@ -1009,12 +1009,12 @@
             // 
             // AppearPowerStarTextBox
             // 
-            this.AppearPowerStarTextBox.Location = new System.Drawing.Point(342, 29);
-            this.AppearPowerStarTextBox.Name = "AppearPowerStarTextBox";
-            this.AppearPowerStarTextBox.Size = new System.Drawing.Size(96, 19);
-            this.AppearPowerStarTextBox.TabIndex = 5;
-            this.AppearPowerStarTextBox.Tag = "AppearPowerStarObj";
-            this.AppearPowerStarTextBox.TextChanged += new System.EventHandler(this.TextBox_ValueChanged);
+            this.AppearPowerStar.Location = new System.Drawing.Point(342, 29);
+            this.AppearPowerStar.Name = "AppearPowerStarTextBox";
+            this.AppearPowerStar.Size = new System.Drawing.Size(96, 19);
+            this.AppearPowerStar.TabIndex = 5;
+            this.AppearPowerStar.Tag = "AppearPowerStarObj";
+            this.AppearPowerStar.TextChanged += new System.EventHandler(this.TextBox_ValueChanged);
             // 
             // label11
             // 
@@ -1027,17 +1027,17 @@
             // 
             // PowerStarIDTextBox
             // 
-            this.PowerStarIDTextBox.Location = new System.Drawing.Point(101, 48);
-            this.PowerStarIDTextBox.Maximum = new decimal(new int[] {
+            this.PowerStarID.Location = new System.Drawing.Point(101, 48);
+            this.PowerStarID.Maximum = new decimal(new int[] {
             99999,
             0,
             0,
             0});
-            this.PowerStarIDTextBox.Name = "PowerStarIDTextBox";
-            this.PowerStarIDTextBox.Size = new System.Drawing.Size(76, 19);
-            this.PowerStarIDTextBox.TabIndex = 3;
-            this.PowerStarIDTextBox.Tag = "PowerStarId";
-            this.PowerStarIDTextBox.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
+            this.PowerStarID.Name = "PowerStarIDTextBox";
+            this.PowerStarID.Size = new System.Drawing.Size(76, 19);
+            this.PowerStarID.TabIndex = 3;
+            this.PowerStarID.Tag = "PowerStarId";
+            this.PowerStarID.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
             // 
             // label15
             // 
@@ -1168,14 +1168,14 @@
             this.Text = "StageInfoEditor";
             this.MainTabControl.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.ScenarioInformation_GroupBox.ResumeLayout(false);
+            this.ScenarioInformation_GroupBox.PerformLayout();
             this.layerMasksBox.ResumeLayout(false);
             this.UseLayerFlags.ResumeLayout(false);
             this.UseLayerFlags.PerformLayout();
             this.ShowScenarioStarFlags.ResumeLayout(false);
             this.ShowScenarioStarFlags.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.CometAndLuigi_TimerNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TimerNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GalaxyInfoPictureBox)).EndInit();
             this.BGM_InfoTabPage.ResumeLayout(false);
             this.BGMTabControl.ResumeLayout(false);
@@ -1191,7 +1191,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ScenBGM_dgv)).EndInit();
             this.DebugTabPage.ResumeLayout(false);
             this.DebugTabPage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PowerStarIDTextBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PowerStarID)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.scenarioBGMStartFrame)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.scenarioBGMStartType)).EndInit();
             this.MainToolStrip.ResumeLayout(false);
@@ -1240,12 +1240,12 @@
         private System.Windows.Forms.CheckBox scenarioBGMIsPrepare;
         private System.Windows.Forms.NumericUpDown scenarioBGMStartFrame;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.TextBox ScenarioNameTextBox;
+        private System.Windows.Forms.GroupBox ScenarioInformation_GroupBox;
+        private System.Windows.Forms.TextBox ScenarioName;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.NumericUpDown PowerStarIDTextBox;
-        private System.Windows.Forms.TextBox AppearPowerStarTextBox;
+        private System.Windows.Forms.NumericUpDown PowerStarID;
+        private System.Windows.Forms.TextBox AppearPowerStar;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TextBox PowerStarTypeTextBox;
         private System.Windows.Forms.Label label17;
@@ -1267,8 +1267,12 @@
         private System.Windows.Forms.CheckBox layerB;
         private System.Windows.Forms.CheckBox layerA;
         private System.Windows.Forms.ComboBox ZoneComboBox;
-        private System.Windows.Forms.NumericUpDown CometAndLuigi_TimerNumericUpDown;
-        private System.Windows.Forms.Label CometTimerLabel;
+        private System.Windows.Forms.NumericUpDown TimerNumericUpDown;
+        /// <summary>
+        /// SMG1:"LuigiModeTimer"<br/>
+        /// SMG2:"CometTimer"
+        /// </summary>
+        private System.Windows.Forms.Label Timer_Label;
         private System.Windows.Forms.TextBox CometTypeTextBox;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ToolStrip MainToolStrip;
@@ -1292,8 +1296,8 @@
         private System.Windows.Forms.TextBox DebugTextBox;
         private System.Windows.Forms.ComboBox CometTypeComboBox;
         private System.Windows.Forms.ListBox StageBGMListBox;
-        private System.Windows.Forms.ComboBox PowerStarTypeComboBox;
+        private System.Windows.Forms.ComboBox StarType;
         private System.Windows.Forms.DataGridView ScenBGM_dgv;
-        private System.Windows.Forms.ComboBox AppearPowerStarObjComboBox;
+        private System.Windows.Forms.ComboBox AppearStarObj;
     }
 }

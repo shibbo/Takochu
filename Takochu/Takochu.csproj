@@ -124,6 +124,9 @@
     <Compile Include="io\FilesystemBase.cs" />
     <Compile Include="io\RARCFile.cs" />
     <Compile Include="io\RARCFilesystem.cs" />
+    <Compile Include="io\SpecificNameARC\IARC_IO.cs" />
+    <Compile Include="io\SpecificNameARC\ScenarioArc.cs" />
+    <Compile Include="io\SpecificNameARC\SpecificArcBase.cs" />
     <Compile Include="io\Yaz0.cs" />
     <Compile Include="io\ExternalFilesystem.cs" />
     <Compile Include="io\FileBase.cs" />

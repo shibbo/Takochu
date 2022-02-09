@@ -26,6 +26,7 @@ namespace Takochu.ui.StageInfoEditorSys
             Scenarios = new Dictionary<int, Scenario>();
             EditScenarios = new Dictionary<int, Scenario>();
             SetTreeView(ScenarioListTreeView);
+            ScenarioListTreeView.SelectedNode = ScenarioListTreeView.Nodes[0];
         }
 
         /// <summary>
