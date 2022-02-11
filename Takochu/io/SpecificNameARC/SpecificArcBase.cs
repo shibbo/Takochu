@@ -9,24 +9,24 @@ namespace Takochu.io.SpecificNameARC
 {
     public class SpecificArcBase
     {
-        public RARCFilesystem InFiles { get; protected set; }
+        public RARCFilesystem RARCFileStream { get; protected set; }
 
         protected static readonly Dictionary<BCSV_Name, string> BCSV_Path = new Dictionary<BCSV_Name, string>()
         {
             { BCSV_Name.ZoneList , "/root/ZoneList.bcsv"},
-            { BCSV_Name.ScenarioList , "/root/ScenarioData.bcsv"}
+            { BCSV_Name.ScenarioData , "/root/ScenarioData.bcsv"}
         };
 
         public enum BCSV_Name
         {
             ZoneList,
-            ScenarioList
+            ScenarioData
         }
 
         protected BCSV BCSV_Open(BCSV_Name bcsvName)
         {
             var bcsvPath = PathGenerate_FromGameVer(BCSV_Path[bcsvName]);
-            return new BCSV(InFiles.OpenFile(bcsvPath));
+            return new BCSV(RARCFileStream.OpenFile(bcsvPath));
         }
 
         protected string PathGenerate_FromGameVer(string path)

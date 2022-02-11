@@ -2,95 +2,87 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Linq;
 using Takochu.fmt;
 using Takochu.util;
 
 namespace Takochu.smg
 {
-    public class Scenario
+    public class ScenarioEntry
     {
         private List<string> _zoneList;
 
-        public Scenario(BCSV.Entry entry, List<string> zoneList)
+        public ScenarioEntry(BCSV.Entry entry, List<string> zoneList)
         {
-            mEntry = entry;
+            Entry = entry;
             _zoneList = zoneList;
 
-            mScenarioNo = mEntry.Get<int>("ScenarioNo");
-            mScenarioName = mEntry.Get<string>("ScenarioName");
-            mPowerStarID = mEntry.Get<int>("PowerStarId");
-            mAppearPowerStar = mEntry.Get<string>("AppearPowerStarObj");
+            ScenarioNo      = Entry.Get<int>("ScenarioNo");
+            ScenarioName    = Entry.Get<string>("ScenarioName");
+            PowerStarID     = Entry.Get<int>("PowerStarId");
+            AppearStarObj   = Entry.Get<string>("AppearPowerStarObj");
 
-            if (GameUtil.IsSMG2())
-            {
-                mPowerStarType = mEntry.Get<string>("PowerStarType");
-                mCometLimitTimer = mEntry.Get<int>("CometLimitTimer");
-            }
+            Console.WriteLine(AppearStarObj);
+
+            SettingsEachGameVer();
+
+            if (!Entry.ContainsKey("Comet"))
+                Comet = "";
             else
-            {
-                mIsHidden = mEntry.Get<int>("IsHidden");
-                if (!mEntry.ContainsKey("LuigiModeTimer"))
-                    mLuigiModeTimer = default;
-                else
-                    mLuigiModeTimer = mEntry.Get<int>("LuigiModeTimer");
-            }
+                Comet = Entry.Get<string>("Comet");
 
-            if (!mEntry.ContainsKey("Comet"))
-                mComet = "";
-            else
-                mComet = mEntry.Get<string>("Comet");
+            ZoneMasks = new Dictionary<string, Layer[]>();
 
-            mZoneMasks = new Dictionary<string, int>();
-            mTest_ZoneMasks = new Dictionary<string, Layer[]>();
-
-            foreach (string zone in zoneList)
-            {
-                mZoneMasks.Add(zone, mEntry.Get<int>(zone));
-            }
-
-            ReloadTest_ZoneMask();
+            ReloadZoneMask();
 
         }
 
-        public void ReloadTest_ZoneMask()
+        private void SettingsEachGameVer() 
         {
-            mTest_ZoneMasks = new Dictionary<string, Layer[]>();
+            if (GameUtil.IsSMG2())
+            {
+                PowerStarType = Entry.Get<string>("PowerStarType");
+                CometLimitTimer = Entry.Get<int>("CometLimitTimer");
+            }
+            else
+            {
+                IsHidden = Entry.Get<int>("IsHidden");
+                if (!Entry.ContainsKey("LuigiModeTimer"))
+                    LuigiModeTimer = default;
+                else
+                    LuigiModeTimer = Entry.Get<int>("LuigiModeTimer");
+            }
+        }
+
+        public void ReloadZoneMask()
+        {
+            ZoneMasks = new Dictionary<string, Layer[]>();
 
             foreach (string zone in _zoneList)
             {
-
-
-                int[] layerArray = { mEntry.Get<int>(zone) };
+                int[] layerArray = { Entry.Get<int>(zone) };
                 BitArray bitArray = new BitArray(layerArray);
 
                 var layers = new Layer[16];
 
-
-                Console.WriteLine();
-                Console.WriteLine(zone);
                 for (int i = 0; i < 16; i++)
                 {
                     layers[i].Name = GameUtil.GalaxyLayers[i];
                     layers[i].Checked = bitArray[i];
-
-                    Console.WriteLine($"{layers[i].Name}:{layers[i].Checked}");
-                    
                 }
-                mTest_ZoneMasks.Add(zone, layers);
+                ZoneMasks.Add(zone, layers);
             }
         }
 
         public int GetLayerIndex(CheckBox cb, string zoneName)
         {
-            //var nameIndex = Array.IndexOf(GameUtil.GalaxyLayers, cb.Tag.ToString());
-
             var nameIndex =  -1;
 
-            for (var t = 0; t< 16; t++) 
+            for (var layerIndex = 0; layerIndex< 16; layerIndex++) 
             {
-                if (mTest_ZoneMasks[zoneName][t].Name == cb.Tag.ToString()) 
+                if (ZoneMasks[zoneName][layerIndex].Name == cb.Tag.ToString()) 
                 {
-                    nameIndex = t;
+                    nameIndex = layerIndex;
                     break;
                 }
             }
@@ -103,76 +95,159 @@ namespace Takochu.smg
 
         public void ChangeZoneMask(CheckBox cb, string zoneName)
         {
-            var layerIndex = GetLayerIndex(cb, zoneName);
-            var layer = GetLayer(zoneName, layerIndex);
-            layer.Checked = cb.Checked;
+            var layerIndex  = GetLayerIndex(cb, zoneName);
+            var layer       = GetLayer(zoneName, layerIndex);
+            layer.Checked   = cb.Checked;
 
-            //Console.WriteLine($"{cb.Tag}:{cb.Checked}");
-            Console.WriteLine($"{layer.Name}:{layer.Checked}");
-            mTest_ZoneMasks[zoneName][layerIndex] = layer;
-            //mZoneMasks[zoneName] = ;
+            ZoneMasks[zoneName][layerIndex] = layer;
         }
 
         public int GetZoneMaskInt(string zoneName)
         {
-            int test = 0;
+            int maskData = 0;
 
-            for (int layer = 0; layer < mTest_ZoneMasks[zoneName].Length; layer++)
+            for (int layer = 0; layer < ZoneMasks[zoneName].Length; layer++)
             {
-                Console.WriteLine(zoneName+layer.ToString());
-                if (mTest_ZoneMasks[zoneName][layer].Checked) 
+                if (ZoneMasks[zoneName][layer].Checked) 
                 {
-
-                    test += LayerNo[layer];
-                    Console.WriteLine($"index: {layer}");
+                    maskData += LayerNo[layer];
                 }
-                    
-
-                if (layer == mTest_ZoneMasks[zoneName].Length-1) Console.WriteLine("t:"+layer.ToString());
             }
-            Console.WriteLine(test);
-            Console.WriteLine();
-            return test;
+
+            return maskData;
         }
 
         public void SetZoneMask(string zoneName)
         {
-            mEntry.Set(zoneName, GetZoneMaskInt(zoneName));
+            Entry.Set(zoneName, GetZoneMaskInt(zoneName));
         }
 
-        public Layer GetLayer(string zoneName, int layerIndex)
+        private Layer GetLayer(string zoneName, int layerIndex)
         {
-            return mTest_ZoneMasks[zoneName][layerIndex];
+            return ZoneMasks[zoneName][layerIndex];
         }
 
         public void RemoveZone(string zoneName)
         {
-            mZoneMasks.Remove(zoneName);
+            ZoneMasks.Remove(zoneName);
         }
 
-        public void SetZoneMask(string zoneName, int layerInt)
+        public void ChangeShowScenario(BitArray bitArray) 
         {
-            mZoneMasks[zoneName] = layerInt;
+            var powerStarID = 0;
+            for (int i = 0; i < bitArray.Length; i++) 
+            {
+                if (bitArray[i] == true) 
+                {
+                    powerStarID += ShowScenarioNo[i];
+                }
+            }
+
+            PowerStarID = powerStarID;
+        }
+
+        public void SetShowScenario(string zoneName) 
+        {
+            //Console.WriteLine( Entry.Get("PowerStarID"));
+            Entry.Set("PowerStarId", PowerStarID);
+        }
+
+        public void ChangeScenarioName(string scenarioName) 
+        {
+            if (scenarioName.Length < 1) return;
+            ScenarioName = scenarioName;
+        }
+
+        public void SetScenarioName() 
+        {
+            Entry.Set("ScenarioName", ScenarioName);
+        }
+
+        public void ChangeAppearStarObj(string selectedItemName) 
+        {
+            AppearStarObj = selectedItemName;
+        }
+
+        public void SetAppearStarObj() 
+        {
+            Entry.Set("AppearPowerStarObj", AppearStarObj);
+        }
+
+        public void ChangePowerStarType(string selectedItemName) 
+        {
+            PowerStarType = selectedItemName;
+        }
+
+        public void SetPowerStarType() 
+        {
+            Entry.Set("PowerStarType", PowerStarType);
+        }
+
+        public void ChangeComet(string selectedItemName) 
+        {
+            Comet = selectedItemName;
+        }
+
+        public void SetComet() 
+        {
+            Entry.Set("Comet", Comet);
+        }
+
+        public void ChangeTimer(int time) 
+        {
+            var returnTime = time;
+
+            if (time < 0) returnTime = 0;
+            if (time > int.MaxValue) returnTime = int.MaxValue;
+
+            if (GameUtil.IsSMG1())
+            {
+                LuigiModeTimer = returnTime;
+            }
+            else
+            {
+                CometLimitTimer = returnTime;
+            }
+        }
+
+        public void SetTimer() 
+        {
+            if (GameUtil.IsSMG1())
+            {
+                Entry.Set("LuigiModeTimer", LuigiModeTimer);
+            }
+            else
+            {
+                Entry.Set("CometLimitTimer", CometLimitTimer);
+            }
+        }
+
+        public void ChangeIsHidden(bool isHidden) 
+        {
+            IsHidden = IsHidden;
+        }
+
+        public void SetIsHidden() 
+        {
+            Entry.Set("IsHidden", IsHidden);
         }
 
         public static string[] Comets { get => GameUtil.IsSMG1() ? SMG1Comets : SMG2Comets; }
         public static string[] AppearStarObjs { get => GameUtil.IsSMG1() ? SMG1AppearPowerStarObj : SMG2AppearPowerStarObj; }
         public static string TimerNameFromGameVer { get => GameUtil.IsSMG1() ? "LuigiModeTimer:" : "CometTimer:"; }
 
-        public BCSV.Entry mEntry { get; private set; }
-        public int mScenarioNo { get; private set; }
-        public string mScenarioName { get; private set; }
-        public int mPowerStarID { get; private set; }
-        public string mAppearPowerStar { get; private set; }
-        public string mPowerStarType { get; private set; }
-        public string mComet { get; private set; }
-        public int mCometLimitTimer { get; private set; }
-        public int mIsHidden { get; private set; }
-        public int mLuigiModeTimer { get; private set; }
+        public BCSV.Entry Entry { get; private set; }
+        public int ScenarioNo { get; private set; }
+        public string ScenarioName { get; private set; }
+        public int PowerStarID { get; private set; }
+        public string AppearStarObj { get; private set; }
+        public string PowerStarType { get; private set; }
+        public string Comet { get; private set; }
+        public int CometLimitTimer { get; private set; }
+        public int IsHidden { get; private set; }
+        public int LuigiModeTimer { get; private set; }
 
-        public Dictionary<string, int> mZoneMasks { get; private set; }
-
-        public Dictionary<string, Layer[]> mTest_ZoneMasks { get; private set; }
+        public Dictionary<string, Layer[]> ZoneMasks { get; private set; }
 
         public struct Layer 
         {
@@ -180,6 +255,21 @@ namespace Takochu.smg
             public bool Checked;
         }
 
+        public static readonly int[] ShowScenarioNo =
+        {
+            0b0000_0000_0000_0001,
+            0b0000_0000_0000_0010,
+            0b0000_0000_0000_0100,
+            0b0000_0000_0000_1000,
+            0b0000_0000_0001_0000,
+            0b0000_0000_0010_0000,
+            0b0000_0000_0100_0000,
+            0b0000_0000_1000_0000
+        };
+
+        /// <summary>
+        /// LayerA～LayerPまでのビットフラグ
+        /// </summary>
         public static readonly int[] LayerNo = new int[]
         {
             0b_0000_0000_0000_0001,

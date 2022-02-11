@@ -17,40 +17,7 @@ namespace Takochu.smg
 {
     public class Galaxy
     {
-        //class ARC_FileOpen
-        //{
-        //    public RARCFilesystem ScenarioArc { get; private set; }
-
-        //    public ARC_FileOpen(FilesystemBase fsb, string galaxyName) 
-        //    {
-        //        ScenarioArc = new RARCFilesystem(fsb.OpenFile($"/StageData/{galaxyName}/{galaxyName}Scenario.arc"));
-        //    }
-
-        //    public enum BCSV_Name
-        //    {
-        //        ZoneList,
-        //        ScenarioList
-        //    }
-
-        //    private static readonly Dictionary<BCSV_Name, string> BCSV_Path = new Dictionary<BCSV_Name, string>() 
-        //    {
-        //        { BCSV_Name.ZoneList , "/root/ZoneList.bcsv"},
-        //        { BCSV_Name.ScenarioList , "/root/ScenarioData.bcsv"}
-        //    };
-
-        //    public BCSV BCSV_Open(BCSV_Name bcsvName) 
-        //    {
-        //        var bcsvPath = PathGenerate_FromGameVer(BCSV_Path[bcsvName]);
-        //        return new BCSV(ScenarioArc.OpenFile(bcsvPath));
-        //    }
-
-        //    private string PathGenerate_FromGameVer(string path) 
-        //    {
-        //        return GameUtil.IsSMG1() ? path.ToLower() : path;
-        //    }
-        //}
-
-        
+        public ScenarioArcFile ScenarioARC { get; private set; }
 
         public Galaxy(Game game, string galaxyName)
         {
@@ -58,96 +25,61 @@ namespace Takochu.smg
             mFilesystem = game.mFilesystem;
             mName = galaxyName;
             mRemovedZones = new List<string>();
-            mZones = new Dictionary<string, Zone>();
-            mZoneEntries = new Dictionary<string, BCSV.Entry>();
-            
-            ReadScenarioArc();
+            //mZones = new Dictionary<string, Zone>();
+            //mZoneEntries = new Dictionary<string, BCSV.Entry>();
 
+            System.Diagnostics.Stopwatch s = new System.Diagnostics.Stopwatch();
+            Console.WriteLine("ReadStart---------------");
+            s.Start();
+            ReadScenarioArc();
+            s.Stop();
+
+            Console.WriteLine("ReadScenario: "+s.Elapsed.TotalSeconds);
 
             if (!NameHolder.HasGalaxyName(galaxyName))
                 return;
 
-            mGalaxyName = NameHolder.GetGalaxyName(galaxyName);
+            mHolderName = NameHolder.GetGalaxyName(galaxyName);
         }
 
         private void ReadScenarioArc() 
         {
-            ScenarioArc scenarioArc = new ScenarioArc(mFilesystem, this);
-            mScenarioFile = scenarioArc.InFiles;
-            scenarioArc.ReadAllFiles();
-
-            mZones = scenarioArc.mZones;
-            mZoneEntries = scenarioArc.mZoneEntries;
-            mScenarios = scenarioArc.mScenarios;
-
-            //var arcOpen = new ARC_FileOpen(mFilesystem, mName);
-            //mScenarioFile = arcOpen.ScenarioArc;
-
-
-
-
-            ////ZoneList.bcsvを開く
-            //BCSV zonesList = arcOpen.BCSV_Open(ARC_FileOpen.BCSV_Name.ZoneList);
-            //{
-            //    var MissingPathArgumentsRemove = 0;
-            //    foreach (BCSV.Entry zoneEntry in zonesList.mEntries)
-            //    {
-            //        string name = zoneEntry.Get<string>("ZoneName");
-
-            //        if (name == "PoleUnizoZone")
-            //            continue;
-
-            //        mZones.Add(name, new Zone(this, name));
-            //        mZoneEntries.Add(name, zoneEntry);
-            //        MissingPathArgumentsRemove += Zone.MissingPathArgumentsRemove;
-            //    }
-            //    if (MissingPathArgumentsRemove > 0)
-            //        MessageBox.Show($"Takochu just added in missing path arguments that Whitehole was known to remove.\nRemove arguments count: {MissingPathArgumentsRemove}");
-            //}
-            //zonesList.Close();
-
-            ////ScenarioList.bcsvを開く
-            //BCSV scenarios = arcOpen.BCSV_Open(ARC_FileOpen.BCSV_Name.ScenarioList);
-            //{
-            //    mScenarios = new Dictionary<int, Scenario>();
-
-            //    foreach (BCSV.Entry scenarioEntry in scenarios.mEntries)
-            //    {
-            //        mScenarios.Add(scenarioEntry.Get<int>("ScenarioNo"), new Scenario(scenarioEntry, mZones.Keys.ToList()));
-            //    }
-            //}
-            //scenarios.Close();
+            ScenarioARC = new ScenarioArcFile(mFilesystem, this);
+            ScenarioARC.ReadAllFiles();
         }
 
-        public void RemoveZone(string zoneName)
+        public void RemoveZone(string removeZoneName)
         {
-            mZones[zoneName].Close();
+            ScenarioARC.ZoneListBCSV[removeZoneName].Close();
 
-            Zone galaxyZone = GetGalaxyZone();
+            Zone mainGalaxy = GetMainGalaxyZone();
 
-            foreach(KeyValuePair<string, List<StageObj>> kvp in galaxyZone.mZones)
+
+
+            foreach(KeyValuePair<string, List<StageObj>> stageObjs in mainGalaxy.mHasStageObjList)
             {
-                List<StageObj> objs = new List<StageObj>();
+                //List<StageObj> objs = new List<StageObj>();
 
-                foreach(StageObj stageObj in kvp.Value)
+                foreach(StageObj stageObj in stageObjs.Value)
                 {
-                    if (stageObj.mName == zoneName)
+                    if (stageObj.mName == removeZoneName)
                     {
-                        galaxyZone.mZones[kvp.Key].RemoveAt(galaxyZone.mZones[kvp.Key].IndexOf(stageObj));
+                        var findStageObjIndex = mainGalaxy.mHasStageObjList[stageObjs.Key].IndexOf(stageObj);
+                        mainGalaxy.mHasStageObjList[stageObjs.Key].RemoveAt(findStageObjIndex);
                         break;
                     }
                 }
             }
 
-            mZones.Remove(zoneName);
-            mZoneEntries.Remove(zoneName);
+            ScenarioARC.ZoneListBCSV.Remove(removeZoneName);
+            ScenarioARC.ZoneListBCSV_Entries.Remove(removeZoneName);
             
-            foreach(KeyValuePair<int, Scenario> kvp in mScenarios)
+            foreach(KeyValuePair<int, ScenarioEntry> scenarioBCSV in ScenarioARC.ScenarioDataBCSV)
             {
-                kvp.Value.RemoveZone(zoneName);
+                scenarioBCSV.Value.RemoveZone(removeZoneName);
             }
 
-            mRemovedZones.Add(zoneName);
+            mRemovedZones.Add(removeZoneName);
         }
 
         public void Close()
@@ -159,7 +91,7 @@ namespace Takochu.smg
                 zone.Close();
             }
 
-            mScenarioFile.Close();
+            ScenarioARC.RARCFileStream.Close();
         }
 
         public void SetScenario(int no)
@@ -193,32 +125,32 @@ namespace Takochu.smg
 
         public int GetGreenStarNo()
         {
-            return (from KeyValuePair<int, Scenario> scenarios in mScenarios where scenarios.Value.mPowerStarType == "Green" select scenarios).Count();
+            return (from KeyValuePair<int, ScenarioEntry> scenarios in ScenarioARC.ScenarioDataBCSV where scenarios.Value.PowerStarType == "Green" select scenarios).Count();
         }
 
         public bool ContainsZone(string zone)
         {
-            return mZones.ContainsKey(zone);
+            return ScenarioARC.ZoneListBCSV.ContainsKey(zone);
         }
 
         public Dictionary<string, Zone> GetZones()
         {
-            return mZones;
+            return ScenarioARC.ZoneListBCSV;
         }
 
         public List<string> GetZoneNames()
         {
-            return mZones.Keys.ToList();
+            return ScenarioARC.ZoneListBCSV.Keys.ToList();
         }
 
-        public Zone GetGalaxyZone()
+        public Zone GetMainGalaxyZone()
         {
-            return mZones[mName];
+            return ScenarioARC.ZoneListBCSV[mName];
         }
 
         public List<string> GetZonesUsedOnCurrentScenario()
         {
-            Zone galaxyZone = GetGalaxyZone();
+            Zone galaxyZone = GetMainGalaxyZone();
             return galaxyZone.GetZonesUsedOnLayers(galaxyZone.GetLayersUsedOnZoneForCurrentScenario());
         }
 
@@ -233,7 +165,7 @@ namespace Takochu.smg
             List<StageObj> SearchFile = new List<StageObj>();
             
             var ZoneGlobalOffset = new Vector3(0f,0f,0f);
-            var ZoneCurrentLayers = GetGalaxyZone().GetLayersUsedOnZoneForCurrentScenario();
+            var ZoneCurrentLayers = GetMainGalaxyZone().GetLayersUsedOnZoneForCurrentScenario();
 
             Vector3 Result_v3 = Vector3.Zero;
 
@@ -241,18 +173,18 @@ namespace Takochu.smg
             {
                 if (GameUtil.IsSMG2())
                 {
-                    if (GetGalaxyZone().mZones.ContainsKey(Layer))
+                    if (GetMainGalaxyZone().mHasStageObjList.ContainsKey(Layer))
                     {
-                        SearchFile = (GetGalaxyZone().mZones[Layer]);
+                        SearchFile = (GetMainGalaxyZone().mHasStageObjList[Layer]);
                     }
-                    else if (GetGalaxyZone().mZones.ContainsKey(Layer.ToLower())) {
-                        SearchFile = (GetGalaxyZone().mZones[Layer.ToLower()]);
+                    else if (GetMainGalaxyZone().mHasStageObjList.ContainsKey(Layer.ToLower())) {
+                        SearchFile = (GetMainGalaxyZone().mHasStageObjList[Layer.ToLower()]);
                     }
                 }
                 else
                 {
                     SearchFile = 
-                        GetGalaxyZone().mZones[Layer.ToLower()];
+                        GetMainGalaxyZone().mHasStageObjList[Layer.ToLower()];
                 }
 
                 var FindIndex = 
@@ -262,13 +194,9 @@ namespace Takochu.smg
                 
 
                 Result_v3 = SearchFile.ElementAt(FindIndex).mPosition;
-                //Console.WriteLine("//////////Pos_GlobalOffset//////////");
-                //Console.Write("X_" + SearchFile.ElementAt(FindIndex).mPosition.X);
-                //Console.Write("  Y_" + SearchFile.ElementAt(FindIndex).mPosition.Y);
-                //Console.WriteLine("  Z_" + SearchFile.ElementAt(FindIndex).mPosition.Z + "\n\r");
                 break;
             }
-            return Result_v3/*SearchFile.ElementAt(FindIndex).mPosition*/;
+            return Result_v3;
 
         }
 
@@ -277,7 +205,7 @@ namespace Takochu.smg
             List<StageObj> SearchFile = new List<StageObj>();
 
             var ZoneGlobalOffset = new Vector3(0f, 0f, 0f);
-            var ZoneCurrentLayers = GetGalaxyZone().GetLayersUsedOnZoneForCurrentScenario();
+            var ZoneCurrentLayers = GetMainGalaxyZone().GetLayersUsedOnZoneForCurrentScenario();
 
             Vector3 Result_v3 = Vector3.Zero;
 
@@ -285,52 +213,48 @@ namespace Takochu.smg
             {
                 if (GameUtil.IsSMG2())
                 {
-                    if (GetGalaxyZone().mZones.ContainsKey(Layer))
+                    if (GetMainGalaxyZone().mHasStageObjList.ContainsKey(Layer))
                     {
-                        SearchFile = (GetGalaxyZone().mZones[Layer]);
+                        SearchFile = (GetMainGalaxyZone().mHasStageObjList[Layer]);
                     }
-                    else if (GetGalaxyZone().mZones.ContainsKey(Layer.ToLower()))
+                    else if (GetMainGalaxyZone().mHasStageObjList.ContainsKey(Layer.ToLower()))
                     {
-                        SearchFile = (GetGalaxyZone().mZones[Layer.ToLower()]);
+                        SearchFile = (GetMainGalaxyZone().mHasStageObjList[Layer.ToLower()]);
                     }
                 }
                 else
                 {
                     SearchFile = 
-                        GetGalaxyZone().mZones[Layer.ToLower()];
+                        GetMainGalaxyZone().mHasStageObjList[Layer.ToLower()];
                 }
 
                 var FindIndex = SearchFile.FindIndex(x => x.mName == zoneName);
                 SearchFile.ForEach(x => Console.WriteLine(x.mName));
                 if (FindIndex < 0) continue;
-                //Console.WriteLine("//////////Ros_GlobalOffset_Rot//////////" + "  " + zoneName);
-                //Console.Write("X_" + Math.Truncate(SearchFile.ElementAt(FindIndex).mRotation.X));
-                //Console.Write("  Y_" + SearchFile.ElementAt(FindIndex).mRotation.Y);
-                //Console.WriteLine("  Z_" + SearchFile.ElementAt(FindIndex).mRotation.Z + "\n\r");
                 Result_v3 = SearchFile.ElementAt(FindIndex).mRotation;
                 break;
             }
-            return Result_v3/*SearchFile.ElementAt(FindIndex).mRotation*/;
+            return Result_v3;
         }
 
         public Zone GetZone(string name)
         {
-            if (!mZones.ContainsKey(name))
+            if (!ScenarioARC.ZoneListBCSV.ContainsKey(name))
                 throw new Exception("Galaxy::GetZone() - Zone does not exist.");
 
-            return mZones[name];
+            return ScenarioARC.ZoneListBCSV[name];
         }
 
         public BCSV.Entry GetScenarioInfoForCurrentScenario()
         {
             // it is smart to instead check for our scenario info in a loop
             // sometimes scenario data is not stored in order, so using an index may produce inaccurate results
-            return mScenarios[mScenarioNo].mEntry;
+            return ScenarioARC.ScenarioDataBCSV[mScenarioNo].Entry;
         }
 
-        public Scenario GetScenario(int scenarioNo)
+        public ScenarioEntry GetScenario(int scenarioNo)
         {
-            return mScenarios[scenarioNo];
+            return ScenarioARC.ScenarioDataBCSV[scenarioNo];
         }
 
         public int GetMaskUsedInZoneOnCurrentScenario(string zoneName)
@@ -340,13 +264,13 @@ namespace Takochu.smg
 
         public void Save()
         {
-            BCSV zonesBCSV = new BCSV(mScenarioFile.OpenFile("/root/ZoneList.bcsv"));
+            BCSV zonesBCSV = new BCSV(ScenarioARC.RARCFileStream.OpenFile("/root/ZoneList.bcsv"));
             zonesBCSV.mEntries.Clear();
 
-            foreach (KeyValuePair<string, Zone> z in mZones)
+            foreach (KeyValuePair<string, Zone> z in ScenarioARC.ZoneListBCSV)
             {
                 z.Value.Save();
-                zonesBCSV.mEntries.Add(mZoneEntries[z.Key]);
+                zonesBCSV.mEntries.Add(ScenarioARC.ZoneListBCSV_Entries[z.Key]);
             }
 
             foreach (string zone in mRemovedZones)
@@ -355,35 +279,31 @@ namespace Takochu.smg
             }
 
             zonesBCSV.Save();
-            mScenarioFile.Save();
+            ScenarioARC.RARCFileStream.Save();
             NameHolder.Save();
         }
 
         public void SaveScenario()
         {
-            BCSV scenarioBCSV = new BCSV(mScenarioFile.OpenFile("/root/ScenarioData.bcsv"));
+            BCSV scenarioBCSV = new BCSV(ScenarioARC.RARCFileStream.OpenFile("/root/ScenarioData.bcsv"));
             scenarioBCSV.mEntries.Clear();
 
-            foreach(KeyValuePair<int, Scenario> scenario in mScenarios)
+            foreach(KeyValuePair<int, ScenarioEntry> scenario in ScenarioARC.ScenarioDataBCSV)
             {
-                scenarioBCSV.mEntries.Add(scenario.Value.mEntry);
+                scenarioBCSV.mEntries.Add(scenario.Value.Entry);
             }
 
             scenarioBCSV.Save();
-            mScenarioFile.Save();
+            ScenarioARC.RARCFileStream.Save();
         }
 
-        public Game mGame;
-        public FilesystemBase mFilesystem;
-        public RARCFilesystem mScenarioFile;
-        public Dictionary<int, Scenario> mScenarios;
-        public int mScenarioNo;
+        public Game mGame { get; private set; }
+        private FilesystemBase mFilesystem;
+        public int mScenarioNo { get; private set; }
 
-        public string mName;
-        private Dictionary<string, Zone> mZones;
-        private Dictionary<string, BCSV.Entry> mZoneEntries;
+        public string mName { get; private set; }
         private List<string> mRemovedZones;
-        public string mGalaxyName;
-        public string mCurScenarioName;
+        public string mHolderName { get; private set; }
+        public string mCurScenarioName { get; private set; }
     }
 }

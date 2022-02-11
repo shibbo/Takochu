@@ -11,35 +11,40 @@ using System.Windows.Forms;
 
 namespace Takochu.io.SpecificNameARC
 {
-    public class ScenarioArc : SpecificArcBase,IARC_IO
+    public class ScenarioArcFile : SpecificArcBase,IARC_IO
     {
-        public Dictionary<string, Zone> mZones { get; private set; }
-        public Dictionary<string, BCSV.Entry> mZoneEntries { get; private set; }
-        public Dictionary<int, Scenario> mScenarios { get; private set; }
+        public Dictionary<string, Zone> ZoneListBCSV { get; private set; }
+        public Dictionary<string, BCSV.Entry> ZoneListBCSV_Entries { get; private set; }
+        public Dictionary<int, ScenarioEntry> ScenarioDataBCSV { get; private set; }
 
         private readonly Galaxy _galaxy;
 
 
-        public ScenarioArc(FilesystemBase fsb, Galaxy galaxy)
+        public ScenarioArcFile(FilesystemBase fsb, Galaxy galaxy)
         {
             _galaxy = galaxy;
             var galaxyName = galaxy.mName;
-            InFiles = new RARCFilesystem(fsb.OpenFile($"/StageData/{galaxyName}/{galaxyName}Scenario.arc"));
+            RARCFileStream = new RARCFilesystem(fsb.OpenFile($"/StageData/{galaxyName}/{galaxyName}Scenario.arc"));
 
-            mZones = new Dictionary<string, Zone>();
-            mZoneEntries = new Dictionary<string, BCSV.Entry>();
-            mScenarios = new Dictionary<int, Scenario>();
+            ZoneListBCSV = new Dictionary<string, Zone>();
+            ZoneListBCSV_Entries = new Dictionary<string, BCSV.Entry>();
+            ScenarioDataBCSV = new Dictionary<int, ScenarioEntry>();
         }
 
         public void ReadAllFiles()
         {
             ReadZoneListBCSV();
-            ReadScenarioListBCSV();
+            ReadScenarioDataBCSV();
         }
 
         public void WriteAllFiles()
         {
             throw new NotImplementedException();
+        }
+
+        public void ScenarioDataSave(Dictionary<int, ScenarioEntry> scenarioDataBcsv) 
+        {
+            ScenarioDataBCSV = new Dictionary<int, ScenarioEntry>(scenarioDataBcsv);
         }
 
         private void ReadZoneListBCSV() 
@@ -54,8 +59,8 @@ namespace Takochu.io.SpecificNameARC
                     if (name == "PoleUnizoZone")
                         continue;
 
-                    mZones.Add(name, new Zone(_galaxy, name));
-                    mZoneEntries.Add(name, zoneEntry);
+                    ZoneListBCSV.Add(name, new Zone(_galaxy, name));
+                    ZoneListBCSV_Entries.Add(name, zoneEntry);
                     MissingPathArgumentsRemove += Zone.MissingPathArgumentsRemove;
                 }
                 if (MissingPathArgumentsRemove > 0)
@@ -64,15 +69,15 @@ namespace Takochu.io.SpecificNameARC
             zonesList.Close();
         }
 
-        private void ReadScenarioListBCSV() 
+        private void ReadScenarioDataBCSV() 
         {
-            BCSV scenarios = BCSV_Open(BCSV_Name.ScenarioList);
+            BCSV scenarios = BCSV_Open(BCSV_Name.ScenarioData);
             {
-                mScenarios = new Dictionary<int, Scenario>();
+                ScenarioDataBCSV = new Dictionary<int, ScenarioEntry>();
 
                 foreach (BCSV.Entry scenarioEntry in scenarios.mEntries)
                 {
-                    mScenarios.Add(scenarioEntry.Get<int>("ScenarioNo"), new Scenario(scenarioEntry, mZones.Keys.ToList()));
+                    ScenarioDataBCSV.Add(scenarioEntry.Get<int>("ScenarioNo"), new ScenarioEntry(scenarioEntry, ZoneListBCSV.Keys.ToList()));
                 }
             }
             scenarios.Close();
