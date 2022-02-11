@@ -20,7 +20,7 @@ namespace Takochu.ui
 {
     public partial class StageInfoEditor : Form
     {
-        private Galaxy _galaxy;
+        private readonly Galaxy _galaxy;
         private List<BGMInfo.ScenarioBGMEntry> _scenarioEntries;
         private List<int> _bgmRestrictedIDs;
         private int _currentScenario;
@@ -31,14 +31,16 @@ namespace Takochu.ui
         {
             _galaxy = galaxy;
             InitializeComponent();
-            //ToggleLayersEnabled(UseLayerFlags, false);
 
             SetGalaxyImageLayouts();
 
-            Timer_Label.Text = Scenario.TimerNameFromGameVer;
+            Timer_Label.Text = ScenarioEntry.TimerNameFromGameVer;
 
-            SetComboBoxItems(CometTypeComboBox  ,Scenario.Comets                 );
-            SetComboBoxItems(AppearStarObj      ,Scenario.AppearStarObjs         );
+            
+            
+
+            SetComboBoxItems(CometTypeComboBox  ,ScenarioEntry.Comets                 );
+            SetComboBoxItems(AppearStarObj      ,ScenarioEntry.AppearStarObjs         );
             SetComboBoxItems(ZoneComboBox       ,_galaxy.GetZoneNames().ToArray());
 
             //SMG1,SMG2それぞれ固有の設定を行う。
@@ -49,7 +51,8 @@ namespace Takochu.ui
             }
             else 
             {
-                SetComboBoxItems(StarType, Scenario.StarType);
+                HiddenCheckBox.Enabled = false;
+                SetComboBoxItems(StarType, ScenarioEntry.StarType);
                 var scenarioBGM_dgv = new ScenarioBGMInfo_DataGridView(ScenBGM_dgv);
                 ScenBGM_dgv = scenarioBGM_dgv.GetDataTable();
                 SetStageBGMListBox();
@@ -98,30 +101,33 @@ namespace Takochu.ui
             GalaxyNameLabel.Top        -= GalaxyInfoPictureBox.Top;
             GalaxyNameLabel.Left       -= GalaxyInfoPictureBox.Left;
             GalaxyNameLabel.BackColor   = Color.Transparent;
-            GalaxyNameLabel.Text        = _galaxy.mGalaxyName;
+            GalaxyNameLabel.Text        = _galaxy.mHolderName;
         }
 
         /// <summary>
         /// テキストボックスなどにシナリオの情報を表示
         /// </summary>
         /// <param name="scenario">対象のシナリオ</param>
-        private void SetScenarioInfo(Scenario scenario)
+        private void SetScenarioInfo(ScenarioEntry scenario)
         {
-            ScenarioName.Text     = scenario.mScenarioName;
-            AppearPowerStar.Text  = scenario.mAppearPowerStar;
-            PowerStarID.Value     = scenario.mPowerStarID;
+            ScenarioName.Text     = scenario.ScenarioName;
+            AppearPowerStar.Text  = scenario.AppearStarObj;
+            PowerStarID.Value     = scenario.PowerStarID;
+
 
             if (GameUtil.IsSMG2())
             {
-                TimerNumericUpDown.Value = scenario.mCometLimitTimer;
-                StarType.SelectedIndex = Array.IndexOf(Scenario.StarType, scenario.mPowerStarType);
+                TimerNumericUpDown.Value = scenario.CometLimitTimer;
+                StarType.SelectedIndex = Array.IndexOf(ScenarioEntry.StarType, scenario.PowerStarType);
             }
             else 
             {
+                HiddenCheckBox.Checked = Convert.ToBoolean(scenario.IsHidden);
+
                 //値が存在しない場合があるのでチェックしています。
-                if (scenario.mLuigiModeTimer != default)
+                if (scenario.LuigiModeTimer != default)
                 {
-                    TimerNumericUpDown.Value = scenario.mLuigiModeTimer;
+                    TimerNumericUpDown.Value = scenario.LuigiModeTimer;
                     TimerNumericUpDown.Enabled = true;
                 }
                 else 
@@ -132,22 +138,22 @@ namespace Takochu.ui
                     
             }
             
-            AppearStarObj.SelectedItem = scenario.mAppearPowerStar;
+            AppearStarObj.SelectedItem = scenario.AppearStarObj;
 
-            if (!scenario.mEntry.ContainsKey("Comet")) 
+            if (!scenario.Entry.ContainsKey("Comet")) 
             {
                 CometTypeComboBox.Enabled = false;
                 return;
             }
 
             CometTypeComboBox.Enabled = true;
-            if (scenario.mComet == string.Empty) 
+            if (scenario.Comet == string.Empty) 
             {
                 CometTypeComboBox.SelectedIndex = 0;
                 return;
             }
 
-            CometTypeComboBox.SelectedIndex = Array.IndexOf(Scenario.Comets, scenario.mComet);
+            CometTypeComboBox.SelectedIndex = Array.IndexOf(ScenarioEntry.Comets, scenario.Comet);
         }
 
         private void ScenarioListTreeView_AfterSelect(object sender, TreeViewEventArgs e)
@@ -157,22 +163,18 @@ namespace Takochu.ui
             if (scenarioTreeView.Nodes.Count < 1) return;
 
             _currentScenario = Convert.ToInt32(scenarioTreeView.SelectedNode.Tag);
-
+            
             /*
              * ツリーノードのインデックスを選択した際に、
              * データが再入力されるのでイベントを一時停止する必要がある。
              */
             Pause_ControlsEvent();
             {
-                SetScenarioInfo(_scenarioInformation.Scenarios[_currentScenario]);
+                SetScenarioInfo(_scenarioInformation.ScenarioBCSV[_currentScenario]);
                 ZoneComboBox.SelectedItem = _galaxy.mName;
-                //ResetLayers(layerMasksBox);
                 UseLayerCheckBoxReload();
             }
             ReStart_ControlsEvent();
-
-            
-            //StageBGM_InfoTabPage.Controls;
         }
 
         /// <summary>
@@ -180,21 +182,31 @@ namespace Takochu.ui
         /// </summary>
         private void Pause_ControlsEvent() 
         {
-            
-            ZoneComboBox.SelectedIndexChanged -= new EventHandler(ZoneComboBox_SelectedIndexChanged);
             foreach (Control control in UseLayerFlags.Controls) 
             {
-                control.BindingContextChanged -= new System.EventHandler(this.ZoneLayerCheckbox_CheckedChanged);
+                control.BindingContextChanged -= new EventHandler(ZoneLayerCheckbox_CheckedChanged);
             }
+            foreach (Control control in ShowScenarioStarFlags.Controls)
+            {
+                control.BindingContextChanged -= new EventHandler(ShowScenarioCheckBox_CheckedChanged);
+            }
+            TimerNumericUpDown.ValueChanged -= new EventHandler(TimerNumericInt_ValueChanged);
 
         }
 
+        /// <summary>
+        /// コントロールの BindingContextChanged を有効にします。
+        /// </summary>
         private void ReStart_ControlsEvent() 
         {
-            ZoneComboBox.SelectedIndexChanged += new EventHandler(ZoneComboBox_SelectedIndexChanged);
+            TimerNumericUpDown.ValueChanged += new EventHandler(TimerNumericInt_ValueChanged);
             foreach (Control control in UseLayerFlags.Controls)
             {
-                control.BindingContextChanged += new System.EventHandler(this.ZoneLayerCheckbox_CheckedChanged);
+                control.BindingContextChanged += new EventHandler(ZoneLayerCheckbox_CheckedChanged);
+            }
+            foreach (Control control in ShowScenarioStarFlags.Controls)
+            {
+                control.BindingContextChanged += new EventHandler(ShowScenarioCheckBox_CheckedChanged);
             }
         }
 
@@ -210,74 +222,43 @@ namespace Takochu.ui
             
         }
 
-        private void ZoneComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            foreach (Control control in UseLayerFlags.Controls)
-            {
-                control.BindingContextChanged -= new EventHandler(this.ZoneLayerCheckbox_CheckedChanged);
-            }
-            UseLayerCheckBoxReload();
-            foreach (Control control in UseLayerFlags.Controls)
-            {
-                control.BindingContextChanged += new EventHandler(this.ZoneLayerCheckbox_CheckedChanged);
-            }
-        }
+        
 
+        private void ZoneComboBox_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            Pause_ControlsEvent();
+            {
+                UseLayerCheckBoxReload();
+            }
+            ReStart_ControlsEvent();
+        }
 
         /// <summary>
         /// ゾーンで使用されるレイヤーのチェックボックスを再読み込みします。
         /// </summary>
         private void UseLayerCheckBoxReload()
         {
-            
-
             if (ZoneComboBox.SelectedIndex < 0) return;
 
-            
-            //ResetLayers(UseLayerFlags);
-            
-
-
-            //ToggleLayersEnabled(UseLayerFlags, true);
-
-            var scenario   = _scenarioInformation.Scenarios[_currentScenario];
+            var scenario   = _scenarioInformation.ScenarioBCSV[_currentScenario];
             var zoneName = Convert.ToString(ZoneComboBox.SelectedItem);
-            var maskBitData = scenario.GetZoneMaskInt(zoneName);
-            var layerList    = GameUtil.GetGalaxyLayers(maskBitData);
-
-            DebugTextBox.Text = string.Empty;
-            DebugTextBox.Text = maskBitData.ToString();
-
-
-
-
+            
             foreach (Control control in UseLayerFlags.Controls)
             {
                 if (control.Tag == null) continue;
 
-                string tag = control.Tag.ToString();
+                string tagName = control.Tag.ToString();
 
-                //var maskchecked = scenario.mTest_ZoneMasks[zoneName].Select(x => x.Name == tag).ToArray();
-
-                tag = GameUtil.IsSMG1() ? tag.ToLower() : tag;
-
-
+                //tagName = GameUtil.IsSMG1() ? tagName.ToLower() : tagName;
 
                 if (!(control is CheckBox)) continue;
                 CheckBox checkBox = control as CheckBox;
 
-
-
-                if (!layerList.Contains(tag)) continue;
-                checkBox.Checked = scenario.mTest_ZoneMasks[zoneName].First(x => x.Name == tag).Checked;
+                checkBox.Checked = scenario.ZoneMasks[zoneName].First(layer => layer.Name == tagName).Checked;
             }
 
-
-            //ResetLayers(ShowScenarioStarFlags);
-            //ToggleLayersEnabled(ShowScenarioStarFlags, true);
-            int[] powerStarIDArray = new int[] { scenario.mPowerStarID };
+            int[] powerStarIDArray = new int[] { scenario.PowerStarID };
             var bitarray = new BitArray(powerStarIDArray);
-
 
             for (int i = 0; i < ShowScenarioStarFlags.Controls.Count; i++)
             {
@@ -291,24 +272,6 @@ namespace Takochu.ui
 
                 var cb = ShowScenarioStarFlags.Controls[i] as CheckBox;
                 cb.Checked = bitarray[scenarioNo - 1];
-
-
-
-            }
-        }
-
-        /// <summary>
-        /// グループボックス内の「<see cref="CheckBox.Checked"/>」プロパティをすべて<see langword="false"/>にする
-        /// </summary>
-        /// <param name="groupBox"></param>
-        private void ResetLayers(GroupBox groupBox)
-        {
-            foreach (Control control in groupBox.Controls)
-            {
-                if (!(control is CheckBox)) continue;
-                CheckBox checkBox = control as CheckBox;
-                checkBox.Checked = false;
-
             }
         }
 
@@ -318,8 +281,9 @@ namespace Takochu.ui
             //BGMInfo.Save();
         }
 
-        private void NumericInt_ValueChanged(object sender, EventArgs e)
+        private void TimerNumericInt_ValueChanged(object sender, EventArgs e)
         {
+            
             
         }
 
@@ -328,30 +292,31 @@ namespace Takochu.ui
             //if (!misInitialized)
             //    return;
 
-            TextBox textBox = sender as TextBox;
+            
 
+            //_scenarioInformation.Scenarios[_currentScenario].ScenarioName
             // time for some hacks
-            if (MainTabControl.SelectedTab.Text != "BGM_InfoTabPage") return;
+            //if (MainTabControl.SelectedTab.Text != "BGM_InfoTabPage") return;
 
 
 
-            if (BGMTabControl.SelectedTab.Text == "StageBGM_InfoTabPage")
-            {
-                //_infoEntry.Entry.Set(textBox.Tag.ToString(), textBox.Text);
-            }
-            else
-            {
-                int scenario = 0;
+            //if (BGMTabControl.SelectedTab.Text == "StageBGM_InfoTabPage")
+            //{
+            //    //_infoEntry.Entry.Set(textBox.Tag.ToString(), textBox.Text);
+            //}
+            //else
+            //{
+            //    int scenario = 0;
 
-                // if we are in a restricted scenario, we default to changing the entry with scenario 0
-                if (!_bgmRestrictedIDs.Contains(_currentScenario))
-                {
-                    scenario = _currentScenario;
-                }
+            //    // if we are in a restricted scenario, we default to changing the entry with scenario 0
+            //    if (!_bgmRestrictedIDs.Contains(_currentScenario))
+            //    {
+            //        scenario = _currentScenario;
+            //    }
 
-                BGMInfo.ScenarioBGMEntry scenarioEntry = _scenarioEntries.Find(entry => entry.Entry.Get<int>("ScenarioNo") == 0);
-                //scenarioEntry.Entry.Set(textBox.Tag.ToString(), textBox.Text);
-            }
+            //    BGMInfo.ScenarioBGMEntry scenarioEntry = _scenarioEntries.Find(entry => entry.Entry.Get<int>("ScenarioNo") == 0);
+            //    //scenarioEntry.Entry.Set(textBox.Tag.ToString(), textBox.Text);
+            //}
 
 
         }
@@ -376,70 +341,59 @@ namespace Takochu.ui
         {
             CheckBox checkbox = sender as CheckBox;
             string zoneName = ZoneComboBox.SelectedItem.ToString();
-            var scenario = _scenarioInformation.Scenarios[_currentScenario];
-
+            var scenario = _scenarioInformation.ScenarioBCSV[_currentScenario];
 
             scenario.ChangeZoneMask(checkbox, zoneName);
-            //ResetLayers(layerMasksBox);
-            //UseLayerCheckBoxReload();
-
             scenario.SetZoneMask(zoneName);
-
+            UseLayerCheckBoxReload();
 
             //int newMask = /*GetLayerMask(checkbox)*/scenario.mTest_ZoneMasks[zoneName][scenario.GetLayerIndex(checkbox,zoneName)];
             /*GameUtil.SetLayerOnMask(checkbox.Tag.ToString(), scenario.mZoneMasks[zoneName], checkbox.Checked);*/
             //_scenarioInformation.Scenarios[_currentScenario].mEntry.Set(zoneName, newMask);
         }
 
-        private int GetLayerMask(CheckBox cb) 
+        private void ShowScenarioCheckBox_CheckedChanged(object sender, EventArgs e)
         {
+            CheckBox checkbox = sender as CheckBox;
+            var scenario = _scenarioInformation.ScenarioBCSV[_currentScenario];
+
+            var a = checkbox.Checked;
 
 
-            int newMask = 0;
 
-            var scenario = _scenarioInformation.Scenarios[_currentScenario];
-            var powerStarID = scenario.mPowerStarID;
-            var maskBitData = scenario.mZoneMasks[Convert.ToString(ZoneComboBox.SelectedItem)];
-            var layerList = GameUtil.GetGalaxyLayers(maskBitData);
+            int[] powerStarIDArray = new int[] { scenario.PowerStarID };
+            var bitarray = new BitArray(powerStarIDArray);
 
-            int[] maskBitArr = { maskBitData };
-            var bitarr = new BitArray(maskBitArr);
+            for (int i = 0; i < ShowScenarioStarFlags.Controls.Count; i++)
+            {
+                var ControlTagString = ShowScenarioStarFlags.Controls[i].Tag.ToString();
+                if (!ControlTagString.StartsWith("Scenario")) continue;
 
-            var checkBoxText = cb.Text;
-            if (checkBoxText == "Common") return maskBitData;
-            if (GameUtil.IsSMG1()) checkBoxText = checkBoxText.ToLower();
+                
 
-            var find = layerList.IndexOf(checkBoxText);
+                var scenarioNoChars = ControlTagString.Skip("Scenario".Length).ToArray();
+                var scenarioNo = int.Parse(string.Concat(scenarioNoChars));
 
-            if (find > -1) throw new OverflowException($"Negative values for array indices are not allowed.");
+                if (!(ShowScenarioStarFlags.Controls[i] is CheckBox)) continue;
 
-            bitarr.Set(find + 1, cb.Checked);
+                var cb = ShowScenarioStarFlags.Controls[i] as CheckBox;
 
-            bitarr.CopyTo(maskBitArr, 0);
-
-            newMask = maskBitArr[0];
-            //foreach (Control control in UseLayerFlags.Controls)
-            //{
-            //    if (control.Tag == null) continue;
-
-            //    string layerName = control.Tag.ToString();
-
-            //    layerName = GameUtil.IsSMG1() ? layerName.ToLower() : layerName;
-
-            //    if (!(control is CheckBox)) continue;
-            //    CheckBox checkBox = control as CheckBox;
-
-            //    if (!layerList.Contains(layerName)) continue;
-            //    checkBox.Checked = bitarr;
-            //}
+                bitarray[scenarioNo - 1] = cb.Checked;
+            }
 
 
-            return newMask;
+
+            scenario.ChangeShowScenario(bitarray);
+            scenario.SetShowScenario(ZoneComboBox.SelectedItem.ToString());
+
+            UseLayerCheckBoxReload();
         }
+
 
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //_galaxy.SaveScenario();
+            _galaxy.ScenarioARC.ScenarioDataSave(_scenarioInformation.ScenarioBCSV);
+            _galaxy.SaveScenario();
         }
 
         private void StageBGMListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -449,6 +403,7 @@ namespace Takochu.ui
 
             var selectString = listBox.Items[listBox.SelectedIndex].ToString();
             var stageBgm = BGMInfo.mStageEntries[selectString];
+
             changeBgmIdName_0.Text = stageBgm.ChangeBGMIDName[0];
             changeBgmIdName_1.Text = stageBgm.ChangeBGMIDName[1];
             changeBgmIdName_2.Text = stageBgm.ChangeBGMIDName[2];
@@ -461,6 +416,59 @@ namespace Takochu.ui
             changeBgmState_3.Value = stageBgm.ChangeBGMState[3];
             changeBgmState_4.Value = stageBgm.ChangeBGMState[4];
 
+        }
+
+        private void ScenarioName_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            var scenario = _scenarioInformation.ScenarioBCSV[_currentScenario];
+            scenario.ChangeScenarioName(textBox.Text);
+            scenario.SetScenarioName();
+        }
+
+        private void AppearStarObj_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+            var scenario = _scenarioInformation.ScenarioBCSV[_currentScenario];
+            scenario.ChangeAppearStarObj(comboBox.SelectedItem.ToString());
+            scenario.SetAppearStarObj();
+        }
+
+        private void StarType_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+            if (comboBox.Enabled == false) return;
+            var scenario = _scenarioInformation.ScenarioBCSV[_currentScenario];
+            scenario.ChangePowerStarType(comboBox.SelectedItem.ToString());
+            scenario.SetPowerStarType();
+        }
+
+        private void CometTypeComboBox_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+            if (comboBox.Enabled == false) return;
+            var scenario = _scenarioInformation.ScenarioBCSV[_currentScenario];
+            scenario.ChangeComet(comboBox.SelectedItem.ToString());
+            scenario.SetComet();
+        }
+
+        private void TimerNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            var numericInt = sender as NumericUpDown;
+            if (numericInt.Enabled == false) return;
+            var scenario = _scenarioInformation.ScenarioBCSV[_currentScenario];
+            scenario.ChangeTimer(Convert.ToInt32(numericInt.Value));
+            scenario.SetTimer();
+        }
+
+        private void HiddenCheckBox_CheckStateChanged(object sender, EventArgs e)
+        {
+            if (GameUtil.IsSMG2()) return;
+            CheckBox checkbox = sender as CheckBox;
+            if (checkbox.Enabled == false) return;
+            var scenario = _scenarioInformation.ScenarioBCSV[_currentScenario];
+            scenario.ChangeIsHidden(checkbox.Checked);
+            scenario.SetIsHidden();
         }
     }
 }

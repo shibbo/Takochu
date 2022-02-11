@@ -15,16 +15,16 @@ namespace Takochu.ui.StageInfoEditorSys
     public class ScenarioInformation
     {
         private readonly Galaxy _galaxy;
-        public Dictionary<int, Scenario> Scenarios { get; private set; }
-        public Dictionary<int, Scenario> EditScenarios { get; private set; }
+        public Dictionary<int, ScenarioEntry> ScenarioBCSV { get; private set; }
+        //public Dictionary<int, ScenarioEntry> EditScenarios { get; private set; }
 
         
 
         public ScenarioInformation(Galaxy galaxy, TreeView ScenarioListTreeView) 
         {
             _galaxy = galaxy;
-            Scenarios = new Dictionary<int, Scenario>();
-            EditScenarios = new Dictionary<int, Scenario>();
+            ScenarioBCSV = new Dictionary<int, ScenarioEntry>();
+            //EditScenarios = new Dictionary<int, ScenarioEntry>();
             SetTreeView(ScenarioListTreeView);
             ScenarioListTreeView.SelectedNode = ScenarioListTreeView.Nodes[0];
         }
@@ -33,16 +33,16 @@ namespace Takochu.ui.StageInfoEditorSys
         /// Sets the scenario to the TreeView specified in the argument.<br/>
         /// 引数で指定したTreeViewにシナリオをセットします。
         /// </summary>
-        /// <param name="ScenarioListTreeView"><see cref="Scenario"/>をセットしたい<see cref="TreeView"/></param>
+        /// <param name="ScenarioListTreeView"><see cref="ScenarioEntry"/>をセットしたい<see cref="TreeView"/></param>
         private void SetTreeView(TreeView ScenarioListTreeView) 
         {
-            foreach (KeyValuePair<int, Scenario> scenarios in _galaxy.mScenarios)
+            foreach (KeyValuePair<int, ScenarioEntry> scenEntry in _galaxy.ScenarioARC.ScenarioDataBCSV)
             {
-                Scenario ReadScenario = scenarios.Value;
+                ScenarioEntry scenarioEntry = scenEntry.Value;
 
-                ScenarioListTreeView.Nodes.Add(SetScenarioForTreeNodeTag(ReadScenario));
+                ScenarioListTreeView.Nodes.Add(SetScenarioForTreeNodeTag(scenarioEntry));
 
-                Scenarios.Add(ReadScenario.mScenarioNo, _galaxy.GetScenario(ReadScenario.mScenarioNo));
+                ScenarioBCSV.Add(scenarioEntry.ScenarioNo, _galaxy.GetScenario(scenarioEntry.ScenarioNo));
             }
 
             //ツリーノードの数をチェックして0個の場合エラーを出す。
@@ -57,26 +57,16 @@ namespace Takochu.ui.StageInfoEditorSys
         /// </summary>
         /// <param name="scenario"></param>
         /// <returns></returns>
-        private TreeNode SetScenarioForTreeNodeTag(Scenario scenario) 
+        private TreeNode SetScenarioForTreeNodeTag(ScenarioEntry scenario) 
         {
-            TreeNode ScenarioTreeNode = new TreeNode($"[{scenario.mScenarioNo}] {scenario.mScenarioName}")
+            TreeNode ScenarioTreeNode = new TreeNode($"[{scenario.ScenarioNo}] {scenario.ScenarioName}")
             {
-                Tag = scenario.mScenarioNo
+                Tag = scenario.ScenarioNo
             };
 
             return ScenarioTreeNode;
         }
 
-        public enum ShowScenarioNo : int
-        {
-            Scenario1 = 1,
-            Scenario2 = 2,
-            Scenario3 = 4,
-            Scenario4 = 8,
-            Scenario5 = 16,
-            Scenario6 = 32,
-            Scenario7 = 64,
-            Scenario8 = 128
-        }
+        
     }
 }

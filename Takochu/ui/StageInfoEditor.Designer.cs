@@ -118,6 +118,7 @@
             this.MainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.HiddenCheckBox = new System.Windows.Forms.CheckBox();
             this.MainTabControl.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.ScenarioInformation_GroupBox.SuspendLayout();
@@ -185,6 +186,7 @@
             // 
             this.ScenarioInformation_GroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.ScenarioInformation_GroupBox.Controls.Add(this.HiddenCheckBox);
             this.ScenarioInformation_GroupBox.Controls.Add(this.AppearStarObj);
             this.ScenarioInformation_GroupBox.Controls.Add(this.StarType);
             this.ScenarioInformation_GroupBox.Controls.Add(this.CometTypeComboBox);
@@ -205,21 +207,23 @@
             this.ScenarioInformation_GroupBox.TabStop = false;
             this.ScenarioInformation_GroupBox.Text = "Scenario Information";
             // 
-            // AppearPowerStarObjComboBox
+            // AppearStarObj
             // 
             this.AppearStarObj.FormattingEnabled = true;
             this.AppearStarObj.Location = new System.Drawing.Point(8, 138);
-            this.AppearStarObj.Name = "AppearPowerStarObjComboBox";
+            this.AppearStarObj.Name = "AppearStarObj";
             this.AppearStarObj.Size = new System.Drawing.Size(256, 20);
             this.AppearStarObj.TabIndex = 22;
+            this.AppearStarObj.SelectionChangeCommitted += new System.EventHandler(this.AppearStarObj_SelectionChangeCommitted);
             // 
-            // PowerStarTypeComboBox
+            // StarType
             // 
             this.StarType.FormattingEnabled = true;
             this.StarType.Location = new System.Drawing.Point(8, 176);
-            this.StarType.Name = "PowerStarTypeComboBox";
+            this.StarType.Name = "StarType";
             this.StarType.Size = new System.Drawing.Size(256, 20);
             this.StarType.TabIndex = 21;
+            this.StarType.SelectionChangeCommitted += new System.EventHandler(this.StarType_SelectionChangeCommitted);
             // 
             // CometTypeComboBox
             // 
@@ -228,6 +232,7 @@
             this.CometTypeComboBox.Name = "CometTypeComboBox";
             this.CometTypeComboBox.Size = new System.Drawing.Size(256, 20);
             this.CometTypeComboBox.TabIndex = 20;
+            this.CometTypeComboBox.SelectionChangeCommitted += new System.EventHandler(this.CometTypeComboBox_SelectionChangeCommitted);
             // 
             // GalaxyNameLabel
             // 
@@ -476,7 +481,7 @@
             this.ZoneComboBox.Name = "ZoneComboBox";
             this.ZoneComboBox.Size = new System.Drawing.Size(240, 20);
             this.ZoneComboBox.TabIndex = 0;
-            this.ZoneComboBox.SelectedIndexChanged += new System.EventHandler(this.ZoneComboBox_SelectedIndexChanged);
+            this.ZoneComboBox.SelectionChangeCommitted += new System.EventHandler(this.ZoneComboBox_SelectionChangeCommitted);
             // 
             // ShowScenarioStarFlags
             // 
@@ -505,6 +510,7 @@
             this.Scenario8.Tag = "Scenario8";
             this.Scenario8.Text = "Scenario8";
             this.Scenario8.UseVisualStyleBackColor = true;
+            this.Scenario8.CheckedChanged += new System.EventHandler(this.ShowScenarioCheckBox_CheckedChanged);
             // 
             // Scenario7
             // 
@@ -516,6 +522,7 @@
             this.Scenario7.Tag = "Scenario7";
             this.Scenario7.Text = "Scenario7";
             this.Scenario7.UseVisualStyleBackColor = true;
+            this.Scenario7.CheckedChanged += new System.EventHandler(this.ShowScenarioCheckBox_CheckedChanged);
             // 
             // Scenario6
             // 
@@ -527,6 +534,7 @@
             this.Scenario6.Tag = "Scenario6";
             this.Scenario6.Text = "Scenario6";
             this.Scenario6.UseVisualStyleBackColor = true;
+            this.Scenario6.CheckedChanged += new System.EventHandler(this.ShowScenarioCheckBox_CheckedChanged);
             // 
             // Scenario5
             // 
@@ -538,6 +546,7 @@
             this.Scenario5.Tag = "Scenario5";
             this.Scenario5.Text = "Scenario5";
             this.Scenario5.UseVisualStyleBackColor = true;
+            this.Scenario5.CheckedChanged += new System.EventHandler(this.ShowScenarioCheckBox_CheckedChanged);
             // 
             // Scenario4
             // 
@@ -549,6 +558,7 @@
             this.Scenario4.Tag = "Scenario4";
             this.Scenario4.Text = "Scenario4";
             this.Scenario4.UseVisualStyleBackColor = true;
+            this.Scenario4.CheckedChanged += new System.EventHandler(this.ShowScenarioCheckBox_CheckedChanged);
             // 
             // Scenario3
             // 
@@ -560,6 +570,7 @@
             this.Scenario3.Tag = "Scenario3";
             this.Scenario3.Text = "Scenario3";
             this.Scenario3.UseVisualStyleBackColor = true;
+            this.Scenario3.CheckedChanged += new System.EventHandler(this.ShowScenarioCheckBox_CheckedChanged);
             // 
             // Scenario2
             // 
@@ -571,6 +582,7 @@
             this.Scenario2.Tag = "Scenario2";
             this.Scenario2.Text = "Scenario2";
             this.Scenario2.UseVisualStyleBackColor = true;
+            this.Scenario2.CheckedChanged += new System.EventHandler(this.ShowScenarioCheckBox_CheckedChanged);
             // 
             // Scenario1
             // 
@@ -582,8 +594,9 @@
             this.Scenario1.Tag = "Scenario1";
             this.Scenario1.Text = "Scenario1";
             this.Scenario1.UseVisualStyleBackColor = true;
+            this.Scenario1.CheckedChanged += new System.EventHandler(this.ShowScenarioCheckBox_CheckedChanged);
             // 
-            // CometAndLuigi_TimerNumericUpDown
+            // TimerNumericUpDown
             // 
             this.TimerNumericUpDown.Location = new System.Drawing.Point(8, 251);
             this.TimerNumericUpDown.Maximum = new decimal(new int[] {
@@ -591,17 +604,17 @@
             0,
             0,
             0});
-            this.TimerNumericUpDown.Name = "CometAndLuigi_TimerNumericUpDown";
+            this.TimerNumericUpDown.Name = "TimerNumericUpDown";
             this.TimerNumericUpDown.Size = new System.Drawing.Size(138, 19);
             this.TimerNumericUpDown.TabIndex = 11;
             this.TimerNumericUpDown.Tag = "CometLimitTimer";
-            this.TimerNumericUpDown.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
+            this.TimerNumericUpDown.ValueChanged += new System.EventHandler(this.TimerNumericUpDown_ValueChanged);
             // 
-            // CometTimerAndLuigTimer_Label
+            // Timer_Label
             // 
             this.Timer_Label.AutoSize = true;
             this.Timer_Label.Location = new System.Drawing.Point(6, 236);
-            this.Timer_Label.Name = "CometTimerAndLuigTimer_Label";
+            this.Timer_Label.Name = "Timer_Label";
             this.Timer_Label.Size = new System.Drawing.Size(73, 12);
             this.Timer_Label.TabIndex = 10;
             this.Timer_Label.Text = "Comet Timer:";
@@ -642,14 +655,14 @@
             this.label16.TabIndex = 4;
             this.label16.Text = "AppearPowerStarObj:";
             // 
-            // ScenarioNameTextBox
+            // ScenarioName
             // 
             this.ScenarioName.Location = new System.Drawing.Point(8, 102);
-            this.ScenarioName.Name = "ScenarioNameTextBox";
+            this.ScenarioName.Name = "ScenarioName";
             this.ScenarioName.Size = new System.Drawing.Size(256, 19);
             this.ScenarioName.TabIndex = 1;
             this.ScenarioName.Tag = "ScenarioName";
-            this.ScenarioName.TextChanged += new System.EventHandler(this.TextBox_ValueChanged);
+            this.ScenarioName.TextChanged += new System.EventHandler(this.ScenarioName_TextChanged);
             // 
             // label14
             // 
@@ -758,7 +771,7 @@
             this.changeBgmState_2.Size = new System.Drawing.Size(82, 19);
             this.changeBgmState_2.TabIndex = 11;
             this.changeBgmState_2.Tag = "ChangeBgmState2";
-            this.changeBgmState_2.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
+            this.changeBgmState_2.ValueChanged += new System.EventHandler(this.TimerNumericInt_ValueChanged);
             // 
             // label2
             // 
@@ -781,7 +794,7 @@
             this.changeBgmState_3.Size = new System.Drawing.Size(82, 19);
             this.changeBgmState_3.TabIndex = 15;
             this.changeBgmState_3.Tag = "ChangeBgmState3";
-            this.changeBgmState_3.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
+            this.changeBgmState_3.ValueChanged += new System.EventHandler(this.TimerNumericInt_ValueChanged);
             // 
             // changeBgmIdName_4
             // 
@@ -804,7 +817,7 @@
             this.changeBgmState_0.Size = new System.Drawing.Size(82, 19);
             this.changeBgmState_0.TabIndex = 3;
             this.changeBgmState_0.Tag = "ChangeBgmState0";
-            this.changeBgmState_0.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
+            this.changeBgmState_0.ValueChanged += new System.EventHandler(this.TimerNumericInt_ValueChanged);
             // 
             // changeBgmIdName_1
             // 
@@ -845,7 +858,7 @@
             this.changeBgmState_1.Size = new System.Drawing.Size(82, 19);
             this.changeBgmState_1.TabIndex = 7;
             this.changeBgmState_1.Tag = "ChangeBgmState1";
-            this.changeBgmState_1.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
+            this.changeBgmState_1.ValueChanged += new System.EventHandler(this.TimerNumericInt_ValueChanged);
             // 
             // label5
             // 
@@ -886,7 +899,7 @@
             this.changeBgmState_4.Size = new System.Drawing.Size(82, 19);
             this.changeBgmState_4.TabIndex = 19;
             this.changeBgmState_4.Tag = "ChangeBgmState4";
-            this.changeBgmState_4.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
+            this.changeBgmState_4.ValueChanged += new System.EventHandler(this.TimerNumericInt_ValueChanged);
             // 
             // label9
             // 
@@ -1007,10 +1020,10 @@
             this.scenarioBGMId.Tag = "BgmIdName";
             this.scenarioBGMId.TextChanged += new System.EventHandler(this.TextBox_ValueChanged);
             // 
-            // AppearPowerStarTextBox
+            // AppearPowerStar
             // 
             this.AppearPowerStar.Location = new System.Drawing.Point(342, 29);
-            this.AppearPowerStar.Name = "AppearPowerStarTextBox";
+            this.AppearPowerStar.Name = "AppearPowerStar";
             this.AppearPowerStar.Size = new System.Drawing.Size(96, 19);
             this.AppearPowerStar.TabIndex = 5;
             this.AppearPowerStar.Tag = "AppearPowerStarObj";
@@ -1025,7 +1038,7 @@
             this.label11.TabIndex = 0;
             this.label11.Text = "Music ID:";
             // 
-            // PowerStarIDTextBox
+            // PowerStarID
             // 
             this.PowerStarID.Location = new System.Drawing.Point(101, 48);
             this.PowerStarID.Maximum = new decimal(new int[] {
@@ -1033,11 +1046,11 @@
             0,
             0,
             0});
-            this.PowerStarID.Name = "PowerStarIDTextBox";
+            this.PowerStarID.Name = "PowerStarID";
             this.PowerStarID.Size = new System.Drawing.Size(76, 19);
             this.PowerStarID.TabIndex = 3;
             this.PowerStarID.Tag = "PowerStarId";
-            this.PowerStarID.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
+            this.PowerStarID.ValueChanged += new System.EventHandler(this.TimerNumericInt_ValueChanged);
             // 
             // label15
             // 
@@ -1092,7 +1105,7 @@
             this.scenarioBGMStartFrame.Size = new System.Drawing.Size(81, 19);
             this.scenarioBGMStartFrame.TabIndex = 5;
             this.scenarioBGMStartFrame.Tag = "StartFrame";
-            this.scenarioBGMStartFrame.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
+            this.scenarioBGMStartFrame.ValueChanged += new System.EventHandler(this.TimerNumericInt_ValueChanged);
             // 
             // label13
             // 
@@ -1110,7 +1123,7 @@
             this.scenarioBGMStartType.Size = new System.Drawing.Size(81, 19);
             this.scenarioBGMStartType.TabIndex = 3;
             this.scenarioBGMStartType.Tag = "StartType";
-            this.scenarioBGMStartType.ValueChanged += new System.EventHandler(this.NumericInt_ValueChanged);
+            this.scenarioBGMStartType.ValueChanged += new System.EventHandler(this.TimerNumericInt_ValueChanged);
             // 
             // MainToolStrip
             // 
@@ -1155,6 +1168,17 @@
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
+            // 
+            // HiddenCheckBox
+            // 
+            this.HiddenCheckBox.AutoSize = true;
+            this.HiddenCheckBox.Location = new System.Drawing.Point(152, 252);
+            this.HiddenCheckBox.Name = "HiddenCheckBox";
+            this.HiddenCheckBox.Size = new System.Drawing.Size(68, 16);
+            this.HiddenCheckBox.TabIndex = 23;
+            this.HiddenCheckBox.Text = "IsHidden";
+            this.HiddenCheckBox.UseVisualStyleBackColor = true;
+            this.HiddenCheckBox.CheckStateChanged += new System.EventHandler(this.HiddenCheckBox_CheckStateChanged);
             // 
             // StageInfoEditor
             // 
@@ -1299,5 +1323,6 @@
         private System.Windows.Forms.ComboBox StarType;
         private System.Windows.Forms.DataGridView ScenBGM_dgv;
         private System.Windows.Forms.ComboBox AppearStarObj;
+        private System.Windows.Forms.CheckBox HiddenCheckBox;
     }
 }
