@@ -14,7 +14,9 @@ namespace Takochu.smg.obj
     {
         public readonly Dictionary<string, List<string>> cMultiRenderObjs = new Dictionary<string, List<string>>()
         {
-            { "RedBlueTurnBlock", new List<string>() { "RedBlueTurnBlock", "RedBlueTurnBlockBase" } }
+            { "RedBlueTurnBlock", new List<string>() { "RedBlueTurnBlock", "RedBlueTurnBlockBase" } },
+            //{ "PatakuriBig" , new List<string>(){"KuriboChief","PatakuriWingBig" } }
+            { "PatakuriBig" , new List<string>(){"PatakuriWingBig","KuriboChief" } }
         };
 
         public AbstractObj(BCSV.Entry entry)
