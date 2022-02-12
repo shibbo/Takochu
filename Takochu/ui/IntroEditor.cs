@@ -18,7 +18,7 @@ namespace Takochu.ui
         {
             InitializeComponent();
 
-            mParentZone = galaxy.GetGalaxyZone();
+            mParentZone = galaxy.GetMainGalaxyZone();
             mCamera = mParentZone.GetIntroCamera(galaxy.mScenarioNo - 1);
             mScenarioNo = galaxy.mScenarioNo - 1;
 

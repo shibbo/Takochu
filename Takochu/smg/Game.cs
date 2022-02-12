@@ -10,13 +10,18 @@ namespace Takochu.smg
 {
     public class Game
     {
+        private const string Only_SMG2_File = "/ObjectData/ProductMapObjDataTable.arc";
+
         public Game(FilesystemBase filesystem)
         {
             mFilesystem = filesystem;
+            SetGameVer();
+            
+        }
 
-            // now we decide which game we're dealing with
-            // just checking to see if a file exists in one game but not the other.
-            if (mFilesystem.DoesFileExist("/ObjectData/ProductMapObjDataTable.arc"))
+        private void SetGameVer() 
+        {
+            if (mFilesystem.DoesFileExist(Only_SMG2_File))
                 GameUtil.SetGame(GameUtil.Game.SMG2);
             else
                 GameUtil.SetGame(GameUtil.Game.SMG1);
@@ -32,7 +37,7 @@ namespace Takochu.smg
             return mFilesystem.DoesFileExist(file);
         }
 
-        public bool IsGalaxy(string galaxy)
+        public bool HasScenario(string galaxy)
         {
             // this solution works for both games
             return mFilesystem.DoesFileExist($"/StageData/{galaxy}/{galaxy}Scenario.arc");
@@ -41,18 +46,18 @@ namespace Takochu.smg
         public List<string> GetGalaxies()
         {
             // this solution works for both games
-            List<string> dirs = mFilesystem.GetDirectories("/StageData");
-            return dirs.FindAll(d => IsGalaxy(d));
+            List<string> stageDataDirs = mFilesystem.GetDirectories("/StageData");
+            return stageDataDirs.FindAll(galaxyName => HasScenario(galaxyName));
         }
 
-        public Galaxy OpenGalaxy(string name)
+        public Galaxy OpenGalaxy(string galaxy)
         {
-            if (!IsGalaxy(name))
+            if (!HasScenario(galaxy))
             {
                 throw new Exception("Game::OpenGalaxy() -- Requested name is not a Galaxy.");
             }
 
-            return new Galaxy(this, name);
+            return new Galaxy(this, galaxy);
         }
 
         public FilesystemBase mFilesystem;

@@ -57,7 +57,7 @@
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.galaxyNameTxtBox = new System.Windows.Forms.ToolStripTextBox();
+            this.GalaxyNameTxtBox = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.scenarioNameTxtBox = new System.Windows.Forms.ToolStripTextBox();
             this.applyGalaxyNameBtn = new System.Windows.Forms.ToolStripButton();
@@ -322,7 +322,7 @@
             this.toolStripButton2,
             this.toolStripSeparator1,
             this.toolStripLabel1,
-            this.galaxyNameTxtBox,
+            this.GalaxyNameTxtBox,
             this.toolStripLabel2,
             this.scenarioNameTxtBox,
             this.applyGalaxyNameBtn});
@@ -394,9 +394,9 @@
             // 
             // galaxyNameTxtBox
             // 
-            this.galaxyNameTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.galaxyNameTxtBox.Name = "galaxyNameTxtBox";
-            this.galaxyNameTxtBox.Size = new System.Drawing.Size(300, 25);
+            this.GalaxyNameTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.GalaxyNameTxtBox.Name = "galaxyNameTxtBox";
+            this.GalaxyNameTxtBox.Size = new System.Drawing.Size(300, 25);
             // 
             // toolStripLabel2
             // 
@@ -623,7 +623,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
-        private System.Windows.Forms.ToolStripTextBox galaxyNameTxtBox;
+        private System.Windows.Forms.ToolStripTextBox GalaxyNameTxtBox;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripTextBox scenarioNameTxtBox;
         private System.Windows.Forms.ToolStripButton applyGalaxyNameBtn;

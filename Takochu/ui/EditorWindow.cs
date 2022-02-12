@@ -23,11 +23,28 @@ namespace Takochu.ui
 {
     public partial class EditorWindow : Form
     {
+        private string mGalaxyName;
+        private int mCurrentScenario;
+        private Galaxy mGalaxy;
+        private List<AbstractObj> mObjects = new List<AbstractObj>();
+        private List<PathObj> mPaths = new List<PathObj>();
+
+        Dictionary<string, List<StageObj>> mStages = new Dictionary<string, List<StageObj>>();
+        List<string> mZonesUsed = new List<string>();
+
+        Dictionary<string, int> mZoneMasks = new Dictionary<string, int>();
+
+        Dictionary<int, Dictionary<int, int>> mDispLists = new Dictionary<int, Dictionary<int, int>>();
+
+        AbstractObj mSelectedObject;
+
         public EditorWindow(string galaxyName)
         {
             InitializeComponent();
             mGalaxyName = galaxyName;
 
+            //SMG1 data cannot be saved in the current version.
+            //現段階ではギャラクシー1のデータは保存できません。
             if (GameUtil.IsSMG1())
                 SaveToolStripMenuItem.Enabled = false;
         }
@@ -37,39 +54,26 @@ namespace Takochu.ui
             //base.OnLoad(e);
 
             mGalaxy = Program.sGame.OpenGalaxy(mGalaxyName);
-            galaxyNameTxtBox.Text = mGalaxy.mGalaxyName;
+            GalaxyNameTxtBox.Text = mGalaxy.mHolderName;
             AreaToolStripMenuItem.Checked = Properties.Settings.Default.EditorWindowDisplayArea;
             pathsToolStripMenuItem.Checked = Properties.Settings.Default.EditorWindowDisplayPath;
 
-            foreach(KeyValuePair<int, Scenario> scenarios in mGalaxy.mScenarios)
+            foreach(KeyValuePair<int, ScenarioEntry> scenarioBCSV_Entry in mGalaxy.ScenarioARC.ScenarioDataBCSV)
             {
-                Scenario s = scenarios.Value;
-                TreeNode n = new TreeNode($"[{s.mScenarioNo}] {s.mScenarioName}")
+                ScenarioEntry senario = scenarioBCSV_Entry.Value;
+                TreeNode treeNode = new TreeNode($"[{senario.ScenarioNo}] {senario.ScenarioName}")
                 {
-                    Tag = s.mScenarioNo
+                    Tag = senario.ScenarioNo
                 };
 
-                scenarioTreeView.Nodes.Add(n);
+                scenarioTreeView.Nodes.Add(treeNode);
             }
 
             //if (!BGMInfo.HasBGMInfo(mGalaxy.mName))
             //    stageInformationBtn.Enabled = false;
         }
 
-        private string mGalaxyName;
-        public int mCurrentScenario;
-
-        private Galaxy mGalaxy;
-        private List<AbstractObj> mObjects = new List<AbstractObj>();
-        private List<PathObj> mPaths = new List<PathObj>();
-        Dictionary<string, List<StageObj>> mStages = new Dictionary<string, List<StageObj>>();
-        List<string> mZonesUsed = new List<string>();
-
-        Dictionary<string, int> mZoneMasks = new Dictionary<string, int>();
-
-        Dictionary<int, Dictionary<int, int>> mDispLists = new Dictionary<int, Dictionary<int, int>>();
-
-        AbstractObj mSelectedObject;
+        
         
         
         public void LoadScenario(int scenarioNo)
@@ -128,7 +132,7 @@ namespace Takochu.ui
 
             List<string> currentLayers = new List<string>();
 
-            Zone galaxyZone = mGalaxy.GetGalaxyZone();
+            Zone galaxyZone = mGalaxy.GetMainGalaxyZone();
             mObjects.AddRange(galaxyZone.GetAllObjectsFromLayers(layers));
             //Console.WriteLine(mZonesUsed.Count);
             //Console.WriteLine("\n\r\n\r");
@@ -239,13 +243,13 @@ namespace Takochu.ui
                     {
                         List<StageObj> stgs;
 
-                        if (galaxyZone.mZones.ContainsKey(layer))
+                        if (galaxyZone.mHasStageObjList.ContainsKey(layer))
                         {
-                            stgs = galaxyZone.mZones[layer];
+                            stgs = galaxyZone.mHasStageObjList[layer];
                         }
-                        else if (galaxyZone.mZones.ContainsKey(layer.ToLower()))
+                        else if (galaxyZone.mHasStageObjList.ContainsKey(layer.ToLower()))
                         {
-                            stgs = galaxyZone.mZones[layer.ToLower()];
+                            stgs = galaxyZone.mHasStageObjList[layer.ToLower()];
                         }
                         else
                         {
@@ -379,7 +383,7 @@ namespace Takochu.ui
                 sw.Reset();
                 sw.Start();
 
-                if (mGalaxy.GetGalaxyZone().mIntroCameras.ContainsKey($"StartScenario{mCurrentScenario}.canm"))
+                if (mGalaxy.GetMainGalaxyZone().mIntroCameras.ContainsKey($"StartScenario{mCurrentScenario}.canm"))
                     introCameraEditorBtn.Enabled = true;
                 else
                     introCameraEditorBtn.Enabled = false;
@@ -390,7 +394,7 @@ namespace Takochu.ui
                 sw.Start();
             }
             sw.Stop();
-            mGalaxy.GetGalaxyZone().LoadCameras();
+            mGalaxy.GetMainGalaxyZone().LoadCameras();
             Console.WriteLine($"LoadCameras: {sw.Elapsed}");
             sw.Reset();
             sw.Start();
@@ -446,7 +450,7 @@ namespace Takochu.ui
         private void stageInformationBtn_Click(object sender, EventArgs e)
         {
             StageInfoEditor stageInfo = new StageInfoEditor(ref mGalaxy, mCurrentScenario);
-            stageInfo.Show();
+            stageInfo.ShowDialog();
         }
 
         private void applyGalaxyNameBtn_Click(object sender, EventArgs e)
@@ -454,7 +458,7 @@ namespace Takochu.ui
             string galaxy_lbl = $"GalaxyName_{mGalaxyName}";
             string scenario_lbl = $"ScenarioName_{mGalaxyName}{mCurrentScenario}";
 
-            NameHolder.AssignToGalaxy(galaxy_lbl, galaxyNameTxtBox.Text);
+            NameHolder.AssignToGalaxy(galaxy_lbl, GalaxyNameTxtBox.Text);
             NameHolder.AssignToScenario(scenario_lbl, scenarioNameTxtBox.Text);
         }
 
@@ -474,12 +478,12 @@ namespace Takochu.ui
                 applyGalaxyNameBtn.Enabled = true;
                 LoadScenario(mCurrentScenario);
 
-                if (mGalaxy.GetGalaxyZone().mIntroCameras.ContainsKey($"StartScenario{mCurrentScenario}.canm"))
+                if (mGalaxy.GetMainGalaxyZone().mIntroCameras.ContainsKey($"StartScenario{mCurrentScenario}.canm"))
                     introCameraEditorBtn.Enabled = true;
                 else
                     introCameraEditorBtn.Enabled = false;
             }
-            mGalaxy.GetGalaxyZone().LoadCameras();
+            mGalaxy.GetMainGalaxyZone().LoadCameras();
             UpdateCamera();
             glLevelView.Refresh();
             sw.Stop();
@@ -542,7 +546,7 @@ namespace Takochu.ui
 
                 if (!o.mParentZone.mZoneName.EndsWith("Galaxy") && zoneNode.Tag == null)
                 {
-                    var layers = mGalaxy.GetGalaxyZone().GetAllStageDataFromLayers(mGalaxy.GetGalaxyZone().GetLayersUsedOnZoneForCurrentScenario());
+                    var layers = mGalaxy.GetMainGalaxyZone().GetAllStageDataFromLayers(mGalaxy.GetMainGalaxyZone().GetLayersUsedOnZoneForCurrentScenario());
                     zoneNode.Tag = layers.Find(stage => stage.mName == zoneNode.Text) as StageObj;
                 }
                 
@@ -693,7 +697,7 @@ namespace Takochu.ui
             }
             else
             {
-                List<StageObj> stage_layers = mGalaxy.GetGalaxyZone().GetAllStageDataFromLayers(mGalaxy.GetGalaxyZone().GetLayersUsedOnZoneForCurrentScenario());
+                List<StageObj> stage_layers = mGalaxy.GetMainGalaxyZone().GetAllStageDataFromLayers(mGalaxy.GetMainGalaxyZone().GetLayersUsedOnZoneForCurrentScenario());
                 
                 foreach(StageObj stage in stage_layers)
                 {
@@ -1299,7 +1303,7 @@ namespace Takochu.ui
             List<string> zones = mGalaxy.GetZonesUsedOnCurrentScenario();
             Dictionary<string, List<int>> ids = new Dictionary<string, List<int>>();
 
-            ids.Add(mGalaxy.mName, mGalaxy.GetGalaxyZone().GetAllUniqueIDsFromObjectsOfType("AreaObj"));
+            ids.Add(mGalaxy.mName, mGalaxy.GetMainGalaxyZone().GetAllUniqueIDsFromObjectsOfType("AreaObj"));
 
             foreach (string z in zones)
             {
@@ -1600,7 +1604,7 @@ namespace Takochu.ui
             List<string> zones = mGalaxy.GetZonesUsedOnCurrentScenario();
             Dictionary<string, List<int>> ids = new Dictionary<string, List<int>>();
 
-            ids.Add(mGalaxy.mName, mGalaxy.GetGalaxyZone().GetAllUniqueIDsFromObjectsOfType("PathObj"));
+            ids.Add(mGalaxy.mName, mGalaxy.GetMainGalaxyZone().GetAllUniqueIDsFromObjectsOfType("PathObj"));
 
             foreach (string z in zones)
             {

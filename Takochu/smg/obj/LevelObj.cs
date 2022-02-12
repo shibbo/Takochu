@@ -46,8 +46,7 @@ namespace Takochu.smg.obj
             { "PlantC" , ("PlantC00","None") },
             { "PlantD" , ("PlantD01","None") },
             { "SplashPieceBlock" , ("CoinBlock","None") },
-            { "GreenStar" , ("PowerStar","None") },
-            { "PatakuriBig" , ("KuriboChief","PatakuriWingBig") }
+            { "GreenStar" , ("PowerStar","None") }
         };
          
         public LevelObj(BCSV.Entry entry, Zone parentZone, string path) : base(entry)

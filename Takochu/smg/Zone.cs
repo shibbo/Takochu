@@ -30,7 +30,7 @@ namespace Takochu.smg
 
             mMapFiles = new Dictionary<string, FilesystemBase>();
             mObjects = new Dictionary<string, Dictionary<string, List<AbstractObj>>>();
-            mZones = new Dictionary<string, List<StageObj>>();
+            mHasStageObjList = new Dictionary<string, List<StageObj>>();
 
             Load();
         }
@@ -249,9 +249,9 @@ namespace Takochu.smg
                 mObjects[archive].Add(layer, new List<AbstractObj>());
             }
 
-            if (!mZones.ContainsKey(layer))
+            if (!mHasStageObjList.ContainsKey(layer))
             {
-                mZones.Add(layer, new List<StageObj>());
+                mHasStageObjList.Add(layer, new List<StageObj>());
             }
 
             BCSV bcsv = new BCSV(mMapFiles[archive].OpenFile($"/stage/jmp/{path}"));
@@ -270,7 +270,7 @@ namespace Takochu.smg
                         break;
                     case "stageobjinfo":
                         //case "StageObjInfo":
-                        mZones[layer].Add(new StageObj(Entry, this));
+                        mHasStageObjList[layer].Add(new StageObj(Entry, this));
                         break;
                     case "objinfo":
                         //case "ObjInfo":
@@ -319,10 +319,10 @@ namespace Takochu.smg
 
         public bool IsZoneUsedOnLayer(string layer)
         {
-            if (mZones.ContainsKey(layer))
+            if (mHasStageObjList.ContainsKey(layer))
                 return false;
 
-            List<StageObj> zones = mZones[layer];
+            List<StageObj> zones = mHasStageObjList[layer];
 
             return zones.Any(s => mZoneName == s.mName);
         }
@@ -335,9 +335,9 @@ namespace Takochu.smg
             List<string> zones = new List<string>();
             layers.ForEach(l =>
             {
-                if (mZones.ContainsKey(l))
+                if (mHasStageObjList.ContainsKey(l))
                 {
-                    List<StageObj> z = mZones[l];
+                    List<StageObj> z = mHasStageObjList[l];
                     z.ForEach(s => zones.Add(s.mName));
                 }
             });
@@ -388,9 +388,9 @@ namespace Takochu.smg
 
             foreach (string layer in layers)
             {
-                if (mZones.ContainsKey(layer))
+                if (mHasStageObjList.ContainsKey(layer))
                 {
-                    ret.AddRange(mZones[layer]);
+                    ret.AddRange(mHasStageObjList[layer]);
 
                 }
             }
@@ -904,7 +904,8 @@ namespace Takochu.smg
         public bool mIsMainGalaxy;
 
         public Dictionary<string, Dictionary<string, List<AbstractObj>>> mObjects;
-        public Dictionary<string, List<StageObj>> mZones;
+
+        public Dictionary<string, List<StageObj>> mHasStageObjList;
         public List<Camera> mCameras;
         public Dictionary<string, CANM> mIntroCameras;
         public Dictionary<string, GST> mGhostFiles;
