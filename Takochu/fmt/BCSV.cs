@@ -9,7 +9,7 @@ using Takochu.io;
 
 namespace Takochu.fmt
 {
-    public class BCSV
+    public class BCSV:IDisposable
     {
         public BCSV(FileBase file)
         {
@@ -383,6 +383,11 @@ namespace Takochu.fmt
             {
                 AddHash(line);
             }
+        }
+
+        public void Dispose()
+        {
+            Close();
         }
 
         private FileBase mFile;

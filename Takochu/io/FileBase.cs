@@ -10,7 +10,7 @@ using System.Security.Policy;
 
 namespace Takochu.io
 {
-    public class FileBase
+    public class FileBase:IDisposable
     {
         public virtual void Save() { }
         public virtual void Close() { }
@@ -52,5 +52,10 @@ namespace Takochu.io
 
         public virtual byte[] GetBuffer() { return null; }
         public virtual void SetBuffer(byte[] buffer) { }
+
+        public void Dispose()
+        {
+            Close();
+        }
     }
 }

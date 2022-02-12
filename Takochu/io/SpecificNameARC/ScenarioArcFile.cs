@@ -49,7 +49,7 @@ namespace Takochu.io.SpecificNameARC
 
         private void ReadZoneListBCSV() 
         {
-            BCSV zonesList = BCSV_Open(BCSV_Name.ZoneList);
+            using (BCSV zonesList = BCSV_Open(BCSV_Name.ZoneList))
             {
                 var MissingPathArgumentsRemove = 0;
                 foreach (BCSV.Entry zoneEntry in zonesList.mEntries)
@@ -66,12 +66,11 @@ namespace Takochu.io.SpecificNameARC
                 if (MissingPathArgumentsRemove > 0)
                     MessageBox.Show($"Takochu just added in missing path arguments that Whitehole was known to remove.\nRemove arguments count: {MissingPathArgumentsRemove}");
             }
-            zonesList.Close();
         }
 
         private void ReadScenarioDataBCSV() 
         {
-            BCSV scenarios = BCSV_Open(BCSV_Name.ScenarioData);
+            using (BCSV scenarios = BCSV_Open(BCSV_Name.ScenarioData))
             {
                 ScenarioDataBCSV = new Dictionary<int, ScenarioEntry>();
 
@@ -80,7 +79,6 @@ namespace Takochu.io.SpecificNameARC
                     ScenarioDataBCSV.Add(scenarioEntry.Get<int>("ScenarioNo"), new ScenarioEntry(scenarioEntry, ZoneListBCSV.Keys.ToList()));
                 }
             }
-            scenarios.Close();
         }
     }
 }
