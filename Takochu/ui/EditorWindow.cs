@@ -1913,6 +1913,11 @@ namespace Takochu.ui
             dlg.ShowDialog();
             string field = dlg.GetField();
 
+            if (dlg.IsCanceled())
+            {
+                return;
+            }
+
             StageObjectAttrFinder finder = new StageObjectAttrFinder(field);
 
             foreach (string zone in zones)

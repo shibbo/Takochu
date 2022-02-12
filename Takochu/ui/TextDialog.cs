@@ -39,5 +39,18 @@ namespace Takochu.ui
                 Close();
             }
         }
+
+        private void cancelBtn_Click(object sender, EventArgs e)
+        {
+            isCanceled = true;
+            Close();
+        }
+
+        public bool IsCanceled()
+        {
+            return isCanceled;
+        }
+
+        bool isCanceled = false;
     }
 }
