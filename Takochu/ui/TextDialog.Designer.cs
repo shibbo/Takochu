@@ -49,6 +49,7 @@
             this.fieldName.Name = "fieldName";
             this.fieldName.Size = new System.Drawing.Size(704, 20);
             this.fieldName.TabIndex = 1;
+            this.fieldName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.fieldName_KeyDown);
             // 
             // okBtn
             // 

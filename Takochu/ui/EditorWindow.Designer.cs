@@ -549,6 +549,7 @@
             // 
             // attrFinderToolStripMenuItem
             // 
+            this.attrFinderToolStripMenuItem.Enabled = false;
             this.attrFinderToolStripMenuItem.Name = "attrFinderToolStripMenuItem";
             this.attrFinderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.attrFinderToolStripMenuItem.Text = "Attribute Finder";

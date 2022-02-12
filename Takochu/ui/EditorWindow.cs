@@ -339,6 +339,8 @@ namespace Takochu.ui
             //RenderObjectLists(RenderMode.Picking);
             RenderObjectLists(RenderMode.Opaque);
             //RenderObjectLists(RenderMode.Translucent);
+
+            attrFinderToolStripMenuItem.Enabled = true;
         }
 
         private void PopulateCameraTreeNode(ref TreeNode node)
@@ -1917,6 +1919,12 @@ namespace Takochu.ui
             {
                 Zone z = mGalaxy.GetZone(zone);
                 resObjs.AddRange(z.GetAllObjectsWithAttributeNonZero(field));
+            }
+
+            if (resObjs.Count == 0)
+            {
+                MessageBox.Show($"No objects were found that contain the field {field}.");
+                return;
             }
 
             foreach (AbstractObj obj in resObjs)

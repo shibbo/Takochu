@@ -26,5 +26,18 @@ namespace Takochu.ui
         {
             return fieldName.Text;
         }
+
+        private void fieldName_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+        }
+
+        private void fieldName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                Close();
+            }
+        }
     }
 }
