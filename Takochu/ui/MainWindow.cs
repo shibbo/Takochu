@@ -79,9 +79,9 @@ namespace Takochu
                 {
 
                     if (reSetup)
-                        BGMInfo.Close();
+                        StageBgmInfoArcFile.Close();
 
-                    BGMInfo.Initialize();
+                    StageBgmInfoArcFile.Initialize();
 
 
                 }

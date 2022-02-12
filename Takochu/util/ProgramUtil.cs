@@ -26,7 +26,7 @@ namespace Takochu.util
             LightData.Initialize();
 
             if (GameUtil.IsSMG2())
-                BGMInfo.Initialize();
+                StageBgmInfoArcFile.Initialize();
 
             NameHolder.Initialize();
             ImageHolder.Initialize();
