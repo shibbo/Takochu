@@ -84,6 +84,7 @@ namespace Takochu.ui
                 StageBGMListBox.Items.Add(stageBGM.Key);
             }
 
+            StageBGMListBox.SelectedIndex = StageBGMListBox.Items.IndexOf(_galaxy.mName);
         }
 
         /// <summary>
