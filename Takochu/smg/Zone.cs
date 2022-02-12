@@ -440,6 +440,61 @@ namespace Takochu.smg
             return ret;
         }
 
+        public List<AbstractObj> GetAllObjectsOfAllTypeFromCurrentScenario()
+        {
+            List<AbstractObj> ret = new List<AbstractObj>();
+            string[] types = new string[] { "AreaObj", "CameraObj", "DebugObj", "DemoObj", "GeneralPosObj", "Obj", "MapPartsObj", "PathPointObj", "PlanetObj", "StartObj" };
+
+            foreach(string type in types)
+            {
+                ret.AddRange(GetAllObjectsOfTypeFromCurrentScenario(type));
+            }
+
+            ret.AddRange(mPaths);
+            mPaths.ForEach(p => ret.AddRange(p.mPathPointObjs));
+
+            return ret;
+        }
+
+        public List<AbstractObj> GetAllObjectsWithAttributeNonZero(string attr)
+        {
+            List<AbstractObj> ret = new List<AbstractObj>();
+            List<AbstractObj> allObjs = GetAllObjectsOfAllTypeFromCurrentScenario();
+
+            foreach (AbstractObj obj in allObjs)
+            {
+                if (obj.mEntry.ContainsKey(attr))
+                {
+                    string fieldType = obj.mEntry.GetTypeOfField(attr).ToString();
+
+                    switch(fieldType)
+                    {
+                        case "System.Int16":
+                            short short_val = obj.Get<short>(attr);
+
+                            if (short_val != -1)
+                            {
+                                ret.Add(obj);
+                            }
+                            break;
+                        case "System.Int32":
+                            int int_val = obj.Get<int>(attr);
+
+                            if (int_val != -1)
+                            {
+                                ret.Add(obj);
+                            }
+                            break;
+                        default:
+                            Console.WriteLine($"lol type {fieldType}");
+                            break;
+                    }
+                }
+            }
+
+            return ret;
+        }
+
         public bool DoesAnyObjUsePathID(int id, out AbstractObj out_obj)
         {
             out_obj = null;

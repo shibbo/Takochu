@@ -1901,6 +1901,39 @@ namespace Takochu.ui
             undoToolStripMenuItem.Enabled = EditorUtil.EditorActionHolder.CanUndo();
         }
 
+        private void attrFinderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            List<string> zones = mGalaxy.GetZonesUsedOnCurrentScenario();
+            zones.Add(mGalaxyName);
+            List<AbstractObj> resObjs = new List<AbstractObj>();
+
+            TextDialog dlg = new TextDialog();
+            dlg.ShowDialog();
+            string field = dlg.GetField();
+
+            StageObjectAttrFinder finder = new StageObjectAttrFinder(field);
+
+            foreach (string zone in zones)
+            {
+                Zone z = mGalaxy.GetZone(zone);
+                resObjs.AddRange(z.GetAllObjectsWithAttributeNonZero(field));
+            }
+
+            foreach (AbstractObj obj in resObjs)
+            {
+                if (obj.mEntry.ContainsKey("l_id"))
+                {
+                    finder.AddRow(obj.Get<int>("l_id"), obj.mName, obj.mParentZone.mZoneName, obj.mEntry.Get(field));
+                }
+                else
+                {
+                    finder.AddRow(-1, obj.mName, obj.mParentZone.mZoneName, obj.mEntry.Get(field));
+                }
+            }
+
+            finder.Show();
+        }
+
         private void cameraListTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             Camera camera = e.Node.Tag as Camera;

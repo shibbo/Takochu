@@ -224,6 +224,18 @@
     </Compile>
     <Compile Include="ui\StageInfoEditorSys\ScenarioBGMInfo_DataGridView.cs" />
     <Compile Include="ui\StageInfoEditorSys\ScenarioInformation.cs" />
+    <Compile Include="ui\StageObjectAttrFinder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\StageObjectAttrFinder.Designer.cs">
+      <DependentUpon>StageObjectAttrFinder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ui\TextDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ui\TextDialog.Designer.cs">
+      <DependentUpon>TextDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="util\CameraUtil.cs" />
     <Compile Include="smg\Galaxy.cs" />
     <Compile Include="smg\Game.cs" />
@@ -317,6 +329,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ui\StageInfoEditor.resx">
       <DependentUpon>StageInfoEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\StageObjectAttrFinder.resx">
+      <DependentUpon>StageObjectAttrFinder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ui\TextDialog.resx">
+      <DependentUpon>TextDialog.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Build.cmd" />
     <None Include="packages.config" />
