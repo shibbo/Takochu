@@ -67,14 +67,18 @@
             this.SaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DisplayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AreaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pathsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.attrFinderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EditorWindowStatusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.OpenSaveStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.pathsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
@@ -390,10 +394,10 @@
             this.toolStripLabel1.Size = new System.Drawing.Size(80, 22);
             this.toolStripLabel1.Text = "Galaxy Name:";
             // 
-            // galaxyNameTxtBox
+            // GalaxyNameTxtBox
             // 
             this.GalaxyNameTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.GalaxyNameTxtBox.Name = "galaxyNameTxtBox";
+            this.GalaxyNameTxtBox.Name = "GalaxyNameTxtBox";
             this.GalaxyNameTxtBox.Size = new System.Drawing.Size(300, 25);
             // 
             // toolStripLabel2
@@ -445,7 +449,8 @@
             this.MainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.FileToolStripMenuItem,
             this.EditToolStripMenuItem,
-            this.DisplayToolStripMenuItem});
+            this.DisplayToolStripMenuItem,
+            this.toolsToolStripMenuItem});
             this.MainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MainMenuStrip.Name = "MainMenuStrip";
             this.MainMenuStrip.Size = new System.Drawing.Size(1842, 24);
@@ -478,9 +483,30 @@
             // 
             // EditToolStripMenuItem
             // 
+            this.EditToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.undoToolStripMenuItem,
+            this.redoToolStripMenuItem});
             this.EditToolStripMenuItem.Name = "EditToolStripMenuItem";
             this.EditToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.EditToolStripMenuItem.Text = "Edit";
+            // 
+            // undoToolStripMenuItem
+            // 
+            this.undoToolStripMenuItem.Enabled = false;
+            this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
+            this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.undoToolStripMenuItem.Text = "Undo";
+            this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
+            // 
+            // redoToolStripMenuItem
+            // 
+            this.redoToolStripMenuItem.Enabled = false;
+            this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
+            this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.redoToolStripMenuItem.Text = "Redo";
+            this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
             // 
             // DisplayToolStripMenuItem
             // 
@@ -498,9 +524,36 @@
             this.AreaToolStripMenuItem.Name = "AreaToolStripMenuItem";
             this.AreaToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.A)));
-            this.AreaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.AreaToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.AreaToolStripMenuItem.Text = "Area";
             this.AreaToolStripMenuItem.Click += new System.EventHandler(this.AreaToolStripMenuItem_Click);
+            // 
+            // pathsToolStripMenuItem
+            // 
+            this.pathsToolStripMenuItem.Checked = true;
+            this.pathsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.pathsToolStripMenuItem.Name = "pathsToolStripMenuItem";
+            this.pathsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.P)));
+            this.pathsToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.pathsToolStripMenuItem.Text = "Paths";
+            this.pathsToolStripMenuItem.Click += new System.EventHandler(this.pathsToolStripMenuItem_Click);
+            // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.attrFinderToolStripMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+            this.toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // attrFinderToolStripMenuItem
+            // 
+            this.attrFinderToolStripMenuItem.Enabled = false;
+            this.attrFinderToolStripMenuItem.Name = "attrFinderToolStripMenuItem";
+            this.attrFinderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.attrFinderToolStripMenuItem.Text = "Attribute Finder";
+            this.attrFinderToolStripMenuItem.Click += new System.EventHandler(this.attrFinderToolStripMenuItem_Click);
             // 
             // EditorWindowStatusStrip
             // 
@@ -537,24 +590,13 @@
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
-            // pathsToolStripMenuItem
-            // 
-            this.pathsToolStripMenuItem.Checked = true;
-            this.pathsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.pathsToolStripMenuItem.Name = "pathsToolStripMenuItem";
-            this.pathsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.P)));
-            this.pathsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.pathsToolStripMenuItem.Text = "Paths";
-            this.pathsToolStripMenuItem.Click += new System.EventHandler(this.pathsToolStripMenuItem_Click);
-            // 
             // EditorWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1842, 831);
-            this.Controls.Add(this.EditorWindowStatusStrip);
             this.Controls.Add(this.glLevelView);
+            this.Controls.Add(this.EditorWindowStatusStrip);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.MainMenuStrip);
             this.Controls.Add(this.tabControl1);
@@ -634,5 +676,9 @@
         private System.Windows.Forms.TreeView lightsTreeView;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem pathsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem attrFinderToolStripMenuItem;
     }
 }

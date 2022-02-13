@@ -85,6 +85,12 @@ namespace Takochu.smg.obj
             return mEntry.Get<T>(key);
         }
 
+        public void SetPosition(Vector3 pos)
+        {
+            mTruePosition = pos;
+            mPosition = new Vector3(pos.X / 100, pos.Y / 100, pos.Z / 100);
+        }
+
         
         public BCSV.Entry mEntry { get; protected set; }
         public Zone mParentZone { get; protected set; }

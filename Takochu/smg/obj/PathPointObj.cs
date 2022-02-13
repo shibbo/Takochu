@@ -21,6 +21,8 @@ namespace Takochu.smg.obj
 
             mID = mEntry.Get<short>("id");
 
+            mName = $"Path Point {mID} [Path {parent.mID}]";
+
             mPoint0 = new Vector3
             {
                 X = mEntry.Get<float>("pnt0_x"),
