@@ -179,7 +179,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="smg\BGMInfo.cs" />
+    <Compile Include="smg\StageBgmInfoArcFile.cs" />
     <Compile Include="smg\LightData.cs" />
     <Compile Include="smg\msg\FlowEmulator.cs" />
     <Compile Include="smg\msg\NameHolder.cs" />

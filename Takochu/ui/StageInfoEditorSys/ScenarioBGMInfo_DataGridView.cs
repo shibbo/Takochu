@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static Takochu.smg.BGMInfo;
+using static Takochu.smg.StageBgmInfoArcFile;
 
 namespace Takochu.ui.StageInfoEditorSys
 {
@@ -86,7 +86,7 @@ namespace Takochu.ui.StageInfoEditorSys
 
         private void NullCheck()
         {
-            if (mScenarioEntries.Count == 0 || mScenarioEntries == default)
+            if (ScenarioBgmInfoBCSV.Count == 0 || ScenarioBgmInfoBCSV == default)
                 throw new Exception("ScenarioBGMInfo is null");
         }
 
@@ -126,39 +126,39 @@ namespace Takochu.ui.StageInfoEditorSys
 
         private void SetRow()
         {
-            for (int i = 0; i < mScenarioEntries.Count; i++) 
+            for (int i = 0; i < ScenarioBgmInfoBCSV.Count; i++) 
             {
                 //データグリッドビューにコントロールを追加
                 DataGridViewRow row = new DataGridViewRow();
 
                 DataGridViewTextBoxCell tbcCell = new DataGridViewTextBoxCell
                 {
-                    Value = mScenarioEntries[i].StageName
+                    Value = ScenarioBgmInfoBCSV[i].StageName
                 };
 
                 DataGridViewTextBoxCell tbcCell2 = new DataGridViewTextBoxCell
                 {
-                    Value = mScenarioEntries[i].ScenarioNo
+                    Value = ScenarioBgmInfoBCSV[i].ScenarioNo
                 };
 
                 DataGridViewTextBoxCell tbcCell3 = new DataGridViewTextBoxCell
                 {
-                    Value = mScenarioEntries[i].BGMName
+                    Value = ScenarioBgmInfoBCSV[i].BGMName
                 };
 
                 DataGridViewTextBoxCell tbcCell4 = new DataGridViewTextBoxCell
                 {
-                    Value = mScenarioEntries[i].StartType
+                    Value = ScenarioBgmInfoBCSV[i].StartType
                 };
 
                 DataGridViewTextBoxCell tbcCell5 = new DataGridViewTextBoxCell
                 {
-                    Value = mScenarioEntries[i].StartFrame
+                    Value = ScenarioBgmInfoBCSV[i].StartFrame
                 };
 
                 DataGridViewCheckBoxCell tbcCell6 = new DataGridViewCheckBoxCell
                 {
-                    Value = Convert.ToBoolean(mScenarioEntries[i].IsPrepare)
+                    Value = Convert.ToBoolean(ScenarioBgmInfoBCSV[i].IsPrepare)
                 };
 
 

@@ -8,15 +8,17 @@ using Takochu.io;
 
 namespace Takochu.smg
 {
-    public static class BGMInfo
+    public static class StageBgmInfoArcFile
     {
+        public const string StageBgmInfoArcPath = "/AudioRes/Info/StageBgmInfo.arc";
+
         public static void Initialize()
         {
-            mFilesystem = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile("/AudioRes/Info/StageBgmInfo.arc"));
+            mFilesystem = new RARCFilesystem(Program.sGame.mFilesystem.OpenFile(StageBgmInfoArcPath));
 
             //StageBGMInfoを読み込む
             BCSV stageBgm = new BCSV(mFilesystem.OpenFile("/StageBgmInfo/StageBgmInfo.bcsv"));
-            mStageEntries = new Dictionary<string, BGMInfoEntry>();
+            StageBgmInfoBCSV = new Dictionary<string, BGMInfoEntry>();
             foreach(BCSV.Entry e in stageBgm.mEntries)
             {
                 BGMInfoEntry bgmEntry = new BGMInfoEntry
@@ -34,12 +36,12 @@ namespace Takochu.smg
                 for (int i = 0; i < 5; i++)
                     bgmEntry.ChangeBGMState[i] = e.Get<int>($"ChangeBgmState{i}");
 
-                mStageEntries.Add(bgmEntry.StageName, bgmEntry);
+                StageBgmInfoBCSV.Add(bgmEntry.StageName, bgmEntry);
             }
 
             //ScenarioBGMInfoを読み込む
             BCSV scenarioBgm = new BCSV(mFilesystem.OpenFile("/StageBgmInfo/ScenarioBgmInfo.bcsv"));
-            mScenarioEntries = new List<ScenarioBGMEntry>();
+            ScenarioBgmInfoBCSV = new List<ScenarioBGMEntry>();
             foreach(BCSV.Entry e in scenarioBgm.mEntries)
             {
                 ScenarioBGMEntry scenarioEntry = new ScenarioBGMEntry
@@ -53,22 +55,22 @@ namespace Takochu.smg
                     IsPrepare = e.Get<int>("IsPrepare")
                 };
 
-                mScenarioEntries.Add(scenarioEntry);
+                ScenarioBgmInfoBCSV.Add(scenarioEntry);
             }
         }
 
         public static bool HasBGMInfo(string name)
         {
-            if (mStageEntries == null)
+            if (StageBgmInfoBCSV == null)
                 return false;
 
-            return mStageEntries.ContainsKey(name);
+            return StageBgmInfoBCSV.ContainsKey(name);
         }
 
         public static void GetBGMInfo(string name, out BGMInfoEntry stageEntry, out List<ScenarioBGMEntry> scenarioEntry)
         {
-            stageEntry = mStageEntries[name];
-            scenarioEntry = mScenarioEntries.FindAll(e => e.StageName == name);
+            stageEntry = StageBgmInfoBCSV[name];
+            scenarioEntry = ScenarioBgmInfoBCSV.FindAll(e => e.StageName == name);
         }
 
         public static void Save()
@@ -76,7 +78,7 @@ namespace Takochu.smg
             BCSV stageBgm = new BCSV(mFilesystem.OpenFile("/StageBgmInfo/StageBgmInfo.bcsv"));
             stageBgm.mEntries.Clear();
 
-            foreach (KeyValuePair<string, BGMInfoEntry> entry in mStageEntries)
+            foreach (KeyValuePair<string, BGMInfoEntry> entry in StageBgmInfoBCSV)
             {
                 stageBgm.mEntries.Add(entry.Value.Entry);
             }
@@ -86,7 +88,7 @@ namespace Takochu.smg
             BCSV scenarioBgm = new BCSV(mFilesystem.OpenFile("/StageBgmInfo/ScenarioBgmInfo.bcsv"));
             scenarioBgm.mEntries.Clear();
 
-            foreach (ScenarioBGMEntry entry in mScenarioEntries)
+            foreach (ScenarioBGMEntry entry in ScenarioBgmInfoBCSV)
             {
                 scenarioBgm.mEntries.Add(entry.Entry);
             }
@@ -120,8 +122,8 @@ namespace Takochu.smg
             public int IsPrepare;
         };
 
-        static RARCFilesystem mFilesystem;
-        public static Dictionary<string, BGMInfoEntry> mStageEntries;
-        public static List<ScenarioBGMEntry> mScenarioEntries;
+        private static RARCFilesystem mFilesystem;
+        public static Dictionary<string, BGMInfoEntry> StageBgmInfoBCSV { get; private set; }
+        public static List<ScenarioBGMEntry> ScenarioBgmInfoBCSV { get; private set; }
     }
 }

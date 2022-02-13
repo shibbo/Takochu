@@ -9,7 +9,7 @@ using Takochu.io;
 
 namespace Takochu.fmt
 {
-    public class BCSV
+    public class BCSV:IDisposable
     {
         public BCSV(FileBase file)
         {
@@ -404,6 +404,11 @@ namespace Takochu.fmt
                 string[] spl = line.Split('=');
                 sFieldTypeTable.Add(spl[0], spl[1]);
             }
+        }
+
+        public void Dispose()
+        {
+            Close();
         }
 
         private FileBase mFile;

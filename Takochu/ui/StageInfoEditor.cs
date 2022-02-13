@@ -21,7 +21,7 @@ namespace Takochu.ui
     public partial class StageInfoEditor : Form
     {
         private readonly Galaxy _galaxy;
-        private List<BGMInfo.ScenarioBGMEntry> _scenarioEntries;
+        private List<StageBgmInfoArcFile.ScenarioBGMEntry> _scenarioEntries;
         private List<int> _bgmRestrictedIDs;
         private int _currentScenario;
         private readonly ScenarioInformation _scenarioInformation;
@@ -79,7 +79,7 @@ namespace Takochu.ui
         private void SetStageBGMListBox()
         {
             StageBGMListBox.Items.Clear();
-            foreach (var stageBGM in BGMInfo.mStageEntries)
+            foreach (var stageBGM in StageBgmInfoArcFile.StageBgmInfoBCSV)
             {
                 StageBGMListBox.Items.Add(stageBGM.Key);
             }
@@ -403,7 +403,7 @@ namespace Takochu.ui
             if (listBox.Items.Count == 0) return;
 
             var selectString = listBox.Items[listBox.SelectedIndex].ToString();
-            var stageBgm = BGMInfo.mStageEntries[selectString];
+            var stageBgm = StageBgmInfoArcFile.StageBgmInfoBCSV[selectString];
 
             changeBgmIdName_0.Text = stageBgm.ChangeBGMIDName[0];
             changeBgmIdName_1.Text = stageBgm.ChangeBGMIDName[1];
