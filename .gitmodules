@@ -1,6 +1,3 @@
-[submodule "References/GL_EditorFramework"]
-	path = References/GL_EditorFramework
-	url = https://github.com/jupahe64/GL_EditorFramework.git
 [submodule "References/SuperBMD"]
 	path = References/SuperBMD
 	url = https://github.com/Sage-of-Mirrors/SuperBMD.git
