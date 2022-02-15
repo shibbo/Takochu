@@ -128,6 +128,11 @@ namespace Takochu.rnd
         public override bool GottaRender(RenderInfo info)
         {
             
+            if (info.Mode == RenderMode.Picking)
+            {
+                return true;
+            }
+
             foreach (BMD.Material mat in m_Model.Materials)
             {
                 if (!((mat.DrawFlag == 4) ^ (info.Mode == RenderMode.Translucent)))
@@ -164,6 +169,11 @@ namespace Takochu.rnd
 
             Matrix4[] lastmatrixtable = null;
 
+            if (info.Mode != RenderMode.Picking)
+            {
+                GL.Color4(1f, 1f, 1f, 1f);
+            }
+
             foreach (BMD.SceneGraphNode node in m_Model.SceneGraph)
             {
                 //Nodeタイプが0でない場合(ジョイントの場合)shapeにNodeIDを入れない
@@ -182,101 +192,104 @@ namespace Takochu.rnd
                     //マテリアルIDそれぞれのマテリアルをmatに格納
                     BMD.Material mat = m_Model.Materials[node.MaterialID];
 
-                    if ((mat.DrawFlag == 4) ^ (info.Mode == RenderMode.Translucent))
+                    if (info.Mode != RenderMode.Picking)
                     {
-                        //Console.WriteLine("drawFlag "+((mat.DrawFlag == 4) ^ (info.Mode == RenderMode.Translucent)));
-                        continue;
-                    }
-                    //Console.WriteLine("false");
-                    //Console.WriteLine("hasShaders"+m_HasShaders);
-
-                    //シェーダーを持っている場合
-                    if (m_HasShaders)
-                    {
-                        // shader: handles multitexturing, color combination, alpha test
-                        GL.UseProgram(m_Shaders[node.MaterialID].Program);
-
-                        // do multitexturing
-                        for (int i = 0; i < 8; i++)
+                        if ((mat.DrawFlag == 4) ^ (info.Mode == RenderMode.Translucent))
                         {
-                            GL.ActiveTexture(TextureUnit.Texture0 + i);
-
-                            if (mat.TexStages[i] == 0xFFFF)
-                            {
-                                GL.Disable(EnableCap.Texture2D);
-                                continue;
-                            }
-
-                            //シェーダ内のuniform位置を取得しセット
-                            int loc = GL.GetUniformLocation(m_Shaders[node.MaterialID].Program, "texture" + i.ToString());
-                            GL.Uniform1(loc, i);
-
-                            //テクスチャのID
-                            int texid = m_Textures[mat.TexStages[i]];
-                            GL.Enable(EnableCap.Texture2D);
-                            GL.BindTexture(TextureTarget.Texture2D, texid);
+                            //Console.WriteLine("drawFlag "+((mat.DrawFlag == 4) ^ (info.Mode == RenderMode.Translucent)));
+                            continue;
                         }
-                    }
-                    else
-                    {
-                        AlphaFunction[] alphafunc = { AlphaFunction.Never, AlphaFunction.Less, AlphaFunction.Equal, AlphaFunction.Lequal,
+                        //Console.WriteLine("false");
+                        //Console.WriteLine("hasShaders"+m_HasShaders);
+
+                        //シェーダーを持っている場合
+                        if (m_HasShaders)
+                        {
+                            // shader: handles multitexturing, color combination, alpha test
+                            GL.UseProgram(m_Shaders[node.MaterialID].Program);
+
+                            // do multitexturing
+                            for (int i = 0; i < 8; i++)
+                            {
+                                GL.ActiveTexture(TextureUnit.Texture0 + i);
+
+                                if (mat.TexStages[i] == 0xFFFF)
+                                {
+                                    GL.Disable(EnableCap.Texture2D);
+                                    continue;
+                                }
+
+                                //シェーダ内のuniform位置を取得しセット
+                                int loc = GL.GetUniformLocation(m_Shaders[node.MaterialID].Program, "texture" + i.ToString());
+                                GL.Uniform1(loc, i);
+
+                                //テクスチャのID
+                                int texid = m_Textures[mat.TexStages[i]];
+                                GL.Enable(EnableCap.Texture2D);
+                                GL.BindTexture(TextureTarget.Texture2D, texid);
+                            }
+                        }
+                        else
+                        {
+                            AlphaFunction[] alphafunc = { AlphaFunction.Never, AlphaFunction.Less, AlphaFunction.Equal, AlphaFunction.Lequal,
                                                         AlphaFunction.Greater, AlphaFunction.Notequal, AlphaFunction.Gequal, AlphaFunction.Always };
 
-                        // texturing -- texture 0 will be used
-                        if (mat.TexStages[0] != 0xFFFF)
-                        {
-                            int texid = m_Textures[mat.TexStages[0]];
-                            GL.Enable(EnableCap.Texture2D);
-                            GL.BindTexture(TextureTarget.Texture2D, texid);
-                        }
-                        else
-                            GL.Disable(EnableCap.Texture2D);
-
-                        // alpha test -- only one comparison can be done
-                        if (mat.AlphaComp.MergeFunc == 1 && (mat.AlphaComp.Func0 == 7 || mat.AlphaComp.Func1 == 7))
-                            GL.Disable(EnableCap.AlphaTest);
-                        else if (mat.AlphaComp.MergeFunc == 0 && (mat.AlphaComp.Func0 == 0 || mat.AlphaComp.Func1 == 0))
-                        {
-                            GL.Enable(EnableCap.AlphaTest);
-                            GL.AlphaFunc(AlphaFunction.Never, 0f);
-                        }
-                        else
-                        {
-                            GL.Enable(EnableCap.AlphaTest);
-
-                            if ((mat.AlphaComp.MergeFunc == 1 && mat.AlphaComp.Func0 == 0) || (mat.AlphaComp.MergeFunc == 0 && mat.AlphaComp.Func0 == 7))
-                                GL.AlphaFunc(alphafunc[mat.AlphaComp.Func1], (float)mat.AlphaComp.Ref1 / 255f);
+                            // texturing -- texture 0 will be used
+                            if (mat.TexStages[0] != 0xFFFF)
+                            {
+                                int texid = m_Textures[mat.TexStages[0]];
+                                GL.Enable(EnableCap.Texture2D);
+                                GL.BindTexture(TextureTarget.Texture2D, texid);
+                            }
                             else
-                                GL.AlphaFunc(alphafunc[mat.AlphaComp.Func0], (float)mat.AlphaComp.Ref0 / 255f);
-                        }
-                    }
-                    //Console.WriteLine(mat.BlendMode.BlendMode);
-                    //Blend方法によって処理分岐
-                    switch (mat.BlendMode.BlendMode)
-                    {
-                        case 0:
-                            GL.Disable(EnableCap.Blend);
-                            GL.Disable(EnableCap.ColorLogicOp);
-                            break;
+                                GL.Disable(EnableCap.Texture2D);
 
-                        case 1:
-                        case 3:
-                            GL.Enable(EnableCap.Blend);
-                            GL.Disable(EnableCap.ColorLogicOp);
-
-                            if (mat.BlendMode.BlendMode == 3)
-                                GL.BlendEquation(BlendEquationMode.FuncSubtract);
+                            // alpha test -- only one comparison can be done
+                            if (mat.AlphaComp.MergeFunc == 1 && (mat.AlphaComp.Func0 == 7 || mat.AlphaComp.Func1 == 7))
+                                GL.Disable(EnableCap.AlphaTest);
+                            else if (mat.AlphaComp.MergeFunc == 0 && (mat.AlphaComp.Func0 == 0 || mat.AlphaComp.Func1 == 0))
+                            {
+                                GL.Enable(EnableCap.AlphaTest);
+                                GL.AlphaFunc(AlphaFunction.Never, 0f);
+                            }
                             else
-                                GL.BlendEquation(BlendEquationMode.FuncAdd);
+                            {
+                                GL.Enable(EnableCap.AlphaTest);
 
-                            GL.BlendFunc(blendsrc[mat.BlendMode.SrcFactor], blenddst[mat.BlendMode.DstFactor]);
-                            break;
+                                if ((mat.AlphaComp.MergeFunc == 1 && mat.AlphaComp.Func0 == 0) || (mat.AlphaComp.MergeFunc == 0 && mat.AlphaComp.Func0 == 7))
+                                    GL.AlphaFunc(alphafunc[mat.AlphaComp.Func1], (float)mat.AlphaComp.Ref1 / 255f);
+                                else
+                                    GL.AlphaFunc(alphafunc[mat.AlphaComp.Func0], (float)mat.AlphaComp.Ref0 / 255f);
+                            }
+                        }
+                        //Console.WriteLine(mat.BlendMode.BlendMode);
+                        //Blend方法によって処理分岐
+                        switch (mat.BlendMode.BlendMode)
+                        {
+                            case 0:
+                                GL.Disable(EnableCap.Blend);
+                                GL.Disable(EnableCap.ColorLogicOp);
+                                break;
 
-                        case 2:
-                            GL.Disable(EnableCap.Blend);
-                            GL.Enable(EnableCap.ColorLogicOp);
-                            GL.LogicOp(logicop[mat.BlendMode.BlendOp]);
-                            break;
+                            case 1:
+                            case 3:
+                                GL.Enable(EnableCap.Blend);
+                                GL.Disable(EnableCap.ColorLogicOp);
+
+                                if (mat.BlendMode.BlendMode == 3)
+                                    GL.BlendEquation(BlendEquationMode.FuncSubtract);
+                                else
+                                    GL.BlendEquation(BlendEquationMode.FuncAdd);
+
+                                GL.BlendFunc(blendsrc[mat.BlendMode.SrcFactor], blenddst[mat.BlendMode.DstFactor]);
+                                break;
+
+                            case 2:
+                                GL.Disable(EnableCap.Blend);
+                                GL.Enable(EnableCap.ColorLogicOp);
+                                GL.LogicOp(logicop[mat.BlendMode.BlendOp]);
+                                break;
+                        }
                     }
 
                     //カリング方法決定
@@ -391,44 +404,63 @@ namespace Takochu.rnd
                         GL.Begin(primtypes[(prim.PrimitiveType - 0x80) / 8]);
                         //GL.Begin(BeginMode.Points);
 
-                        //頂点それぞれに行う
-                        for (int i = 0; i < prim.NumIndices; i++)
+                        if (info.Mode != RenderMode.Picking)
                         {
-
-                            if ((prim.ArrayMask & (1 << 11)) != 0) GL.Color4(m_Model.ColorArray[0][prim.ColorIndices[0][i]]);
-
-                            if (m_HasShaders)
+                            //頂点それぞれに行う
+                            for (int i = 0; i < prim.NumIndices; i++)
                             {
-                                if ((prim.ArrayMask & (1 << 12)) != 0)
+
+                                if ((prim.ArrayMask & (1 << 11)) != 0) GL.Color4(m_Model.ColorArray[0][prim.ColorIndices[0][i]]);
+
+                                if (m_HasShaders)
                                 {
-                                    Vector4 color2 = m_Model.ColorArray[1][prim.ColorIndices[1][i]];
-                                    GL.SecondaryColor3(color2.X, color2.Y, color2.Z);
+                                    if ((prim.ArrayMask & (1 << 12)) != 0)
+                                    {
+                                        Vector4 color2 = m_Model.ColorArray[1][prim.ColorIndices[1][i]];
+                                        GL.SecondaryColor3(color2.X, color2.Y, color2.Z);
+                                    }
+
+                                    if ((prim.ArrayMask & (1 << 13)) != 0) GL.MultiTexCoord2(TextureUnit.Texture0, ref m_Model.TexcoordArray[0][prim.TexcoordIndices[0][i]]);
+                                    if ((prim.ArrayMask & (1 << 14)) != 0) GL.MultiTexCoord2(TextureUnit.Texture1, ref m_Model.TexcoordArray[1][prim.TexcoordIndices[1][i]]);
+                                    if ((prim.ArrayMask & (1 << 15)) != 0) GL.MultiTexCoord2(TextureUnit.Texture2, ref m_Model.TexcoordArray[2][prim.TexcoordIndices[2][i]]);
+                                    if ((prim.ArrayMask & (1 << 16)) != 0) GL.MultiTexCoord2(TextureUnit.Texture3, ref m_Model.TexcoordArray[3][prim.TexcoordIndices[3][i]]);
+                                    if ((prim.ArrayMask & (1 << 17)) != 0) GL.MultiTexCoord2(TextureUnit.Texture4, ref m_Model.TexcoordArray[4][prim.TexcoordIndices[4][i]]);
+                                    if ((prim.ArrayMask & (1 << 18)) != 0) GL.MultiTexCoord2(TextureUnit.Texture5, ref m_Model.TexcoordArray[5][prim.TexcoordIndices[5][i]]);
+                                    if ((prim.ArrayMask & (1 << 19)) != 0) GL.MultiTexCoord2(TextureUnit.Texture6, ref m_Model.TexcoordArray[6][prim.TexcoordIndices[6][i]]);
+                                    if ((prim.ArrayMask & (1 << 20)) != 0) GL.MultiTexCoord2(TextureUnit.Texture7, ref m_Model.TexcoordArray[7][prim.TexcoordIndices[7][i]]);
                                 }
+                                else
+                                {
+                                    if ((prim.ArrayMask & (1 << 13)) != 0) GL.TexCoord2(m_Model.TexcoordArray[0][prim.TexcoordIndices[0][i]]);
+                                }
+                                //if ((prim.ArrayMask & (1 << 0)) != 0) GL.Color4(debug[prim.PosMatrixIndices[i]]);
 
-                                if ((prim.ArrayMask & (1 << 13)) != 0) GL.MultiTexCoord2(TextureUnit.Texture0, ref m_Model.TexcoordArray[0][prim.TexcoordIndices[0][i]]);
-                                if ((prim.ArrayMask & (1 << 14)) != 0) GL.MultiTexCoord2(TextureUnit.Texture1, ref m_Model.TexcoordArray[1][prim.TexcoordIndices[1][i]]);
-                                if ((prim.ArrayMask & (1 << 15)) != 0) GL.MultiTexCoord2(TextureUnit.Texture2, ref m_Model.TexcoordArray[2][prim.TexcoordIndices[2][i]]);
-                                if ((prim.ArrayMask & (1 << 16)) != 0) GL.MultiTexCoord2(TextureUnit.Texture3, ref m_Model.TexcoordArray[3][prim.TexcoordIndices[3][i]]);
-                                if ((prim.ArrayMask & (1 << 17)) != 0) GL.MultiTexCoord2(TextureUnit.Texture4, ref m_Model.TexcoordArray[4][prim.TexcoordIndices[4][i]]);
-                                if ((prim.ArrayMask & (1 << 18)) != 0) GL.MultiTexCoord2(TextureUnit.Texture5, ref m_Model.TexcoordArray[5][prim.TexcoordIndices[5][i]]);
-                                if ((prim.ArrayMask & (1 << 19)) != 0) GL.MultiTexCoord2(TextureUnit.Texture6, ref m_Model.TexcoordArray[6][prim.TexcoordIndices[6][i]]);
-                                if ((prim.ArrayMask & (1 << 20)) != 0) GL.MultiTexCoord2(TextureUnit.Texture7, ref m_Model.TexcoordArray[7][prim.TexcoordIndices[7][i]]);
+                                if ((prim.ArrayMask & (1 << 10)) != 0) GL.Normal3(m_Model.NormalArray[prim.NormalIndices[i]]);
+
+                                //頂点インデックスにあった頂点番号の頂点を順番にセット
+                                Vector3 pos = m_Model.PositionArray[prim.PositionIndices[i]];
+                                //モデルの拡大縮小、回転、移動を頂点ごとに適用(モデルビュープロジェクション行列でやるのは適さないから しかし、CPUで計算するので負荷高い)
+                                if ((prim.ArrayMask & (1 << 0)) != 0) Vector3.Transform(ref pos, ref mtxtable[prim.PosMatrixIndices[i]], out pos);
+                                else Vector3.Transform(ref pos, ref mtxtable[0], out pos);
+                                GL.Vertex3(pos);
                             }
-                            else
-                            {
-                                if ((prim.ArrayMask & (1 << 13)) != 0) GL.TexCoord2(m_Model.TexcoordArray[0][prim.TexcoordIndices[0][i]]);
-                            }
-                            //if ((prim.ArrayMask & (1 << 0)) != 0) GL.Color4(debug[prim.PosMatrixIndices[i]]);
-
-                            if ((prim.ArrayMask & (1 << 10)) != 0) GL.Normal3(m_Model.NormalArray[prim.NormalIndices[i]]);
-
-                            //頂点インデックスにあった頂点番号の頂点を順番にセット
-                            Vector3 pos = m_Model.PositionArray[prim.PositionIndices[i]];
-                            //モデルの拡大縮小、回転、移動を頂点ごとに適用(モデルビュープロジェクション行列でやるのは適さないから しかし、CPUで計算するので負荷高い)
-                            if ((prim.ArrayMask & (1 << 0)) != 0) Vector3.Transform(ref pos, ref mtxtable[prim.PosMatrixIndices[i]], out pos);
-                            else Vector3.Transform(ref pos, ref mtxtable[0], out pos);
-                            GL.Vertex3(pos);
                         }
+                        else
+                        {
+                            for (int i = 0; i < prim.NumIndices; i++)
+                            {
+                                Vector3 pos = new Vector3(m_Model.PositionArray[prim.PositionIndices[i]]);
+
+                                if ((prim.ArrayMask & 1) != 0)
+                                    Vector3.Transform(ref pos, ref mtxtable[prim.PosMatrixIndices[i]], out pos);
+                                else
+                                    Vector3.Transform(ref pos, ref mtxtable[0], out pos);
+
+                                GL.Vertex3(pos.X, pos.Y, pos.Z);
+                            }
+                        }
+
+
 
                         GL.End();
                     }

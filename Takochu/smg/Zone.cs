@@ -654,6 +654,16 @@ namespace Takochu.smg
                 {
                     foreach (string l in layers)
                     {
+                        if (!mObjects.ContainsKey(str))
+                        {
+                            break;
+                        }
+
+                        if (!mObjects[str].ContainsKey(l))
+                        {
+                            break;
+                        }
+
                         List<AbstractObj> objs = mObjects[str][l];
 
                         foreach (AbstractObj o in objs)
