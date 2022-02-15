@@ -2,6 +2,7 @@
 using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using Takochu.fmt;
 using Takochu.io;
 using Takochu.rnd;
 using Takochu.util;
+using static Takochu.util.EditorUtil;
 
 namespace Takochu.smg.obj
 {
@@ -96,12 +98,15 @@ namespace Takochu.smg.obj
         {
             foreach (PathPointObj pp in mPathPointObjs)
             {
-                
                 pp.Render(1, mPathColor, mode);
                 pp.Render(2, mPathColor, mode);
                 pp.Render(0, mPathColor, mode);
 
-                GL.Color4(mPathColor);
+                if (mode != RenderMode.Picking)
+                {
+                    GL.Color4(mPathColor);
+                }
+
                 GL.LineWidth(1.0f);
                 GL.Begin(BeginMode.LineStrip);
 

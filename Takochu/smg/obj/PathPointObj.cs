@@ -2,12 +2,14 @@
 using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Takochu.calc;
 using Takochu.fmt;
 using Takochu.rnd;
+using static Takochu.util.EditorUtil;
 
 namespace Takochu.smg.obj
 {
@@ -99,6 +101,13 @@ namespace Takochu.smg.obj
 
             RenderInfo inf = new RenderInfo();
             inf.Mode = mode;
+
+            if (mode == RenderMode.Picking)
+            {
+                Color c = ColorHolder.mColors[mUnique + pointNo];
+                GL.Color4((byte)c.R, (byte)c.G, (byte)c.B, (byte)0xFF);
+            }
+
             rend.Render(inf);
 
             GL.PopMatrix();

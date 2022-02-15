@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -90,5 +91,46 @@ namespace Takochu.util
             public string mFieldName;
             public object mValue;
         }
+
+        public class ColorHolder
+        {
+            public static void Add(int id, Color color)
+            {
+                mColors.Add(id, color);
+            }
+
+            public static int IDFromColor(Color color)
+            {
+                foreach(KeyValuePair<int, Color> kvp in mColors)
+                {
+                    if (kvp.Value.Equals(color))
+                    {
+                        return kvp.Key;
+                    }
+                }
+
+                return -1;
+            }
+
+            public static Dictionary<int, Color> mColors = new Dictionary<int, Color>();
+        }
+
+        public static Color UIntToColor(uint color)
+        {
+            byte r = (byte)(color >> 16);
+            byte g = (byte)(color >> 8);
+            byte b = (byte)(color >> 0);
+            return Color.FromArgb(0xFF, r, g, b);
+        }
+    }
+
+    public class GlobalRandom
+    {
+        public static int GetNext(int max)
+        {
+            return mRandom.Next(max);
+        }
+
+        private static Random mRandom = new Random(Guid.NewGuid().GetHashCode());
     }
 }
