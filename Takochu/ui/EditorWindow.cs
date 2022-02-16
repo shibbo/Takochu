@@ -979,10 +979,17 @@ namespace Takochu.ui
 
                     if (obj == null)
                     {
-                        //MessageBox.Show("Null: " + obj.mName);
                         continue;
-                        
                     }
+
+                    // if the current seleted object is the same, we deselect
+                    if (obj == mSelectedObject)
+                    {
+                        mSelectedObject = null;
+                        return;
+                    }
+
+                    mSelectedObject = obj;
 
                     if (obj is PathPointObj)
                     {

@@ -45,7 +45,6 @@ namespace Takochu.smg.obj
             {
                 mUnique = Program.sUniqueID++;
                 mPicking = Color.FromArgb(0xFF, GlobalRandom.GetNext(256), GlobalRandom.GetNext(256), GlobalRandom.GetNext(256));
-                Console.WriteLine($"{mPicking.R} {mPicking.G} {mPicking.B}");
                 ColorHolder.Add(mUnique, mPicking);
             }
         }
