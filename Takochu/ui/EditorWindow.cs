@@ -977,10 +977,27 @@ namespace Takochu.ui
                     Zone zone = mGalaxy.GetZone(z);
                     AbstractObj obj = zone.GetObjFromUniqueID(id);
 
-                    if (obj != null)
+                    if (obj == null)
+                    {
+                        //MessageBox.Show("Null: " + obj.mName);
+                        continue;
+                        
+                    }
+
+                    if (obj is PathObj)
+                    {
+                        //MessageBox.Show("PathObj");
+                        var pObj = obj as PathObj;
+                        SelectTreeNodeWithUnique(pObj.mUnique);
+                        continue;
+                    }
+                    else
                     {
                         SelectTreeNodeWithUnique(obj.mUnique);
+                        continue;
                     }
+
+                    
                 }
             }
 
@@ -1004,6 +1021,7 @@ namespace Takochu.ui
 
             node.EnsureVisible();
             objectsListTreeView.Select();
+            objectsListTreeView.SelectedNode = node;
 
             if (node.Parent == null && node.Text.EndsWith("Zone"))
             {
@@ -1023,6 +1041,24 @@ namespace Takochu.ui
                     var Rot_ZoneOffset = mGalaxy.Get_Rot_GlobalOffset(ZoneName);
 
                     var PosObj = abstractObj.mTruePosition;
+
+                    //Move the camera to the position of Point0, index number 0 in the PathPoint list.
+                    if (abstractObj is PathObj) 
+                    {
+                        if (abstractObj == null) return;
+                        var pathObj = abstractObj as PathObj;
+                        PosObj = pathObj.mPathPointObjs[0].mPoint0;
+                    }
+
+                    //The camera when PathPointObj is selected.
+                    //The selection of point 1 and point 2 of PathPointObj is not supported.
+                    if (abstractObj is PathPointObj) 
+                    {
+                        if (abstractObj == null) return;
+                        var pathPointObj = abstractObj as PathPointObj;
+                        PosObj = pathPointObj.mPoint0;
+                    }
+
                     var CorrectPos_Object = calc.RotAfin.GetPositionAfterRotation(PosObj, Rot_ZoneOffset, calc.RotAfin.TargetVector.All);
 
                     m_CamDistance = 0.200f;
@@ -1192,6 +1228,18 @@ namespace Takochu.ui
                 {
                     tabControl1.SelectedIndex = 2;
                     ExpandAllParents(node);
+                    ChangeToNode(node, (Control.ModifierKeys == Keys.Shift));
+                    return;
+                }
+                else if(obj is PathPointObj)
+                {
+                    
+                    var ppObj = obj as PathPointObj;
+                    if (ppObj.mUnique != id) continue;
+                    tabControl1.SelectedIndex = 2;
+                    ExpandAllParents(node);
+                    //objectsListTreeView.SelectedNode = node;
+
                     ChangeToNode(node, (Control.ModifierKeys == Keys.Shift));
                     return;
                 }
