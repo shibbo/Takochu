@@ -112,6 +112,19 @@ namespace Takochu.util
                 return -1;
             }
 
+            public static bool Contains(Color color)
+            {
+                foreach(KeyValuePair<int, Color> kvp in mColors)
+                {
+                    if (kvp.Value == color)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
             public static Dictionary<int, Color> mColors = new Dictionary<int, Color>();
         }
 

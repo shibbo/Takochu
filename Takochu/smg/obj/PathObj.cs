@@ -120,7 +120,10 @@ namespace Takochu.smg.obj
                 GL.End();
             }
 
-            GL.Color4(mPathColor);
+            if (mode != RenderMode.Picking)
+            {
+                GL.Color4(mPathColor);
+            }
 
             if (mPathPointObjs.Count != 0)
             {

@@ -682,10 +682,17 @@ namespace Takochu.smg
             {
                 foreach (var pathPointObj in pathObj.mPathPointObjs)
                 {
-                    if (pathPointObj.mUnique == id)
+                    for (int i = 0; i < 3; i++)
+                    {
+                        if (pathPointObj.mPointIDs[i] == id)
+                        {
+                            return pathPointObj;
+                        }
+                    }
+                    /*if (pathPointObj.mUnique == id)
                     {
                         return pathPointObj;
-                    }
+                    }*/
                 }
             }
 

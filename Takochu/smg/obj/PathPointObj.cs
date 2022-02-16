@@ -22,8 +22,9 @@ namespace Takochu.smg.obj
             mType = "PathPointObj";
 
             mID = mEntry.Get<short>("id");
-
+            
             mName = $"Path Point {mID} [Path {parent.mID}]";
+            Console.WriteLine(mName);
 
             mPoint0 = new Vector3
             {
@@ -104,7 +105,7 @@ namespace Takochu.smg.obj
 
             if (mode == RenderMode.Picking)
             {
-                Color c = ColorHolder.mColors[mUnique + pointNo];
+                Color c = mPointColors[pointNo];
                 GL.Color4((byte)c.R, (byte)c.G, (byte)c.B, (byte)0xFF);
             }
 
@@ -149,9 +150,13 @@ namespace Takochu.smg.obj
 
         public PathObj mParent;
         public short mID;
+        public int mFirstID;
         public Vector3 mPoint0;
         public Vector3 mPoint1;
         public Vector3 mPoint2;
+
+        public Color[] mPointColors;
+        public int[] mPointIDs;
 
         int[] mPointArgs;
     }

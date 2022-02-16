@@ -661,7 +661,7 @@ namespace Takochu.ui
                     keyValuePairs.Add(o.mUnique, GL.GenLists(1));
                     mDispLists[t].Add(o.mUnique, GL.GenLists(1));
 
-                    if (o.mType == "AreaObj" && AreaToolStripMenuItem.Checked == false)
+                    if (o.mType == "AreaObj" && AreaToolStripMenuItem.Checked == false && mode != RenderMode.Picking)
                         continue;
 
                     GL.NewList(mDispLists[t][o.mUnique], ListMode.Compile);
@@ -695,7 +695,7 @@ namespace Takochu.ui
                     keyValuePairs.Add(p.mUnique, GL.GenLists(1));
                     mDispLists[t].Add(p.mUnique, GL.GenLists(1));
 
-                    if (pathsToolStripMenuItem.Checked == false)
+                    if (pathsToolStripMenuItem.Checked == false && mode != RenderMode.Picking)
                         continue;
 
                     GL.NewList(mDispLists[t][p.mUnique], ListMode.Compile);
@@ -727,7 +727,7 @@ namespace Takochu.ui
                     keyValuePairs.Add(o.mUnique, GL.GenLists(1));
                     mDispLists[t].Add(o.mUnique, GL.GenLists(1));
 
-                    if (o.mType == "AreaObj" && AreaToolStripMenuItem.Checked == false)
+                    if (o.mType == "AreaObj" && AreaToolStripMenuItem.Checked == false && mode != RenderMode.Picking)
                             continue;
 
                     GL.NewList(mDispLists[t][o.mUnique], ListMode.Compile);
@@ -755,7 +755,7 @@ namespace Takochu.ui
                     keyValuePairs.Add(path.mUnique, GL.GenLists(1));
                     mDispLists[t].Add(path.mUnique, GL.GenLists(1));
 
-                    if (pathsToolStripMenuItem.Checked == false)
+                    if (pathsToolStripMenuItem.Checked == false && mode != RenderMode.Picking)
                         continue;
 
                     GL.NewList(mDispLists[t][path.mUnique], ListMode.Compile);
@@ -984,17 +984,15 @@ namespace Takochu.ui
                         
                     }
 
-                    if (obj is PathObj)
+                    if (obj is PathPointObj)
                     {
-                        //MessageBox.Show("PathObj");
-                        var pObj = obj as PathObj;
-                        SelectTreeNodeWithUnique(pObj.mUnique);
-                        continue;
+                        SelectTreeNodeWithUnique(id);
+                        break;
                     }
                     else
                     {
                         SelectTreeNodeWithUnique(obj.mUnique);
-                        continue;
+                        break;
                     }
 
                     
@@ -1231,17 +1229,20 @@ namespace Takochu.ui
                     ChangeToNode(node, (Control.ModifierKeys == Keys.Shift));
                     return;
                 }
-                else if(obj is PathPointObj)
+                else if (obj is PathPointObj)
                 {
-                    
                     var ppObj = obj as PathPointObj;
-                    if (ppObj.mUnique != id) continue;
-                    tabControl1.SelectedIndex = 2;
-                    ExpandAllParents(node);
-                    //objectsListTreeView.SelectedNode = node;
 
-                    ChangeToNode(node, (Control.ModifierKeys == Keys.Shift));
-                    return;
+                    for (int i = 0; i < 3; i++)
+                    {
+                        if (ppObj.mPointIDs[i] == id)
+                        {
+                            tabControl1.SelectedIndex = 2;
+                            ExpandAllParents(node);
+                            ChangeToNode(node, (Control.ModifierKeys == Keys.Shift));
+                            return;
+                        }
+                    }
                 }
             }
         }
