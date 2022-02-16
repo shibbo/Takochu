@@ -54,6 +54,7 @@ namespace Takochu.smg.obj
         public void RemovePathPointAtIndex(int idx)
         {
             mPathPointObjs.RemoveAt(idx);
+            
         }
 
         public override void Reload_mValues()
@@ -81,6 +82,9 @@ namespace Takochu.smg.obj
 
             mEntry.Set("usage", mUsage);
             mEntry.Set("Path_ID", mPathID);
+
+
+            //mFilesystem.DeleteFile($"/Stage/jmp/Path/CommonPathPointInfo.{mNo}");
 
             BCSV b = new BCSV(mFilesystem.OpenFile($"/Stage/jmp/Path/CommonPathPointInfo.{mNo}"));
             b.mEntries.Clear();
